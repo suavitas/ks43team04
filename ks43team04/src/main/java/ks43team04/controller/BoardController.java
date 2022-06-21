@@ -3,15 +3,19 @@ package ks43team04.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ks43team04.dto.Board;
+import ks43team04.mapper.BoardMapper;
 import ks43team04.service.BoardService;
 
 @Controller
@@ -21,10 +25,16 @@ public class BoardController {
 	private static final Logger log = LoggerFactory.getLogger(BoardController.class);
 
 	private final BoardService boardService;
+	private final BoardMapper boardMapper;
 	
-	public BoardController(BoardService boardService) {
+	public BoardController(BoardService boardService, BoardMapper boardMapper) {
 		this.boardService = boardService;
+		this.boardMapper = boardMapper;
 	}
+	
+	
+	
+	
 
 	/**
 	 * 이벤트 > 글 작성하기
@@ -42,10 +52,28 @@ public class BoardController {
 	 */
 	
 	@GetMapping("/noticeWrite")
-	public String noticeWrite() {
+	public String noticeWrite(Model model) {
 		
+		model.addAttribute("title", "공지등록");
+		model.addAttribute("titleName", "공지등록");
 		return "/user/board/noticeWrite";
 	}
+	
+	@PostMapping("/noticeWrite")
+	public String noticeWrite(Board board, HttpSession session) {
+		String sessionId = (String) session.getAttribute("SID");
+		boardService.noticeWrite(board, sessionId);
+		
+		log.info("공지 등록 data : {}", board);
+		log.info("화면에서 입력받은 data: {}, boardCode");
+		
+
+		return "redirect:/user/board/noticeList";
+	}
+		
+		
+
+	
 	
 	/**
 	 * Q&A > 문의하기
@@ -62,10 +90,11 @@ public class BoardController {
 	 * 공지사항 > 상세글 조회 
 	 */
 	@GetMapping("/noticeDetail")
-	public String noticeDetail(@RequestParam(name="boardCode", required = false) String boardCode
+	public String noticeDetail(@RequestParam(name="boardMenuCode", required = false) String boardMenuCode
+							  ,@RequestParam(name="boardParentNo", required = false) int boardParentNo
 							  ,Model model) {
 		
-		Board board = boardService.getBoardDetailByCode(boardCode);
+		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardParentNo);
 		
 		model.addAttribute("board", board);
 		
@@ -78,10 +107,11 @@ public class BoardController {
 	 */
 	 
 	@GetMapping("/qnaDetail")
-	public String qnaDetail(@RequestParam(name="boardCode", required = false) String boardCode
-			  				,Model model) {
-		
-	Board board = boardService.getBoardDetailByCode(boardCode);
+	public String qnaDetail(@RequestParam(name="boardMenuCode", required = false) String boardMenuCode
+							  ,@RequestParam(name="boardParentNo", required = false) int boardParentNo
+							  ,Model model) {
+						
+	Board board = boardService.getBoardDetailByCode(boardMenuCode, boardParentNo);
 	
 	model.addAttribute("board", board);
 			return "/user/board/qnaDetail";
@@ -144,4 +174,3 @@ public class BoardController {
 
 	
 	}
-

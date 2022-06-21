@@ -43,7 +43,7 @@
 		<div class="info">
 			<div class="xleft" style="text-align: right; padding: 10px 0 10px 0; font-size: 13px;">
 					<span class="addFile">
-	                    <a href="#" title="몰라">
+	                    <a href="#" title="#">
 	                       <i class="bi bi-download" title="첨부파일"></i>
 	                        	    <th:block th:text="${board.boardAddFileName}"></th:block>         
 	                      </a>
@@ -76,7 +76,7 @@
 			
 			<div class="btnArea col-lg-6 col-sm-12" style="padding-top: 0px; margin-top: 80px;">
 				<span>
-						<a th:href="@{/user/board/noticeList}" class="cart-btn btn-lg">수정</a>
+						<a th:href="@{/user/board/noticeModify}" class="cart-btn btn-lg">수정</a>
 						<a th:href="@{/user/board/noticeList}" class="cart-btn btn-lg">삭제</a>
 				</span>
 			</div>
@@ -119,5 +119,5 @@
 		
 	</div>
 		
-
+</th:block>
 </html>

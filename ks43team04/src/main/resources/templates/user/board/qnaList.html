@@ -13,12 +13,16 @@
 	
 	<th:block layout:fragment="customJsScript">
 		<script>
+		/*setTimeout(function(){datatable.columns.adjust().draw();},200);*/
 			$(function(){
 				$('.tbqnaList').DataTable({
 					language : {'info':'맘대로'}
 				});
 			});
+		
 		</script>
+		
+		
 	</th:block>
 	  
 	  
@@ -83,7 +87,7 @@
 											<td class="product-remove" th:text="${l.boardParentNo}"></td>
 											<td class="product-remove" th:text="${l.boardSecret}"></td>
 											<td class="product-image">
-											<a th:href="@{/user/board/qnaDetail(boardCode=${l.boardCode})}" th:text="${l.boardTitle}"></a>
+											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardParentNo=${l.boardParentNo})}" th:text="${l.boardTitle}"></a>
 											</td>
 											<td class="product-name" th:text="${l.boardAddFile}"></td>
 											<td class="product-price" th:text="${l.memeberId}"></td>
@@ -123,7 +127,7 @@
 											<td class="product-remove" th:text="${l.boardParentNo}"></td>
 											<td class="product-remove" th:text="${l.boardSecret}"></td>
 											<td class="product-image">
-											<a th:href="@{/user/board/qnaDetail(boardCode=${l.boardCode})}" th:text="${l.boardTitle}"></a>
+											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardParentNo=${l.boardParentNo})}" th:text="${l.boardTitle}"></a>
 											</td>
 											<td class="product-name" th:text="${l.boardAddFile}"></td>
 											<td class="product-price" th:text="${l.memeberId}"></td>
@@ -162,7 +166,7 @@
 											<td class="product-remove" th:text="${l.boardParentNo}"></td>
 											<td class="product-remove" th:text="${l.boardSecret}"></td>
 											<td class="product-image">
-											<a th:href="@{/user/board/qnaDetail(boardCode=${l.boardCode})}" th:text="${l.boardTitle}"></a>
+											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardParentNo=${l.boardParentNo})}" th:text="${l.boardTitle}"></a>
 											</td>
 											<td class="product-name" th:text="${l.boardAddFile}"></td>
 											<td class="product-price" th:text="${l.memeberId}"></td>
@@ -204,7 +208,7 @@
 											<td class="product-remove" th:text="${l.boardParentNo}"></td>
 											<td class="product-remove" th:text="${l.boardSecret}"></td>
 											<td class="product-image">
-											<a th:href="@{/user/board/qnaDetail(boardCode=${l.boardCode})}" th:text="${l.boardTitle}"></a>
+											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardParentNo=${l.boardParentNo})}" th:text="${l.boardTitle}"></a>
 											</td>
 											<td class="product-name" th:text="${l.boardAddFile}"></td>
 											<td class="product-price" th:text="${l.memeberId}"></td>
