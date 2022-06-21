@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.HolidayMapper">
+
+	<resultMap type="HolidayList" 					id="HolidayListResultMap">
+		<id column="laundry_code"					property="holidayCode"/>
+		<result column="m_id" 						property="laundryCode"/>
+		<result column="level_code" 				property="yearlyHolidayDate"/>
+		<result column="laundry_name" 				property="yearlyHolidayName"/>
+		<result column="laundry_state" 				property="holidayCodeUse"/>
+	</resultMap>
+	
+			
+	<resultMap type="YearlyHoliday" 				id="holidayResultMap">
+		<id column="yearly_holiday_code" 			property="yearlyHolidayCode"/>
+		<result column="yearly_holiday_date" 		property="yearlyHolidayDate"/>
+		<result column="yearly_holiday_name"		property="yearlyHolidayName"/>
+		<result column="holiday_code_use" 			property="holidayCodeUse"/>
+		<result column="admin_level_code" 			property="adminLevelCode"/>
+		<result column="regist_time" 				property="registTime"/>
+	</resultMap>
+	
+	<select id="holidayList" parameterType="String" resultMap="HolidayListResultMap">
+		SELECT 
+			holiday_code, 
+			laundry_code, 
+			yearly_holiday_date,
+			yearly_holiday_name,
+			holiday_code_use
+		FROM 
+			tb_holiday		
+	
+	</select>
+		
+	<select id="yearlyHolidayList" resultMap="holidayResultMap">
+		SELECT
+			h.yearly_holiday_code 
+			,h.yearly_holiday_date
+			,h.yearly_holiday_name 
+			,h.holiday_code_use
+		FROM
+			tb_yearly_holiday AS h;
+	</select>
+	
+</mapper>

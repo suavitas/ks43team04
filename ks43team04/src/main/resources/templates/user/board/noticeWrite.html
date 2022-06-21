@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/userDefault}">
+	  
+	  
+ <!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+	<!-- 게시판 타이틀 -->
+	<div id="container">
+		<div id="top-loca">
+			<div class="boardPath">
+				<a th:href="@{/}">HOME</a>
+				 > 
+				<a th:href="@{/user/board/noticeList}">공지사항</a>
+			</div>	
+			<h2>공지사항</h2>			
+		</div>
+	</div>	
+		
+	<!-- 게시판 탭  -->			
+	<div class="list-group list-group-horizontal col-sm-6" style="margin:0 auto; text-align: center;">
+  		<a th:href="@{/user/board/noticeList}" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">
+  		공지사항
+  		</a>
+		<a th:href="@{/user/board/eventList}" class="list-group-item list-group-item-action">이벤트</a>
+		<a th:href="@{/user/board/faqList}" class="list-group-item list-group-item-action">FAQ</a>
+		<a th:href="@{/user/board/qnaList}" class="list-group-item list-group-item-action">문의사항</a>
+	</div>
+	
+	
+	<!-- 문의사항 작성 테이블 -->
+	<div class="cart-section mt-150 mb-150" style="background-color: #f5f6fa; padding: 60px 0 100px; margin: 0; border-top: #e5e5e5 1px solid;">
+		<div class="container">
+			<div class="row" style="float: none; margin: 100 auto;">
+				<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
+
+	<!--작성 폼 -->
+	<div class="form-title">
+						<h2>NOTICE</h2>
+						<p>공지작성합니다.</p>
+					</div>
+				 	<div id="form_status">
+					<div class="contact-form">
+						<form type="POST" id="fruitkha-contact" onSubmit="return valid_datas( this );">
+							<table class="col-lg-8 col-lg-12">
+								<colgroup>
+									<col style="width:120px">
+									<col>
+									</colgroup>
+								<tbody>
+									<tr>
+										<th scope="row" class="table-head">작성자</th>
+										<td class="table-data">
+											<p>
+												<input type="text" placeholder="관리자" name="name" id="name"  style="padding: 5px 15px 5px 15px; margin-top: 10px; margin-bottom: 5px; width: 30%" readonly="readonly">
+											</p>
+										</td>
+									</tr>
+								
+								
+								
+
+										
+									<tr>
+										<th scope="row" class="table-head">제목</th>
+										<td class="table-data">
+											<p>
+												<input type="text" placeholder="Subject" name="subject" id="subject"  style="padding: 5px 15px 5px 15px; margin-top: 5px; margin-bottom: 10px; width: 100%">
+											</p>
+										</td>
+									</tr>
+									
+									<tr>
+										<th scope="row" class="table-head">문의내용</th>
+										<td class="table-data">
+											<p><textarea name="message" id="message" cols="30" rows="10" placeholder="Message"></textarea></p>
+												<input type="hidden" name="token" value="FsWga4&@f6aw" />
+												<!-- 2000자 제한할것인가 (지마켓)
+												<span class="text__limit"><em class="text__active">48</em>/2000자</span> -->
+										</td>
+									</tr>
+										
+										<tr id="hideByFaq">
+										<th scope="row" class="table-head">파일첨부</th>
+										<td class="table-data">
+											<div class="box__attach-images">
+												<ul class="list__attach-item" style="list-style: none; padding: 0;" >
+													<li class="list-item add_photo_item">
+														<div class="box__item">
+															<input type="file" id="photo_01" class="js-add-photo form__input-file" accept="image/*,.pdf">
+															<!-- 다른 곳 눌러도 파일첨부 창이 열린다
+															<label for="photo_01" class="label__attach button__attach"><span class="sprite__help">파일첨부</span></label>  -->
+														</div>
+													</li>
+												</ul>
+												<p class="text__guide">파일첨부는 최대 4장까지 가능하며,<br>5MB이하의 GIF, JPG, JPEG, PNG, PDF 형태로 업로드해주세요.</p>
+											</div>
+										</td>
+									</tr>
+										
+																	
+								</tbody>	
+							</table>
+						
+						
+					
+					
+						
+							<p style="text-align: center;">
+							<a th:href="@{/user/board/noticeList}" class="backBtn">BACK</a>
+							<input type="submit" value="Submit" style=" margin: 50px;">
+							</p>
+						</form>
+					</div>
+				</div>
+
+		</div>
+
+	</div>
+		
+
+		
+			
+		
+		
+		
+		
+		
+		
+
+		</div>
+		
+	</div>
+		
+</th:block>
+</html>

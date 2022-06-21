@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.YeyakMapper">
+
+	<resultMap type="MuinMachine" 					id="MuinMachineResultMap">
+		<id column="muin_Machinecode" 				property="muinMachineCode"/>
+		<result column="laundry_code" 				property="laundryCode"/>
+		<result column="muin_spec_code" 			property="muinSpecCode"/>
+		<result column="machine_number"				property="machineNumber"/>
+		<result column="machine_state" 				property="machineState"/>
+		<result column="admin_level_code" 			property="adminLevelCode"/>
+		<result column="regist_time" 				property="registTime"/>
+	</resultMap>
+	
+	<select id="muinMachineList" resultMap="MuinMachineResultMap">
+		SELECT
+			m.muin_machine_code,
+			m.laundry_code,
+			m.muin_spec_code,
+			m.machine_number,
+			m.machine_state,
+			m.admin_level_code,
+			m.regist_time
+		FROM
+			tb_muin_machine AS m
+	</select>
+
+	<select id="muinLaundryList" parameterType="map" resultType="map">
+		SELECT
+			l.laundry_code AS laundryCode,
+			l.laundry_name AS laundryName,
+			l.laundry_state AS laundryState,
+			l.laundry_addr AS laundryAddr,
+			l.laundry_tel AS laundryTel,
+			l.skill_licence AS skillLicene
+		FROM
+			tb_laundry AS l
+		WHERE
+			l.level_code = 'level_code_02'
+		LIMIT #{startRow}, #{rowPerPage};
+	</select>
+	
+	<select id="ilbanLaundryList" parameterType="map" resultType="map">
+		/*페이징 처리를위한 LIMIT을 사용한 일반 세탁소 리스트 */
+		SELECT
+			l.laundry_name AS laundryName,
+			l.laundry_state AS laundryState,
+			l.laundry_addr AS laundryAddr,
+			l.laundry_tel AS laundryTel,
+			l.skill_licence AS skillLicence
+		FROM
+			tb_laundry AS l
+		WHERE
+			l.level_code = 'level_code_03'
+		LIMIT #{startRow}, #{rowPerPage};
+	</select>
+	
+</mapper>
