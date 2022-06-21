@@ -10,19 +10,41 @@ import ks43team04.mapper.BoardMapper;
 
 @Service
 @Transactional
+
 public class BoardService {
+	
+	
 	private final BoardMapper boardMapper;
+	
 	public BoardService(BoardMapper boardMapper) {
 		this.boardMapper = boardMapper;
 	}
 	
+	
+	
+	
+	/**
+	 * 공지사항 입력
+	 * @param board
+	 * @return
+	 */
+	public int noticeWrite(Board board, String sessionId) {
+		
+		board.setMemeberId(sessionId);
+		
+		int result = boardMapper.noticeWrite(board);
+		return result;
+	}
+	
+	
+	
 	/**
 	 * 분류별 게시물 내용 조회
-	 * @param boardCode
+	 * @param boardMenuCode
 	 * @return Board
 	 */
-	public Board getBoardDetailByCode(String boardCode) {
-		Board board = boardMapper.getBoardDetailByCode(boardCode);
+	public Board getBoardDetailByCode(String boardMenuCode, int boardParentNo) {
+		Board board = boardMapper.getBoardDetailByCode(boardMenuCode, boardParentNo);
 		return board;
 	}
 	
@@ -59,3 +81,4 @@ public class BoardService {
 
 	
 }
+

@@ -8,8 +8,15 @@ import ks43team04.dto.Board;
 
 @Mapper
 public interface BoardMapper {
+	
+	// 공지사항 글 수정
+	public int noticeModify(Board board);
+	
+	// 공지사항 글 작성
+	public int noticeWrite(Board board);
+	
 	// 분류별 게시물 조회
-	public Board getBoardDetailByCode(String boardCode);
+	public Board getBoardDetailByCode(String boardMenuCode, int boardParentNo);
 	
 	
 	//문의사항(서비스 불만족) 답변 목록 조회
