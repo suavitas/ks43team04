@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/userDefault}">
+	  
+<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+	<div class="product-section mt-150 mb-150">
+		<div class="container">
+			<div class="row product-lists" style="margin: 0 auto; margin-top: 100px;">
+				<th:block th:if="${not #lists.isEmpty(ilbanLaundryList)}" th:each="l, status : ${ilbanLaundryList}">
+					<div class="col-lg-4 col-md-6 text-center" >
+						<div class="single-product-item laundry-box">
+							<div class="product-image">
+								<img th:src="@{/user/assets/img/products/laundry.png}" alt="세탁소">
+							</div>
+							<h4 th:text="${l.get('laundryName')}"></h4>
+							<h5 class="product-price" th:text="${l.get('laundryAddr')}"></h5>
+							<p>영업상태</p>
+							<h3 class="laundry-state" th:text="${l.get('laundryState')}"></h3> 
+							<p th:text="${l.get('laundryTel')}"></p>
+							세탁자격증 보유 여부
+							<p th:text="${l.get('skillLicence')}"></p>
+							<!-- 모달 예약하기 버튼 시작-->
+							<!-- Button trigger modal -->
+							<button type="button" class="btn btn-primary btn-lg yeyak-btn" data-toggle="modal" th:data-target="${'#myModal' + status.count}">
+							예약하기
+							</button>
+							<!-- Modal -->
+							<div class="modal fade" th:id="${'myModal' + status.count}" tabindex="-1" role="dialog" th:aria-labelledby="${'myModal' + status.count + 'Label'}">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" th:id="${'myModal'+ status.count +'Label'}" th:text="${l.get('laundryName')}">예약사항</h4>
+										</div>
+										<div class="modal-body">
+											<!-- 예약사항 폼 시작-->
+											<div class="checkout-accordion-wrap">
+												<div class="accordion" id="accordionExample">
+													<div class="card single-accordion">
+														<div class="card-header" id="headingOne">
+															<h5 class="mb-0">
+																<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">수거 및 배송신청</button>
+															</h5>
+														</div>
+														<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+															<div class="card-body">
+																<div class="billing-address-form">
+																	<form action="index.html">
+																		<h5>수거일 예약 신청</h5>
+																		<input type="date" value="2022-04-21">
+																		<input type="time" style="margin-bottom: 20px;">
+																		<p>수거는 예약날짜 및 시간 으로 부터 <br/>최대 24시간의 시간이 소요 됩니다.</p>
+																			<div th:class="${'append-info'}">
+																				<div class="boxbox">
+																					<h5>세탁기능 선택</h5>
+																					<select>
+																						<th:block th:each="ls : ${ilbanSkillList}">						        			
+																							<option th:text="${ls.skillCate}" th:value="${ls.skillCate}"></option>
+																						</th:block>
+																					</select>
+																					<br/>
+																					<h5 style="margin-top: 20px;">세탁물 선택</h5>
+																					<select class="igp">
+																						<th:block th:each="ls , st : ${ilbanGoodsPriceList}"> 	
+																							<th:block th:each="lss : ${ls.ilbanGoodsPrice}"> 	
+																								<option th:if="${ls.laundryName} eq ${l.laundryName}" th:text="${lss.goodsName}" th:value="${lss.goodsPrice}"></option>
+																							</th:block>	
+																						</th:block>
+																					</select>
+																				</div>
+																			</div>
+																			<br/>
+																			<div style="margin-bottom: 20px">
+																				<button type="button" class="btn btn-info append-btn">추가하기</button>
+																				<button type="button" class="btn btn-info remove-btn">제거하기</button>
+																			</div>
+																			<p><input type="text" placeholder="상세주소"></p>
+																			<p><input type="tel" placeholder="연락받을 연락처"></p>
+																			<p>
+																				<textarea name="bill" id="bill" cols="30" rows="10" placeholder="배송시 요청사항"></textarea>
+																			</p>
+																		</form>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="card single-accordion">
+															<div class="card-header" id="headingTwo">
+																<h5 class="mb-0">
+																	<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">가격표</button>
+																</h5>
+														</div>
+														<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+															<div class="card-body">
+																<div class="shipping-address-form" >
+																	<th:block>
+																		<div class="cart-table-wrap">
+																			<table class="cart-table tbServiceList">
+																				<thead class="cart-table-head">
+																					<tr class="table-head-row" >
+																						<th class="product-quantity">상품명</th>
+																						<th class="product-total">가격</th>
+																					</tr>
+																				</thead>
+																				<tbody>	
+																					<th:block th:each="ls , st : ${ilbanGoodsPriceList}">
+																						<tr class="table-body-row" th:each="lss : ${ls.ilbanGoodsPrice}">
+																							<td class="product-quantity" th:if="${ls.laundryName} eq ${l.get('laundryName')}" th:text="${lss.goodsName}"></td>
+																							<td class="product-total" th:if="${ls.laundryName} eq ${l.get('laundryName')}" th:text="${lss.goodsPrice}"></td>
+																						</tr>
+																					</th:block>		
+																				</tbody>
+																			</table>
+																		</div>
+																	</th:block>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<!-- 예약사항 폼 끝-->
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+											<button type="button" class="btn btn-primary">결제하기</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 모달 예약하기 버튼 끝 -->
+						</div>
+					</div>
+				</div>	
+			</div>
+		</div>
+		<th:block th:unless="${not #lists.isEmpty(ilbanLaundryList)}">
+			<table class="cart-table tbServiceList">
+				<thead class="cart-table-head" style="font-size: 30px;">
+					<tr class="table-head-row" >
+						<th class="product-quantity">일반 세탁소의 관련된 문의는 063-717-1008</th>
+					</tr>
+				</thead>
+				<tbody style="text-align: center; font-size: 30px;" >	
+						<tr>
+							<td>잠깐 !</td>
+						</tr>
+						<tr>
+							<td>오류가 아닙니다.. 단지 !</td>
+						</tr>
+						<tr>
+							<td>조회된 일반 세탁소 목록이 없는거에요 !</td>
+						</tr>
+				</tbody>
+			</table>
+		</th:block>
+		<div class="row" style="margin-bottom: 100px;">
+			<div class="col-lg-12 text-center">
+				<div class="pagination-wrap">
+					<ul>
+						<li><a th:href="@{/user/ilbanYeyak}">처음</a><li>
+						<li><a th:if="${currentPage > 1}" th:href="@{/user/ilbanYeyak(currentPage=${currentPage -1})}">이전</a></li>
+						<th:block th:each="num : ${#numbers.sequence(startPageNum, endPageNum)}">
+							<li><label th:if="${currentPage eq num}" th:text="${(num < 5)? '0'+ num: num}"></label></li>
+							<li><a th:unless="${currentPage eq num}" th:href="@{/user/ilbanYeyak(currentPage=${num})}" th:text="${(num < 5)? '0'+ num: num}"></a></li>
+						</th:block>
+						<li><a th:if="${currentPage < lastPage}" th:href="@{/user/ilbanYeyak(currentPage=${currentPage +1})}">다음</a></li>
+						<li><a th:href="@{/user/ilbanYeyak(currentPage=${lastPage})}">마지막</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+</th:block>
+      
+<th:block layout:fragment="customJsScript">  
+	<script type="text/javascript">
+	
+		/*close 상태 세탁소 폐업으로 글자 변경 + 클릭 안되게 하는 기능*/
+		var laundryBox = document.querySelectorAll('.laundry-box');
+		var laundryState = document.querySelectorAll('.laundry-state');
+		var yeyakBtn = document.querySelectorAll('.yeyak-btn');
+		
+		for(var i=0; i<laundryState.length; i++){
+			var lState = laundryState[i].innerText;
+			if(lState == 'close'){
+				yeyakBtn[i].innerText ='폐업';
+				yeyakBtn[i].removeAttribute('data-target');
+				yeyakBtn[i].addEventListener('click',function(){
+					alert('이미 폐업한 곳 입니다.');
+				});
+			}
+		}
+			
+		/*추가하기 클릭시 세탁기능, 세탁물 선택창 추가*/
+		var appendBtn = document.querySelectorAll('.append-btn');
+		var removeBtn = document.querySelectorAll('.remove-btn');
+		
+		for(var i=0; i<appendBtn.length; i++){
+			appendBtn[i].addEventListener('click',function(e){
+				var boxs = e.target.parentElement.parentElement.querySelectorAll('.boxbox');
+				var cloneC = boxs[0].cloneNode(true);
+				if(boxs.length < 3) {						
+					e.target.parentElement.parentElement.querySelector('.append-info').appendChild(cloneC);
+				}else{
+					alert('더이상 추가 할 수 없습니다.')
+				}
+			});
+		}
+		
+		/*제거하기 클릭시 세탁기능, 세탁물 선택창 제거*/
+		for(var i=0; i<removeBtn.length; i++){
+			removeBtn[i].addEventListener('click',function(e){
+				var boxs = e.target.parentElement.parentElement.querySelectorAll('.boxbox');
+				var l = boxs.length;
+				if(l > 1){						
+					boxs[l-1].remove();						
+				}else{
+					alert('더이상 제거 할 수 없습니다.')
+				}
+			});
+		}	
+		
+	</script>
+</th:block>
+
+</html>

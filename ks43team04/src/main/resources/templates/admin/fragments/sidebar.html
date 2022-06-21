@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ 
+             <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu" th:fragment="sidebar">
+              <div class="menu_section">
+                <h3>관리자 페이지</h3>
+                <ul class="nav side-menu">
+                  <li><a th:href="@{/admin/main}"><span>관리자 홈 </span></a> 
+                  <li><a><i class="fa fa-edit"></i> 회원 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a th:href="@{/admin/adminMember}">전체 회원 목록</a></li>                    
+                      <li><a th:href="@{/admin/adminLoginHistory}">회원 로그인 이력</a></li>
+                      <li><a th:href="@{#}">회원관리에 뭐가 필요할까</a></li>
+                    </ul>
+                  </li>
+                                   <li><a><i class="fa fa-table"></i> 휴무일 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a th:href="@{holiday}">전체 공휴일</a></li>
+                      <li><a th:href="@{lundryHoliday}">세탁소별 휴일</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-bar-chart-o"></i> 회계 <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a th:href="@{income}">전체 매장 월별 매출</a></li>
+                      <li><a th:href="@{retrun}">전체 매장 월별 환불 횟수</a></li>
+                      <li><a th:href="@{memberPoint}">전체 회원 포인트 사용 내역</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-clone"></i>장비<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a th:href="@{machine}">매장별 장비 현황</a></li>
+                      <li><a th:href="@{machineState}">매장별 장비 스팩 </a></li>                     
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+			<div class="menu_section">
+				<h3>매장 관리</h3>
+					<ul class="nav side-menu">
+						<li><a><i class="fa fa-desktop"></i>매장 관리<span class="fa fa-chevron-down"></span></a>
+		                    <ul class="nav child_menu">
+		                      <li><a th:href="@{lundryIncome}">월별 매출액</a></li>
+		                      <li><a th:href="@{lundryReturn}">월별 환불 요청</a></li>
+		                      <li><a th:href="@{lundryMachine}">장비현황</a></li>
+		                      <li><a href="#">또 추가할거 있어요?</a></li>
+
+		                    </ul>                  
+						</li>
+					</ul> 
+              </div>
+              <div class="menu_section">
+                <h3>고객 관리</h3>
+                <ul class="nav side-menu">
+                  <li><a><i class="fa fa-bug"></i>회원<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a th:href="@{lundryUser}">회원 목록</a></li>
+                      <li><a th:href="@{lundryUserPoint}">회원별 포인트 </a></li>
+                      <li><a th:href="@{lundryUserQA}">회원별 건의 사항</a></li>
+                      <li><a href="#">바꾸고 싶으면 직접하게</a></li>
+                    </ul>
+                  </li>
+                 </ul>
+              </div>
+
+            </div>
+            <!-- /sidebar menu --> 
+
+
+</html>

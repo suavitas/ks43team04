@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/userDefault}">
+
+
+<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+	<div class="payContainer" style="background-color: #FCFCFC;">
+		<div id="payOrder">
+			<div id="payH3">
+				<div class="payOrder-header">
+					<h3>주문/결제</h3>
+				</div>
+			</div>
+
+			<form id="payForm" name="payForm" method="post">
+				
+					<div class="product-area">
+						<span class="top-line"></span>
+						<table class="tb-products">
+							<colgroup>
+								<col width="160">
+								<col width="160">
+								<col width="160">
+								<col width="160">
+								<col width="160">
+								<col>
+							</colgroup>
+							<thead class="point_plus">
+								<tr>
+									<th scope="col" class="product">주문정보</th>
+									<th scope="col">세탁소</th>
+									<th scope="col">세탁물</th>
+									<th scope="col">배송비</th>
+									<th scope="col" class="bg_point">할인</th>
+									<th scope="col" class="col_price">세탁비용(할인, 배달료 포함)</th>
+								</tr>
+							</thead>
+							<tbody>
+
+
+
+
+								<tr>
+									<td>수거예약</td>
+
+									<td rowspan="1">현우세탁소</td>
+									<td>2개
+										<button type="button" onclick="location.href='#';">상세</button>
+									</td>
+
+									<td rowspan="1">3000원</td>
+									<td>1000원</td>
+									<td>15000원</td>
+								</tr>
+
+
+							</tbody>
+						</table>
+					</div>
+					<div class="destination-wrap">
+						<div class="deliver-option-wrap">
+							<div class="deliver-info">
+								<h4>
+									<span class="blind">배송지정보</span>
+								</h4>
+								<strong class="req" title="필수입력">배송지 선택</strong>
+								<ul class="radio-inline-list delivery">
+									<li class="_baseDeliveryInfo"><input type="radio"
+										name="delivery" id="deliveryTypeNew"> <label>기본배송지</label>
+									</li>
+									<li class="_newDeliveryInfo"><input type="radio"
+										name="delivery" id="deliveryTypeNew"> <label>신규배송지</label>
+									</li>
+
+								</ul>
+								<ul class="addr-list" style="display: block;">
+									<li>이현우 <em>(중화산동2가 232 새한그린파크 1605호)</em></li>
+									<li>010-2498-0735
+										<div class="safe-number">
+											<input type="checkbox" id="reliefPhoneNumber_1"
+												class="_click(nmp.front.order.order_sheet.checkFirstNumber(1)) _reliefPhoneNumberCheckbox_1">
+											<label for="reliefPhoneNumber_1">안심번호 서비스 사용</label>
+										</div>
+									</li>
+									<li>(54984) 전라북도 전주시 완산구 영경1길 22 (중화산동2가, 새한그린파크아파트) 1605호
+										<button
+											class="btn _click(nmp.front.order.order_sheet.editDeliveryInfo()) _stopDefault">정보수정</button>
+
+									</li>
+								</ul>
+								<div class="_deliveryMemoOuter">
+									<strong class="_deliveryMemoHeader" style="display: none;">배송메모</strong>
+									<div class="_deliveryMemoInner">
+
+										<div class="comments deliveryMemo">
+
+											<div class="dropdown_wrap">
+												<input type="text" placeholder="요청사항을 직접 입력합니다"
+													title="배송 메세지" name="deliveryMemo"
+													class="deli_msg placeholder _deliveryForm deliverySingleMemo _click(nmp.front.order.order_sheet.showLatestDeliveryMemo()) _stopDefault">
+												<input type="text" placeholder="요청사항을 직접 입력합니다"
+													title="배송 메세지" name="deliveryMemos.2022062084358289"
+													class="deli_msg placeholder _deliveryForm particularDeliveryMemo deliveryProductMemo _click(nmp.front.order.order_sheet.showLatestDeliveryMemo(2022062084358289)) _stopDefault"
+													style="display: none;"> <a href="#"
+													title="배송메세지 선택"
+													class="dropdown deliverySingleMemo _click(nmp.front.order.order_sheet.showLatestDeliveryMemo(,deliverySingleMemo)) _stopDefault"><span
+													class="dropdown_arr _stopDefault"></span></a> <a href="#"
+													title="배송메세지 선택"
+													class="dropdown deliveryProductMemo _click(nmp.front.order.order_sheet.showLatestDeliveryMemo(2022062084358289,particularDeliveryMemo)) _stopDefault"
+													style="display: none;"><span
+													class="dropdown_arr _stopDefault"></span></a>
+											</div>
+											<span class="length deliverySingleMemo"><em
+												class="deliveryMemoRealLength">0</em>/<em
+												class="deliveryMemoMaxLength">500</em></span> <span
+												class="length deliveryProductMemo" style="display: none;"><em
+												class="particularDeliveryMemoRealLength">0</em>/<em
+												class="particularDeliveryMemoMaxLength">500</em></span>
+										</div>
+									</div>
+								</div>
+								<p class="extra_info">
+									<span class="ico_ext"></span>도서산간 지역의 경우 추후 수령 시 추가 배송비가 과금될 수
+									있습니다.
+								</p>
+
+							</div>
+							<div class="deliver-userinfo-wrap">
+								<h4>주문자 정보</h4>
+								<ul class="user-info">
+									<li>이현우</li>
+									<li class="_telNoHighlight "><span
+										class="_memberTelNumber">010-2**8-0**5</span>
+										<button
+											class="btn _click(nmp.front.order.order_sheet.changeMemberCellphone()) _stopDefault">수정</button>
+										<!--N=a:ord.modifyphone--></li>
+									<li><span class="_memberEmailAddress">vg******@na***com</span>
+										<button
+											class="btn _click(nmp.front.order.order_sheet.changeMemberEmail()) _stopDefault">수정</button>
+										<!--N=a:ord.modifyemail--></li>
+								</ul>
+								<ul class="info-dsc">
+									<li class="info_confirm"><span
+										class="_telNoNoti _telNoDuplicated" style="display: none"><strong>휴대폰
+												번호를 확인해주세요!</strong><br>현재 등록되어 있는 휴대폰 번호가<br>다른사용자에게도 동일하게
+											등록되어<br>있습니다.<br>휴대폰 번호가 잘못 등록되어 있을 경우<br>정확한
+											주문/결제 알림을 받지 못할 수<br> 있습니다.</span> <span
+										class="_telNoNoti _telNoNeedRegistration"
+										style="display: none"><strong>휴대폰 번호를 등록해주세요.</strong><br>휴대폰
+											번호가 등록되지 않으면 정확한<br>주문/결제 알림을 받지 못할 수 있습니다.</span> <span
+										class="_telNoNoti _telNoInfo" style="display: block">주문자
+											정보로 결제관련 정보가 제공됩니다.<br>정확한 정보로 등록되어있는지 확인해주세요.
+									</span></li>
+								</ul>
+								<input type="hidden" name="order.memberName" value="이현우">
+								<input type="hidden" name="order.memberCellPhoneNo"
+									value="010-2**8-0**5">
+							</div>
+						</div>
+
+					</div>
+				
+			</form>
+		</div>
+	</div>
+
+</th:block>
+</html>

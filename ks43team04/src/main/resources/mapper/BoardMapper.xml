@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.BoardMapper">
+
+	<resultMap type="Board" 					id="boardResultMap">
+		<id 	column="board_code" 			property="boardCode"/>
+		<result column="board_menu_code" 		property="boardMenuCode"/>
+		<result column="m_id" 					property="memeberId"/>
+		<result column="board_parent_no" 		property="boardParentNo"/>
+		<result column="board_read_count" 		property="boardReadCount"/>
+		<result column="board_title" 			property="boardTitle"/>
+		<result column="board_content" 			property="boardContent"/>
+		<result column="board_secret" 			property="boardSecret"/>
+		<result column="board_add_file" 		property="boardAddFile"/>
+		<result column="board_add_file_name" 	property="boardAddFileName"/>
+		<result column="board_add_file_vol" 	property="boardAddFileVol"/>
+		<result column="regist_time" 			property="registTime"/>
+		<result column="update_time" 			property="updateTime"/>
+	</resultMap>
+	
+	
+	<select id="getBoardDetailByCode" resultMap="boardResultMap">
+		/* 게시물 조회 */
+		SELECT
+			 b.board_parent_no
+			,board_secret
+			,b.board_title
+			,b.board_content
+			,board_add_file
+			,board_add_file_name
+			,b.m_id
+			,b.update_time
+			,b.board_read_count
+		FROM
+			tb_board AS b
+		WHERE
+			b.board_code = #{boardCode};		
+	</select>
+	
+	
+	<select id="getAnsComplainList" resultMap="boardResultMap">
+		/* 문의사항(서비스 불만족)답변 목록 조회 */
+		
+		
+	</select>
+	
+	
+	
+	
+		
+	<select id="getQnaComplainList" resultMap="boardResultMap">
+		/* 문의사항(서비스 불만족) 목록 조회 */
+		SELECT
+			b.board_code
+			,b.board_parent_no
+			,board_secret
+			,b.board_title
+			,board_add_file
+			,b.m_id
+			,b.update_time
+			,b.board_read_count
+		FROM
+			tb_board AS b
+		WHERE
+			b.board_code = 'notice_code_005';		
+	</select>	
+	
+	<select id="getQnaPayList" resultMap="boardResultMap">
+		/* 문의사항(결제 포인트) 목록 조회 */
+		SELECT
+			b.board_code
+			,b.board_parent_no
+			,board_secret
+			,b.board_title
+			,board_add_file
+			,b.m_id
+			,b.update_time
+			,b.board_read_count
+		FROM
+			tb_board AS b
+		WHERE
+			b.board_code = 'notice_code_004';		
+	</select>	
+		
+	<select id="getQnaPickupList" resultMap="boardResultMap">
+		/* 문의사항(수거 배송) 목록 조회 */
+		SELECT		
+			b.board_code
+			,b.board_parent_no
+			,board_secret
+			,b.board_title
+			,board_add_file
+			,b.m_id
+			,b.update_time
+			,b.board_read_count
+		FROM
+			tb_board AS b
+		WHERE
+			b.board_code = 'notice_code_003';		
+	</select>	
+
+	<select id="getQnaServiceList" resultMap="boardResultMap">
+		/* 문의사항(서비스 이용) 목록 조회 */
+		SELECT
+			b.board_code
+			,b.board_parent_no
+			,board_secret
+			,b.board_title
+			,board_add_file
+			,b.m_id
+			,b.update_time
+			,b.board_read_count
+		FROM
+			tb_board AS b
+		WHERE
+			b.board_code = 'notice_code_002';	
+	</select>
+
+	<select id="getNoticeList" resultMap="boardResultMap">
+	  	/* 공지사항 목록 조회 */
+		SELECT
+			b.board_code
+			,b.board_parent_no
+			,b.board_title
+			,board_add_file
+			,b.m_id
+			,b.update_time
+			,b.board_read_count
+		FROM
+			tb_board AS b
+		WHERE
+			b.board_code = 'notice_code_001';
+	</select>
+
+
+</mapper>

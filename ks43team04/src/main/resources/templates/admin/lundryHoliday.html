@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/adminDefault}">
+	  
+	  
+	  
+	<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+ 	<div class="x_content">
+		<div th:include="search/laundrySearch :: searchLaundryFragment"></div><br/>
+		
+		::::세탁소 휴일 추가::::<input type="button" value="추가" href="{#}"><br/><br/>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>세탁소 이름</th>
+					<th>휴일명</th>
+					<th>휴일 날짜</th>	
+					<th>수정</th>	
+					<th>삭제</th>	
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:if="${not #lists.isEmpty(getLaundryList)}" th:each="l : ${getLaundryList}">
+					<tr th:if="${not #lists.isEmpty(l.holidayList)}" th:each="sl, status : ${l.holidayList}">
+						<td th:if="${status.index == 0}" th:text="${l.laundryName}" th:rowspan="${#lists.size(l.holidayList)}"></td>
+						<td th:text="${sl.yearlyHolidayName}"></td>
+						<td th:text="${sl.yearlyHolidayDate}"></td>
+						
+						<td>
+							<input type="button" value="수정" href="{#}">
+						</td>
+						<td id="submit" colspan="2">
+					    	<input id="tblbutton" type="button" value="삭제" onclick="removeCheck()">
+					    </td>
+					</tr>
+
+					<tr th:unless="${not #lists.isEmpty(l.holidayList)}">
+						<td colspan="8">등록된 휴일이 없습니다.</td>
+					</tr>
+					</th:block>		
+					<tr th:unless="${not #lists.isEmpty(getLaundryList)}">
+						<td colspan="8">조회된 내용이 없습니다.</td>
+					</tr>
+			</tbody>
+		</table>
+	</div>
+	<script type="text/javascript">
+		function removeCheck() {
+		
+			 if (confirm("정말 삭제하시겠습니까??") == true){ 
+			     document.removefrm.submit();
+		
+			 }else{ 
+			     return false;
+		
+			 }
+		
+			}
+	</script>
+</th:block>
+
+</html>

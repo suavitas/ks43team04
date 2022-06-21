@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&family=Nanum+Brush+Script&display=swap" rel="stylesheet">
+<style>
+* {
+	font-family: 'Gowun Batang', serif;
+	font-family: 'Nanum Brush Script', cursive;
+}
+</style>
+<div class="topnav" th:fragment="header">
+	<!--PreLoader-->
+	<div class="loader">
+		<div class="loader-inner">
+			<div class="circle"></div>
+		</div>
+	</div>
+	<!--PreLoader Ends-->
+
+	<!-- header -->
+	<div class="top-header-area" id="sticker">
+		<div class="container">
+			<!-- logo -->
+			<div class="site-logo">
+				<a th:href="@{/}"> <img th:src="@{/user/assets/img/logo.png}"
+					alt="로고이미지">
+				</a>
+			</div>
+			<!-- logo -->
+			<div class="row">
+				<div class="col-lg-12 col-sm-15 text-center">
+					<div class="main-menu-wrap">
+
+						<!-- menu start -->
+						<nav class="main-menu-top">
+							<ul> 
+								<li>
+									<a th:href="@{/user/myPage}"  style="font-size: 13.5px;">
+									<span th:if="${session.SLEVEL == 'level_code_02'|| session.SLEVEL == 'level_code_03'|| session.SLEVEL == 'level_code_04'}" style="color: #F49403;">마이페이지</span>
+									</a>
+								</li>
+		                        <li>
+		                        	<div th:if="${session.SLEVEL == 'level_code_01' || session.SLEVEL == 'level_code_00' || session.SLEVEL == 'level_code_02' || session.SLEVEL == 'level_code_03'}">
+                                		<a th:href="@{/admin/main}" style="color: #FAFCFC; font-size: 13.5px;"><strong>관리 페이지</strong></a>
+                                	</div>
+                           		</li>
+                           		<li><a th:if="${session.SID == null}" th:href="@{/user/login}" style="color: #ADB4B6;"><i class="fa fa-user"></i>로그인</a></li>							
+		                        <li><a th:if="${session.SID != null}" th:href="@{/user/logout}"style="color: #ADB4B6;" ><span>[</span>[[${session.SNAME}]]님 접속중]</a></li>	
+		                        <li><a th:unless="${session.SID == null}" th:href="@{/user/logout}"><i class="fa fa-user"></i> 로그아웃</a></li>
+							</ul>
+						</nav>
+						<nav class="main-menu">
+							<ul>
+
+								
+								<li class="current-list-item"><a th:href="@{/project}">프로젝트
+										소개</a></li>
+
+								<li><a href="#">예약하기</a>
+									<ul class="sub-menu">
+										<li><a th:href="@{/user/ilbanYeyak}">일반세탁소 예약</a></li>
+										<li><a th:href="@{/user/muinYeyak}">무인세탁소 예약</a></li>
+									</ul></li>
+								<li><a th:href="@{/user/searchmap}">매장찾기</a></li>
+								<li><a href="#">고객센터</a>
+									<ul class="sub-menu">
+										<li><a th:href="@{/user/board/noticeList}">공지사항</a></li>
+										<li><a th:href="@{/user/board/eventList}">이벤트?</a></li>
+										<li><a th:href="@{/user/board/faqList}">FAQ</a></li>
+										<li><a th:href="@{/user/board/qnaList}">Q&A</a></li>
+									</ul></li>
+
+
+
+								<!--상단 메뉴 고치는 중
+								<li class="current-list-main"><a th:href="@{/}">메인</a>
+								<li><a href="#">Pages</a></li>
+								<li><a href="shop.html">Shop</a></li>
+								<li>
+									<div class="header-icons">
+										<a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+										<a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+									</div>
+								</li>
+							-->
+
+
+							</ul>
+						</nav>
+						<a class="mobile-show search-bar-icon" href="#"><i
+							class="fas fa-search"></i></a>
+						<div class="mobile-menu"></div>
+						<!-- menu end -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end header -->
+
+	<!-- search area -->
+	<div class="search-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<span class="close-btn"><i class="fas fa-window-close"></i></span>
+					<div class="search-bar">
+						<div class="search-bar-tablecell">
+							<h3>Search For:</h3>
+							<input type="text" placeholder="Keywords">
+							<button type="submit">
+								Search <i class="fas fa-search"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- end search area -->
+</div>
+
+
+
+
+
+
+</html>
