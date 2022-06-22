@@ -42,7 +42,7 @@
 								</li>
 		                        <li>
 		                        	<div th:if="${session.SLEVEL == 'level_code_01' || session.SLEVEL == 'level_code_00' || session.SLEVEL == 'level_code_02' || session.SLEVEL == 'level_code_03'}">
-                                		<a th:href="@{/admin/main}" style="color: #FAFCFC; font-size: 13.5px;"><strong>관리 페이지</strong></a>
+                                		<a th:href="@{/admin}" style="color: #FAFCFC; font-size: 13.5px;"><strong>관리 페이지</strong></a>
                                 	</div>
                            		</li>
                            		<li><a th:if="${session.SID == null}" th:href="@{/user/login}" style="color: #ADB4B6;"><i class="fa fa-user"></i>로그인</a></li>							

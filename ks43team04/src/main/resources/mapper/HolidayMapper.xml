@@ -31,7 +31,6 @@
 			holiday_code_use
 		FROM 
 			tb_holiday		
-	
 	</select>
 		
 	<select id="yearlyHolidayList" resultMap="holidayResultMap">
