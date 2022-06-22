@@ -3664,7 +3664,6 @@ table {
 	margin-top: 15px;
 	border-top: 1px solid #e8e8e8;
 	padding: 14px 0 20px;
-	line-height: 17px;
 	color: #000;
 }
 
@@ -3683,12 +3682,15 @@ table {
 	word-break: break-all;
 	display: list-item;
 	text-align: -webkit-match-parent;
+	height: 45px;
 	
 }
-
+.radio-inline-list li{
+	display: inline-block;
+	padding: 5px 10px 0px 0px;
+}
 .safe-number {
 	display: inline-block;
-	vertical-align: middle;
 	margin: 0 0 0 22px;
 }
 
