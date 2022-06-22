@@ -3594,7 +3594,7 @@ refs /heads/develop
 }
 
 .payOrder-header {
-	padding: 20px 0;
+	padding: 20px 0 45px 0;
 	width: 100%;
 	zoom: 1;
 }
@@ -3659,7 +3659,7 @@ table {
 	display: block;
 }
 
-.addr-list {
+#addr-list-byDB {
 	padding-top: 7px;
 	margin-top: 15px;
 	border-top: 1px solid #e8e8e8;
@@ -3667,7 +3667,7 @@ table {
 	color: #000;
 }
 
-.addr-list ul {
+#addr-list-byDB ul {
 	list-style: none;
 	display: block;
 	margin-block-start: 1em;
@@ -3677,13 +3677,16 @@ table {
 	padding-inline-start: 40px;
 }
 
-.addr-list li {
-	padding-top: 13px;
+#addr-list-byDB li {
+	padding-top: 9px;
 	word-break: break-all;
 	display: list-item;
 	text-align: -webkit-match-parent;
-	height: 45px;
+	height: 30px;
 	
+}
+.addr-list {
+	display: none;
 }
 .radio-inline-list li{
 	display: inline-block;
@@ -3999,6 +4002,7 @@ table {
 	position: relative;
 	padding: 0;
 	color: #888;
+	
 }
 
 .calc-list strong {
@@ -4007,14 +4011,15 @@ table {
 	letter-spacing: -0.5px;
 }
 
-.calc-list p {
+.calc-list li p {
 	float: right;
 	letter-spacing: -0.5px;
+	margin-left: 80px;
 }
 
 .calc-list p em {
 	font-family: tahoma, geneva, sans-serif;
-	margin-right: 3px;
+	margin-right: 3px;	
 }
 
 .calc-list+.total-list {
@@ -4042,23 +4047,22 @@ table {
 	display: block;
 }
 /* 결제 수단 부트스트랩 css */
-.payment-info .col-3 {
-	width: 172.25px;
-	position: static;
-	margin: 0;
-	float: left;
+.paymethod-list .nav-pills .nav-link.active, .paymethod-list .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #F28123;
+    
 }
 
-.payment-info .col-9 {
-	padding: 0;
-	max-width: 74.3%;
-	float: right;
-}
 
 .payment-info a {
-	padding: 8px 14px;
+	padding: 5px 10px;
+	color: black;
 }
 
+.payment-info a:hover {
+	color: #F28123;
+	text-decoration: none;
+}
 /*결제수단*/
 .ec-base-table table:before {
 	position: absolute;
