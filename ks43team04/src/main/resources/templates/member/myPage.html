@@ -90,16 +90,38 @@
 
 <!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
+	<!-- 게시판 타이틀 -->
+	<div id="container">
+		<div id="top-loca">
+			<div class="boardPath">
+				<a th:href="@{/}">HOME</a>
+				 
+				<h2 style="font-family: 'ONE-Mobile-Regular'">[[${sessionName}]]</h2><span>님의 마이페이지</span>
+			</div>	
+		</div>
+	</div>	
+		
+	<!-- 게시판 탭  -->			
+	<div class="list-group list-group-horizontal col-sm-6" style="margin:0 auto; text-align: center;">
+  		<a th:href="@{/user/myPage}" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">
+  		회원정보
+  		</a>
+		<a th:href="@{/user/board/eventList}" class="list-group-item list-group-item-action">이벤트</a>
+		<a th:href="@{/user/board/faqList}" class="list-group-item list-group-item-action">FAQ</a>
+		<a th:href="@{/user/board/qnaList}" class="list-group-item list-group-item-action">문의사항</a>
+	</div>
+	
+	
+	<!-- 공지사항 테이블 -->
+	<div class="cart-section mt-150 mb-150" style="background-color: #f5f6fa; padding: 60px 0 100px; margin: 0; border-top: #e5e5e5 1px solid;">
+		<div class="container">
+			<div class="row" style="float: none; margin: 100 auto;">
+				<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
 
 		  <div class="container"  style="margin-top: 80px; margin-bottom: 100px;">
 		    <div class="input-form-backgroud row">
 		      <div class="input-form col-md-12 mx-auto" >
-		      	<div class="row" >
-						<div class="col-lg-12 text-center" style="padding: 5%;">
-						<h2 style="font-family: 'ONE-Mobile-Regular'">[[${sessionName}]]</h2><span>님의 마이페이지</span>
-						</div>
-				</div>
-		        <div id="cid_1" class="form-input-wide" data-layout="full" >
+		            <div id="cid_1" class="form-input-wide" data-layout="full" >
 			           <div data-component="separator" style="border-top:1px solid rgb(0,0,0); clear:both;"></div>
 			    </div>
 			    <div>
@@ -324,7 +346,8 @@
 		</div>
 	</div>	
 </div>				
-
+</div>
+</div>
 
 
      </th:block>
