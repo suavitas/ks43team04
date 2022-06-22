@@ -11,8 +11,6 @@ import ks43team04.dto.MuinMachine;
 
 @Mapper
 public interface YeyakMapper {
-
-
 	
 	/*일반 세탁소 페이징처리*/
 	public List<Map<String, Object>> ilbanLaundryList(Map<String, Object> paramMap);
@@ -22,7 +20,5 @@ public interface YeyakMapper {
 	
 	/*무인세탁소 장비 조회*/
 	public List<MuinMachine> muinMachineList();
-	
-
 	
 }
