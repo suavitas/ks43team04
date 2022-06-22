@@ -167,13 +167,5 @@ public class MemberController {
 		
 
 	
-	@GetMapping("/searchMap")
-	public String searchMap() {
-		return "user/searchmap/searchMap";
-	}
 	
-	@GetMapping("/payment")
-	public String payment() {
-		return "user/payment/payment";
-	}
 }
