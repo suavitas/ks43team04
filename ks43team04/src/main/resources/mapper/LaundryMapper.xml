@@ -87,7 +87,8 @@
 	SELECT 
 			tl.laundry_name,
 			th.yearly_holiday_date,  	
-			th.yearly_holiday_name
+			th.yearly_holiday_name,
+			th.holiday_code_use
 		FROM 
 			tb_holiday AS th
 		INNER JOIN
