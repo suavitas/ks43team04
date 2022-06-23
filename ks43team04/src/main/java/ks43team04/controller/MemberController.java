@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks43team04.dto.Member;
@@ -30,7 +31,43 @@ public class MemberController {
 		this.memberService = memberService;
 		this.memberMapper = memberMapper;
 	}
-	
+
+	/**
+	 * 회원가입 아이디 중복체크 
+	 * idCheck ajax
+	 * @RequestParam(value = "memberId") == request.getParameter("memberId")
+	 */
+	@PostMapping("/idCheck")
+	@ResponseBody
+	public boolean isIdCheck(@RequestParam(value = "memberId") String memberId) {
+		
+		boolean idCheck = false;
+		log.info("아이디중복체크 클릭시 요청받은 memberId의 값: {}", memberId);
+		
+		boolean result = memberMapper.isIdCheck(memberId);
+		if(result) idCheck = true;
+		
+		log.info("아이디중복체크 여부 : {}", result);
+		return idCheck;
+	}
+	/**
+	 * 무인점주, 일반점주 회원가입 처리
+	 * @param member
+	 * @param memberId
+	 * @param request
+	 * @return
+	 */
+	@PostMapping("/addMemberLaundry")
+	public String addMemberLaundry(Member member
+							,@RequestParam(name="memberId", required=false) String memberId 
+							,HttpServletRequest request) {
+		log.info("회원가입 화면에서 입력한 data : {}", member);
+		log.info("회원가입 화면에서 입력한 memberId : {}", memberId);
+		
+		memberService.addMember(member);
+		
+		return "redirect:/user/login";	
+	}
 	/**
 	 * 고객, 관리자 회원가입 처리
 	 * @param member
@@ -47,7 +84,7 @@ public class MemberController {
 		
 		memberService.addMember(member);
 		
-		return "redirect:/user/memberList";	
+		return "redirect:/user/login";	
 	}	
 	
 	/**

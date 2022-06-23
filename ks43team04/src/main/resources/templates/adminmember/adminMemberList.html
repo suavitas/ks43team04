@@ -16,30 +16,34 @@
 	<table id="reportList" class="table table-striped table-bordered" style="width: 100%;">
 		<thead>
 			<tr>
-				<th>아이디</th>				
+				<th>아이디</th>
 				<th>비밀번호</th>
 				<th>이름</th>
 				<th>생년월일</th>
+				<th>우편번호</th>
 				<th>주소</th>
-				<th>연락처</th>
+				<th>상세주소</th>
+				<th>전화번호</th>
 				<th>성별</th>
 				<th>이메일</th>
-				<th>등록시간</th>
+				<th>가입일</th>
 				<th>수정</th>
-				<th>삭제</th>					
+				<th>삭제</th>				
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:if="${not #lists.isEmpty(MemberList)}" th:each="l : ${MemberList}">
+			<tr th:if="${not #lists.isEmpty(adminMemberList)}" th:each="l : ${adminMemberList}">
 				<td th:text="${l.memberId}"></td>
 				<td th:text="${l.memberPw}"></td>
 				<td th:text="${l.memberName}"></td>
 				<td th:text="${l.memberBirth}"></td>
+				<td th:text="${l.memberPostNum}"></td>
 				<td th:text="${l.memberAddr}"></td>
+				<td th:text="${l.memberDetailAddr}"></td>
 				<td th:text="${l.memberPhone}"></td>
 				<td th:text="${l.memberGender}"></td>
 				<td th:text="${l.memberEmail}"></td>
-				<td th:text="${l.registTime}"></td>
+				<td th:text="${l.memberRegDate}"></td>
 				<td>			 
 				<a href="#">수정</a>
 				</td>
@@ -47,8 +51,8 @@
 				<a href="#">삭제</a>					
 				</td>
 			</tr>
-			<tr th:unless="${not #lists.isEmpty(MemberList)}">
-				<td colspan="9">조회된 내용이 없습니다.</td>
+			<tr th:unless="${not #lists.isEmpty(adminMemberList)}">
+				<td colspan="13">조회된 내용이 없습니다.</td>
 			</tr>
 		</tbody>
 	</table>
