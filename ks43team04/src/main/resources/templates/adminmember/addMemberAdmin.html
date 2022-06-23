@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/adminDefault}">	  
+	  
+<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+
+<!-- 사용자 정의 JsScript 파일-->
+<th:block layout:fragment="customJsScript">
+	<!-- 주소검색 API -->
+	<script th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}"></script>
+</th:block>
+
+<th:block layout:fragment="customScript">
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+		<script>
+		// 카카오 우편번호 API 
+			function searchAddForm() {
+		        new daum.Postcode({
+		            oncomplete: function(data) {
+		            	
+		            	var addr = '';
+		            	var extraAddr = ''; // 참고항목 변수
+
+		                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+		                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+		                    addr = data.roadAddress;
+		                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+		                    addr = data.jibunAddress;
+		                }
+		                
+		                document.getElementById('memberPostNum').value = data.zonecode;
+		                document.getElementById('memberAddr').value = addr;
+		                // 커서를 상세주소 필드로 이동한다.
+		                document.getElementById('memberDetailAddr').focus();
+		                
+		            }
+		        }).open();
+		    }
+		</script>
+		<script>
+			//아이디 중복 체크 
+			$(function(){
+				
+				function validationCheck(data){
+					if(typeof data == 'undefined' || data == '' || data == null){
+						return false;
+					}
+					return true;
+				}
+				
+				$('#idCheck').click(function(){
+					var memberId = $('input[name="memberId"]').val();
+					console.log(validationCheck(memberId));
+					var vCheck = validationCheck(memberId);
+					if(vCheck){
+					console.log(vCheck)
+						$.ajax({
+							 url: '/user/idCheck'
+							,type: 'POST'
+							,data: {'memberId' : memberId}
+							,dataType: 'json'
+							,success: function(data){
+								// 화면에서 맨처음 아이디를 제외한 모든 입력하는 요소는 비활성화 (HTML 속성 추가 disabled="disabled") 
+								// 아이디 중복이 발생 않은 경우(회원가입 O) 입력하는 요소는 활성화
+								if(data){
+									$('#idCheckResult').text('사용 가능한 아이디 입니다.');
+									$('#addMemberForm input').prop('disabled', false);
+									$('#addMemberForm select').prop('disabled', false);
+									$('#addMemberForm button').prop('disabled', false);
+								}else{									
+									// 아이디 중복이 발생하는 경우(회원가입 X) 입력하는 요소는 비활성화
+									$('#idCheckResult').text('중복된 아이디가 있습니다.');
+									$('#idCheckResult').attr('color','red');
+									$('#addMemberForm input').not('input[name="memberId"]').prop('disabled', true);
+									$('#addMemberForm button').not('#idCheck').prop('disabled', true);
+									$('#addMemberForm select').prop('disabled', true);
+								}
+							}
+						});
+					}
+					
+				});
+				
+				$('#addMemberBtn').click(function(){
+					var isSubmit = true;
+					var inputObj = $('#addMemberForm').find('input');
+					
+					$.each(inputObj, function(){
+						var inputData = $(this).val();
+						var result = validationCheck(inputData);
+						
+						// 사용자가 입력하지 않은 경우
+						if(!result){
+							alert('필수 항목입니다. 입력해주세요');
+							$(this).focus();
+							isSubmit = false;
+							return false;
+						}
+					});		
+					
+					if(isSubmit) $('#addMemberForm').submit();
+				});
+				// 카카오 우편번호 API 
+				function searchAddForm() {
+			        new daum.Postcode({
+			            oncomplete: function(data) {
+			            	
+			            	var addr = '';
+			            	var extraAddr = ''; // 참고항목 변수
+
+			                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+			                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+			                    addr = data.roadAddress;
+			                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+			                    addr = data.jibunAddress;
+			                }
+			                
+			                document.getElementById('memberPostNum').value = data.zonecode;
+			                document.getElementById('memberAddr').value = addr;
+			                // 커서를 상세주소 필드로 이동한다.
+			                document.getElementById('memberDetailAddr').focus();
+			                
+			            }
+			        }).open();
+			    }
+			</script>
+	</th:block>	
+<style>
+     min-height: 100vh;
+
+    .input-form {
+      max-width: 800px;
+
+      margin-top: 300px;
+      margin-bottom: 100px;
+      padding: 32px;
+
+      background: #fff;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+    }
+</style>
+
+
+<div class="container"  style="margin-top: 80px; margin-bottom: 100px;">
+		    <div class="input-form-backgroud row">
+		      <div class="input-form col-md-12 mx-auto">
+		        <h4 class="mb-3" >관리자 등록</h4>
+			      <br>
+				<form id="addMemberAdminForm" th:action="@{/admin/addMemberAdmin}" method="post" class="validation-form" novalidate>
+				
+					<div class="mb-3"  style="margin: 20px auto;  width: 35%;">
+						<label for="id"><strong>아이디</strong></label> 
+						<div style="display: flex; margin: 0 auto;">
+							<input type="text" class="form-control" id="memberId" name="memberId" />	
+							<input type="button" class="btn btn-success" id="idCheck" name="idCheck" style="width: 20%;" value="중복검사"/>
+						</div>
+							<div>
+								<span id="idCheckResult"></span> 
+							</div>
+					</div>					
+
+					<div class="mb-3" style="margin: 20px auto; width: 35%;">
+						<label for="password"><strong>비밀번호</strong></label> 
+						<input type="text" class="form-control" id="memberPw" name="memberPw"/> 
+					</div>
+
+					<div class="mb-3" style="margin: 20px auto; width: 35%;">
+						<label for="email"><strong>이름</strong></label>
+						<input type="email" class="form-control" id="memberName"  name="memberName"/>
+					</div>
+
+					<div class="mb-3" style="margin: 20px auto; width: 35%;">
+						<label for="birth"><strong>생년월일</strong></label> 
+						<input type="date" class="form-control" id="memberBirth" name="memberBirth"/>
+					</div>
+
+					<div class="mb-3"  style="margin: 20px auto;  width: 35%;">
+						<label for="email"><strong>주소</strong></label> 
+						<div style="display: flex;">
+							<input type="text" class="form-control" name="memberPostNum" id="memberPostNum" placeholder="우편번호"/>
+							<input type="button" class="btn btn-success" id="memberPostNum" name="memberPostNum" style="width: 20%;" onclick="searchAddForm()" value="우편찾기"/>			
+						</div>
+					</div>	
+					<div class="mb-3" style="margin: 20px auto; width: 35%;">		
+							<input type="text" class="form-control" name="memberAddr" id="memberAddr" placeholder="주소" />
+					</div>
+					<div class="mb-3" style="margin: 20px auto; width: 35%;">		
+							<input type="text" class="form-control" name="memberDetailAddr" id="memberDetailAddr" placeholder="상세주소"/>
+					</div>
+
+					<div class="mb-3" style="margin: 20px auto; width: 35%;">
+						<label for="address"><strong>전화번호</strong></label> 
+						<input type="text" class="form-control" id="memberPhone" name="memberPhone" placeholder="전화번호 입력" />
+					</div>
+					
+					<div class="mb-3" style="margin: 20px auto; width: 35%;">
+						<label for="email"><strong>성별 선택</strong></label> 
+						<input type='checkbox' name='memberGender' value="여" style="margin: 20px;"/><strong>여성</strong>
+  						<input type='checkbox' name='memberGender' value="남" style="margin: 20px;"/><strong>남성</strong>
+					</div>
+
+					<div class="mb-3" style="margin: 20px auto; width: 35%;">
+						<label for="eamil"><strong>이메일</strong></label> 
+						<input type="text"class="form-control" id="memberEmail" name="memberEmail" placeholder="이메일 입력"/>
+					</div>
+					<div class="custom-control custom-checkbox" style="text-align: center; margin: 35px;">
+						<div class="mb-5" style="padding: 50px;">				
+							<a th:href="@{/admin}"><input type="button" class="btnContactSubmit" value="취소" style="width: 10%;"/></a>
+							<input type="submit" class="btnContactSubmit" id="addMemberBtn" value="회원가입" style="width: 10%;"/>
+							<!-- <a th:href="@{/user/index}"><input type="button" id="addMemberLaundryBtn" value="회원가입" style="width: 15%;"/></ -->
+						</div>
+					</div>
+				</form>
+				</div>
+			</div>				
+		</div>
+   </th:block>
+</html>
+  
