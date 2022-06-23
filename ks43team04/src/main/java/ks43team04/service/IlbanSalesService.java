@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ks43team04.dto.Bill;
 import ks43team04.mapper.IlbanSalesMapper;
 
 @Service
@@ -19,6 +20,23 @@ public class IlbanSalesService {
 		this.ilbanSalesMapper = ilbanSalesMapper;
 	}
 	
+	public boolean removeIlbanSalesLookUpList(String billCode) {	
+	
+		boolean billCheck = false;
+		
+		Bill bill = ilbanSalesMapper.getBillInfoByCode(billCode);
+		if(bill != null) {
+			String billCodeCheck = bill.getBillCode();
+			if(billCode.equals(billCodeCheck)) {
+				billCheck = true;
+				ilbanSalesMapper.removeIlbanSalesLookUpList(billCode);
+			}
+		}
+		
+		return billCheck;
+	}
+	
+	/*리스트 페이징처리*/
 	public Map<String, Object> getIlbanSalesLookUp(int currentPage){
 		//페이지 내 몇개를 보여줄까? (5) 행 노출
 		   int rowPerPage = 10; 
