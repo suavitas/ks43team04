@@ -31,6 +31,26 @@ public class MemberController {
 		this.memberService = memberService;
 		this.memberMapper = memberMapper;
 	}
+	
+	/**
+	 * 고객 마이페이지 > 포인트 조회
+	 */
+	@GetMapping("/myPageWrite")
+	public String myPageWrite() {
+		
+		return "/member/myPageWrite";
+	}
+		
+	
+	/**
+	 * 고객 마이페이지 > 포인트 조회
+	 */
+	@GetMapping("/myPagePoint")
+	public String myPagePoint() {
+		
+		return "/member/myPagePoint";
+	}
+	
 
 	/**
 	 * 회원가입 아이디 중복체크 

@@ -101,13 +101,17 @@
    </div>   
       
    <!-- 게시판 탭  -->         
-   <div class="list-group list-group-horizontal col-sm-6" style="margin:0 auto; text-align: center;">
+   <div class="list-group list-group-horizontal col-sm-12" style="margin:0 auto; text-align: center;padding-right: 0px;">
         <a th:href="@{/user/myPage}" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">
         회원정보
         </a>
-      <a th:href="@{/user/board/eventList}" class="list-group-item list-group-item-action">이벤트</a>
-      <a th:href="@{/user/board/faqList}" class="list-group-item list-group-item-action">FAQ</a>
-      <a th:href="@{/user/board/qnaList}" class="list-group-item list-group-item-action">문의사항</a>
+      <a href="#" class="list-group-item list-group-item-action">예약 현황</a>
+      <a href="#" class="list-group-item list-group-item-action">수거배송 조회</a>
+      <a href="#" class="list-group-item list-group-item-action">결제 내역</a>
+      <a href="#" class="list-group-item list-group-item-action">환불 내역</a>
+      <a th:href="@{/user/myPagePoint}" class="list-group-item list-group-item-action">포인트 조회</a>
+      <a th:href="@{/user/myPageWrite}" class="list-group-item list-group-item-action">내가 쓴 글</a>
+      <a href="#" class="list-group-item list-group-item-action">리뷰?</a>
    </div>
    
    
