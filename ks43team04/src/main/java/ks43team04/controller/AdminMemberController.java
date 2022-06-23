@@ -21,65 +21,58 @@ import ks43team04.service.AdminMemberService;
 public class AdminMemberController {
 
 	private static final Logger log = LoggerFactory.getLogger(AdminMemberController.class);
-	
+
 	private final AdminMemberService adminMemberService;
 	private final AdminMemberMapper adminMemberMapper;
-	
-	public AdminMemberController(AdminMemberService adminMemberService,  AdminMemberMapper adminMemberMapper) {
+
+	public AdminMemberController(AdminMemberService adminMemberService, AdminMemberMapper adminMemberMapper) {
 		this.adminMemberService = adminMemberService;
 		this.adminMemberMapper = adminMemberMapper;
 	}
-	
-	//어드민페이지 아이디 중복체크 여부
+
+	// 어드민페이지 아이디 중복체크 여부
 	@PostMapping("/idCheck")
 	@ResponseBody
 	public boolean isIdCheck(@RequestParam(value = "memberId") String memberId) {
 		boolean idCheck = false;
 		log.info("아이디중복체크 클릭시 요청받은 memberId의 값: {}", memberId);
-		
+
 		boolean result = adminMemberMapper.isIdCheck(memberId);
-		if(result) idCheck = true;
-		
+		if (result)
+			idCheck = true;
+
 		log.info("아이디중복체크 여부 : {}", result);
 		return idCheck;
 	}
-	//어드민페이지 관리자 회원가입(등록) 처리
+
+	// 어드민페이지 관리자 회원가입(등록) 처리
 	@PostMapping("/addMemberAdmin")
-	public String addMemberAdmin(Member member) {	
-		log.info("회원가입폼 시작");		
-		adminMemberService.addMemberAdmin(member);	
+	public String addMemberAdmin(Member member) {
+		log.info("회원가입폼 시작");
+		adminMemberService.addMemberAdmin(member);
 		log.info("회원가입폼에서 입력받은 데이터:{}", member);
-		
+
 		return "redirect:/admin";
-	}	
-	//어드민페이지 관리자 회원가입(등록)
+	}
+
+	// 어드민페이지 관리자 회원가입(등록)
 	@GetMapping("/addMemberAdmin")
-	public String addMemberAdmin(Model model) {	
+	public String addMemberAdmin(Model model) {
 		model.addAttribute("title", "관리자페이지 관리자 등록");
 		model.addAttribute("titleName", "관리자 등록");
-		
+
 		return "adminmember/addMemberAdmin";
 	}
-	//어드민페이지 전체회원 조회
+
+	// 어드민페이지 전체회원 조회
 	@GetMapping("/adminMemberList")
 	public String getAdminMemberList(Model model) {
-		
+
 		List<Member> adminMemberList = adminMemberService.getAdminMemberList();
 		log.info("회원전체 목록: {}", adminMemberList);
 		model.addAttribute("adminMemberList", adminMemberList);
-		
+
 		return "adminmember/adminMemberList";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

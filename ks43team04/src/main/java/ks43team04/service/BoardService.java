@@ -12,34 +12,30 @@ import ks43team04.mapper.BoardMapper;
 @Transactional
 
 public class BoardService {
-	
-	
+
 	private final BoardMapper boardMapper;
-	
+
 	public BoardService(BoardMapper boardMapper) {
 		this.boardMapper = boardMapper;
 	}
-	
-	
-	
-	
+
 	/**
 	 * 공지사항 입력
+	 * 
 	 * @param board
 	 * @return
 	 */
 	public int noticeWrite(Board board, String sessionId) {
-		
+
 		board.setMemeberId(sessionId);
-		
+
 		int result = boardMapper.noticeWrite(board);
 		return result;
 	}
-	
-	
-	
+
 	/**
 	 * 분류별 게시물 내용 조회
+	 * 
 	 * @param boardMenuCode
 	 * @return Board
 	 */
@@ -47,38 +43,35 @@ public class BoardService {
 		Board board = boardMapper.getBoardDetailByCode(boardMenuCode, boardParentNo);
 		return board;
 	}
-	
-	/*문의사항(서비스 불만족) 목록 조회*/
-	public List<Board> getQnaComplainList(){
+
+	/* 문의사항(서비스 불만족) 목록 조회 */
+	public List<Board> getQnaComplainList() {
 		List<Board> qnaComplainList = boardMapper.getQnaComplainList();
 		return qnaComplainList;
 	}
-	
-	/*문의사항(결제 포인트) 목록 조회*/
-	public List<Board> getQnaPayList(){
+
+	/* 문의사항(결제 포인트) 목록 조회 */
+	public List<Board> getQnaPayList() {
 		List<Board> qnaPayList = boardMapper.getQnaPayList();
 		return qnaPayList;
 	}
-	
-	/*문의사항(수거 배송) 목록 조회*/
+
+	/* 문의사항(수거 배송) 목록 조회 */
 	public List<Board> getQnaPickupList() {
 		List<Board> qnaPickupList = boardMapper.getQnaPickupList();
 		return qnaPickupList;
 	}
-	
-	
-	/*문의사항(서비스 이용) 목록 조회*/
-	public List<Board> getQnaServiceList(){
+
+	/* 문의사항(서비스 이용) 목록 조회 */
+	public List<Board> getQnaServiceList() {
 		List<Board> qnaServiceList = boardMapper.getQnaServiceList();
 		return qnaServiceList;
 	}
-	
-	/*공지사항 목록 조회*/
-	public List<Board> getNoticeList(){
+
+	/* 공지사항 목록 조회 */
+	public List<Board> getNoticeList() {
 		List<Board> noticeList = boardMapper.getNoticeList();
 		return noticeList;
 	}
 
-	
 }
-

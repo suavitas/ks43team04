@@ -24,36 +24,34 @@ public class HolidayController {
 		this.holidayService = holidayService;
 		this.laundryService = laundryService;
 	}
-	
+
 	/* 세탁소별 휴일 */
 	@GetMapping("/lundryHoliday")
-	public String LaundryList(@RequestParam(name="searchKey", defaultValue = "1") String searchKey
-							 ,@RequestParam(name="searchValue",  required=false) String searchValue
-							 ,Model model) {
-		
-		if("laundryName".equals(searchKey)) {
+	public String LaundryList(@RequestParam(name = "searchKey", defaultValue = "1") String searchKey,
+			@RequestParam(name = "searchValue", required = false) String searchValue, Model model) {
+
+		if ("laundryName".equals(searchKey)) {
 			searchKey = "laundry_name";
-		}else {
+		} else {
 			searchKey = "laundry_addr";
 		}
-		
-		List<LaundryList>getLaundryList = laundryService.LaundryList(searchKey, searchValue);
-		if(getLaundryList != null)model.addAttribute("getLaundryList",getLaundryList);
-		
+
+		List<LaundryList> getLaundryList = laundryService.LaundryList(searchKey, searchValue);
+		if (getLaundryList != null)
+			model.addAttribute("getLaundryList", getLaundryList);
+
 		System.out.println(getLaundryList);
-		
+
 		return "admin/lundryHoliday";
 	}
-	
 
 	/* 공휴일 목록 */
 	@GetMapping("/holiday")
 	public String holiday(Model model) {
 		List<YearlyHoliday> YearlyHolidayList = holidayService.yearlyHolidayList();
-		
+
 		model.addAttribute("YearlyHolidayList", YearlyHolidayList);
 		return "admin/holiday";
 	}
 
-	
 }

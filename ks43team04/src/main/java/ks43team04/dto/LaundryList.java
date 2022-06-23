@@ -3,8 +3,8 @@ package ks43team04.dto;
 
 import java.util.List;
 
-public class LaundryList { 
-	
+public class LaundryList {
+
 	private String laundryCode;
 	private String memberId;
 	private String levelCode;
@@ -20,7 +20,7 @@ public class LaundryList {
 	private String businessNumber;
 	private String adminLevelCode;
 	private String registTime;
-	
+
 	private List<HolidayList> holidayList;
 
 	public String getLaundryCode() {
@@ -189,6 +189,5 @@ public class LaundryList {
 		builder.append("]");
 		return builder.toString();
 	}
-
 
 }

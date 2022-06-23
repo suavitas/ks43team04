@@ -9,24 +9,25 @@ import ks43team04.mapper.DeliveryMapper;
 
 @Service
 public class DeliveryService {
-	
+
 	private final DeliveryMapper deliveryMapper;
-	
-	public DeliveryService(DeliveryMapper deliveryMapper) {	
-		this.deliveryMapper = deliveryMapper;		
+
+	public DeliveryService(DeliveryMapper deliveryMapper) {
+		this.deliveryMapper = deliveryMapper;
 	}
-	
-	public List<Delivery> getDeliveryList(){	
-			
-			List<Delivery> getDeliveryList = deliveryMapper.getDeliveryList();
-			
-			return getDeliveryList;
-		}
-	public List<Delivery> getDeliveryList(String sessionId){	
-		
-		List<Delivery> getDeliveryList = deliveryMapper.getDeliveryList(sessionId);
-		
+
+	public List<Delivery> getDeliveryList() {
+
+		List<Delivery> getDeliveryList = deliveryMapper.getDeliveryList();
+
 		return getDeliveryList;
 	}
-	
+
+	public List<Delivery> getDeliveryList(String sessionId) {
+
+		List<Delivery> getDeliveryList = deliveryMapper.getDeliveryList(sessionId);
+
+		return getDeliveryList;
+	}
+
 }

@@ -11,24 +11,25 @@ import ks43team04.mapper.PickUpMapper;
 
 @Service
 public class PickUpService {
-	
+
 	private final PickUpMapper pickUpMapper;
-	
-	public PickUpService(PickUpMapper pickUpMapper) {	
-		this.pickUpMapper = pickUpMapper;		
+
+	public PickUpService(PickUpMapper pickUpMapper) {
+		this.pickUpMapper = pickUpMapper;
 	}
-	
-	public List<PickUp> getPickUpList(){	
-			
-			List<PickUp> getPickUpList = pickUpMapper.getPickUpList();
-			
-			return getPickUpList;
-		}
-	public List<PickUp> getPickUpList(String sessionId){	
-		
-		List<PickUp> getPickUpList = pickUpMapper.getPickUpList(sessionId);
-		
+
+	public List<PickUp> getPickUpList() {
+
+		List<PickUp> getPickUpList = pickUpMapper.getPickUpList();
+
 		return getPickUpList;
 	}
-	
+
+	public List<PickUp> getPickUpList(String sessionId) {
+
+		List<PickUp> getPickUpList = pickUpMapper.getPickUpList(sessionId);
+
+		return getPickUpList;
+	}
+
 }
