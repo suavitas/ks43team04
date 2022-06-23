@@ -12,23 +12,21 @@ import ks43team04.mapper.LaundryMapper;
 public class LaundryService {
 
 	private final LaundryMapper laundryMapper;
-	
-	public LaundryService(LaundryMapper laundryMapper) {	
-		this.laundryMapper = laundryMapper;		
+
+	public LaundryService(LaundryMapper laundryMapper) {
+		this.laundryMapper = laundryMapper;
 	}
-	
-	 public List<LaundryList> LaundryList(String searchKey, String searchValue){
-			List<LaundryList> getLaundryList = laundryMapper.LaundryList(searchKey, searchValue);
-			return getLaundryList;
-	 }
-	 
-		
-	public List<MuinMachienSpec> machineSpecList(){
-			
+
+	public List<LaundryList> LaundryList(String searchKey, String searchValue) {
+		List<LaundryList> getLaundryList = laundryMapper.LaundryList(searchKey, searchValue);
+		return getLaundryList;
+	}
+
+	public List<MuinMachienSpec> machineSpecList() {
+
 		List<MuinMachienSpec> MachineSpecList = laundryMapper.machineSpecList();
-			
+
 		return MachineSpecList;
 	}
-	
-	
+
 }

@@ -9,10 +9,10 @@ import ks43team04.dto.PickUp;
 
 @Mapper
 public interface DeliveryMapper {
-	
-	//공지사항 목록 조회
+
+	// 공지사항 목록 조회
 	public List<Delivery> getDeliveryList();
-	
+
 	public List<Delivery> getDeliveryList(String sessionId);
-	
+
 }

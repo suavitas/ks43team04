@@ -7,32 +7,32 @@
               <div class="menu_section">
                 <h3>관리자 페이지</h3>
                 <ul class="nav side-menu">
-                  <li><a th:href="@{/admin}"><span>관리자 홈 </span></a> 
-                  <li><a><i class="fa fa-edit"></i> 회원 <span class="fa fa-chevron-down"></span></a>
+                  <li><a th:href="@{/admin}"><span>!관리자 홈(정승현) </span></a> 
+                  <li><a><i class="fa fa-edit"></i> !회원(홍휘연) <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a th:href="@{/admin/addMemberAdmin}">관리자 등록</a></li> 
-                      <li><a th:href="@{/admin/adminMemberList}">전체 회원목록</a></li>                    
-                      <li><a th:href="@{/admin/adminLoginHistory}">회원 로그인 이력</a></li>
+                      <li><a th:href="@{/admin/addMemberAdmin}">관리자 등록(홍휘연)</a></li> 
+                      <li><a th:href="@{/admin/adminMemberList}">전체 회원목록(홍휘연)</a></li>                    
+                      <li><a th:href="@{/admin/adminLoginHistory}">#회원 로그인 이력</a></li>
                     </ul>
                   </li>
-                     <li><a><i class="fa fa-table"></i> 휴무일 <span class="fa fa-chevron-down"></span></a>
+                     <li><a><i class="fa fa-table"></i> !휴무일<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a th:href="@{/admin/holiday}">전체 공휴일</a></li>
-                      <li><a th:href="@{/admin/lundryHoliday}">세탁소별 휴일</a></li>
+                      <li><a th:href="@{/admin/holiday}">!전체 공휴일(정승현)</a></li>
+                      <li><a th:href="@{/admin/lundryHoliday}">!세탁소별 휴일(이용민)</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-bar-chart-o"></i> 회계 <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-bar-chart-o"></i> !회계 <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a th:href="@{/admin/income}">전체 매장 월별 매출</a></li>
-                      <li><a th:href="@{/admin/retrun}">전체 매장 월별 환불 횟수</a></li>
-                      <li><a th:href="@{/admin/memberPoint}">전체 회원 포인트 사용 내역</a></li>
-                      <li><a th:href="@{/admin/pickUp}">전체 수거 및 배송 현황</a></li>
+                      <li><a th:href="@{/admin/income}">#전체 매장 월별 매출</a></li>
+                      <li><a th:href="@{/admin/retrun}">#전체 매장 월별 환불 횟수</a></li>
+                      <li><a th:href="@{/admin/memberPoint}">#전체 회원 포인트 사용 내역</a></li>
+                      <li><a th:href="@{/admin/pickUp}">전체 수거 및 배송 현황(이용민)</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-clone"></i>장비<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a th:href="@{/admin/machine}">매장별 장비 현황</a></li>
-                      <li><a th:href="@{/admin/machineState}">매장별 장비 스팩 </a></li>                     
+                      <li><a th:href="@{/admin/machine}">#매장별 장비 현황</a></li>
+                      <li><a th:href="@{/admin/machineState}">!매장별 장비 스팩(이용민) </a></li>                     
                     </ul>
                   </li>
                 </ul>
@@ -42,10 +42,10 @@
 					<ul class="nav side-menu">
 						<li><a><i class="fa fa-desktop"></i>매장 관리<span class="fa fa-chevron-down"></span></a>
 		                    <ul class="nav child_menu">
-		                      <li><a th:href="@{/admin/lundryIncome}">월별 매출액</a></li>
-		                      <li><a th:href="@{/admin/lundryReturn}">월별 환불 요청</a></li>
-		                      <li><a th:href="@{/admin/lundryMachine}">장비현황</a></li>
-		                      <li><a th:href="@{/admin/ilbanSales}">일반세탁소 매출</a></li>
+		                      <li><a th:href="@{/admin/lundryIncome}">#월별 매출액</a></li>
+		                      <li><a th:href="@{/admin/lundryReturn}">#월별 환불 요청</a></li>
+		                      <li><a th:href="@{/admin/lundryMachine}">#장비현황</a></li>
+		                      <li><a th:href="@{/admin/ilbanSales}">!일반세탁소 매출(최우영)</a></li>
 
 		                    </ul>                  
 						</li>
@@ -54,7 +54,7 @@
               <div class="menu_section">
                 <h3>고객 관리</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-bug"></i>회원<span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-bug"></i>#회원<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a th:href="@{/admin/lundryUser}">회원 목록</a></li>
                       <li><a th:href="@{/admin/lundryUserPoint}">회원별 포인트 </a></li>

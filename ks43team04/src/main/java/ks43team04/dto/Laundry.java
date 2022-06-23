@@ -18,107 +18,137 @@ public class Laundry {
 	private String businessNumber;
 	private String adminLevelCode;
 	private String registTime;
-		
+
 	private List<IlbanGprice> ilbanGoodsPrice;
-		
+
 	public List<IlbanGprice> getIlbanGoodsPrice() {
 		return ilbanGoodsPrice;
 	}
-	
+
 	public void setIlbanGoodsPrice(List<IlbanGprice> ilbanGoodsPrice) {
 		this.ilbanGoodsPrice = ilbanGoodsPrice;
 	}
-	
+
 	public String getLaundryCode() {
 		return laundryCode;
 	}
+
 	public void setLaundryCode(String laundryCode) {
 		this.laundryCode = laundryCode;
 	}
+
 	public String getMemberId() {
 		return memberId;
 	}
+
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
+
 	public String getLevelCode() {
 		return levelCode;
 	}
+
 	public void setLevelCode(String levelCode) {
 		this.levelCode = levelCode;
 	}
+
 	public String getLaundryName() {
 		return laundryName;
 	}
+
 	public void setLaundryName(String laundryName) {
 		this.laundryName = laundryName;
 	}
+
 	public String getLaundryState() {
 		return laundryState;
 	}
+
 	public void setLaundryState(String laundryState) {
 		this.laundryState = laundryState;
 	}
+
 	public String getLaundryPostNum() {
 		return laundryPostNum;
 	}
+
 	public void setLaundryPostNum(String laundryPostNum) {
 		this.laundryPostNum = laundryPostNum;
 	}
+
 	public String getLaundryAddr() {
 		return laundryAddr;
 	}
+
 	public void setLaundryAddr(String laundryAddr) {
 		this.laundryAddr = laundryAddr;
 	}
+
 	public String getLaundryDetailAddr() {
 		return laundryDetailAddr;
 	}
+
 	public void setLaundryDetailAddr(String laundryDetailAddr) {
 		this.laundryDetailAddr = laundryDetailAddr;
 	}
+
 	public String getLaundryTel() {
 		return laundryTel;
 	}
+
 	public void setLaundryTel(String laundryTel) {
 		this.laundryTel = laundryTel;
 	}
+
 	public String getLaundryLicenseImg() {
 		return laundryLicenseImg;
 	}
+
 	public void setLaundryLicenseImg(String laundryLicenseImg) {
 		this.laundryLicenseImg = laundryLicenseImg;
 	}
+
 	public String getLaundryImg() {
 		return laundryImg;
 	}
+
 	public void setLaundryImg(String laundryImg) {
 		this.laundryImg = laundryImg;
 	}
+
 	public String getSkillLicence() {
 		return skillLicence;
 	}
+
 	public void setSkillLicence(String skillLicence) {
 		this.skillLicence = skillLicence;
 	}
+
 	public String getBusinessNumber() {
 		return businessNumber;
 	}
+
 	public void setBusinessNumber(String businessNumber) {
 		this.businessNumber = businessNumber;
 	}
+
 	public String getAdminLevelCode() {
 		return adminLevelCode;
 	}
+
 	public void setAdminLevelCode(String adminLevelCode) {
 		this.adminLevelCode = adminLevelCode;
 	}
+
 	public String getRegistTime() {
 		return registTime;
 	}
+
 	public void setRegistTime(String registTime) {
 		this.registTime = registTime;
 	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -157,5 +187,5 @@ public class Laundry {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }

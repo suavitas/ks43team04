@@ -8,9 +8,9 @@ import ks43team04.dto.PickUp;
 
 @Mapper
 public interface PickUpMapper {
-	
-	//공지사항 목록 조회
+
+	// 공지사항 목록 조회
 	public List<PickUp> getPickUpList();
-	
+
 	public List<PickUp> getPickUpList(String sessionId);
 }

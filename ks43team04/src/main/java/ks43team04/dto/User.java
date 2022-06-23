@@ -6,37 +6,47 @@ public class User {
 	private String userLevelChangeCode;
 	private String pointUpdate;
 	private String adminLevelCode;
-	
+
 	public String getUserCode() {
 		return userCode;
 	}
+
 	public void setUserCode(String userCode) {
 		this.userCode = userCode;
 	}
+
 	public String getmId() {
 		return mId;
 	}
+
 	public void setmId(String mId) {
 		this.mId = mId;
 	}
+
 	public String getUserLevelChangeCode() {
 		return userLevelChangeCode;
 	}
+
 	public void setUserLevelChangeCode(String userLevelChangeCode) {
 		this.userLevelChangeCode = userLevelChangeCode;
 	}
+
 	public String getPointUpdate() {
 		return pointUpdate;
 	}
+
 	public void setPointUpdate(String pointUpdate) {
 		this.pointUpdate = pointUpdate;
 	}
+
 	public String getAdminLevelCode() {
 		return adminLevelCode;
 	}
+
 	public void setAdminLevelCode(String adminLevelCode) {
 		this.adminLevelCode = adminLevelCode;
 	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -54,5 +64,4 @@ public class User {
 		return builder.toString();
 	}
 
-	
 }
