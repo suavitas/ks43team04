@@ -130,7 +130,7 @@
 			ip.laundry_code=l.laundry_code
 	 	<trim prefix="WHERE" prefixOverrides="AND |OR ">
 			<if test="searchValue != null and searchValue != ''"> 
-				m.m_name = #{sessionId}; 
+				m.m_id = #{sessionId}; 
 			</if>
 		</trim>		
 	</select>
