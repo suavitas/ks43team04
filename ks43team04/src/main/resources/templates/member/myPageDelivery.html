@@ -37,7 +37,41 @@
 					
 					<!-- 포인트 조회 -->
 					<div class="cart-table-wrap">
-						개인별 배송조회 넣을 거에요
+						<th:block>
+					 	<table id="reportList" class="table table-striped table-bordered" style="width: 100%;">
+							<thead>
+								<tr>
+									<th>세탁소 이름</th>				
+									<th>고객 이름</th>
+									<th>수거 희망일</th>
+									<th>수거 완료일</th>			
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${not #lists.isEmpty(getPickUpList)}" th:each="l : ${getPickUpList}">
+									<th:block  th:if="${not #lists.isEmpty(l.laundryList)}" th:each="sl : ${l.laundryList}">
+										<td  th:text="${sl.laundryName}"></td>
+									</th:block>
+									
+									<th:block  th:if="${not #lists.isEmpty(l.memberList)}" th:each="ssl : ${l.memberList}">
+										<td  th:text="${ssl.memberName}"></td>
+									</th:block>
+									<td th:text="${l.pickupWantDate}"></td>
+									<th:block  th:if="${not #lists.isEmpty(l.pickupFinishTime)}">
+										<td th:text="${l.pickupFinishTime}"></td>
+									</th:block>
+									<th:block  th:unless="${not #lists.isEmpty(l.pickupFinishTime)}">
+										<td style="color:red">수거 미완료</td>
+									</th:block>
+
+								</tr>
+								<tr th:unless="${not #lists.isEmpty(getPickUpList)}">
+									<td colspan="9">조회된 내용이 없습니다.</td>
+								</tr>
+							</tbody>
+						</table>
+					</th:block>
+						
 					</div>
 				</div>
 			</div>

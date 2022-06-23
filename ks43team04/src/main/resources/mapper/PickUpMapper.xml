@@ -108,26 +108,31 @@
 
 	
 
-	<select id="getPickUpList" resultMap="pickUpResultMap">
+	<select id="getPickUpList" parameterType="String" resultMap="pickUpResultMap">
 	  	SELECT
-			l.laundry_name
+			l.laundry_name 
 			,m.m_name
 			,ip.pickup_want_date
 			,ip.pickup_finish_time
 		FROM
 			tb_ilban_pickup AS ip
-			INNER JOIN
+		INNER JOIN
 			tb_user AS u
 			on
 			u.user_code = ip.user_code
-			INNER JOIN
+		INNER JOIN
 			tb_member AS m
 			on
 			u.m_id = m.m_id
-			INNER JOIN
+		INNER JOIN
 			tb_laundry AS l
 			ON 
-			ip.laundry_code=l.laundry_code;
+			ip.laundry_code=l.laundry_code
+	 	<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="searchValue != null and searchValue != ''"> 
+				m.m_name = #{sessionId}; 
+			</if>
+		</trim>		
 	</select>
 
 
