@@ -32,11 +32,6 @@ public class AdminController {
 		return "admin/machineState";
 	}
 
-	// 전 매장 월별 수입
-	@GetMapping("/income")
-	public String income() {
-		return "admin/income";
-	}
 
 	// 전 매장 월별 환불퍼센트
 	@GetMapping("/retrun")
