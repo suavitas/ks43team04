@@ -9,18 +9,18 @@ import ks43team04.mapper.HolidayMapper;
 
 @Service
 public class HolidayService {
-	
+
 	private final HolidayMapper holidayMapper;
-	
-	public HolidayService(HolidayMapper holidayMapper) {	
-		this.holidayMapper = holidayMapper;		
+
+	public HolidayService(HolidayMapper holidayMapper) {
+		this.holidayMapper = holidayMapper;
 	}
-	
-	public List<YearlyHoliday> yearlyHolidayList(){
-			
-			List<YearlyHoliday> yearlyHolidayList = holidayMapper.yearlyHolidayList();
-			
-			return yearlyHolidayList;
-		}
-	
+
+	public List<YearlyHoliday> yearlyHolidayList() {
+
+		List<YearlyHoliday> yearlyHolidayList = holidayMapper.yearlyHolidayList();
+
+		return yearlyHolidayList;
+	}
+
 }

@@ -14,7 +14,7 @@
 <th:block layout:fragment="customScript">
 <script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
 		<script>
-			// 카카오 우편번호 API 
+		// 카카오 우편번호 API 
 			function searchAddForm() {
 		        new daum.Postcode({
 		            oncomplete: function(data) {
@@ -53,7 +53,7 @@
 	                    addr = data.jibunAddress;
 	                }
 	                
-	                document.getElementById('LundryPostNum').value = data.zonecode;
+	                document.getElementById('lundryPostNum').value = data.zonecode;
 	                document.getElementById('lundryAddr').value = addr;
 	                // 커서를 상세주소 필드로 이동한다.
 	                document.getElementById('lundryDetailAddr').focus();
@@ -170,7 +170,7 @@
 					<div class="mb-3"  style="margin: 20px auto;">
 						<label for="id"><strong>아이디</strong></label> 
 						<div style="display: flex;">
-							<input type="text" class="form-control" id="memberId" style="width: 85%;">	
+							<input type="text" class="form-control" id="memberId" style="width: 85%;"/>	
 							<button type="button" class="btn btn-success" id="idCheck" style="width: 15%;">중복체크</button>
 						</div>
 							<div>
@@ -180,47 +180,47 @@
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="password"><strong>비밀번호</strong></label> 
-						<input type="text" class="form-control" id="memberPw">
+						<input type="text" class="form-control" id="memberPw" name="memberPw"/>
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="email"><strong>이름</strong></label>
-						<input type="email" class="form-control" id="memberName">
+						<input type="email" class="form-control" id="memberName" name="memberName"/>
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="birth"><strong>생년월일</strong></label> 
-						<input type="date" class="form-control" id="memberBirth">
+						<input type="date" class="form-control" id="memberBirth" name="memberBirth"/>
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="email"><strong>주소</strong></label> 
 						<div style="display: flex;">
-							<input type="text" class="form-control" name="memberPostNum" id="memberPostNum" placeholder="우편번호" style="width: 85%;">
-							<button type="button" class="btn btn-success" id="postNum" style="width: 15%;" onclick="searchAddForm()">우편찾기</button>				
+							<input type="text" class="form-control" name="memberPostNum" id="memberPostNum" placeholder="우편번호" style="width: 85%;"/>
+							<button type="button" class="btn btn-success" id="memberPostNum" style="width: 15%;" onclick="searchAddForm()">우편찾기</button>				
 						</div>
 					</div>	
 					<div class="mb-3" style="margin: 20px auto;">			
-							<input type="text" class="form-control" name="memberAddr" id="memberAddr" placeholder="주소" style="width: 85%;">
+							<input type="text" class="form-control" name="memberAddr" id="memberAddr" placeholder="주소" style="width: 85%;"/>
 					</div>
 					<div class="mb-3" style="margin: 20px auto;">			
-							<input type="text" class="form-control" name="memberDetailAddr" id="memberDetailAddr" placeholder="상세주소" style="width: 85%;">
+							<input type="text" class="form-control" name="memberDetailAddr" id="memberDetailAddr" placeholder="상세주소" style="width: 85%;"/>
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="phone"><strong>전화번호</strong></label> 
-						<input type="text" class="form-control" id="memberPhone" placeholder="전화번호 입력" style="width: 85%;">
+						<input type="text" class="form-control" id="memberPhone" name="memberPhone" placeholder="전화번호 입력" style="width: 85%;"/>
 					</div>
 					
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="gen"><strong>성별 선택</strong></label> 
-						<input type="checkbox" name="memberGender" value="female" style="margin: 20px;"/><strong>여성</strong>
-  						<input type="checkbox" name="memberGender" value="male" style="margin: 20px;"/><strong>남성</strong>
+						<input type="checkbox" name="memberGender" value="여" style="margin: 20px;"/><strong>여성</strong>
+  						<input type="checkbox" name="memberGender" value="남" style="margin: 20px;"/><strong>남성</strong>
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto; padding-bottom: 5% ">
 						<label for="email"><strong>이메일</strong></label> 
-						<input type="text" class="form-control" id="memberEmail" placeholder="이메일 입력">
+						<input type="text" class="form-control" id="memberEmail" name="memberEmail" placeholder="이메일 입력"/>
 					</div>
 					
 						
@@ -232,27 +232,27 @@
 
 					<div class="mb-3"  style="margin: 20px auto;">
 						<label for="name"><strong>세탁소 명</strong></label> 
-							<input type="text" class="form-control" id="laundryName" style="width: 85%;">	
+							<input type="text" class="form-control" id="laundryName" name="laundryName" style="width: 85%;"/>	
 					</div>
 			      
 			        <div class="mb-3" style="margin: 20px auto;">
 						<label for="num"><strong>사업자등록번호</strong></label> 
-						<input type="text" class="form-control" id="businessNumber">
+						<input type="text" class="form-control" id="businessNumber" name="businessNumber"/>
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="imgsaup"><strong>사업자등록증 사진</strong></label>
-						<input type="file" multiple="multiple" name="fileImage" id="launImg"/>
+						<input type="file" multiple="multiple" name="laundryLicenseImg" id="laundryLicenseImg" />
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="imgsetak"><strong>세탁소 사진</strong></label> 
-						<input type="file" multiple="multiple" name="fileImage" id="launImg"/>
+						<input type="file" multiple="multiple" name="laundryImg" id="laundryImg" />
 					</div>
 					
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="phone"><strong>세탁소 대표번호</strong></label> 
-						<input type="text" class="form-control" id="laundryTel" placeholder="대표전화 입력" style="width: 85%;">
+						<input type="text" class="form-control" id="laundryTel"  name="laundryTel" placeholder="대표전화 입력" style="width: 85%;"/>
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
@@ -263,10 +263,10 @@
 						</div>
 					</div>
 					<div class="mb-3" style="margin: 20px auto;">			
-							<input type="text" class="form-control" name="lundryAddr" id="lundryAddr" placeholder="주소" style="width: 85%;">
+							<input type="text" class="form-control" name="lundryAddr" id="lundryAddr" placeholder="주소" style="width: 85%;"/>
 					</div>
 					<div class="mb-3" style="margin: 20px auto;">			
-							<input type="text" class="form-control" name="lundryDetailAddr" id="lundryDetailAddr" placeholder="상세주소" style="width: 85%;">
+							<input type="text" class="form-control" name="lundryDetailAddr" id="lundryDetailAddr" placeholder="상세주소" style="width: 85%;"/>
 					</div>
 					
 					<div class="mb-3" style="margin: 50px auto;">
@@ -459,7 +459,7 @@
 						<label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>
 
 						<div class="mb-5" style="padding: 50px;">				
-							<a th:href="@{/user/login}"><input type="submit" class="btnContactSubmit" value="취소" style="width: 15%;"/></a>
+							<a th:href="@{/user/login}"><input type="button" class="btnContactSubmit" value="취소" style="width: 15%;"/></a>
 							<input type="submit" class="btnContactSubmit" id="addMemberLaundryBtn" value="회원가입" style="width: 15%;"/>
 							<!-- <a th:href="@{/user/index}"><input type="button" id="addMemberLaundryBtn" value="회원가입" style="width: 15%;"/></ -->
 						</div>

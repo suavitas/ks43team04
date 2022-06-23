@@ -15,7 +15,7 @@
 <th:block layout:fragment="customScript">
 <script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
 		<script>
-			// 카카오 우편번호 API 
+		// 카카오 우편번호 API 
 			function searchAddForm() {
 		        new daum.Postcode({
 		            oncomplete: function(data) {
@@ -40,30 +40,7 @@
 		    }
 		</script>
 		<script>
-		function searchLundryAddForm() {
-	        new daum.Postcode({
-	            oncomplete: function(data) {
-	            	
-	            	var addr = '';
-	            	var extraAddr = ''; // 참고항목 변수
-
-	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-	                    addr = data.roadAddress;
-	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-	                    addr = data.jibunAddress;
-	                }
-	                
-	                document.getElementById('LundryPostNum').value = data.zonecode;
-	                document.getElementById('lundryAddr').value = addr;
-	                // 커서를 상세주소 필드로 이동한다.
-	                document.getElementById('lundryDetailAddr').focus();
-	                
-	            }
-	        }).open();
-	    }
-		</script>
-		<script>
+			//아이디 중복 체크 
 			$(function(){
 				
 				function validationCheck(data){
@@ -72,24 +49,24 @@
 					}
 					return true;
 				}
-				b
+				
 				$('#idCheck').click(function(){
 					var memberId = $('input[name="memberId"]').val();
 					console.log(validationCheck(memberId));
 					var vCheck = validationCheck(memberId);
 					if(vCheck){
+					console.log(vCheck)
 						$.ajax({
 							 url: '/user/idCheck'
 							,type: 'POST'
 							,data: {'memberId' : memberId}
 							,dataType: 'json'
 							,success: function(data){
-								console.log(data);
 								// 화면에서 맨처음 아이디를 제외한 모든 입력하는 요소는 비활성화 (HTML 속성 추가 disabled="disabled") 
-								// 아이디 중복이 발생 하지않은 경우(회원가입 O) 입력하는 요소는 활성화
+								// 아이디 중복이 발생 않은 경우(회원가입 O) 입력하는 요소는 활성화
 								if(data){
 									$('#idCheckResult').text('사용 가능한 아이디 입니다.');
-									$('#addMemberForm input').prop('disabled', false); 
+									$('#addMemberForm input').prop('disabled', false);
 									$('#addMemberForm select').prop('disabled', false);
 									$('#addMemberForm button').prop('disabled', false);
 								}else{									
@@ -102,11 +79,13 @@
 								}
 							}
 						});
-					 }
-				});				
+					}
+					
+				});
+				
 				$('#addMemberBtn').click(function(){
 					var isSubmit = true;
-					var inputObj = $('.addMemberForm').find('input');
+					var inputObj = $('#addMemberForm').find('input');
 					
 					$.each(inputObj, function(){
 						var inputData = $(this).val();
@@ -119,14 +98,35 @@
 							isSubmit = false;
 							return false;
 						}
-					});					
-					console.log('유효여부 폼전송할건지?' + isSubmit )
+					});		
 					
 					if(isSubmit) $('#addMemberForm').submit();
 				});
-			});
-		</script>	
+				// 카카오 우편번호 API 
+				function searchAddForm() {
+			        new daum.Postcode({
+			            oncomplete: function(data) {
+			            	
+			            	var addr = '';
+			            	var extraAddr = ''; // 참고항목 변수
 
+			                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+			                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+			                    addr = data.roadAddress;
+			                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+			                    addr = data.jibunAddress;
+			                }
+			                
+			                document.getElementById('memberPostNum').value = data.zonecode;
+			                document.getElementById('memberAddr').value = addr;
+			                // 커서를 상세주소 필드로 이동한다.
+			                document.getElementById('memberDetailAddr').focus();
+			                
+			            }
+			        }).open();
+			    }
+			</script>
+	</th:block>	
 <style>
      min-height: 100vh;
 
@@ -164,62 +164,62 @@
 			      </div>
 			      <br>
 			    
-				<form th:action="@{/user/addMember}" method="post" class="validation-form" novalidate>
+				<form id="addMemberForm" th:action="@{/user/addMember}" method="post" class="validation-form" novalidate>
 				
 					<div class="mb-3"  style="margin: 20px auto;">
 						<label for="id"><strong>아이디</strong></label> 
 						<div style="display: flex;">
-							<input type="text" class="form-control" id="memberId" style="width: 85%;">	
-							<button type="button" class="btn btn-success" id="idCheck" style="width: 15%;">중복체크</button>
+							<input type="text" class="form-control" id="memberId" name="memberId" style="width: 85%;"/>	
+							<input type="button" class="btn btn-success" id="idCheck" name="idCheck" style="width: 15%;" value="중복검사"/>
 						</div>
 							<div>
-								<span id="idCheckResult"></span>
+								<span id="idCheckResult"></span> 
 							</div>
 					</div>					
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="password"><strong>비밀번호</strong></label> 
-						<input type="text" class="form-control" id="memberPw">
+						<input type="text" class="form-control" id="memberPw" name="memberPw"/> 
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="email"><strong>이름</strong></label>
-						<input type="email" class="form-control" id="memberName">
+						<input type="email" class="form-control" id="memberName"  name="memberName"/>
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="birth"><strong>생년월일</strong></label> 
-						<input type="date" class="form-control" id="memberBirth">
+						<input type="date" class="form-control" id="memberBirth" name="memberBirth"/>
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="email"><strong>주소</strong></label> 
 						<div style="display: flex;">
-							<input type="text" class="form-control" name="memberPostNum" id="memberPostNum" placeholder="우편번호" style="width: 85%;">
-							<button type="button" class="btn btn-success" id="postNum" style="width: 15%;" onclick="searchAddForm()">우편찾기</button>				
+							<input type="text" class="form-control" name="memberPostNum" id="memberPostNum" placeholder="우편번호" style="width: 85%;"/>
+							<input type="button" class="btn btn-success" id="memberPostNum" name="memberPostNum" style="width: 15%;" onclick="searchAddForm()" value="우편찾기"/>			
 						</div>
 					</div>	
 					<div class="mb-3" style="margin: 20px auto;">			
-							<input type="text" class="form-control" name="memberAddr" id="memberAddr" placeholder="주소" style="width: 85%;">
+							<input type="text" class="form-control" name="memberAddr" id="memberAddr" placeholder="주소" style="width: 85%;"/>
 					</div>
 					<div class="mb-3" style="margin: 20px auto;">			
-							<input type="text" class="form-control" name="memberDetailAddr" id="memberDetailAddr" placeholder="상세주소" style="width: 85%;">
+							<input type="text" class="form-control" name="memberDetailAddr" id="memberDetailAddr" placeholder="상세주소" style="width: 85%;"/>
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="address"><strong>전화번호</strong></label> 
-						<input type="text" class="form-control" id="memberPhone" placeholder="전화번호 입력" style="width: 85%;">
+						<input type="text" class="form-control" id="memberPhone" name="memberPhone" placeholder="전화번호 입력" style="width: 85%;"/>
 					</div>
 					
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="email"><strong>성별 선택</strong></label> 
-						<input type='checkbox' name='gender' value='female' style="margin: 20px;"/><strong>여성</strong>
-  						<input type='checkbox' name='gender' value='male' style="margin: 20px;"/><strong>남성</strong>
+						<input type='checkbox' name='memberGender' value="여" style="margin: 20px;"/><strong>여성</strong>
+  						<input type='checkbox' name='memberGender' value="남" style="margin: 20px;"/><strong>남성</strong>
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
-						<label for="address"><strong>이메일</strong></label> 
-						<input type="text" class="form-control" id="memberEmail" placeholder="이메일 입력">
+						<label for="eamil"><strong>이메일</strong></label> 
+						<input type="text" class="form-control" id="memberEmail" name="memberEmail" placeholder="이메일 입력"/>
 					</div>
 										
 					<div class="mb-3" style="margin: 50px auto;">
@@ -398,9 +398,7 @@
 									인증서와 인증 업무에 관한 기록: 인증서 효력 상실일로부터 10년 보관
 									- 통신비밀보호법
 									로그인 기록: 3개월
-									
 									참고로 내 손안에 세탁소는 ‘개인정보 유효기간제’에 따라 1년간 서비스를 이용하지 않은 회원의 개인정보를 별도로 분리 보관하여 관리하고 있습니다.
-									
 									4. 개인정보 수집 및 이용 동의를 거부할 권리
 									이용자는 개인정보의 수집 및 이용 동의를 거부할 권리가 있습니다. 회원가입 시 수집하는 최소한의 개인정보, 즉, 필수 항목에 대한 수집 및 이용 동의를 거부하실 경우, 회원가입이 어려울 수 있습니다.
                             	</textarea>
@@ -408,7 +406,7 @@
 
 					<hr class="mb-4" >
 					<div class="custom-control custom-checkbox" style="text-align: center; margin: 50px;">
-						<input type="checkbox" class="custom-control-input" id="aggrement"> 
+						<input type="checkbox" class="custom-control-input" id="aggrement"/> 
 						<label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>
 
 						<div class="mb-5" style="padding: 50px;">				
@@ -421,7 +419,6 @@
 			</div>				
 		</div>
      </div>
-		
    </th:block>
 </html>
   

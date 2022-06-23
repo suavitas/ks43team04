@@ -11,7 +11,9 @@
 		<result column="m_pw_QnA_code" 			property="memberPwQnACode"/>
 		<result column="m_name" 				property="memberName"/>
 		<result column="m_birth" 				property="memberBirth"/>
+		<result column="m_post_num" 			property="memberPostNum"/>
 		<result column="m_addr" 				property="memberAddr"/>
+		<result column="m_detail_addr" 			property="memberDetailAddr"/>
 		<result column="m_phone" 				property="memberPhone"/>
 		<result column="m_gender" 				property="memberGender"/>
 		<result column="m_out_code" 			property="memberOutCode"/>
@@ -27,8 +29,12 @@
 		<result column="level_code" 				property="levelCode"/>
 		<result column="laundry_name" 				property="laundryName"/>
 		<result column="laundry_state" 				property="laundryState"/>
+		<result column="laundry_post_num" 			property="laundryPostNum"/>
 		<result column="laundry_addr"				property="laundryAddr"/>
+		<result column="laundry_detail_addr"		property="laundryDetailAddr"/>
 		<result column="laundry_tel" 				property="laundryTel"/>
+		<result column="laundry_license_img" 		property="laundryLicenseImg"/>
+		<result column="laundry_img" 				property="laundryImg"/>
 		<result column="skill_licence" 				property="skillLicence"/>
 		<result column="business_number" 			property="businessNumber"/>
 		<result column="admin_level_code" 			property="adminLevelCode"/>
@@ -178,23 +184,61 @@
 	</select>
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<insert id="addMemberLaundry" parameterType="Laundry">
+		/* */
+		INSERT INTO
+			tb_laundry
+		(
+			 laundry_name
+			,business_number
+			,laundry_license_img
+			,laundry_img
+			,laundry_tel
+			,laundryPostNum
+			,laundryAddr
+			,laundryDetailAddr
+		)VALUES (
+			 #{laundryName}
+			,#{businessNumber}
+			,#{laundryLicenseImg}
+			,#{laundryImg}
+			,#{laundryTel}
+			,#{laundryPostNum}
+			,#{laundryAddr}
+			,#{laundryDetailAddr}
+		)
+	</insert>
+	
 	<select id="getMemberInfoById" parameterType="String" resultMap="memberResultMap">
-		/* 모든회원 정보조회*/
+		/* 회원별 회원 정보조회*/
 		SELECT
 		     m.m_id
-		    ,level_code
-			,m.m_pw
-			,m.m_pw_QnA_code
+		    ,m.m_pw
+		    ,m.level_code
 			,m.m_name
 			,m.m_birth
+			,m.m_post_num
 			,m.m_addr
+			,m.m_detail_addr
 			,m.m_phone
 			,m.m_gender
-			,m.m_out_code
 			,m.m_email
 			,m.m_reg_date
-			,admin_level_code
-			,regist_time   
 		FROM
 		   tb_member AS m
 		WHERE
@@ -217,38 +261,29 @@
 			(m_id
 			,m_pw
 			,m_name
-			,m_email
+			,m_birth
+			,m_post_num
 			,m_addr
+			,m_detail_addr
+			,m_phone
+			,m_gender
+			,m_email
 			,m_reg_date
 		)VALUES( 
 			#{memberId}
 			,#{memberPw}
 			,#{memberName}
-			,#{memberEmail}
+			,#{memberBirth}
+			,#{memberPostNum}
 			,#{memberAddr}
+			,#{memberDetailAddr}
+			,#{memberPhone}
+			,#{memberGender}
+			,#{memberEmail}
 			,CURDATE() 
 		);	
  	</insert>
 	
 	
-	<select id="memberList" resultMap="memberResultMap">
-		SELECT 
-			m_id, 
-			level_code, 
-			m_pw, 
-			m_pw_QnA_code, 
-			m_name, 
-			m_birth, 
-			m_addr, 
-			m_phone, 
-			m_gender, 
-			m_out_code, 
-			m_email, 
-			m_reg_date, 
-			admin_level_code, 
-			regist_time
-		FROM 
-			tb_member
-	</select>
 	
 </mapper>

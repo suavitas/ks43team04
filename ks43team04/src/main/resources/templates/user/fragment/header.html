@@ -23,7 +23,7 @@
 		<div class="container">
 			<!-- logo -->
 			<div class="site-logo">
-				<a th:href="@{/}"> <img th:src="@{/user/assets/img/logo.png}"
+				<a th:href="@{/}"> <img th:src="@{/admin/images/main/세탁아이콘.png}"
 					alt="로고이미지">
 				</a>
 			</div>
@@ -45,7 +45,7 @@
                                 		<a th:href="@{/admin}" style="color: #FAFCFC; font-size: 13.5px;"><strong>관리 페이지</strong></a>
                                 	</div>
                            		</li>
-                           		<li><a th:if="${session.SID == null}" th:href="@{/user/login}" style="color: #ADB4B6;"><i class="fa fa-user"></i>로그인</a></li>							
+                           		<li><a th:if="${session.SID == null}" th:href="@{/user/login}" style="color: #ADB4B6;"><i class="fa fa-user"></i>로그인(휘연)</a></li>							
 		                        <li><a th:if="${session.SID != null}" th:href="@{/user/logout}"style="color: #ADB4B6;" ><span>[</span>[[${session.SNAME}]]님 접속중]</a></li>	
 		                        <li><a th:unless="${session.SID == null}" th:href="@{/user/logout}"><i class="fa fa-user"></i> 로그아웃</a></li>
 							</ul>
@@ -55,15 +55,15 @@
 
 								
 								<li class="current-list-item"><a th:href="@{/project}">프로젝트
-										소개</a></li>
+										소개(용민)</a></li>
 
-								<li><a href="#">예약하기</a>
+								<li><a href="#">!예약하기(우영)</a>
 									<ul class="sub-menu">
-										<li><a th:href="@{/user/ilbanYeyak}">일반세탁소 예약</a></li>
-										<li><a th:href="@{/user/muinYeyak}">무인세탁소 예약</a></li>
+										<li><a th:href="@{/user/ilbanYeyak}">!일반세탁소 예약</a></li>
+										<li><a th:href="@{/user/muinYeyak}">!무인세탁소 예약</a></li>
 									</ul></li>
-								<li><a th:href="@{/user/searchmap}">매장찾기</a></li>
-								<li><a th:href="@{/user/board/noticeList}">고객센터</a>
+								<li><a th:href="@{/user/searchmap}">매장찾기(현우)</a></li>
+								<li><a th:href="@{/user/board/noticeList}">!고객센터(수빈)</a>
 									<ul class="sub-menu">
 										<li><a th:href="@{/user/board/noticeList}">공지사항</a></li>
 										<li><a th:href="@{/user/board/eventList}">이벤트</a></li>

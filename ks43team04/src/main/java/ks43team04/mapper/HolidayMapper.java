@@ -11,10 +11,10 @@ import ks43team04.dto.YearlyHoliday;
 public interface HolidayMapper {
 
 	/**
-	 *  세탁소 조회
+	 * 세탁소 조회
 	 */
 	public List<HolidayList> holidayList();
-	
+
 	/**
 	 * 공휴일 조회
 	 * 

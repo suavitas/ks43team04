@@ -4,176 +4,177 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks43team04.mapper.LaundryMapper">
 
-	<resultMap type="LaundryList" 						id="LaundryListResultMap">
-		<id column="laundry_code"						property="laundryCode"/>
-		<result column="m_id" 							property="memberId"/>
-		<result column="level_code" 					property="levelCode"/>
-		<result column="laundry_name" 					property="laundryName"/>
-		<result column="laundry_state" 					property="laundryState"/>
-		<result column="laundry_post_num" 				property="laundryPostNum"/>
-		<result column="laundry_addr" 					property="laundryAddr"/>
-		<result column="laundry_detail_addr" 			property="laundryDetailAddr"/>
-		<result column="laundry_tel" 					property="laundryTel"/>
-		<result column="laundry_license_img" 			property="laundryLicenseImg"/>
-		<result column="laundry_img" 					property="laundryImg"/>
-		<result column="skill_licence" 					property="skillLicence"/>
-		<result column="business_number" 				property="businessNumber"/>
-		<result column="admin_level_code" 				property="adminLevelCode"/>
-		<result column="regist_time"					property="registTime"/>
-		<collection property="holidayList" 				ofType="HolidayList"> 
-			<id 	column="holiday_code" 				property="holidayCode"/>
-			<result column="laundry_code" 				property="laundryCode"/>
-			<result column="yearly_holiday_date" 		property="yearlyHolidayDate"/>
-			<result column="yearly_holiday_name" 		property="yearlyHolidayName"/>
-			<result column="holiday_code_use" 			property="holidayCodeUse"/>
-		</collection>
-	</resultMap>
-	
-	<resultMap type="IlbanSkill" 					id="ilbanSkillResultMap">
-		<id column="ilban_skill_code" 				property="ilbanSkillCode"/>
-		<result column="skill_cate" 				property="skillCate"/>
-		<result column="admin_level_code" 			property="adminLevelCode"/>
-		<result column="regist_time" 				property="registTime"/>
-	</resultMap>
-	
-	<resultMap type="MuinMachienSpec" 			id="MachineSpecResultMap">
-		<id column="muin_spec_code" 			property="MachineSpecCode"/>
-		<result column="machine_category" 		property="MachineCategory"/>
-		<result column="machine_release" 		property="MachineRelease"/>
-		<result column="machine_limit" 			property="MachineLimit"/>
-		<result column="machine_motor" 			property="MachineMotor"/>
-		<result column="machine_energy" 		property="MachineEnergy"/>
-		<result column="machine_course" 		property="MachineCourse"/>
-		<result column="machine_removal"		property="MachineRemoval"/>
-		<result column="machine_timer" 			property="MachineTimer"/>
-		<result column="machine_safety" 		property="MachineSafety"/>
-		<result column="machine_control" 		property="MachineSafety"/>
-		<result column="machine_skill" 			property="MachineSkill"/>
-		<result column="machine_management" 	property="MachineManagement"/>
-		<result column="machine_display" 		property="MachineDisplay"/>
-		<result column="machine_Power" 			property="MachinePower"/>
-		<result column="machine_space"			property="MachineSpace"/>
-		<result column="machine_color" 			property="MachineColor"/>
-		<result column="machine_size" 			property="MachineSize"/>
-		<result column="machine_as" 			property="MachineAs"/>
-		<result column="machine_door" 			property="MachineDoor"/>
-		<result column="regist_time" 			property="RegistTime"/>
-	</resultMap>
-	
-	<resultMap type="Laundry" 							id="laundryResultMap">
-		<id column="laundry_code" 						property="laundryCode"/>
-		<result column="m_id" 							property="memberId"/>
-		<result column="level_code" 					property="levelCode"/>
-		<result column="laundry_name" 					property="laundryName"/>
-		<result column="laundry_state"					property="laundryState"/>
-		<result column="laundry_addr" 					property="laundryAddr"/>
-		<result column="laundry_tel" 					property="laundryTel"/>
-		<result column="skill_licence" 					property="skillLicence"/>
-		<result column="business_number" 				property="businessNumber"/>
-		<result column="admin_level_code" 				property="adminLevelCode"/>
-		<result column="regist_time" 					property="registTime"/>
-		<collection property="ilbanGoodsPrice" 			ofType="ilbanGprice">
-			<id column="ilban_G_price_code"				property="ilbanGoodsPriceCode"/>
-			<result column="laundry_code" 				property="laundryCode"/>
-			<result column="ilban_skill_code" 			property="ilbanSkillCode"/>
-			<result column="g_name" 					property="goodsName"/>
-			<result column="g_price" 					property="goodsPrice"/>
-			<result column="regist_time" 				property="registTime"/>
-			<result column="g_price_use_state" 			property="goodsPriceUseState"/>
-		</collection>
-	</resultMap>
-	
-	<select id="LaundryList" fetchSize="1000" parameterType="String" resultMap="LaundryListResultMap">
-	SELECT 
-			tl.laundry_name,
-			th.yearly_holiday_date,  	
-			th.yearly_holiday_name
-		FROM 
-			tb_holiday AS th
-		INNER JOIN
-			tb_laundry AS tl
-		ON 
-		th.laundry_code = tl.laundry_code
-	<trim prefix="WHERE" prefixOverrides="AND |OR ">
-			<if test="searchValue != null and searchValue != ''"> 
-				${searchKey} LIKE CONCAT('%', #{searchValue}, '%'); 
-			</if>
-		</trim>		
-	</select>
-	
-	<select id="machineSpecList" resultMap="MachineSpecResultMap">
-		SELECT 
-			muin_spec_code, 
-			machine_category, 
-			machine_release, 
-			machine_limit, 
-			machine_motor, 
-			machine_energy, 
-			machine_course, 
-			machine_removal, 
-			machine_timer, 
-			machine_safety, 
-			machine_skill, 
-			machine_management, 
-			machine_display, 
-			machine_control, 
-			machine_Power, 
-			machine_space, 
-			machine_color, 
-			machine_size, 
-			machine_as, 
-			machine_door, 
-			admin_level_code, 
-			regist_time
-		FROM
-			tb_muin_spec
-	</select>
-	
-	<select id="muinLaundryCount" resultType="int">
-	/*무인 튜플 수*/
-	SELECT
-		COUNT(level_code)
-	FROM
-		tb_laundry
-	WHERE
-		level_code = 'level_code_02'
-	</select>
-	
-	<select id="ilbanLaundryCount" resultType="int">
-	/*일반세탁소 튜플 수*/
-	SELECT
-		COUNT(level_code)
-	FROM
-		tb_laundry
-	WHERE
-		level_code = 'level_code_03'
-	</select>
-	
-	<select id="ilbanGoodsPriceList" resultMap="laundryResultMap">
-		/*일반세탁소 상품가격 리스트(사용중)*/
-		SELECT 
-			ig.g_name,
-			ig.g_price,
-			l.laundry_name,
-			ig.g_price_use_state
-		FROM 
-			tb_ilban_g_price AS ig
-			INNER JOIN
-			tb_laundry AS l
-		ON
-			ig.laundry_code = l.laundry_code
-			WHERE ig.g_price_use_state = 'use'
-	</select>
-	
-	<select id="ilbanSkillList" resultMap="ilbanSkillResultMap">
-		/*일반 스킬 리스트 조회*/
-		SELECT 
-			ilban_skill_code, 
-			skill_cate, 
-			admin_level_code, 
-			regist_time	
-		FROM 
-			tb_ilban_skill
-	</select>
-	
+   <resultMap type="LaundryList"                   id="LaundryListResultMap">
+      <id column="laundry_code"                  property="laundryCode"/>
+      <result column="m_id"                      property="memberId"/>
+      <result column="level_code"                property="levelCode"/>
+      <result column="laundry_name"                property="laundryName"/>
+      <result column="laundry_state"                property="laundryState"/>
+      <result column="laundry_post_num"             property="laundryPostNum"/>
+      <result column="laundry_addr"                property="laundryAddr"/>
+      <result column="laundry_detail_addr"          property="laundryDetailAddr"/>
+      <result column="laundry_tel"                property="laundryTel"/>
+      <result column="laundry_license_img"          property="laundryLicenseImg"/>
+      <result column="laundry_img"                property="laundryImg"/>
+      <result column="skill_licence"                property="skillLicence"/>
+      <result column="business_number"             property="businessNumber"/>
+      <result column="admin_level_code"             property="adminLevelCode"/>
+      <result column="regist_time"               property="registTime"/>
+      <collection property="holidayList"             ofType="HolidayList"> 
+         <id    column="holiday_code"             property="holidayCode"/>
+         <result column="laundry_code"             property="laundryCode"/>
+         <result column="yearly_holiday_date"       property="yearlyHolidayDate"/>
+         <result column="yearly_holiday_name"       property="yearlyHolidayName"/>
+         <result column="holiday_code_use"          property="holidayCodeUse"/>
+      </collection>
+   </resultMap>
+   
+   <resultMap type="IlbanSkill"                id="ilbanSkillResultMap">
+      <id column="ilban_skill_code"             property="ilbanSkillCode"/>
+      <result column="skill_cate"             property="skillCate"/>
+      <result column="admin_level_code"          property="adminLevelCode"/>
+      <result column="regist_time"             property="registTime"/>
+   </resultMap>
+   
+   <resultMap type="MuinMachienSpec"          id="MachineSpecResultMap">
+      <id column="muin_spec_code"          property="MachineSpecCode"/>
+      <result column="machine_category"       property="MachineCategory"/>
+      <result column="machine_release"       property="MachineRelease"/>
+      <result column="machine_limit"          property="MachineLimit"/>
+      <result column="machine_motor"          property="MachineMotor"/>
+      <result column="machine_energy"       property="MachineEnergy"/>
+      <result column="machine_course"       property="MachineCourse"/>
+      <result column="machine_removal"      property="MachineRemoval"/>
+      <result column="machine_timer"          property="MachineTimer"/>
+      <result column="machine_safety"       property="MachineSafety"/>
+      <result column="machine_control"       property="MachineSafety"/>
+      <result column="machine_skill"          property="MachineSkill"/>
+      <result column="machine_management"    property="MachineManagement"/>
+      <result column="machine_display"       property="MachineDisplay"/>
+      <result column="machine_Power"          property="MachinePower"/>
+      <result column="machine_space"         property="MachineSpace"/>
+      <result column="machine_color"          property="MachineColor"/>
+      <result column="machine_size"          property="MachineSize"/>
+      <result column="machine_as"          property="MachineAs"/>
+      <result column="machine_door"          property="MachineDoor"/>
+      <result column="regist_time"          property="RegistTime"/>
+   </resultMap>
+   
+   <resultMap type="Laundry"                      id="laundryResultMap">
+      <id column="laundry_code"                   property="laundryCode"/>
+      <result column="m_id"                      property="memberId"/>
+      <result column="level_code"                property="levelCode"/>
+      <result column="laundry_name"                property="laundryName"/>
+      <result column="laundry_state"               property="laundryState"/>
+      <result column="laundry_addr"                property="laundryAddr"/>
+      <result column="laundry_tel"                property="laundryTel"/>
+      <result column="skill_licence"                property="skillLicence"/>
+      <result column="business_number"             property="businessNumber"/>
+      <result column="admin_level_code"             property="adminLevelCode"/>
+      <result column="regist_time"                property="registTime"/>
+      <collection property="ilbanGoodsPrice"          ofType="ilbanGprice">
+         <id column="ilban_G_price_code"            property="ilbanGoodsPriceCode"/>
+         <result column="laundry_code"             property="laundryCode"/>
+         <result column="ilban_skill_code"          property="ilbanSkillCode"/>
+         <result column="g_name"                property="goodsName"/>
+         <result column="g_price"                property="goodsPrice"/>
+         <result column="regist_time"             property="registTime"/>
+         <result column="g_price_use_state"          property="goodsPriceUseState"/>
+      </collection>
+   </resultMap>
+   
+   <select id="LaundryList" fetchSize="1000" parameterType="String" resultMap="LaundryListResultMap">
+   SELECT 
+         tl.laundry_name,
+         th.yearly_holiday_date,     
+         th.yearly_holiday_name,
+         th.holiday_code_use
+      FROM 
+         tb_holiday AS th
+      INNER JOIN
+         tb_laundry AS tl
+      ON 
+      th.laundry_code = tl.laundry_code
+   <trim prefix="WHERE" prefixOverrides="AND |OR ">
+         <if test="searchValue != null and searchValue != ''"> 
+            ${searchKey} LIKE CONCAT('%', #{searchValue}, '%'); 
+         </if>
+      </trim>      
+   </select>
+   
+   <select id="machineSpecList" resultMap="MachineSpecResultMap">
+      SELECT 
+         muin_spec_code, 
+         machine_category, 
+         machine_release, 
+         machine_limit, 
+         machine_motor, 
+         machine_energy, 
+         machine_course, 
+         machine_removal, 
+         machine_timer, 
+         machine_safety, 
+         machine_skill, 
+         machine_management, 
+         machine_display, 
+         machine_control, 
+         machine_Power, 
+         machine_space, 
+         machine_color, 
+         machine_size, 
+         machine_as, 
+         machine_door, 
+         admin_level_code, 
+         regist_time
+      FROM
+         tb_muin_spec
+   </select>
+   
+   <select id="muinLaundryCount" resultType="int">
+   /*무인 튜플 수*/
+   SELECT
+      COUNT(level_code)
+   FROM
+      tb_laundry
+   WHERE
+      level_code = 'level_code_02'
+   </select>
+   
+   <select id="ilbanLaundryCount" resultType="int">
+   /*일반세탁소 튜플 수*/
+   SELECT
+      COUNT(level_code)
+   FROM
+      tb_laundry
+   WHERE
+      level_code = 'level_code_03'
+   </select>
+   
+   <select id="ilbanGoodsPriceList" resultMap="laundryResultMap">
+      /*일반세탁소 상품가격 리스트(사용중)*/
+      SELECT 
+         ig.g_name,
+         ig.g_price,
+         l.laundry_name,
+         ig.g_price_use_state
+      FROM 
+         tb_ilban_g_price AS ig
+         INNER JOIN
+         tb_laundry AS l
+      ON
+         ig.laundry_code = l.laundry_code
+         WHERE ig.g_price_use_state = 'use'
+   </select>
+   
+   <select id="ilbanSkillList" resultMap="ilbanSkillResultMap">
+      /*일반 스킬 리스트 조회*/
+      SELECT 
+         ilban_skill_code, 
+         skill_cate, 
+         admin_level_code, 
+         regist_time   
+      FROM 
+         tb_ilban_skill
+   </select>
+   
 </mapper>

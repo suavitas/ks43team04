@@ -14,21 +14,20 @@ public interface LaundryMapper {
 
 	/* 세탁소 조회 */
 	public List<LaundryList> LaundryList(String searchKey, String searchValue);
-	
+
 	/* 무인 장비 스팩 */
 	public List<MuinMachienSpec> machineSpecList();
-	
+
 	/* 일반 세탁소 튜플수 */
 	public int ilbanLaundryCount();
-	
+
 	/* 무인 세탁소 튜플수 */
 	public int muinLaundryCount();
-	
-	/*전체 일반 세탁소 상품 가격 조회*/
+
+	/* 전체 일반 세탁소 상품 가격 조회 */
 	public List<Laundry> ilbanGoodsPriceList();
-	
-	/*일반세탁소 스킬 목록*/
+
+	/* 일반세탁소 스킬 목록 */
 	public List<IlbanSkill> ilbanSkillList();
-	
-	
+
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.BillMapper">
+	<resultMap type="Bill" id="BillResultMap">
+		<id 	column="bill_code" 						property="billCode"/>
+		<result column="order_num_groupcode" 		property="orderNumGroupcode"/>
+		<result column="total_price" 				property="totalPrice"/>
+		<result column="user_code" 					property="userCode"/>
+		<result column="pay_use_point" 				property="payUsePoint"/>
+		<result column="pay_method" 				property="payMethod"/>
+		<result column="pay_ok_date" 				property="payOkDate"/>
+		<result column="refund_code" 				property="refundCode"/>
+		<result column="after_use_point_pay" 		property="afterUsePointPay"/>
+		<result column="add_pay" 					property="addPay"/>
+		<result column="delivery_pay" 				property="deliveryPay"/>
+		<result column="total_pay_groupcode" 		property="totalPayGroupcode"/>
+	</resultMap>
+
+	
+ 	
+ 	<select id="getBillList" resultMap="BillResultMap">
+ 		SELECT
+			bill_code, 
+			order_num_groupcode, 
+			total_price, 
+			user_code, 
+			pay_use_point, 
+			pay_method, 
+			pay_ok_date, 
+			refund_code, 
+			after_use_point_pay, 
+			add_pay, 
+			delivery_pay, 
+			total_pay_groupcode
+		FROM 
+			tb_bill
+
+ 	</select>
+</mapper>

@@ -1,65 +1,65 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/userDefault}">	  
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="~{layouts/userDefault}">     
 
 <!-- 사용자 정의 JsScript 파일-->
 <th:block layout:fragment="customJsScript">
-	<!-- 주소검색 API -->
-	<script th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}"></script>
+   <!-- 주소검색 API -->
+   <script th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}"></script>
 </th:block>
 
 <th:block layout:fragment="customScript">
-		<script>
-			// 카카오 우편번호 API 
-			function searchAddForm() {
-		        new daum.Postcode({
-		            oncomplete: function(data) {
-		            	
-		            	var addr = '';
-		            	var extraAddr = ''; // 참고항목 변수
+      <script>
+         // 카카오 우편번호 API 
+         function searchAddForm() {
+              new daum.Postcode({
+                  oncomplete: function(data) {
+                     
+                     var addr = '';
+                     var extraAddr = ''; // 참고항목 변수
 
-		                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-		                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-		                    addr = data.roadAddress;
-		                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-		                    addr = data.jibunAddress;
-		                }
-		                
-		                document.getElementById('memberPostNum').value = data.zonecode;
-		                document.getElementById('memberAddr').value = addr;
-		                // 커서를 상세주소 필드로 이동한다.
-		                document.getElementById('memberDetailAddr').focus();
-		                
-		            }
-		        }).open();
-		    }
-		</script>
-		<script>
-		function searchLundryAddForm() {
-	        new daum.Postcode({
-	            oncomplete: function(data) {
-	            	
-	            	var addr = '';
-	            	var extraAddr = ''; // 참고항목 변수
+                      //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                      if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                          addr = data.roadAddress;
+                      } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                          addr = data.jibunAddress;
+                      }
+                      
+                      document.getElementById('memberPostNum').value = data.zonecode;
+                      document.getElementById('memberAddr').value = addr;
+                      // 커서를 상세주소 필드로 이동한다.
+                      document.getElementById('memberDetailAddr').focus();
+                      
+                  }
+              }).open();
+          }
+      </script>
+      <script>
+      function searchLundryAddForm() {
+           new daum.Postcode({
+               oncomplete: function(data) {
+                  
+                  var addr = '';
+                  var extraAddr = ''; // 참고항목 변수
 
-	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-	                    addr = data.roadAddress;
-	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-	                    addr = data.jibunAddress;
-	                }
-	                
-	                document.getElementById('LundryPostNum').value = data.zonecode;
-	                document.getElementById('lundryAddr').value = addr;
-	                // 커서를 상세주소 필드로 이동한다.
-	                document.getElementById('lundryDetailAddr').focus();
-	                
-	            }
-	        }).open();
-	    }
-		</script>
-
+                   //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                   if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                       addr = data.roadAddress;
+                   } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                       addr = data.jibunAddress;
+                   }
+                   
+                   document.getElementById('LundryPostNum').value = data.zonecode;
+                   document.getElementById('lundryAddr').value = addr;
+                   // 커서를 상세주소 필드로 이동한다.
+                   document.getElementById('lundryDetailAddr').focus();
+                   
+               }
+           }).open();
+       }
+      </script>
+</th:block>
 <style>
      min-height: 100vh;
 
@@ -79,59 +79,62 @@
       box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
     }
     textarea {
-		position: relative;
-		overflow: auto;
-		height: 100px;
-		border: 1px solid #dadada;
-		box-sizing: border-box;
-	}
+      position: relative;
+      overflow: auto;
+      height: 100px;
+      border: 1px solid #dadada;
+      box-sizing: border-box;
+   }
 </style>
 </th:block>
 
 <!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
-	<!-- 게시판 타이틀 -->
-	<div id="container">
-		<div id="top-loca">
-			<div class="boardPath">
-				<a th:href="@{/}">HOME</a>
-				 
-				<h2 style="font-family: 'ONE-Mobile-Regular'">[[${sessionName}]]</h2><span>님의 마이페이지</span>
-			</div>	
-		</div>
-	</div>	
-		
-	<!-- 게시판 탭  -->			
-	<div class="list-group list-group-horizontal col-sm-6" style="margin:0 auto; text-align: center;">
-  		<a th:href="@{/user/myPage}" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">
-  		회원정보
-  		</a>
-		<a th:href="@{/user/board/eventList}" class="list-group-item list-group-item-action">이벤트</a>
-		<a th:href="@{/user/board/faqList}" class="list-group-item list-group-item-action">FAQ</a>
-		<a th:href="@{/user/board/qnaList}" class="list-group-item list-group-item-action">문의사항</a>
-	</div>
-	
-	
-	<!-- 공지사항 테이블 -->
-	<div class="cart-section mt-150 mb-150" style="background-color: #f5f6fa; padding: 60px 0 100px; margin: 0; border-top: #e5e5e5 1px solid;">
-		<div class="container">
-			<div class="row" style="float: none; margin: 100 auto;">
-				<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
+   <!-- 게시판 타이틀 -->
+   <div id="container">
+      <div id="top-loca">
+         <div class="boardPath">
+            <a th:href="@{/}">HOME</a>           
+            <h2 style="font-family: 'ONE-Mobile-Regular'">[[${sessionName}]]</h2><span>님의 마이페이지</span>
+         </div>   
+      </div>
+   </div>   
+      
+   <!-- 게시판 탭  -->         
+   <div class="list-group list-group-horizontal col-sm-12" style="margin:0 auto; text-align: center;padding-right: 0px;">
+        <a th:href="@{/user/myPage}" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">
+        회원정보
+        </a>
+      <a href="#" class="list-group-item list-group-item-action">예약 현황</a>
+      <a th:href="@{/user/myPageDelivery}" class="list-group-item list-group-item-action">수거배송 조회</a>
+      <a href="#" class="list-group-item list-group-item-action">결제 내역</a>
+      <a href="#" class="list-group-item list-group-item-action">환불 내역</a>
+      <a th:href="@{/user/myPagePoint}" class="list-group-item list-group-item-action">포인트 조회</a>
+      <a th:href="@{/user/myPageWrite}" class="list-group-item list-group-item-action">내가 쓴 글</a>
+      <a href="#" class="list-group-item list-group-item-action">리뷰?</a>
+   </div>
+   
+   
+   <!-- 공지사항 테이블 -->
+   <div class="cart-section mt-150 mb-150" style="background-color: #f5f6fa; padding: 60px 0 100px; margin: 0; border-top: #e5e5e5 1px solid;">
+      <div class="container">
+         <div class="row" style="float: none; margin: 100 auto;">
+            <div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
 
-		  <div class="container"  style="margin-top: 80px; margin-bottom: 100px;">
-		    <div class="input-form-backgroud row">
-		      <div class="input-form col-md-12 mx-auto" >
-		            <div id="cid_1" class="form-input-wide" data-layout="full" >
-			           <div data-component="separator" style="border-top:1px solid rgb(0,0,0); clear:both;"></div>
-			    </div>
-			    <div>
-				  <form th:action="@{/user/modifyMyPage}" method="post" class="validation-form" novalidate>
-				   <table class="table table-bordered mt-6">
-				      <thead>
-							<tr>
-								<th scope="col" style="width: 10%;">#</th>
+        <div class="container"  style="margin-top: 80px; margin-bottom: 100px;">
+          <div class="input-form-backgroud row">
+            <div class="input-form col-md-12 mx-auto" >
+                  <div id="cid_1" class="form-input-wide" data-layout="full" >
+                    <div data-component="separator" style="border-top:1px solid rgb(0,0,0); clear:both;"></div>
+             </div>
+             <div>
+              <form th:action="@{/user/modifyMyPage}" method="post" class="validation-form" novalidate>
+               <table class="table table-bordered mt-6">
+                  <thead>
+                     <tr>
+                        <th scope="col" style="width: 10%;">#</th>
 								<th scope="col"><strong>내 정보관리</strong></th>
-							</tr>
+					</tr>
 					  </thead>  
 			          <tbody>
 			        	<tr>
@@ -279,8 +282,8 @@
 				<div id="cid_1" class="form-input-wide" data-layout="full" >
 			           <div data-component="separator" style="border-top:1px solid rgb(0,0,0); clear:both;"></div>
 			    </div> 	
-						<form th:action="@{/userMember/modifySellerMyPage}" method="post">
-							<table class="table table-bordered mt-6">
+					<form th:action="@{/userMember/modifySellerMyPage}" method="post">
+						<table class="table table-bordered mt-6">
 				      		<thead>
 								<tr>
 									<th scope="col" style="width: 10%;">#</th>
@@ -334,22 +337,22 @@
 					</tr>
 				</tbody>
 			  </table>
-			  <div class="ln_solid"></div>
+			  		<div class="ln_solid"></div>
 					<div class="form-group" style="margin: 5%">
 						<div class="col-md-12 col-sm-12 text-center">
 							<button type="button" class="btn btn-success" id="modifySellerButton">수정</button>
 							<button type="submit" class="btn btn-info">저장</button>
 						</div>
 					</div>
-			</form>
+				</form>
 		</th:block>
 		</div>
 	</div>	
 </div>				
+</div>				
+</div>			
 </div>
 </div>
-
-
      </th:block>
 </html>
 
