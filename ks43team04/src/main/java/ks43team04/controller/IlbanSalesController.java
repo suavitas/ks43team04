@@ -83,7 +83,8 @@ public class IlbanSalesController {
 		ilbanSalesService.removeIlbanSalesLookUpList(billCode);
 		
 		
-		return "admin/sales/ilbanSales";
+		//return "admin/sales/ilbanSales";
+		return "redirect:/admin/ilbanSales";
 	}
 	
 }
