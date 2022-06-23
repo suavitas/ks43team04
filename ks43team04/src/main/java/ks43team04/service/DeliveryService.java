@@ -22,5 +22,11 @@ public class DeliveryService {
 			
 			return getDeliveryList;
 		}
+	public List<Delivery> getDeliveryList(String sessionId){	
+		
+		List<Delivery> getDeliveryList = deliveryMapper.getDeliveryList(sessionId);
+		
+		return getDeliveryList;
+	}
 	
 }
