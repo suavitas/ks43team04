@@ -229,6 +229,7 @@
 		SELECT
 		     m.m_id
 		    ,m.m_pw
+		    ,m.level_code
 			,m.m_name
 			,m.m_birth
 			,m.m_post_num
