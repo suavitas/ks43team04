@@ -51,4 +51,32 @@
 		LIKE
 			'%laundry_code_006%'
 	</select>
+	
+	<delete id="removeIlbanSalesLookUpList" parameterType="String">
+ 		DELETE 
+        FROM 
+        	tb_bill
+        WHERE
+       		bill_code = #{billCode};
+ 	</delete>
+ 	
+ 	<select id="getBillInfoByCode" parameterType="String" resultMap="BillResultMap">
+ 		SELECT
+			bill_code, 
+			order_num_groupcode, 
+			total_price, 
+			user_code, 
+			pay_use_point, 
+			pay_method, 
+			pay_ok_date, 
+			refund_code, 
+			after_use_point_pay, 
+			add_pay, 
+			delivery_pay, 
+			total_pay_groupcode
+		FROM 
+			tb_bill
+		WHERE
+			bill_code = #{billCode};
+ 	</select>
 </mapper>

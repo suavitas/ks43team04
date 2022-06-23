@@ -38,6 +38,7 @@
 									<th class="column-title">실 결제금액</th>
 									<th class="column-title">추가금</th>
 									<th class="column-title">배달료</th>
+									<th class="column-title">삭제</th>
 									<th class="bulk-actions" colspan="10">
 										<a class="antoo" style="color:#fff; font-weight:500;">전체 선택 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
 									</th>
@@ -57,6 +58,11 @@
 									<td th:text="${l.get('afterUsePointPay')}"></td>
 									<td th:text="${l.get('addPay')}"></td>
 									<td th:text="${l.get('deliveryPay')}"></td>
+									<td>
+									<a th:href="@{/admin/removeIlbanSales(billCode=${l.get('billCode')}, totalPrice=${l.get('totalPrice')}, payUsePoint=${l.get('payUsePoint')}, payMethod=${l.get('payMethod')}, payOkDate=${l.get('payOkDate')},refundCode=${l.get('refundCode')},afterUsePointPay=${l.get('afterUsePointPay')},addPay=${l.get('addPay')},deliveryPay=${l.get('deliveryPay')})}">
+										<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">삭제</button>
+									</a>
+									</td>
 								</tr>
 								<tr class="even pointer" th:unless="${not #lists.isEmpty(ilbanSalesLookUpList)}">
 									<td colspan="10" style="text-align: center; font-size: 20px;">조회된 리스트가 없습니다.</td>
