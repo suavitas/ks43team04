@@ -21,7 +21,7 @@ public class IlbanSalesService {
 	
 	public Map<String, Object> getIlbanSalesLookUp(int currentPage){
 		//페이지 내 몇개를 보여줄까? (5) 행 노출
-		   int rowPerPage = 5; 
+		   int rowPerPage = 10; 
 		   int startPageNum = 1;
 		   int endPageNum = 5;
 		   
