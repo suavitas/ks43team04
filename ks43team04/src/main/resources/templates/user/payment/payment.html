@@ -27,7 +27,7 @@
 							<col>
 						</colgroup>
 						<thead class="point-plus">
-							<tr>
+							<tr style="background-color: #e9e9e9">
 								<th scope="col" class="product">주문정보</th>
 								<th scope="col">세탁소</th>
 								<th scope="col">세탁물</th>
@@ -45,7 +45,7 @@
 								<td>수거예약</td>
 
 								<td rowspan="1">현우세탁소</td>
-								<td>2개
+								<td>&nbsp;&nbsp;&nbsp;2개 &nbsp;&nbsp;&nbsp;|
 									<button type="button" onclick="location.href='#';">상세</button>
 								</td>
 
@@ -59,232 +59,221 @@
 					</table>
 				</div>
 				<div class="destination-wrap">
-					<div class="deliver-option-wrap">
-						<div class="deliver-info">
-							<h4>
-								<span class="blind">배송지정보</span>
-							</h4>
+					<div class="deliver-info">
+						<h4>
+							<span class="blind">배송지정보</span>
+						</h4>
 
 
-							<strong class="req" title="필수입력">배송지 선택</strong>
-							<ul class="radio-inline-list">
-								<li class="-baseDeliveryInfo">
-									<input type="radio" name="delivery" id="deliveryTypeOrig" onclick='searchAddr()' checked>  
-									<label>기본배송지</label>
-								</li>
-								<li class="-newDeliveryInfo">
-									<input type="radio" name="delivery" onclick='searchAddr()' id="deliveryTypeNew">
-									<label>신규배송지</label>
-								</li>
+						<strong class="req" title="필수입력">배송지 선택</strong>
+						<ul class="radio-inline-list">
+							<li class="-baseDeliveryInfo"><input type="radio"
+								name="delivery" id="deliveryTypeOrig" onclick='searchAddr()'
+								checked> <label>기본배송지</label></li>
+							<li class="-newDeliveryInfo"><input type="radio"
+								name="delivery" onclick='searchAddr()' id="deliveryTypeNew">
+								<label>신규배송지</label></li>
 
-							</ul>
-							
-							<script type="text/javascript">
+						</ul>
+
+						<script type="text/javascript">
 				
 							
 							function searchAddr() {
 								
 								var delori = document.getElementById('deliveryTypeOrig');	
 								var delnew = document.getElementById('deliveryTypeNew'); 
-								var checked = document.createElement( "checked" )
 								
 								if (delori.checked == true) {	
-									document.getElementById('addr-list-byDB').className = 'addr-list-action';
+									document.getElementById('addr-list-byDB').className = ' ';
 									document.getElementById('addr-list-search').className = 'addr-list';
-								}else if(delnew.checked == true){
-									document.getElementById('addr-list-search').className = 'addr-list-action';
+								}else{
+									document.getElementById('addr-list-search').className = ' ';
 									document.getElementById('addr-list-byDB').className = 'addr-list';
 								}
-								
-							}
-							function searchAddrBtn(){
-								var infoUpdateBtn =document.getElementById('infoUpdateBtn'); 
-								document.getElementById('addr-list-search').className = 'addr-list-action';
-								document.getElementById('addr-list-byDB').className = 'addr-list';
-									
-								
-								
 							}
 							</script>
-							
-							<ul class="addr-list-action" style="display: block;"  id="addr-list-byDB">
-								<li>이현우 <em>(중화산동2가 232 새한그린파크 1605호)</em></li>
+						<ul class=" " id="addr-list-byDB">
+							<li>이현우 <em>(중화산동2가 232 새한그린파크 1605호)</em></li>
+							<li>010-2498-0735
+								<div class="safe-number">
+									<input type="checkbox" id="reliefPhoneNumber-1"
+										class="-click(nmp.front.order.order-sheet.checkFirstNumber(1)) -reliefPhoneNumberCheckbox-1">
+									<label for="reliefPhoneNumber-1">안심번호 서비스 사용</label>
+								</div>
+							</li>
+							<li>(54984) 전라북도 전주시 완산구 영경1길 22 (중화산동2가, 새한그린파크아파트) 1605호
+								<button type="button" id="infoUpdateBtn"
+									onclick="searchAddrBtn()">정보수정</button>
+
+							</li>
+						</ul>
+
+						<div class="addr-list" id="addr-list-search">
+							<ul id="addr-list-byDB2">
+								<li>이현우</li>
 								<li>010-2498-0735
 									<div class="safe-number">
-										<input type="checkbox" id="reliefPhoneNumber-1"
+										<input type="checkbox"
 											class="-click(nmp.front.order.order-sheet.checkFirstNumber(1)) -reliefPhoneNumberCheckbox-1">
 										<label for="reliefPhoneNumber-1">안심번호 서비스 사용</label>
 									</div>
 								</li>
-								<li>(54984) 전라북도 전주시 완산구 영경1길 22 (중화산동2가, 새한그린파크아파트) 1605호
-									<button type="button" id="infoUpdateBtn" onclick="searchAddrBtn()">정보수정</button>
-
-								</li>
 							</ul>
-							
-							<div class="addr-list" id="addr-list-search">						
-								<input type="text" id="sample4_postcode" placeholder="우편번호">
-								<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-								<input type="text" id="sample4_roadAddress" placeholder="도로명주소" style="display: none;">
-								<input type="text" id="sample4_jibunAddress" placeholder="지번주소" style="width: 230px;">
-								<span id="guide" style="color:#999;display:none"></span>
-								<input type="text" id="sample4_detailAddress" placeholder="상세주소" style="width: 230px;">
-								<input type="text" id="sample4_extraAddress" placeholder="참고항목" style="display: none;">
-							</div>
-							
-							<div class="-deliveryMemoOuter">
-								<strong class="-deliveryMemoHeader" style="display: none;">배송메모</strong>
-								<div class="-deliveryMemoInner">
+							<input type="text" id="sample4_postcode" placeholder="우편번호">
+							<input type="button" onclick="sample4_execDaumPostcode()"
+								value="우편번호 찾기"><br> <input type="text"
+								id="sample4_roadAddress" placeholder="도로명주소"
+								style="display: none;"> <input type="text"
+								id="sample4_jibunAddress" placeholder="지번주소"
+								style="width: 230px;"> <span id="guide"
+								style="color: #999; display: none"></span> <input type="text"
+								id="sample4_detailAddress" placeholder="상세주소"
+								style="width: 230px;"> <input type="text"
+								id="sample4_extraAddress" placeholder="참고항목"
+								style="display: none;">
+						</div>
 
-									<div class="comments deliveryMemo">
+						<div class="-deliveryMemoOuter">
+							<strong class="-deliveryMemoHeader" style="display: none;">배송메모</strong>
+							<div class="-deliveryMemoInner">
 
-										<div class="dropdown-wrap">
-											<input type="text" placeholder="요청사항을 직접 입력합니다"
-												title="배송 메세지" name="deliveryMemo"
-												class="deli-msg placeholder -deliveryForm deliverySingleMemo -click(nmp.front.order.order-sheet.showLatestDeliveryMemo()) -stopDefault">
-											<input type="text" placeholder="요청사항을 직접 입력합니다"
-												title="배송 메세지" name="deliveryMemos.2022062084358289"
-												class="deli-msg placeholder -deliveryForm particularDeliveryMemo deliveryProductMemo -click(nmp.front.order.order-sheet.showLatestDeliveryMemo(2022062084358289)) -stopDefault"
-												style="display: none;"> <a href="#" title="배송메세지 선택"
-												class="dropdown deliverySingleMemo -click(nmp.front.order.order-sheet.showLatestDeliveryMemo(,deliverySingleMemo)) -stopDefault"><span
-												class="dropdown-arr -stopDefault"></span></a> <a href="#"
-												title="배송메세지 선택"
-												class="dropdown deliveryProductMemo -click(nmp.front.order.order-sheet.showLatestDeliveryMemo(2022062084358289,particularDeliveryMemo)) -stopDefault"
-												style="display: none;"><span
-												class="dropdown-arr -stopDefault"></span></a>
-										</div>
-										<span class="length deliverySingleMemo"><em
-											class="deliveryMemoRealLength">0</em>/<em
-											class="deliveryMemoMaxLength">500</em></span> <span
-											class="length deliveryProductMemo" style="display: none;"><em
-											class="particularDeliveryMemoRealLength">0</em>/<em
-											class="particularDeliveryMemoMaxLength">500</em></span>
+								<div class="comments deliveryMemo">
+
+									<div class="dropdown-wrap">
+										<input type="text" placeholder="요청사항을 직접 입력합니다" title="배송 메세지"
+											name="deliveryMemo"
+											class="deli-msg placeholder -deliveryForm deliverySingleMemo -click(nmp.front.order.order-sheet.showLatestDeliveryMemo()) -stopDefault">
+										<input type="text" placeholder="요청사항을 직접 입력합니다" title="배송 메세지"
+											name="deliveryMemos.2022062084358289"
+											class="deli-msg placeholder -deliveryForm particularDeliveryMemo deliveryProductMemo -click(nmp.front.order.order-sheet.showLatestDeliveryMemo(2022062084358289)) -stopDefault"
+											style="display: none;"> <a href="#" title="배송메세지 선택"
+											class="dropdown deliverySingleMemo -click(nmp.front.order.order-sheet.showLatestDeliveryMemo(,deliverySingleMemo)) -stopDefault"><span
+											class="dropdown-arr -stopDefault"></span></a> <a href="#"
+											title="배송메세지 선택"
+											class="dropdown deliveryProductMemo -click(nmp.front.order.order-sheet.showLatestDeliveryMemo(2022062084358289,particularDeliveryMemo)) -stopDefault"
+											style="display: none;"><span
+											class="dropdown-arr -stopDefault"></span></a>
 									</div>
+									<span class="length deliverySingleMemo"><em
+										class="deliveryMemoRealLength">0</em>/<em
+										class="deliveryMemoMaxLength">500</em></span> <span
+										class="length deliveryProductMemo" style="display: none;"><em
+										class="particularDeliveryMemoRealLength">0</em>/<em
+										class="particularDeliveryMemoMaxLength">500</em></span>
 								</div>
 							</div>
-							<p class="extra-info">
-								<span class="ico-ext"></span>도서산간 지역의 경우 추후 수령 시 추가 배송비가 과금될 수
-								있습니다.
-							</p>
+						</div>
+						<p class="extra-info">
+							<span class="ico-ext"></span>도서산간 지역의 경우 추후 수령 시 추가 배송비가 과금될 수
+							있습니다.
+						</p>
 
-						</div>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						<div class="deliver-userinfo-wrap">
-							<h6>주문자 정보</h6>
-							<ul class="user-info">
-								<li>이현우</li>
-								<li class="-telNoHighlight "><span class="-memberTelNumber">010-2**8-0**5</span>
-									<button
-										class="btn -click(nmp.front.order.order-sheet.changeMemberCellphone()) -stopDefault">수정</button>
-									<!--N=a:ord.modifyphone--></li>
-								<li><span class="-memberEmailAddress">vg******@na***com</span>
-									<button
-										class="btn -click(nmp.front.order.order-sheet.changeMemberEmail()) -stopDefault">수정</button>
-									<!--N=a:ord.modifyemail--></li>
-							</ul>
-							<ul class="info-dsc">
-								<li class="info-confirm"><span
-									class="-telNoNoti -telNoDuplicated" style="display: none"><strong>휴대폰
-											번호를 확인해주세요!</strong><br>현재 등록되어 있는 휴대폰 번호가<br>다른사용자에게도 동일하게
-										등록되어<br>있습니다.<br>휴대폰 번호가 잘못 등록되어 있을 경우<br>정확한
-										주문/결제 알림을 받지 못할 수<br> 있습니다.</span> <span
-									class="-telNoNoti -telNoNeedRegistration" style="display: none"><strong>휴대폰
-											번호를 등록해주세요.</strong><br>휴대폰 번호가 등록되지 않으면 정확한<br>주문/결제 알림을 받지
-										못할 수 있습니다.</span> <span class="extra-info" style="display: block">주문자
-										정보로 결제관련 정보가 제공됩니다.<br>정확한 정보로 등록되어있는지 확인해주세요.
-								</span></li>
-							</ul>
-							<input type="hidden" name="order.memberName" value="이현우">
-							<input type="hidden" name="order.memberCellPhoneNo"
-								value="010-2**8-0**5">
-						</div>
+					</div>
+
+
+
+					<div class="deliver-userinfo-wrap">
+						<h6>주문자 정보</h6>
+						<ul class="user-info">
+							<li>이현우</li>
+							<li class="-telNoHighlight "><span class="-memberTelNumber">010-2**8-0**5</span>
+								<button type="button">수정</button></li>
+							<li><span class="-memberEmailAddress">vg******@na***com</span>
+								<button type="button">수정</button></li>
+						</ul>
+						<ul class="info-dsc">
+							<li class="info-confirm"><span
+								class="-telNoNoti -telNoDuplicated" style="display: none"><strong>휴대폰
+										번호를 확인해주세요!</strong><br>현재 등록되어 있는 휴대폰 번호가<br>다른사용자에게도 동일하게
+									등록되어<br>있습니다.<br>휴대폰 번호가 잘못 등록되어 있을 경우<br>정확한
+									주문/결제 알림을 받지 못할 수<br> 있습니다.</span> <span
+								class="-telNoNoti -telNoNeedRegistration" style="display: none"><strong>휴대폰
+										번호를 등록해주세요.</strong><br>휴대폰 번호가 등록되지 않으면 정확한<br>주문/결제 알림을 받지
+									못할 수 있습니다.</span> <span class="extra-info" style="display: block">주문자
+									정보로 결제관련 정보가 제공됩니다.<br>정확한 정보로 등록되어있는지 확인해주세요.
+							</span></li>
+						</ul>
+						<input type="hidden" name="order.memberName" value="이현우">
+						<input type="hidden" name="order.memberCellPhoneNo"
+							value="010-2**8-0**5">
 					</div>
 
 				</div>
 
-
-
-
-
-
-
-
-
 				<div class="discount-wrap">
 					<div class="discount-info">
-						<h4>
-							<span class="blind">할인 및 포인트</span>
-						</h4>
+						<div class="discount-inline-modal">
 
-						<div class="area-point-title">
-							<strong class="req short">쿠폰 할인</strong>
+							<h4 style="float: left; width: 400px;">
+								<span class="blind">할인 및 포인트</span>
+							</h4>
+
+							<!-- 모달시작 -->
+							<!-- Large modal -->
+							<button type="button" class="btn btn-primary" data-toggle="modal"
+								data-target=".bs-example-modal-lg"
+								style="float: right; margin-right: 40px;">포인트 부여 기준</button>
+
+							<div class="modal fade bs-example-modal-lg" tabindex="-1"
+								role="dialog" aria-labelledby="myLargeModalLabel"
+								aria-hidden="true">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<div class="payment-point-wrap">
+											<div class="payment-point-info">
+												<h5 style="padding-bottom: 20px;">포인트혜택 안내</h5>
+												<div class="fold_inner">
+													<table class="tb-point-view">
+														<thead>
+															<tr>
+																<th>포인트 등급</th>
+																<th>결제 시 지급되는 포인트</th>
+																<th>등급 기준</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td>welcome</td>
+																<td>결제금액의 1%</td>
+																<td>0 ~ 29999 원</td>
+															</tr>
+															<tr>
+																<td>silver</td>
+																<td>결제금액의 3%</td>
+																<td>30000 원 ~ 99999 원</td>
+															</tr>
+															<tr>
+																<td>gold</td>
+																<td>결제금액의 5%</td>
+																<td>100000 원 ~ 199999 원</td>
+															</tr>
+															<tr>
+																<td>vip</td>
+																<td>결제금액의 7%</td>
+																<td>200000 원 ~ 299999 원</td>
+															</tr>
+															<tr>
+																<td>vvip</td>
+																<td>결제금액의 9%</td>
+																<td>300000원 ~</td>
+															</tr>
+														</tbody>
+													</table>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 모달끝 -->
+
 						</div>
-						<ul class="list-discount">
-							<li class="item-discount">
-								<div class="area-label">
-									<strong>주문쿠폰</strong>
-								</div>
-								<div class="area-item">
-									<div class="input-area">
-										<input type="text" name="productCouponPrice" id="pro-coupon"
-											value="0"
-											class="-calculationDiscountTarget -productCouponDiscountAmt"
-											title="상품/주문쿠폰금액" disabled="disabled"> <span
-											class="measure">원</span>
-									</div>
-									<button class="btn disable" disabled="disabled">쿠폰사용</button>
-									<ul class="use-list">
-										<li>(사용가능 : <em>0</em>장
-										</li>
-										<li>보유 : <em>0</em>장)
-										</li>
-									</ul>
-								</div>
-							</li>
-							<li class="item-discount">
-								<div class="area-label">
-									<strong>배송비 쿠폰</strong>
-								</div>
-								<div class="area-item">
-									<div class="input-area">
-										<input type="text" name="deliveryCouponPrice" id="de-coupon"
-											title="배송비쿠폰금액" value="0"
-											class="-calculationDiscountTarget -deliveryCouponDiscountAmt"
-											disabled="disabled"> <span class="measure">원</span>
-									</div>
-									<button class="btn disable -deliveryCouponButton"
-										disabled="disabled">쿠폰사용</button>
-									<ul class="use-list">
-										<li>(사용가능 : <em class="-usableDeliveryCouponCount">0</em>장
-										</li>
-										<li>보유 : <em class="-totalDeliveryCouponCount">0</em>장)
-										</li>
-									</ul>
-								</div>
-							</li>
-						</ul>
+
 
 						<div class="area-point-title">
-							<strong class="req short"><span
-								class="sp-order ico-npaypoint"></span>포인트</strong>
+							<strong class="req"><span class="sp-order ico-npaypoint"></span>포인트</strong>
 						</div>
 
 						<ul class="list-discount type-point -naverPointArea">
@@ -299,7 +288,7 @@
 								</div>
 								<div class="area-item point-balance">
 									<div>
-										<div class="input-area">
+										<div class="input-area" style="width: 145px;">
 											<span class="value -pointBalance">8,076</span> <span
 												class="measure">원</span>
 										</div>
@@ -312,9 +301,9 @@
 									<strong>사용</strong>
 								</div>
 								<div class="area-item">
-									<div class="input-area">
-										<input type="text" id="mileage" title="네이버페이 포인트"
-											name="payAmounts.NAVER-CASH" value="0" maxlength="7"
+									<div class="input-area" style="width: 145px;">
+										<input type="text" id="mileage" name="payAmounts.NAVER-CASH"
+											value="5000" maxlength="7"
 											class="-onlyPriceTarget -calculationDiscountTarget -mileageUseAmount -subPayMeans -blur(nmp.front.order.order-sheet.calculateTotalPriceOnBlurForNaverCash()) -focus(nmp.front.order.order-sheet.checkUseWithPayLater()) -payForm">
 										<span class="measure">원</span>
 										<button type="button"
@@ -324,9 +313,9 @@
 										</button>
 										<!--N=a:ord.clearpoi-->
 									</div>
-									<button
-										class="btn type-npaypoint -pointAllUseButton -click(nmp.front.order.order-sheet.useAllSubSettle()) -stopDefault">전액사용</button>
-									<!--N=a:ord.pntall-->
+									<button class="btn type-npaypoint" style="margin-left: 10px;">
+										<a href="#">전액사용</a>
+									</button>
 									<div class="checkbox-point-all">
 										<span class="checkbox-point" id="usePointAllCheckbox">
 											<span class="checkbox-mark"></span> <input type="checkbox"
@@ -336,103 +325,20 @@
 								</div>
 							</li>
 
-							<!-- 제휴포인트 영역 -->
-							<li class="item-discount">
-								<div class="area-label point-th">
-									<strong>제휴포인트</strong>
-									<div class="area-tooltip">
-										<a href="#" title="?"
-											class="sp-order ico-que --btnInfoNaverMlg -click(nmp.front.order.order-sheet.showLayerCommon(naverPayCardPointLayer,false,false,left)) -stopDefault"></a>
-										<!--N=a:ord.pntchangeinfo-->
-									</div>
-								</div>
-								<div class="area-item point-td">
-									<div class="input-area -cardPointInputArea"
-										style="display: block;">
-										<input type="text" title="제휴포인트" value="0"
-											class="-totalCardPointAmount" name="totalCardPointAmount"
-											disabled="disabled"> <span class="measure">원</span>
-									</div>
-									<div class="check-area">
-										<span class="loading -cardPointLoading" style="display: none;"><span
-											class="ico-loading"><span class="blind">로딩 중</span></span><span
-											class="ico-more"></span></span> <a href="#"
-											class="balance-check -cardPointCheck -click(nmp.front.order.order-sheet.showCardPointConversionPopup()) -stopDefault"
-											style="display: none;">조회하기</a>
-										<!--N=a:ord.pntcheck-->
-										<!-- 제휴포인트: 포인트 조회실패 -->
-										<a href="#"
-											class="lnk-refresh -cardPointFailed -click(nmp.front.order.order-sheet.reloadCardPointArea()) -stopDefault"
-											style="display: none;"><span
-											class="sp-order ico-refresh -click(nmp.front.order.order-sheet.reloadCardPointArea()) -stopDefault"><span
-												class="blind">새로고침</span></span>조회실패<span class="ico-more"></span></a>
-									</div>
-									<button
-										class="btn -convertCardPointBtn -click(nmp.front.order.order-sheet.showCardPointConversionPopup()) -stopDefault">전환</button>
-									<!--N=a:ord.pntchange-->
-								</div>
-							</li>
+
 						</ul>
 
 
 
 
 					</div>
-					<div class="price-detail">
-						<h4>결제상세</h4>
-						<div class="sum">
-							<strong class="price-sum-title">주문금액</strong>
-							<p class="price-sum-detail">
-								<em class="-totalPayPrice">179,000</em>원
-							</p>
-						</div>
-						<ul class="calc-list">
-							<li><strong>상품금액</strong>
-								<p>
-									<em class="-totalOrderPrice">179,000</em>원
-								</p></li>
 
-							<li><strong>배송비</strong>
-								<p>
-									<dummy class="-totalDeliveryFeeSign"></dummy>
-									<em class="-totalDeliveryFee">0</em>원
-
-								</p></li>
-
-
-							<li><strong>쿠폰할인</strong>
-								<p>
-									<dummy class="-totalDiscountPriceSign"></dummy>
-									<em class="-totalDiscountPrice">0</em>원
-								</p></li>
-						</ul>
-						<ul class="total-list">
-							<li class="-mileageUsedPaymentAmountArea total-item"
-								style="display: list-item;"><strong class="price-sum-title">포인트
-									사용</strong>
-								<p class="price-sum-detail">
-									<em class="-useNaverMileagePrice">179,000</em> 원
-								</p></li>
-							<li class="-usePayLaterAmountArea" style="display: none;"><strong
-								class="price-sum-title">후불결제</strong>
-								<p class="price-sum-detail">
-									<em class="-usePayLaterAmount">0</em> 원
-								</p></li>
-							<li class="-generalPaymentAmountArea" style="display: none;">
-								<strong class="price-sum-title -generalPaymentClass"></strong>
-								<p class="price-sum-detail">
-									<em class="-generalPaymentAmount">0</em> 원
-								</p>
-							</li>
-						</ul>
-					</div>
-					<input type="hidden" class="-totalPayAmount" value="0">
 
 				</div>
 
 				<div class="payment-wrap">
 					<div class="payment-info">
-						<h4>결제수단</h4>
+						<h5>결제수단</h5>
 						<div class="payment-how">
 							<div class="paymethod-list" style="display: block;">
 
@@ -456,13 +362,13 @@
 								<div class="tab-content" id="pills-tabContent">
 									<div class="tab-pane fade show active" id="pills-home"
 										role="tabpanel" aria-labelledby="pills-home-tab">
-										
-										
-										
+
+
+
 										<div class="ec-base-table">
 											<!-- 무통장입금 -->
-											<table border="1"  id="payment-input-cash" style="">
-												
+											<table border="1" id="payment-input-cash" style="">
+
 												<colgroup>
 													<col style="width: 139px">
 													<col style="width: auto">
@@ -484,7 +390,10 @@
 																	value="bank-03:3333058679301:이현우:카카오뱅크:www.kakaobank.com">카카오뱅크:3333058679301
 																	이현우</option>
 														</select>
-														<p class="gBlank5 "><a href="#none" id="btn-bank-go"><img src="/user/assets/img/btn-bank.gif" alt="은행사이트 바로가기"></a></p></td>
+															<p class="gBlank5 ">
+																<a href="#none" id="btn-bank-go"><img
+																	src="/user/assets/img/btn-bank.gif" alt="은행사이트 바로가기"></a>
+															</p></td>
 													</tr>
 												</tbody>
 											</table>
@@ -502,18 +411,103 @@
 							</div>
 						</div>
 					</div>
+					<div class="price-detail">
+						<span style="font-size: 13px; float: right;">이현우 님의 등급 :
+							gold</span>
+						<h5>결제상세</h5>
+						<div class="sum">
+							<strong class="price-sum-title">주문금액</strong>
+							<p class="price-sum-detail">
+								<em class="-totalPayPrice">179,000</em>원
+							</p>
+						</div>
+						<ul class="calc-list">
+							<li><strong>배송비</strong>
+								<p>
+									<dummy class="-totalDeliveryFeeSign"></dummy>
+									<em class="-totalDeliveryFee">2000</em>원
+
+								</p></li>
+
+
+							<li><strong>포인트사용</strong>
+								<p>
+									<dummy class="-totalDiscountPriceSign"></dummy>
+									<em class="-totalDiscountPrice">5000</em>원
+								</p></li>
+							<li><strong>보너스포인트</strong>
+								<p style="font-size: 12px; margin-top: 3px;">결제금액의 5%</p></li>
+						</ul>
+						<ul class="total-list">
+							<li class="-mileageUsedPaymentAmountArea total-item"
+								style="display: list-item;"><strong class="price-sum-title"
+								id="price-yejung">결제 예정 금액 </strong>
+								<p class="price-sum-detail">
+									<em class="-useNaverMileagePrice">172,000</em> 원
+								</p></li>
+						</ul>
+
+
+						<ul class="total-list">
+							<li class="-mileageUsedPaymentAmountArea total-item"
+								style="display: list-item;"><strong class="price-sum-title"
+								id="price-yejung">적립 예정 포인트 </strong>
+								<p class="price-sum-detail">
+									<em class="-useNaverMileagePrice">8600</em> 원
+								</p></li>
+						</ul>
+
+					</div>
 				</div>
-							
+				<div class="agree-wrap">
+					<div class="agree-section">
+						<div class="agreement">
+							개인정보 제공 동의 : <em class="store"> Joliema </em>
+							<div class="area-detail">
+								<button type="button"
+									class="button-detail -click(nmp.front.order.order-sheet.showLayerCommon(commonOrderAgreeLayer,false,false,left)) -stopDefault">상세보기</button>
+							</div>
+						</div>
+						<div class="agreement" style="display: none;">
+							쇼핑몰 구매약관 동의
+							<div class="area-detail">
+								<button type="button"
+									class="button-detail -click(nmp.front.order.order-sheet.openMallProvision(true)) -stopDefault">상세보기</button>
+							</div>
+							<div class="sp-order agree-sub" style="display: none;">
+								<div class="s-checkbox">
+									<span
+										class="checkbox checkbox-applied -click(nmp.front.order.order-sheet.checkAllAgreed())"
+										id="mallProvisionAgree"> <span class="checkbox-mark"></span>
+										<input type="checkbox" name="isAgreeMallContract"
+										id="mall-provision-agree" class="-certificationForm -agreeBtn"
+										checked="">
+									</span> <label for="mall-provision-agree">쇼핑몰 구매 약관 동의 <a
+										href="#"
+										class="btn-bu -click(nmp.front.order.order-sheet.openMallProvision(true)) -stopDefault"
+										title="쇼핑몰 구매약관">상세보기<span class="ico-more2"></span></a></label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="area-notice">
+						<p class="notice">주문 내용을 확인하였으며, 정보 제공 등에 동의합니다.</p>
+					</div>
+				</div>
+				<div class="payment-agree-wrap">
+            <button class="btn-payment -click(nmp.front.order.order-sheet.account()) -stopDefault -doPayButton">결제하기</button>
+            <div class="shdw-bottom"></div>
+        </div>
 			</form>
 		</div>
 	</div>
-	
-	
 
 
 
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
     function sample4_execDaumPostcode() {
