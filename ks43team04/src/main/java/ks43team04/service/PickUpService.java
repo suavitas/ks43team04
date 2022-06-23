@@ -24,5 +24,11 @@ public class PickUpService {
 			
 			return getPickUpList;
 		}
+	public List<PickUp> getPickUpList(String sessionId){	
+		
+		List<PickUp> getPickUpList = pickUpMapper.getPickUpList(sessionId);
+		
+		return getPickUpList;
+	}
 	
 }
