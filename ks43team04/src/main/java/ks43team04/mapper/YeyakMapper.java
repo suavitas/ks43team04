@@ -5,8 +5,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import ks43team04.dto.IlbanSkill;
-import ks43team04.dto.Laundry;
 import ks43team04.dto.MuinMachine;
 
 @Mapper

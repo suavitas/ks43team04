@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.IlbanSalesMapper">
+	<resultMap type="Bill" id="BillResultMap">
+		<id 	column="bill_code" 						property="billCode"/>
+		<result column="order_num_groupcode" 		property="orderNumGroupcode"/>
+		<result column="total_price" 				property="totalPrice"/>
+		<result column="user_code" 					property="userCode"/>
+		<result column="pay_use_point" 				property="payUsePoint"/>
+		<result column="pay_method" 				property="payMethod"/>
+		<result column="pay_ok_date" 				property="payOkDate"/>
+		<result column="refund_code" 				property="refundCode"/>
+		<result column="after_use_point_pay" 		property="afterUsePointPay"/>
+		<result column="add_pay" 					property="addPay"/>
+		<result column="delivery_pay" 				property="deliveryPay"/>
+		<result column="total_pay_groupcode" 		property="totalPayGroupcode"/>
+	</resultMap>
+
+	<select id="ilbanSalesLookUpList" parameterType="map" resultType="map">
+		SELECT 
+			bill_code AS billCode,
+			order_num_groupcode AS orderNumGroupcode, 
+			total_price AS totalPrice, 
+			user_code AS userCode, 
+			pay_use_point AS payUsePoint, 
+			pay_method AS payMethod, 
+			pay_ok_date AS payOkDate, 
+			refund_code AS refundCode, 
+			after_use_point_pay AS afterUsePointPay, 
+			add_pay AS addPay, 
+			delivery_pay AS deliveryPay, 
+			total_pay_groupcode AS totalPayGroupcode
+		FROM 
+			tb_bill
+		WHERE 
+			order_num_groupcode
+		LIKE
+			'%laundry_code_006%'
+		LIMIT #{startRow}, #{rowPerPage};
+	</select>
+	
+	<select id="ilbanSalesLookUpCount" resultType="int">
+		SELECT
+			COUNT(bill_code)
+		FROM
+			tb_bill
+		WHERE
+			order_num_groupcode
+		LIKE
+			'%laundry_code_006%'
+	</select>
+</mapper>
