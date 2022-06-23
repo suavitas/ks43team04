@@ -40,6 +40,7 @@ public class HolidayController {
 		List<LaundryList>getLaundryList = laundryService.LaundryList(searchKey, searchValue);
 		if(getLaundryList != null)model.addAttribute("getLaundryList",getLaundryList);
 		
+		System.out.println(getLaundryList);
 		
 		return "admin/lundryHoliday";
 	}
