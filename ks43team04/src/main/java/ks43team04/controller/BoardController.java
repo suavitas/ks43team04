@@ -32,8 +32,50 @@ public class BoardController {
 		this.boardMapper = boardMapper;
 	}
 	
+	/**
+	 * Qna > 답글작성
+	 */
+	@GetMapping("/qnaComment")
+	public String qnaComment() {
+		
+		return "/user/board/qnaComment";
+	}
 	
+	/**
+	 * Qna > 삭제하기
+	 */
+	@GetMapping("/qnaRemove")
+	public String qnaRemove() {
+		
+		return "/user/board/qnaRemove";
+	}
 	
+	/**
+	 * Qna > 수정하기
+	 */
+	@GetMapping("/qnaModify")
+	public String qnaModify() {
+		
+		return "/user/board/qnaModify";
+	}
+	
+	/**
+	 * 공지사항 > 글 삭제하기 
+	 */
+	@GetMapping("/noticeRemove")
+	public String noticeRemove() {
+		
+		return "/user/board/noticeRemove";
+	}
+	
+	/**
+	 * 공지사항 > 글 수정하기
+	 */
+	@GetMapping("/noticeModify")
+	public String noticeModify() {
+		
+		return "/user/board/noticeModify";
+	}
 	
 
 	/**
