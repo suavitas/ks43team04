@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/adminDefault}">
+	  
+	  
+	  
+	<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+ 	
+ 	<div class="admin-board-list" style="margin-top: 100px;">
+ 		<h4 style="margin-bottom: 50px;">리뷰 목록 조회</h4>
+		<table id="reportList" class="table table-striped table-bordered" style="width: 100%;">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>세탁소명</th>
+					<th>별점</th>
+					<th>내용</th>
+					<th>작성자</th>
+					<th>작성일</th>
+					<th>삭제</th>	
+				</tr>
+			</thead>
+				<tr th:if="${not #lists.isEmpty(noticeList)}" th:each="l : ${noticeList}">
+					<td th:text="${l.boardParentNo}"></td>
+					<td th:text="${l.boardTitle}"></td>
+					<td th:text="${l.boardAddFile}"></td>
+					<td th:text="${l.memeberId}"></td>
+					<td th:text="${l.updateTime}"></td>
+					<td th:text="${l.boardReadCount}"></td>
+					<td><a href="#">삭제</a></td>
+				</tr>
+				<tr th:unless="${not #lists.isEmpty(noticeList)}">
+					<td colspan="7">조회된 내용이 없습니다.</td>
+				</tr>
+		</table>
+</div>
+</th:block>
+
+</html>
