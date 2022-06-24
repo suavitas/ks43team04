@@ -14,7 +14,7 @@
 
 <th:block layout:fragment="customScript">
 <script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
-		<script>
+		<script type="text/javascript">
 		// 카카오 우편번호 API 
 			function searchAddForm() {
 		        new daum.Postcode({
@@ -190,7 +190,7 @@
 					<div class="custom-control custom-checkbox" style="text-align: center; margin: 35px;">
 						<div class="mb-5" style="padding: 50px;">				
 							<a th:href="@{/admin}"><input type="button" class="btnContactSubmit" value="취소" style="width: 10%;"/></a>
-							<input type="submit" class="btnContactSubmit" id="addMemberBtn" value="회원가입" style="width: 10%;"/>
+							<input type="submit" class="btnContactSubmit" id="addMemberBtn" value="등록" style="width: 10%;"/>
 							<!-- <a th:href="@{/user/index}"><input type="button" id="addMemberLaundryBtn" value="회원가입" style="width: 15%;"/></ -->
 						</div>
 					</div>

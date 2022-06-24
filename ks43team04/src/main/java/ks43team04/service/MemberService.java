@@ -32,6 +32,12 @@ public class MemberService {
 	public int addMember(Member member) {		
 		int addMember = memberMapper.addMember(member);	
 		return addMember;	
+	}
+
+
+	public Member getStoreOwnerInfoById(String memberId) {
+		Member laundryOwner = memberMapper.getStoreOwnerInfoById(memberId);
+		return laundryOwner;
 	}		
 	
 }

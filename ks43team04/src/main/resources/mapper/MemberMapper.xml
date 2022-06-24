@@ -21,6 +21,23 @@
 		<result column="m_reg_date" 			property="memberRegDate"/>
 		<result column="admin_level_code" 		property="adminLevelCode"/>
 		<result column="regist_time" 			property="registTime"/>
+		<collection property="laundryList" ofType="Laundry">
+			<id column="laundry_code" 					property="laundryCode"/>
+			<result column="m_id" 						property="memberId"/>
+			<result column="level_code" 				property="levelCode"/>
+			<result column="laundry_name" 				property="laundryName"/>
+			<result column="laundry_state" 				property="laundryState"/>
+			<result column="laundry_post_num" 			property="laundryPostNum"/>
+			<result column="laundry_addr"				property="laundryAddr"/>
+			<result column="laundry_detail_addr"		property="laundryDetailAddr"/>
+			<result column="laundry_tel" 				property="laundryTel"/>
+			<result column="laundry_license_img" 		property="laundryLicenseImg"/>
+			<result column="laundry_img" 				property="laundryImg"/>
+			<result column="skill_licence" 				property="skillLicence"/>
+			<result column="business_number" 			property="businessNumber"/>
+			<result column="admin_level_code" 			property="adminLevelCode"/>
+			<result column="regist_time" 				property="registTime"/>
+		</collection>
 	</resultMap>
 	
 	<resultMap type="Laundry" 						id="laundryResultMap">
@@ -183,20 +200,49 @@
 		LIMIT #{startRow}, #{rowPerPage};
 	</select>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<select id="getStoreOwnerInfoById" parameterType="String" resultMap="memberResultMap">
+		/* 회원 정보조회 (대리점 정보 포함)*/
+		SELECT
+			  m.m_id
+			, m.level_code
+			, m.m_pw
+			, m.m_pw_QnA_code
+			, m.m_name
+			, m.m_birth
+			, m.m_post_num
+			, m.m_addr
+			, m.m_detail_addr
+			, m.m_phone
+			, m.m_gender
+			, m.m_out_code
+			, m.m_email
+			, m.m_reg_date
+			, m.admin_level_code
+			, m.regist_time
+			, l.laundry_code
+			, l.m_id
+			, l.level_code
+			, l.laundry_name
+			, l.laundry_state
+			, l.laundry_post_num
+			, l.laundry_addr
+			, l.laundry_detail_addr
+			, l.laundry_tel
+			, l.laundry_license_img
+			, l.laundry_img
+			, l.skill_licence
+			, l.business_number
+			, l.admin_level_code
+			, l.regist_time
+		FROM
+			tb_member AS m
+			INNER JOIN 
+			tb_laundry AS l
+			ON 
+			m.m_id = l.m_id
+		WHERE
+			m.m_id = #{memberId};
+	</select>
 	
 	<select id="getLaundryInfoById" parameterType="String" resultMap="laundryResultMap">
 		/* 판매자 사업장 상세 조회 */

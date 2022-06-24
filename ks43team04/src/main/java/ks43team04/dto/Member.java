@@ -1,5 +1,7 @@
 package ks43team04.dto;
 
+import java.util.List;
+
 public class Member {
 	private String memberId;
 	private String levelCode;
@@ -17,6 +19,8 @@ public class Member {
 	private String memberRegDate;
 	private String adminLevelCode;
 	private String registTime;
+	
+	private List<Laundry> laundryList;
 
 	public String getMemberId() {
 		return memberId;
@@ -146,6 +150,14 @@ public class Member {
 		this.registTime = registTime;
 	}
 
+	public List<Laundry> getLaundryList() {
+		return laundryList;
+	}
+
+	public void setLaundryList(List<Laundry> laundryList) {
+		this.laundryList = laundryList;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -181,8 +193,12 @@ public class Member {
 		builder.append(adminLevelCode);
 		builder.append(", registTime=");
 		builder.append(registTime);
+		builder.append(", laundryList=");
+		builder.append(laundryList);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
 
 }

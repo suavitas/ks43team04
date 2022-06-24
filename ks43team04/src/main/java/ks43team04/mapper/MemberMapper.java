@@ -10,11 +10,9 @@ import ks43team04.dto.Member;
 
 @Mapper
 public interface MemberMapper {
-
-
 	
 	//마이페이지 무인,일반 점주 사업장정보 조회 
-	public List<Laundry> LaundryList(String memberId);
+	public Member getStoreOwnerInfoById(String memberId);
 	
 	//무인, 일반 점주 회원가입
 	public int addMemberLaundry(Laundry laundry);

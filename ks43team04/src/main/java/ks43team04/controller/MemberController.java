@@ -136,8 +136,15 @@ public class MemberController {
 		
 		String sessionId = (String) session.getAttribute("SID");
 		String sessionName = (String) session.getAttribute("SNAME");
+		String sessionLevel = (String) session.getAttribute("SLEVEL");
 		
 		Member member = memberService.getMemberInfoById(sessionId);
+
+		if(sessionLevel != null && (sessionLevel.equals("level_code_02") || sessionLevel.equals("level_code_03"))) {
+			member = memberService.getStoreOwnerInfoById(sessionId);
+		}
+		
+		System.out.println(member);
 		
 		model.addAttribute("title", "마이페이지");
 		model.addAttribute("sessionName", sessionName);
