@@ -4306,14 +4306,4 @@ table {
     font-size: 0;
 
 }
-.payment-agree-wrap .btn-payment {
-    width: 198px;
-    height: 56px;
-    border: 0;
-    background-color: #F28123;
-    font-size: 18px;
-    font-weight: bold;
-    color: #fff;
-    cursor: pointer;
-    margin: 0 6px;
-}
+
