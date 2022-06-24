@@ -20,6 +20,19 @@
 		<result column="update_time" 			property="updateTime"/>
 	</resultMap>
 	
+	<resultMap type="Review" id="reviewResultMap">
+		<id		column="review_code"			property="reviewCode"/>
+		<result	column="laundry_code"			property="laundryCode"/>
+		<result	column="review_content"			property="reviewContent"/>
+		<result	column="counting_star"			property="countingStar"/>
+	</resultMap>
+	
+	
+	
+	
+	
+	
+	
 	<update id="noticeModify" parameterType="Board">
 		/* 공지 글 수정 */
 			UPDATE 

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.AsMapper">
+
+	<resultMap type="As" 								id="asResultMap">
+		<id 	column="as_code" 						property="asCode"/>
+		<result column="laundry_code" 					property="laundryCode"/>
+		<result column="as_number" 						property="asNumber"/>
+		<result column="as_state" 						property="asState"/>
+		<result column="as_title" 						property="asTitle"/>
+		<result column="as_content" 					property="asContent"/>
+		<result column="as_add_file" 					property="asAddFile"/>
+		<result column="as_add_file_name" 				property="asAddFileName"/>
+		<result column="as_add_file_change_name" 		property="asAddFileChangeName"/>
+		<result column="as_add_file_vol" 				property="asAddFileVol"/>
+		<result column="regist_time" 					property="registTime"/>
+		<result column="update_time" 					property="updateTime"/>
+		<collection property="LaundryList"         		ofType="LaundryList">
+	      <id column="laundry_code"                 	property="laundryCode"/>
+	      <result column="m_id"                      	property="memberId"/>
+	      <result column="level_code"                	property="levelCode"/>
+	      <result column="laundry_name"                 property="laundryName"/>
+	      <result column="laundry_state"                property="laundryState"/>
+	      <result column="laundry_post_num"             property="laundryPostNum"/>
+	      <result column="laundry_addr"                 property="laundryAddr"/>
+	      <result column="laundry_detail_addr"          property="laundryDetailAddr"/>
+	      <result column="laundry_tel"                	property="laundryTel"/>
+	      <result column="laundry_license_img"          property="laundryLicenseImg"/>
+	      <result column="laundry_img"                	property="laundryImg"/>
+	      <result column="skill_licence"                property="skillLicence"/>
+	      <result column="business_number"             	property="businessNumber"/>
+	      <result column="admin_level_code"             property="adminLevelCode"/>
+	      <result column="regist_time"               	property="registTime"/>
+		</collection>
+	</resultMap>
+	
+	<select id="getAsList" resultMap="asResultMap">
+	  	/* AS 목록 조회 */
+		SELECT
+			a.as_number
+			,a.as_state
+			,l.laundry_name
+			,a.as_title
+			,a.as_add_file
+			,l.m_id
+			,a.update_time
+		FROM
+			tb_as AS a
+		INNER JOIN
+			tb_laundry AS l
+		ON 
+			a.laundry_code = l.laundry_code;
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</mapper>

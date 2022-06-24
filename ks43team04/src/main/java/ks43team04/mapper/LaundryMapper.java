@@ -14,6 +14,7 @@ public interface LaundryMapper {
 
 	/* 세탁소 조회 */
 	public List<LaundryList> LaundryList(String searchKey, String searchValue);
+	public List<LaundryList> LaundryList();
 
 	/* 무인 장비 스팩 */
 	public List<MuinMachienSpec> machineSpecList();

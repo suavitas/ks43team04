@@ -22,26 +22,7 @@ public class AdminController {
 
 	}
 	
-	//고장신고접수등록
-	@GetMapping("/asForm")
-	public String asForm() {
-		return "admin/asForm";
-	}
-	
-	
-	//고장신고접수목록
-	@GetMapping("/asList")
-	public String asList() {
-		return "admin/asList";
-	}
-	
-	
-	//리뷰 목록
-	@GetMapping("/review")
-	public String review() {
-		return "admin/review";
-	}
-	
+
 
 
 	// 전 매장 장비 스팩

@@ -7,10 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import groovy.util.logging.Log;
 import ks43team04.dto.Delivery;
 import ks43team04.dto.PickUp;
-import ks43team04.dto.YearlyHoliday;
 import ks43team04.service.DeliveryService;
 import ks43team04.service.PickUpService;
 
@@ -26,6 +24,14 @@ public class PickUpController {
 		this.deliveryService = deliveryService;
 
 	}
+	
+	/*매장별 수거 배송 현황*/
+	@GetMapping("/pickUpByStore")
+	public String pickUpByStore() {
+		
+		return "admin/pickUpByStore";
+	}
+	
 
 	/* 수거 현황 */
 	@GetMapping("/pickUp")
