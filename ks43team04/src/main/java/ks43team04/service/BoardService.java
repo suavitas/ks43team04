@@ -24,6 +24,14 @@ public class BoardService {
 	}
 
 	/**
+	 * AS 접수 상세조회
+	 */
+	public As getAsDetail(String asCode) {
+		As as = asMapper.getAsDetail(asCode);
+		return as;
+	}
+	
+	/**
 	 * AS 접수 목록
 	 */
 	public List<As> getAsList(){
