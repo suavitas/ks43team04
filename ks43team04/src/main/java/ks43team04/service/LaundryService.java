@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import ks43team04.dto.Laundry;
 import ks43team04.dto.LaundryList;
 import ks43team04.dto.MuinMachienSpec;
 import ks43team04.mapper.LaundryListMapper;
@@ -38,6 +39,15 @@ public class LaundryService {
 		List<LaundryList> laundryIncomeList = laundryListMapper.laundryList();
 
 		return laundryIncomeList;
+	}
+	
+	
+	public List<Laundry> eachGoodsPriceList(){
+		
+		List<Laundry> ilbangoodsPrice = laundryMapper.eachGoodsPriceList();
+		
+		return ilbangoodsPrice;
+		
 	}
 	
 

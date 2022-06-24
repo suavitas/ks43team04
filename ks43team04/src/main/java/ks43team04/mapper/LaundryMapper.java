@@ -27,6 +27,10 @@ public interface LaundryMapper {
 
 	/* 전체 일반 세탁소 상품 가격 조회 */
 	public List<Laundry> ilbanGoodsPriceList();
+	
+	/* 매장별 일반 세탁소 상품 가격 조회 */
+	public List<Laundry> eachGoodsPriceList();
+
 
 	/* 일반세탁소 스킬 목록 */
 	public List<IlbanSkill> ilbanSkillList();
