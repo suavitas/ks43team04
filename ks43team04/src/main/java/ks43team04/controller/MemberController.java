@@ -33,10 +33,19 @@ public class MemberController {
 	}
 
 	/**
-	 * 고객 마이페이지 > 포인트 조회
+	 * 고객 마이페이지 > 내가 쓴 글 조회
 	 */
 	@GetMapping("/myPageWrite")
-	public String myPageWrite() {
+	public String myPageWrite(Model model, HttpSession session) {
+
+		String sessionId = (String) session.getAttribute("SID");
+		String sessionName = (String) session.getAttribute("SNAME");
+
+		Member member = memberService.getMemberInfoById(sessionId);
+
+		model.addAttribute("title", "마이페이지");
+		model.addAttribute("sessionName", sessionName);
+		model.addAttribute("member", member);
 
 		return "/member/myPageWrite";
 	}
@@ -45,8 +54,16 @@ public class MemberController {
 	 * 고객 마이페이지 > 포인트 조회
 	 */
 	@GetMapping("/myPagePoint")
-	public String myPagePoint() {
+	public String myPagePoint(Model model, HttpSession session) {
 
+		String sessionId = (String) session.getAttribute("SID");
+		String sessionName = (String) session.getAttribute("SNAME");
+
+		Member member = memberService.getMemberInfoById(sessionId);
+
+		model.addAttribute("title", "마이페이지");
+		model.addAttribute("sessionName", sessionName);
+		model.addAttribute("member", member);
 		return "/member/myPagePoint";
 	}
 

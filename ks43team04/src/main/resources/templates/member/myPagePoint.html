@@ -2,7 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/userDefault}">
+	  
+	  
 
+<th:block layout:fragment="customJsScript">
+	<script type="text/javascript">
+	$(document).ready(function() {
+	    $('dropdown-toggle').dropdown()});
+	
+	</script>
+</th:block>
 	  
 <!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
@@ -20,7 +29,7 @@
    <div class="list-group list-group-horizontal col-sm-12" style="margin:0 auto; text-align: center;padding-right: 0px;">
         <a th:href="@{/user/myPage}" class="list-group-item list-group-item-action">회원정보</a>
       <a href="#" class="list-group-item list-group-item-action">예약 현황</a>
-      <a th:href="@{/user/myPageDelivery}"  class="list-group-item list-group-item-action" >수거배송 조회</a>
+      <a href="#" class="list-group-item list-group-item-action">수거배송 조회</a>
       <a href="#" class="list-group-item list-group-item-action">결제 내역</a>
       <a href="#" class="list-group-item list-group-item-action">환불 내역</a>
       <a th:href="@{/user/myPagePoint}" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">포인트 조회</a>
@@ -29,7 +38,7 @@
    </div>
    
    
-   <!-- 공지사항 테이블 -->
+   <!-- 포인트 테이블 -->
    <div class="cart-section mt-150 mb-150" style="background-color: #f5f6fa; padding: 60px 0 100px; margin: 0; border-top: #e5e5e5 1px solid;">
       <div class="container">
          <div class="row" style="float: none; margin: 100 auto;">
@@ -37,20 +46,108 @@
 					
 					<!-- 포인트 조회 -->
 					<div class="cart-table-wrap">
-						
+						<div class="point-summary" style="border: 1px solid #dadddf; padding: 30px 0 30px;">
+							<ul class="point-zone" style=" display: table; width: 100%; table-layout: fixed; list-style: none; padding-left: 0px; margin-bottom: 0px;">
+								<li class="level-area" style="display: table-cell; text-align: center; vertical-align: middle;">
+									<div class="level-type">
+										<div class="level-area-title">
+											<a th:href="@{/user/myPage}">
+												<strong>[[${sessionName}]]</strong>
+											</a>
+											님의 등급은
+											<span style="display: block;">
+												
+												<strong>골드</strong>
+											</span>
+										</div>
+									</div>
+								</li>
+								<li class="point-total" style="display: table-cell; text-align: center; border-left: 1px solid #d9dadd; width: 650px;">
+									<div class="point-content" style="display: inline-block; position: relative; margin: 0 auto;">
+										<div class="point-area-title">
+											<span>보유 포인트</span>
+										</div>
+										<div class="point-amount row">
+											<i class="bi bi-coin" style="font-size: 30px;"></i>
+												<div style="padding-left: 20px; padding-right: 20px; font-size: 30px;">
+													<span>30,000</span>원
+												</div>
+								
+												
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
 					</div>
+					
+							<div class="point-list">
+								<div class="point-ask-period" style="position: relative; border: 1px solid #d9dadd; margin: -1px 0 46px; padding: 18px 27px;">
+									<table style="border-collapse: separate; text-indent: initial; border-spacing: 2px; margin: auto;">
+										<tbody style="display: table-row-group; vertical-align: middle; border-color: inherit; background-color: transparent;">
+											<tr style="table-row; vertical-align: inherit; border-color: inherit;">
+												<td>
+													<div style="margin: 0 10px;">
+														<input type="date">
+														<span>~</span>
+														<input type="date">
+													  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownBtn" style="background-color: #F28123; border-color: #F28123; margin-left: 10px;padding-top: 3px;padding-bottom: 3px;margin-bottom: 2px; ">
+													    	전체상태
+													  </button>
+													  <div class="dropdown-menu">
+													    <a class="dropdown-item" href="#">적립</a>
+													    <a class="dropdown-item" href="#">사용</a>
+													  </div>
+													</div>
+													<td class="search-click-btn"><a href="#" style="display: inline-block; width: 70px; height: 32px; margin-left:50px; middle;background-color: #F28123; border-color: #F28123; color: #fff; border-radius: 5px; text-align: center;"><span style="vertical-align: middle;">조회하기</span></a></td>
+																							
+													
+
+											</tr>			
+									
+										
+										</tbody>
+									
+									
+									</table>	
+											
+
+
+	</div>							
+											
+											
+											
+											
+											
+			
+											
+											
+											</div>
+										
+										
+										
+											<div class="point-ask-content" style="position: relative; padding: 0 0 30px;">
+												<div id="listContentArea">
+													<div>
+													</div>
+												</div>
+											</div>
+										
+										</div>
+										
+					
 				</div>
 			</div>
 		</div>
 		
 		
-		<!-- 페이징 -->
+		<!-- 페이징 
 		<div class="row">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12 text-center">
 					
-		<!-- 공지사항 등록하기  -->
+		
 		<div id="qna-btn" class="btnArea">
 			<ul style="list-style: none;">
 				<li class="qnaWrite">
@@ -69,7 +166,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 			
 		
 			
