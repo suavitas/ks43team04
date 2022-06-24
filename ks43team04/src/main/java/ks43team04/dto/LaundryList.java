@@ -22,6 +22,34 @@ public class LaundryList {
 	private String registTime;
 
 	private List<HolidayList> holidayList;
+	
+	private List<IlbanGprice> ilbanGpriceList;
+	private List<Order> orderList;
+	private List<Bill> billList;	
+	
+	public List<IlbanGprice> getIlbanGpriceList() {
+		return ilbanGpriceList;
+	}
+
+	public void setIlbanGpriceList(List<IlbanGprice> ilbanGpriceList) {
+		this.ilbanGpriceList = ilbanGpriceList;
+	}
+
+	public List<Order> getOrderList() {
+		return orderList;
+	}
+
+	public void setOrderList(List<Order> orderList) {
+		this.orderList = orderList;
+	}
+
+	public List<Bill> getBillList() {
+		return billList;
+	}
+
+	public void setBillList(List<Bill> billList) {
+		this.billList = billList;
+	}
 
 	public String getLaundryCode() {
 		return laundryCode;
@@ -186,8 +214,15 @@ public class LaundryList {
 		builder.append(registTime);
 		builder.append(", holidayList=");
 		builder.append(holidayList);
+		builder.append(", ilbanGpriceList=");
+		builder.append(ilbanGpriceList);
+		builder.append(", orderList=");
+		builder.append(orderList);
+		builder.append(", billList=");
+		builder.append(billList);
 		builder.append("]");
 		return builder.toString();
 	}
 
+	
 }
