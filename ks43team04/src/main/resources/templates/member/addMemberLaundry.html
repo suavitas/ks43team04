@@ -12,34 +12,11 @@
 </th:block>
 
 <th:block layout:fragment="customScript">
-<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
-		<script>
+<script type="text/javascript" th:src="@{/common/jquery-3.6.0.min.js}"></script>
+		<script  type="text/javascript">
 		// 카카오 우편번호 API 
-			function searchAddForm() {
-		        new daum.Postcode({
-		            oncomplete: function(data) {
-		            	
-		            	var addr = '';
-		            	var extraAddr = ''; // 참고항목 변수
-
-		                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-		                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-		                    addr = data.roadAddress;
-		                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-		                    addr = data.jibunAddress;
-		                }
-		                
-		                document.getElementById('memberPostNum').value = data.zonecode;
-		                document.getElementById('memberAddr').value = addr;
-		                // 커서를 상세주소 필드로 이동한다.
-		                document.getElementById('memberDetailAddr').focus();
-		                
-		            }
-		        }).open();
-		    }
-		</script>
-		<script>
-		function searchLundryAddForm() {
+		//세탁소 우편
+		function searchLaundryAddForm() {
 	        new daum.Postcode({
 	            oncomplete: function(data) {
 	            	
@@ -53,37 +30,58 @@
 	                    addr = data.jibunAddress;
 	                }
 	                
-	                document.getElementById('lundryPostNum').value = data.zonecode;
-	                document.getElementById('lundryAddr').value = addr;
+	                document.getElementById('laundryPostNum').value = data.zonecode;
+	                document.getElementById('laundryAddr').value = addr;
 	                // 커서를 상세주소 필드로 이동한다.
-	                document.getElementById('lundryDetailAddr').focus();
+	                document.getElementById('laundryDetailAddr').focus();
 	                
 	            }
 	        }).open();
 	    }
-		</script>
-		<script>
-			$(function(){
-				
+		//회원 우편
+		function searchAddForm() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	            	
+	            	var addr = '';
+	            	var extraAddr = ''; // 참고항목 변수
+
+	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+	                
+	                document.getElementById('laundryPostNum').value = data.zonecode;
+	                document.getElementById('laundryAddr').value = addr;
+	                // 커서를 상세주소 필드로 이동한다.
+	                document.getElementById('laundryDetailAddr').focus();
+	                
+	            }
+	        }).open();
+	    }
+		//아이디 중복체크 
+			$(function(){			
 				function validationCheck(data){
 					if(typeof data == 'undefined' || data == '' || data == null){
 						return false;
 					}
 					return true;
 				}
-				b
+				
 				$('#idCheck').click(function(){
 					var memberId = $('input[name="memberId"]').val();
 					console.log(validationCheck(memberId));
 					var vCheck = validationCheck(memberId);
 					if(vCheck){
+					console.log(vCheck)
 						$.ajax({
 							 url: '/user/idCheck'
 							,type: 'POST'
 							,data: {'memberId' : memberId}
 							,dataType: 'json'
-							,success: function(data){
-								console.log(data);
+							,success: function(data){							
 								// 화면에서 맨처음 아이디를 제외한 모든 입력하는 요소는 비활성화 (HTML 속성 추가 disabled="disabled") 
 								// 아이디 중복이 발생 하지않은 경우(회원가입 O) 입력하는 요소는 활성화
 								if(data){
@@ -119,13 +117,10 @@
 							isSubmit = false;
 							return false;
 						}
-					});
-					
-					console.log('유효여부 폼전송할건지?' + isSubmit )
-					
 					if(isSubmit) $('#addMemberLaundryForm').submit();
-				});
-			});
+				})
+			})	   
+		});
 		</script>	
 	</th:block>
 
@@ -229,7 +224,11 @@
 			           <div data-component="separator" style="border-top: 1px solid rgb(0,0,0); clear: both"></div>
 			      </div>
 			      <br>
-
+			      
+					<div class="mb-3"  style="margin: 20px auto; display: none;">
+						<label for="name"><strong>세탁소코드</strong></label> 
+							<input type="text" class="form-control" id="laundryName" name="laundryCode" style="width: 85%;"/>	
+					</div>
 					<div class="mb-3"  style="margin: 20px auto;">
 						<label for="name"><strong>세탁소 명</strong></label> 
 							<input type="text" class="form-control" id="laundryName" name="laundryName" style="width: 85%;"/>	
@@ -241,13 +240,13 @@
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
-						<label for="imgsaup"><strong>사업자등록증 사진</strong></label>
-						<input type="file" multiple="multiple" name="laundryLicenseImg" id="laundryLicenseImg" />
+						<label><strong>사업자등록증 사진</strong></label>
+						<input type="file" multiple="multiple" class="img-fluid" />
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="imgsetak"><strong>세탁소 사진</strong></label> 
-						<input type="file" multiple="multiple" name="laundryImg" id="laundryImg" />
+						<input type="file" multiple="multiple"  class="img-fluid" />
 					</div>
 					
 					<div class="mb-3" style="margin: 20px auto;">
@@ -258,15 +257,15 @@
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="addr"><strong>세탁소 주소</strong></label> 
 						<div style="display: flex;">
-							<input type="text" class="form-control" name="lundryPostNum" id="lundryPostNum" placeholder="우편번호" style="width: 85%;">
-							<button type="button" class="btn btn-success" id="postNum" style="width: 15%;" onclick="searchLundryAddForm()">우편찾기</button>				
+							<input type="text" class="form-control" name="laundryPostNum" id="laundryPostNum" placeholder="우편번호" style="width: 85%;">
+							<button type="button" class="btn btn-success" id="postNum" style="width: 15%;" onclick="searchLaundryAddForm()">우편찾기</button>				
 						</div>
 					</div>
 					<div class="mb-3" style="margin: 20px auto;">			
-							<input type="text" class="form-control" name="lundryAddr" id="lundryAddr" placeholder="주소" style="width: 85%;"/>
+							<input type="text" class="form-control" name="laundryAddr" id="laundryAddr" placeholder="주소" style="width: 85%;"/>
 					</div>
 					<div class="mb-3" style="margin: 20px auto;">			
-							<input type="text" class="form-control" name="lundryDetailAddr" id="lundryDetailAddr" placeholder="상세주소" style="width: 85%;"/>
+							<input type="text" class="form-control" name="laundryDetailAddr" id="laundryDetailAddr" placeholder="상세주소" style="width: 85%;"/>
 					</div>
 					
 					<div class="mb-3" style="margin: 50px auto;">

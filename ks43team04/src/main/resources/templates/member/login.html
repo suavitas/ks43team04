@@ -69,10 +69,8 @@
                                         <div class="form-group" style="text-align: center;"> 
                                             <input type="submit" class="btnContactSubmit" id="loginBtn" value="로그인" style="width: 45%; margin: 5%"/>                                                                                                                        
                                         </div>
-                                        <div style=" text-align: center;">                           
-                                        <a th:href="@{/user/againPwMember}" class="forget">비밀번호 찾기</a>  <!-- <a th:href="@{/user/index}" class="btnForgetPwd" value="Login">비밀번호를 잊으셨나요?</a> -->                                    
-                                        <br>
-                                       		 회원이 아니신가요? <a th:href="@{/user/addMember}" class="registration">회원가입</a>
+                                        <div style="text-align: center; padding: 4%;">                           
+                                        	<a th:href="@{/user/againPwMember}" class="forget">비밀번호 찾기</a>  <!-- <a th:href="@{/user/index}" class="btnForgetPwd" value="Login">비밀번호를 잊으셨나요?</a> -->                                    
                                        	</div>	 
                                     </form>
                                 </div>
@@ -95,7 +93,7 @@
                                             <input type="submit" class="btnContactSubmit" id="loginBtn" value="로그인" style="width: 45%; margin: 5%"/>                                                                                                                        
                                         </div>
                                         <div style="text-align: center;">
-                                        <a th:href="@{/user/againPwMember}" class="forget">비밀번호 찾기</a>  <!-- <a th:href="@{/user/index}" class="btnForgetPwd" value="Login">비밀번호를 잊으셨나요?</a> -->                                    
+                                        <a th:href="@{/user/againPwMember}" class="forget">비밀번호 찾기</a>                                    
                                         <br>
                                          	회원이 아니신가요? <a th:href="@{/user/addMember}" class="registration">회원가입</a>
                                         </div> 	
@@ -120,7 +118,7 @@
                                             <input type="submit" class="btnContactSubmit" id="LoginBtn" value="로그인" style="width: 45%; margin: 5%"/>                                                                                                                        
                                         </div>
                                         <div style="text-align: center;">
-                                        <a th:href="@{/user/againPwMember}" class="forget">비밀번호 찾기</a>  <!-- <a th:href="@{/user/index}" class="btnForgetPwd" value="Login">비밀번호를 잊으셨나요?</a> -->                                    
+                                        <a th:href="@{/user/againPwMember}" class="forget">비밀번호 찾기</a>                                    
                                         <br>
                                         	회원이 아니신가요? <a th:href="@{/user/addMemberLaundry}" class="registration">회원가입</a>
                                         </div> 	
@@ -136,16 +134,16 @@
                                 <div class="col-md-12" >
                                     <form id="loginForm" th:action="@{/user/login}" method="post">
                                         <div class="form-group" >
-                                            <input type="text" name="memberId" class="form-control" placeholder="무인점주 아이디" value="id006">  <!-- required -->
+                                            <input type="text" name="memberId" class="form-control memberId" placeholder="무인점주 아이디" value="id006">  <!-- required -->
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="memberPw" class="form-control" placeholder="무인점주 비밀번호" value="pw006" >
                                         </div>
                                         <div class="form-group" style="text-align:center;">
-                                            <input type="submit" class="btnContactSubmit" id="loginBtn" value="로그인" style="width: 45%; margin: 5%"/>                                                                                                                        
+                                            <input type="submit" class="btnContactSubmit" id="submit" value="로그인" style="width: 45%; margin: 5%"/>                                                                                                                        
                                         </div>
                                         <div style=" text-align: center;">
-                                        <a th:href="@{/user/againPwMember}" class="forget">비밀번호 찾기</a>  <!-- <a th:href="@{/user/index}" class="btnForgetPwd" value="Login">비밀번호를 잊으셨나요?</a> -->                                    
+                                        <a th:href="@{/user/againPwMember}" class="forget">비밀번호 찾기</a>                                     
                                         <br>                                    
                                         	회원이 아니신가요? <a th:href="@{/user/addMemberLaundry}" class="registration">회원가입</a>
                                         </div>
@@ -160,26 +158,11 @@
                     </div>   
                 </div>
             </div>
-		<script type="text/javascript">
-				$(function(){
-					function validationCheck(data){
-						if(typeof data == 'undefined' || data == '' || data == null){
-							return false;
-						}
-						return true;
-					}					
-					$('#loginBtn').click(function(){
-						var inputObj = $('#loginForm').find('input');
-						var memberId = $('input[name="memberId"]').val();
-						var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 검증에 사용할 정규식 변수 regExp에 저장 
-						if (memberId.match(regExp) != null) { 
-							$('#loginForm').submit();		
-							} else { 
-							Swal.fire("아이디를 다시 확인해주세요.") 
-						}	
-					});
-				});
-		</script>
+	  <script type="text/javascript" th:src="@{/common/jquery-3.6.0.min.js}"></script>
+      <script type="text/javascript">
+     
+            	
+      </script>
 		
    </th:block>
 </html>

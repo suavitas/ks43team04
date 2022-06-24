@@ -106,7 +106,7 @@
         회원정보
         </a>
       <a href="#" class="list-group-item list-group-item-action">예약 현황</a>
-      <a th:href="@{/user/myPageDelivery}" class="list-group-item list-group-item-action">수거배송 조회</a>
+      <a href="#" class="list-group-item list-group-item-action">수거배송 조회</a>
       <a href="#" class="list-group-item list-group-item-action">결제 내역</a>
       <a href="#" class="list-group-item list-group-item-action">환불 내역</a>
       <a th:href="@{/user/myPagePoint}" class="list-group-item list-group-item-action">포인트 조회</a>
@@ -169,7 +169,7 @@
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="email"><strong>주소</strong></label> 
 						<div style="display: flex;">
-							<input type="text" class="form-control" name="memberPostNum" id="memberPostNum" placeholder="우편번호" style="width: 85%;">
+							<input type="text" class="form-control" name="memberPostNum" id="memberPostNum" placeholder="우편번호" style="width: 85%;" th:value="${member.memberPostNum}" readonly="readonly">
 							<button type="button" class="btn btn-success" id="postNum" style="width: 20%;" onclick="searchAddForm()">우편찾기</button>				
 						</div>
 					</div>	
@@ -177,7 +177,7 @@
 							<input type="text" class="form-control" name="memberAddr" id="memberAddr" placeholder="주소" style="width: 85%;" th:value="${member.memberAddr}" readonly="readonly">
 					</div>
 					<div class="mb-3" style="margin: 20px auto;">			
-							<input type="text" class="form-control" name="memberDetailAddr" id="memberDetailAddr" placeholder="상세주소" style="width: 85%;">
+							<input type="text" class="form-control" name="memberDetailAddr" id="memberDetailAddr" placeholder="상세주소" style="width: 85%;" th:value="${member.memberDetailAddr}" readonly="readonly">
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
@@ -187,8 +187,8 @@
 					
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="gen"><strong>성별 선택</strong></label> 
-						<input type="checkbox" name="memberGender" value="female" style="margin: 18px;" /><strong>여성</strong>
-  						<input type="checkbox" name="memberGender" value="male" style="margin: 18px;" /><strong>남성</strong>
+						<input type="checkbox" name="memberGender" value="female" style="margin: 18px;" th:value="${member.memberGender}" /><strong>여성</strong>
+  						<input type="checkbox" name="memberGender" value="male" style="margin: 18px;"  th:value="${member.memberGender}" /><strong>남성</strong>
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
@@ -208,12 +208,11 @@
 					</form>			
 				</div>
 				 	
-				 	
 				<th:block th:if="${session.SLEVEL == 'level_code_03'}">
 				<div id="cid_1" class="form-input-wide" data-layout="full" >
 			           <div data-component="separator" style="border-top:1px solid rgb(0,0,0); clear:both;"></div>
 			    </div> 	
-						<form th:action="@{/userMember/modifySellerMyPage}" method="post">
+						<form th:action="@{/user/modifyLaundryMyPage}" method="post">
 							<table class="table table-bordered mt-6">
 				      		<thead>
 								<tr>
@@ -228,41 +227,32 @@
 
 					<div class="mb-3"  style="margin: 20px auto;">
 						<label for="name"><strong>세탁소 명</strong></label> 
-							<input type="text" class="form-control" id="laundryName" style="width: 85%;">	
+							<input type="text" class="form-control" id="laundryName" name="laundryName" style="width: 85%;" th:value="${laundry.laundryName}" readonly="readonly">	
 					</div>
 			      
 			        <div class="mb-3" style="margin: 20px auto;">
 						<label for="num"><strong>사업자등록번호</strong></label> 
-						<input type="text" class="form-control" id="businessNumber">
+						<input type="text" class="form-control" id="businessNumber" name="laundryName" th:value="${laundry.businessNumber}" readonly="readonly">
 					</div>
 
-					<div class="mb-3" style="margin: 20px auto;">
-						<label for="imgsaup"><strong>사업자등록증 사진</strong></label>
-						<input type="file" multiple="multiple" name="fileImage" id="launImg"/>
-					</div>
-
-					<div class="mb-3" style="margin: 20px auto;">
-						<label for="imgsetak"><strong>세탁소 사진</strong></label> 
-						<input type="file" multiple="multiple" name="fileImage" id="launImg"/>
-					</div>
-					
+								
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="phone"><strong>세탁소 대표번호</strong></label> 
-						<input type="text" class="form-control" id="laundryTel" placeholder="대표전화 입력" style="width: 85%;">
+						<input type="text" class="form-control" id="laundryTel" name="laundryTel" placeholder="대표전화 입력" style="width: 85%;" th:value="${laundry.laundryTel}" readonly="readonly">
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="addr"><strong>세탁소 주소</strong></label> 
 						<div style="display: flex;">
-							<input type="text" class="form-control" name="lundryPostNum" id="lundryPostNum" placeholder="우편번호" style="width: 85%;">
+							<input type="text" class="form-control" name="lundryPostNum" id="lundryPostNum" placeholder="우편번호" style="width: 85%;" th:value="${laundry.laundryPostNum}" readonly="readonly">
 							<button type="button" class="btn btn-success" id="postNum" style="width: 20%;" onclick="searchLundryAddForm()">우편찾기</button>				
 						</div>
 					</div>
 					<div class="mb-3" style="margin: 20px auto;">			
-							<input type="text" class="form-control" name="lundryAddr" id="lundryAddr" placeholder="주소" style="width: 85%;">
+							<input type="text" class="form-control" name="lundryAddr" id="lundryAddr" placeholder="주소" style="width: 85%;" th:value="${laundry.laundryAddr}" readonly="readonly">
 					</div>
 					<div class="mb-3" style="margin: 20px auto;">			
-							<input type="text" class="form-control" name="lundryDetailAddr" id="lundryDetailAddr" placeholder="상세주소" style="width: 85%;">
+							<input type="text" class="form-control" name="lundryDetailAddr" id="lundryDetailAddr" placeholder="상세주소" style="width: 85%;" th:value="${laundry.laundryDetailAddr}" readonly="readonly">
 					</div>
 					  </td>
 					</tr>
@@ -297,41 +287,45 @@
 
 					<div class="mb-3"  style="margin: 20px auto;">
 						<label for="name"><strong>세탁소 명</strong></label> 
-							<input type="text" class="form-control" id="laundryName" style="width: 85%;">	
+							<input type="text" class="form-control" id="laundryName" name="laundryName" style="width: 85%;" th:value="${laundry.laundryName}" readonly="readonly">	
 					</div>
 			      
 			        <div class="mb-3" style="margin: 20px auto;">
 						<label for="num"><strong>사업자등록번호</strong></label> 
-						<input type="text" class="form-control" id="businessNumber">
+						<input type="text" class="form-control" id="businessNumber" name="laundryName" th:value="${laundry.businessNumber}" readonly="readonly">
 					</div>
+	                <div class="mb-3" style="margin: 20px auto;">
+	                  <label><strong>사업자등록증 사진</strong></label>
+	                    <div>
+	                    	<img th:src="@{/build/images/license.jpg}" class="img-fluid" alt="Responsive image">
+	                    </div>
+	                  	<input type="file"/>
+	                </div>
+	                <div class="mb-3" style="margin: 20px auto;">
+	                  <label><strong>세탁소 사진</strong></label>
+	                    <div>
+	                    	<img th:src="@{/build/images/setak.png}" class="img-fluid" alt="Responsive image">
+	                    </div>
+	                  	<input type="file"/>
+	                </div>
 
-					<div class="mb-3" style="margin: 20px auto;">
-						<label for="imgsaup"><strong>사업자등록증 사진</strong></label>
-						<input type="file" multiple="multiple" name="fileImage" id="launImg"/>
-					</div>
-
-					<div class="mb-3" style="margin: 20px auto;">
-						<label for="imgsetak"><strong>세탁소 사진</strong></label> 
-						<input type="file" multiple="multiple" name="fileImage" id="launImg"/>
-					</div>
-					
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="phone"><strong>세탁소 대표번호</strong></label> 
-						<input type="text" class="form-control" id="laundryTel" placeholder="대표전화 입력" style="width: 85%;">
+						<input type="text" class="form-control" id="laundryTel" placeholder="대표전화 입력" style="width: 85%;" name="laundryTel" th:value="${laundry.laundryTel}" readonly="readonly">
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="addr"><strong>세탁소 주소</strong></label> 
 						<div style="display: flex;">
-							<input type="text" class="form-control" name="lundryPostNum" id="lundryPostNum" placeholder="우편번호" style="width: 85%;">
+							<input type="text" class="form-control" name="lundryPostNum" id="lundryPostNum" placeholder="우편번호" style="width: 85%;" th:value="${laundry.laundryPostNum}" readonly="readonly">
 							<button type="button" class="btn btn-success" id="postNum" style="width: 20%;" onclick="searchLundryAddForm()">우편찾기</button>				
 						</div>
 					</div>
 					<div class="mb-3" style="margin: 20px auto;">			
-							<input type="text" class="form-control" name="lundryAddr" id="lundryAddr" placeholder="주소" style="width: 85%;">
+							<input type="text" class="form-control" name="lundryAddr" id="lundryAddr" placeholder="주소" style="width: 85%;" th:value="${laundry.laundryAddr}" readonly="readonly">
 					</div>
 					<div class="mb-3" style="margin: 20px auto;">			
-							<input type="text" class="form-control" name="lundryDetailAddr" id="lundryDetailAddr" placeholder="상세주소" style="width: 85%;">
+							<input type="text" class="form-control" name="lundryDetailAddr" id="lundryDetailAddr" placeholder="상세주소" style="width: 85%;" th:value="${laundry.laundryDetailAddr}" readonly="readonly">
 					</div>
 					  </td>
 					</tr>

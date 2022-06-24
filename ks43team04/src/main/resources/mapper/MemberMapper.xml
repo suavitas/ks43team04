@@ -198,22 +198,39 @@
 	
 	
 	
+	<select id="getLaundryInfoById" parameterType="String" resultMap="laundryResultMap">
+		/* 판매자 사업장 상세 조회 */
+		SELECT
+			 l.laundry_code
+			,l.laundry_name
+			,l.business_number
+			,l.laundry_license_img
+			,l.laundry_img
+			,l.laundry_tel
+			,l.laundry_post_num
+			,l.laundry_addr
+			,l.laundry_detail_addr
+		FROM 
+			tb_laundry AS l
+		WHERE
+			l.l_laundry_name = #{laundryName};
+	</select>
 	
 	<insert id="addMemberLaundry" parameterType="Laundry">
-		/* */
-		INSERT INTO
-			tb_laundry
-		(
-			 laundry_name
+		/* 세탁소 무인, 일반 점주 회원가입 */
+		INSERT INTO tb_laundry	
+		(	laundry_code
+			,laundry_name
 			,business_number
 			,laundry_license_img
 			,laundry_img
 			,laundry_tel
-			,laundryPostNum
-			,laundryAddr
-			,laundryDetailAddr
+			,laundry_post_num
+			,laundry_addr
+			,laundry_detail_addr
 		)VALUES (
-			 #{laundryName}
+			 #{laundryCode}
+			,#{laundryName}
 			,#{businessNumber}
 			,#{laundryLicenseImg}
 			,#{laundryImg}
