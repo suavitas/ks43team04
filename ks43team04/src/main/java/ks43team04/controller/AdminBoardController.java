@@ -2,18 +2,24 @@ package ks43team04.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ks43team04.dto.As;
 import ks43team04.dto.Board;
+import ks43team04.dto.Laundry;
 import ks43team04.service.BoardService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminBoardController {
+	
+	private static final Logger log = LoggerFactory.getLogger(AdminBoardController.class);
 
 	private final BoardService boardService;
 
@@ -27,6 +33,18 @@ public class AdminBoardController {
 	public String asForm() {
 		return "admin/asForm";
 	}
+	
+	//고장신고접수 상세조회
+	@GetMapping("/asDetail")
+	public String asDetail(@RequestParam(name = "asCode", required = false) String asCode
+							, Model model) {
+		As as = boardService.getAsDetail(asCode);
+		model.addAttribute("as", as);
+		log.info("as목록 : {}", as);
+		System.out.println(as);
+		return "admin/asDetail";
+	}
+	
 	
 	
 	//고장신고접수목록

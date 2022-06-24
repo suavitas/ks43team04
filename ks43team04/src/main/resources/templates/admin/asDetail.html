@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/adminDefault}">
+	 
+	 	  	
+	  
+	<!-- 사용자정의 contents -->
+	<th:block layout:fragment="customContents">
+ 	
+ 	<div class="admin-board-list" style="margin-top: 100px;">
+ 		<h4 style="margin-bottom: 50px;">고장 신고 상세 조회</h4>
+		
+		
+			
+			
+			<!--상세 글 보기 -->	
+		<div class="x_content">
+		<table class="table table col-md-9">
+		
+		<tbody>
+			<tr>
+				<th scope="row">처리상태</th>
+				<td><span th:text="${as.asState}"></span></td>
+				<th scope="row">작성시간</th>
+				<td><span th:text="${as.updateTime}"></span></td>
+			</tr>
+			<tr th:each="l : ${as.LaundryList}" >
+				<th scope="row">세탁소명</th>
+				<td th:text="${l.laundryName}"></td>
+				<th scope="row">작성자</th>
+				<td th:text="${l.memberId}"></td>
+			</tr>
+			<tr>
+				<th scope="row">제목</th>
+				 <td><span th:text="${as.asTitle}"></span></td>
+				<th scope="row">첨부파일</th>
+				 <td><span th:text="${as.asAddFileName}"></span></td>
+			 </tr>
+			 <tr>
+				 <th scope="row">내용</th>
+				 <td colspan="3"><span th:text="${as.asContent}"></span></td>
+			</tr>
+			</tbody>
+		</table>
+		</div>
+			
+			
+			
+			
+			<div class="form-group">
+				<div class="col-md-8 col-sm-8  offset-md-2" style="margin-left: 0; text-align: center; padding-top: 50px;">
+				
+				<button type="button" class="btn btn-primary" style="margin-right: 30px;">취소</button>
+				<button type="submit" class="btn btn-success" style="margin-left: 30px;">접수</button>
+				</div>
+				</div>
+							
+			
+	
+			
+	
+		
+		
+
+
+</div>
+</th:block>
+
+</html>
