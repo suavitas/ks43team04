@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.LaundryListMapper">
+
+   <resultMap type="LaundryList"                   id="LaundryListResultMap">
+      <id column="laundry_code"                  property="laundryCode"/>
+      <result column="m_id"                      property="memberId"/>
+      <result column="level_code"                property="levelCode"/>
+      <result column="laundry_name"                property="laundryName"/>
+      <result column="laundry_state"                property="laundryState"/>
+      <result column="laundry_post_num"             property="laundryPostNum"/>
+      <result column="laundry_addr"                property="laundryAddr"/>
+      <result column="laundry_detail_addr"          property="laundryDetailAddr"/>
+      <result column="laundry_tel"                property="laundryTel"/>
+      <result column="laundry_license_img"          property="laundryLicenseImg"/>
+      <result column="laundry_img"                property="laundryImg"/>
+      <result column="skill_licence"                property="skillLicence"/>
+      <result column="business_number"             property="businessNumber"/>
+      <result column="admin_level_code"             property="adminLevelCode"/>
+      <result column="regist_time"               property="registTime"/>
+      <collection property="ilbanGpriceList"             ofType="IlbanGprice"> 
+         <id    column="ilban_G_price_code"             property="ilbanGoodsPriceCode"/>
+         <result column="laundry_code"             property="laundryCode"/>
+         <result column="ilban_skill_code"       property="ilbanSkillCode"/>
+         <result column="g_name"       property="goodsName"/>
+         <result column="g_price"          property="goodsPrice"/>
+         <result column="regist_time"          property="registTime"/>
+         <result column="g_price_use_state"          property="goodsPriceUseState"/>
+      </collection>
+      <collection property="billList"             ofType="Bill"> 
+         <id    column="bill_code"             property="billCode"/>
+         <result column="order_num_groupcode"             property="orderNumGroupcode"/>
+         <result column="total_price"       property="totalPrice"/>
+         <result column="user_code"       property="userCode"/>
+         <result column="pay_use_point"          property="payUsePoint"/>
+         <result column="pay_method"          property="payMethod"/>
+         <result column="pay_ok_date"          property="payOkDate"/>
+         <result column="refund_code"          property="refundCode"/>
+         <result column="after_use_point_pay"          property="afterUsePointPay"/>
+         <result column="add_pay"          property="addPay"/>
+         <result column="delivery_pay"          property="deliveryPay"/>
+         <result column="total_pay_groupcode"          property="totalPayGroupcode"/>
+      </collection>
+      <collection property="orderList"             ofType="Order"> 
+         <id    column="order_code"             property="orderCode"/>
+         <result column="ilban_G_price_code"             property="ilbanGPriceCode"/>
+         <result column="user_code"       property="userCode"/>
+         <result column="order_num_groupcode"       property="orderNumGroupCode"/>
+      </collection>
+   </resultMap>
+   
+  
+   
+   <select id="laundryList" resultType="Map">
+	SELECT
+		result.laundry_name,
+		SUM(result.g_price) as income
+	FROM
+		(
+     SELECT
+      l.laundry_name
+      ,gp.g_name
+      ,gp.g_price
+      ,b.total_price
+      ,b.pay_ok_date
+      FROM 
+         tb_laundry AS l
+         INNER join
+         tb_ilban_g_price AS gp
+         on
+         l.laundry_code = gp.laundry_code
+         INNER JOIN
+         tb_order AS o
+         on
+         o.ilban_G_price_code = gp.ilban_G_price_code
+         INNER JOIN 
+         tb_bill AS b
+         ON
+         b.user_code = o.user_code	
+			<trim prefix="WHERE" prefixOverrides="AND |OR ">
+				<if test="searchValue != null and searchValue != ''">
+					l.laundry_name like CONCAT('%',#{searchValue},'%') and
+				</if>
+			</trim>
+			<trim prefix="WHERE" prefixOverrides="AND |OR ">
+				<if test="searchValue  != null and searchValue != ''">
+					result.pay_ok_date BETWEEN #{searchValue}
+				</if>
+			</trim>
+			)as result
+			GROUP BY result.laundry_name;
+   </select>
+   
+   
+   
+   
+   
+</mapper>

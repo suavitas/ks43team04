@@ -1,13 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/adminDefault}">
-	  
-	  
-	  
-	<!-- 사용자정의 contents -->
-	<th:block layout:fragment="customContents">
-	<h1> 세탁소 월별 수입 넣을 겁니다</h1>
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/adminDefault}">
+
+
+
+<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+
+	<h1>세탁소 월별 수입 - 금액에 원 넣을수 있는분 좀 넣어줘요</h1>
+		<table id="reportList" class="table table-striped table-bordered" style="width: 50%;">
+			<thead>
+				<tr>
+					<th>세탁소 이름</th>
+					<th>기간별 매출</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:if="${not #lists.isEmpty(laundryIncomeList)}" th:each="l : ${laundryIncomeList}">
+				<tr>
+					<td th:text="${l.laundry_name}"></td>
+					<td th:text="${l.income}"></td>
+				</tr>
+				</th:block>		
+				<tr th:unless="${not #lists.isEmpty(laundryIncomeList)}">
+					<td colspan="8">조회된 내용이 없습니다.</td>
+				</tr>
+			</tbody>
+		</table>
 </th:block>
 
 </html>
