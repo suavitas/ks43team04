@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/userDefault}">
+
+
+
+<th:block layout:fragment="customJsScript">
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('dropdown-toggle').dropdown()
+		});
+	</script>
+</th:block>
+
+<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+	<!-- 게시판 타이틀 -->
+	<div id="container">
+		<div id="top-loca">
+			<div class="boardPath">
+				<a th:href="@{/}">HOME</a>
+				<h2 style="font-family: 'ONE-Mobile-Regular'">[[${sessionName}]]</h2>
+				<span>님의 마이페이지</span>
+			</div>
+		</div>
+	</div>
+
+	<!-- 게시판 탭  -->
+	<div class="list-group list-group-horizontal col-sm-12"
+		style="margin: 0 auto; text-align: center; padding-right: 0px;">
+		<a th:href="@{/user/myPage}"
+			class="list-group-item list-group-item-action">회원정보</a> <a href="#"
+			class="list-group-item list-group-item-action">예약 현황</a> <a href="#"
+			class="list-group-item list-group-item-action">수거배송 조회</a> <a
+			href="#" class="list-group-item list-group-item-action">결제 내역</a> <a
+			th:href="@{/user/myPageRefund}"
+			class="list-group-item list-group-item-action active"
+			style="background-color: #F28123; border-color: #F28123;"
+			aria-current="true">환불 내역</a> <a th:href="@{/user/myPagePoint}"
+			class="list-group-item list-group-item-action">포인트 조회</a> <a
+			th:href="@{/user/myPageWrite}"
+			class="list-group-item list-group-item-action">내가 쓴 글</a> <a href="#"
+			class="list-group-item list-group-item-action">리뷰?</a>
+	</div>
+	<style>
+.date-select-div {
+	padding: 20px;
+	margin-left: auto;
+	margin-top: 20px;
+	border: 5px solid #f5f5f5;
+	color: #404040;
+	display: block;
+	min-inline-size: min-content;
+}
+
+#OrderHistoryForm input {
+	font-size: 12px;
+	letter-spacing: 0.03em;
+	height: 100%;
+	line-height: 30px;
+	padding: 0 10px;
+	border: 0;
+	border-radius: 5px;
+	background: #f5f5f5;
+	width: 120px;
+	vertical-align: middle;
+	outline: 0;
+}
+
+.ec-base-box #select {
+	line-height: 30px;
+	width: auto;
+	height: 100%;
+	background: none;
+	font-size: 12px;
+	padding: 0;
+	border: 0;
+	border-radius: 5px;
+}
+
+.ec-base-box table {
+	border-left: 1px solid #f5f5f5;
+	border-right: 1px solid #f5f5f5;
+	position: relative;
+	margin: 10px 0 0;
+	border: 1px solid #eaeaea;
+	border-top: 0;
+	line-height: 1.5;
+	width: 100%;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+caption {
+	display: none;
+	text-align: -webkit-center;
+}
+
+colgroup {
+	display: table-column-group;
+}
+
+col {
+	display: table-column;
+}
+
+thead {
+	display: table-header-group;
+	vertical-align: middle;
+	border-color: inherit;
+}
+
+th {
+	border: 0;
+	border-top: 1px solid #f0f0f0;
+	padding: 13px 10px 12px 10px;
+	color: #777;
+	font-size: 11px;
+	vertical-align: middle;
+	font-weight: normal;
+	background: #fbfafa;
+	word-break: break-all;
+	word-wrap: break-word;
+	text-align: center;
+}
+
+div.ec-base-help {
+	margin: 20px 0;
+	border: 1px solid #f0f0f0;
+	line-height: 18px;
+}
+
+.ec-base-help .inner {
+	padding: 0 9px 12px;
+}
+
+.ec-base-help ol {
+	margin: 15px 0 0 11px;
+}
+
+.ec-base-help ol li {
+	font-size: 11px;
+	margin: 1px 0 3px 0;
+	padding: 0 0 0 25px;
+	color: #777;
+	list-style: none;
+	display: list-item;
+	text-align: -webkit-match-parent;
+}
+
+
+.sp-no-result-found p {
+    text-align: left;
+    text-indent: -9999px;
+    display: inline-block;
+    width: 150px;
+    height: 250px;
+    background-image: url("../../static/user/assets/img/no-result-found.gif");
+}
+.sp-no-result-found {
+    position: relative;
+    text-align: center;
+}
+</style>
+	<div class="mp-refund-container">
+		<div class="mp-refund-wrap">
+			<form method="GET" id="OrderHistoryForm" name="OrderHistoryForm"
+				style="margin: 0 auto; width: 100%;">
+				<div class="xans-element- xans-myshop xans-myshop-orderhistoryhead ">
+					<fieldset class="ec-base-box">
+						<div class="date-select-div">
+							<input type="date"> <span>~</span> <input type="date">
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="#">적립</a> <a
+									class="dropdown-item" href="#">사용</a>
+							</div>
+							<select id="select"
+								style="background-color: #f5f5f5; border-color: #F28123; padding: 5px 10px 5px; margin-left: 15px;">
+								<option value="">전체</option>
+								<option value="">완료</option>
+								<option value="">진행중</option>
+							</select>
+						</div>
+						<div class="ec-base-help">
+							<div class="inner">
+								<ol>
+									<li class="item1"><p style="font-weight: 500; display: inline;">1. </p> 기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 지난 주문내역을
+										조회하실 수 있습니다.</li>
+									<li class="item2"><p style="font-weight: 500; display: inline;">2. </p>주문번호를 클릭하시면 해당 주문에 대한 상세내역을 확인하실 수 있습니다.</li>
+									<li class="item3 displaynone"><p style="font-weight: 500; display: inline;">3. </p>취소/교환/반품 신청은 주문완료일 기준 일까지
+										가능합니다.</li>
+								</ol>
+							</div>
+						</div>
+						<table style="margin: 0 auto;">
+							<caption>취소/반품/교환</caption>
+							<colgroup>
+								<col style="width: 135px;">
+								<col style="width: 93px;">
+								<col style="width: auto;">
+								<col style="width: 61px;">
+								<col style="width: 111px;">
+								<col style="width: 111px;">
+								<col style="width: 111px;">
+							</colgroup>
+							<thead>
+
+
+								<tr>
+									<th scope="col">주문일자<br>[주문번호]
+									</th>
+									<th scope="col">이미지</th>
+									<th scope="col">상품정보</th>
+									<th scope="col">수량</th>
+									<th scope="col">상품구매금액</th>
+									<th scope="col">주문처리상태</th>
+									<th scope="col">취소/교환/반품</th>
+								</tr>
+
+							</thead>
+
+						</table>
+						<div class="sp-no-result-found ">
+							<p>주문 내역이 없습니다.</p>
+						</div>
+					</fieldset>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+</th:block>
+</html>

@@ -32,7 +32,23 @@ public class MemberController {
 		this.memberService = memberService;
 		this.memberMapper = memberMapper;
 	}
+	/**
+	 * 고객 마이페이지 > 환불내역
+	 */
+	@GetMapping("/myPageRefund")
+	public String myPageRefund(Model model, HttpSession session) {
 
+		String sessionId = (String) session.getAttribute("SID");
+		String sessionName = (String) session.getAttribute("SNAME");
+
+		Member member = memberService.getMemberInfoById(sessionId);
+
+		model.addAttribute("title", "마이페이지");
+		model.addAttribute("sessionName", sessionName);
+		model.addAttribute("member", member);
+
+		return "/member/myPageRefund";
+	}
 	/**
 	 * 고객 마이페이지 > 내가 쓴 글 조회
 	 */
