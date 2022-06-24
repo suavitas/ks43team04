@@ -5,9 +5,13 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import ks43team04.dto.Board;
+import ks43team04.dto.Review;
 
 @Mapper
 public interface BoardMapper {
+	
+	// 리뷰 조회
+	public List<Review> getReviewList();
 
 	// 공지사항 글 수정
 	public int noticeModify(Board board);

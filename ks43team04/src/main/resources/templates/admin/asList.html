@@ -63,18 +63,24 @@
 					<th>작성일</th>					
 				</tr>
 			</thead>
-				<tr th:if="${not #lists.isEmpty(noticeList)}" th:each="l : ${noticeList}">
-					<td th:text="${l.boardParentNo}"></td>
-					<td><a href="#">대기</a></td>
-					<td th:text="${l.boardSecret}"></td>
-					<td th:text="${l.boardTitle}"></td>
-					<td th:text="${l.boardAddFile}"></td>
-					<td th:text="${l.memeberId}"></td>
+			<tbody>
+			<th:block th:if="${not #lists.isEmpty(asList)}" th:each="l : ${asList}">
+				<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl, status :${l.LaundryList}">
+					<td th:text="${l.asNumber}"></td> <!-- status.count -->
+					<td th:text="${l.asState}"></td>
+					<td th:text="${sl.laundryName}"></td>
+					<td th:text="${l.asTitle}"></td>
+					<td th:text="${l.asAddFile}"></td>
+					<td th:text="${sl.memberId}"></td>
 					<td th:text="${l.updateTime}"></td>					
 				</tr>
-				<tr th:unless="${not #lists.isEmpty(noticeList)}">
+				<tr th:unless="${not #lists.isEmpty(asList)}">
 					<td colspan="7">조회된 내용이 없습니다.</td>
 				</tr>
+				
+				
+					</th:block>
+				</tbody>
 		</table>
 			</div>
 			
@@ -92,18 +98,25 @@
 					<th>작성일</th>					
 				</tr>
 			</thead>
-				<tr th:if="${not #lists.isEmpty(noticeList)}" th:each="l : ${noticeList}">
-					<td th:text="${l.boardParentNo}"></td>
-					<td><a href="#">대기</a></td>
-					<td th:text="${l.boardSecret}"></td>
-					<td th:text="${l.boardTitle}"></td>
-					<td th:text="${l.boardAddFile}"></td>
-					<td th:text="${l.memeberId}"></td>
+			<tbody>
+			<th:block th:if="${not #lists.isEmpty(asList)}" th:each="l : ${asList}">
+				<tr th:if="${not #lists.isEmpty(LaundryList)}" th:each="sl, status :${LaundryList}">
+					<td th:text="${l.<td th:text=}"></td>
+					<td th:text="${l.asState}"></td>
+					<td th:text="${sl.laundryName}"></td>
+					<td th:text="${l.asTitle}"></td>
+					<td th:text="${l.asAddFile}"></td>
+					<td th:text="${sl.memberId}"></td>
 					<td th:text="${l.updateTime}"></td>					
 				</tr>
-				<tr th:unless="${not #lists.isEmpty(noticeList)}">
+				<tr th:unless="${not #lists.isEmpty(asList)}">
 					<td colspan="7">조회된 내용이 없습니다.</td>
 				</tr>
+			</th:block>	
+				<tr th:unless="${not #lists.isEmpty(LaundryList)}">
+						<td colspan="7">조회된 내용이 없습니다.</td>
+					</tr>
+				</tbody>
 		</table>
 			</div>
 			
@@ -121,18 +134,25 @@
 					<th>작성일</th>					
 				</tr>
 			</thead>
-				<tr th:if="${not #lists.isEmpty(noticeList)}" th:each="l : ${noticeList}">
-					<td th:text="${l.boardParentNo}"></td>
-					<td><a href="#">대기</a></td>
-					<td th:text="${l.boardSecret}"></td>
-					<td th:text="${l.boardTitle}"></td>
-					<td th:text="${l.boardAddFile}"></td>
-					<td th:text="${l.memeberId}"></td>
+			<tbody>
+			<th:block th:if="${not #lists.isEmpty(asList)}" th:each="l : ${asList}">
+				<tr th:if="${not #lists.isEmpty(LaundryList)}" th:each="sl, status :${LaundryList}">
+					<td th:text="${l.<td th:text=}"></td>
+					<td th:text="${l.asState}"></td>
+					<td th:text="${sl.laundryName}"></td>
+					<td th:text="${l.asTitle}"></td>
+					<td th:text="${l.asAddFile}"></td>
+					<td th:text="${sl.memberId}"></td>
 					<td th:text="${l.updateTime}"></td>					
 				</tr>
-				<tr th:unless="${not #lists.isEmpty(noticeList)}">
+				<tr th:unless="${not #lists.isEmpty(asList)}">
 					<td colspan="7">조회된 내용이 없습니다.</td>
 				</tr>
+			</th:block>	
+				<tr th:unless="${not #lists.isEmpty(LaundryList)}">
+						<td colspan="7">조회된 내용이 없습니다.</td>
+					</tr>
+				</tbody>
 		</table>
 			</div>
 			
@@ -150,18 +170,25 @@
 					<th>작성일</th>					
 				</tr>
 			</thead>
-				<tr th:if="${not #lists.isEmpty(noticeList)}" th:each="l : ${noticeList}">
-					<td th:text="${l.boardParentNo}"></td>
-					<td><a href="#">대기</a></td>
-					<td th:text="${l.boardSecret}"></td>
-					<td th:text="${l.boardTitle}"></td>
-					<td th:text="${l.boardAddFile}"></td>
-					<td th:text="${l.memeberId}"></td>
+			<tbody>
+			<th:block th:if="${not #lists.isEmpty(asList)}" th:each="l : ${asList}">
+				<tr th:if="${not #lists.isEmpty(LaundryList)}" th:each="sl, status :${LaundryList}">
+					<td th:text="${l.<td th:text=}"></td>
+					<td th:text="${l.asState}"></td>
+					<td th:text="${sl.laundryName}"></td>
+					<td th:text="${l.asTitle}"></td>
+					<td th:text="${l.asAddFile}"></td>
+					<td th:text="${sl.memberId}"></td>
 					<td th:text="${l.updateTime}"></td>					
 				</tr>
-				<tr th:unless="${not #lists.isEmpty(noticeList)}">
+				<tr th:unless="${not #lists.isEmpty(asList)}">
 					<td colspan="7">조회된 내용이 없습니다.</td>
 				</tr>
+			</th:block>	
+				<tr th:unless="${not #lists.isEmpty(LaundryList)}">
+						<td colspan="7">조회된 내용이 없습니다.</td>
+					</tr>
+				</tbody>
 		</table>
 			</div>
 			

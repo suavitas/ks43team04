@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ks43team04.dto.As;
 import ks43team04.dto.Board;
+import ks43team04.mapper.AsMapper;
 import ks43team04.mapper.BoardMapper;
 
 @Service
@@ -14,11 +16,24 @@ import ks43team04.mapper.BoardMapper;
 public class BoardService {
 
 	private final BoardMapper boardMapper;
+	private final AsMapper asMapper;
 
-	public BoardService(BoardMapper boardMapper) {
+	public BoardService(BoardMapper boardMapper, AsMapper asMapper) {
 		this.boardMapper = boardMapper;
+		this.asMapper = asMapper;
 	}
 
+	/**
+	 * AS 접수 목록
+	 */
+	public List<As> getAsList(){
+		List<As> asList = asMapper.getAsList();
+		return asList;
+	}
+	
+	
+	
+	
 	/**
 	 * 공지사항 입력
 	 * 
