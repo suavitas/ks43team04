@@ -690,7 +690,62 @@ nav.main-menu ul>li:hover ul {
 nav.main-menu ul li:last-child a {
 	display: inline-block;
 }
+nav.main-menu-top ul ul.sub-menu {
+	position: absolute;
+	background-color: #fff;
+	width: 220px;
+	padding: 10px 10px;
+	margin: 0;
+	left: 0;
+	top: 50px;
+	border-radius: 3px;
+	-webkit-transition: 0.3s;
+	-o-transition: 0.3s;
+	transition: 0.3s;
+	opacity: 0;
+	visibility: hidden;
+	-webkit-box-shadow: 0 0 20px #555555;
+	box-shadow: 0 0 20px #555555;
+	z-index: 1;
+}
 
+
+nav.main-menu-top  ul ul.sub-menu li {
+	display: block;
+	text-align: left;
+}
+
+nav.main-menu-top  ul ul.sub-menu li a {
+	color: #555;
+	font-weight: 600;
+	padding: 7px 10px;
+	font-size: 13px;
+}
+
+nav.main-menu-top ul>li:hover ul {
+	opacity: 1;
+	visibility: visible;
+}
+nav.main-menu-top ul ul.sub-menu li {
+	display: block;
+	text-align: left;
+}
+
+nav.main-menu-top ul ul.sub-menu li a {
+	color: #555;
+	font-weight: 600;
+	padding: 7px 10px;
+	font-size: 13px;
+}
+
+nav.main-menu-top ul>li:hover ul {
+	opacity: 1;
+	visibility: visible;
+}
+
+nav.main-menu-top ul li:last-child a {
+	display: inline-block;
+}
 .site-logo {
 	float: left;
 	max-width: 150px;
