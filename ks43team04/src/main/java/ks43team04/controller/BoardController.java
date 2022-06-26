@@ -112,34 +112,31 @@ public class BoardController {
 	 * Q&A > 문의하기
 	 */
 	@GetMapping("/qnaWrite")
-	public String qnaWrite() {
-
+	public String qnaWrite(Model model) {
+		model.addAttribute("title", "문의등록");
+		model.addAttribute("titleName", "문의등록");
 		return "/user/board/qnaWrite";
 	}
-
-	/**
-	 * 공지사항 > 상세글 조회
-	 */
-	@GetMapping("/noticeDetail")
-	public String noticeDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode,
-			@RequestParam(name = "boardParentNo", required = false) int boardParentNo, Model model) {
-
-		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardParentNo);
-
-		model.addAttribute("board", board);
-
-		return "/user/board/noticeDetail";
+	@PostMapping("/qnaWrite")
+	public String qnaWrite(Board board, HttpSession session) {
+		String sessionId = (String) session.getAttribute("SID");
+		boardService.qnaWrite(board, sessionId);
+		log.info("문의사항 등록 data : {}", board);
+		log.info("화면에서 입력받은 data : P{, boardCode");
+		return "redirect:/user/board/qnaList";
 	}
+	
+
 
 	/**
 	 * Q&A > 상세글 조회
 	 */
 
 	@GetMapping("/qnaDetail")
-	public String qnaDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode,
-			@RequestParam(name = "boardParentNo", required = false) int boardParentNo, Model model) {
+	public String qnaDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
+							,@RequestParam(name = "totalNo", required = false) int totalNo, Model model) {
 
-		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardParentNo);
+		Board board = boardService.getBoardDetailByCode(boardMenuCode, totalNo);
 
 		model.addAttribute("board", board);
 		return "/user/board/qnaDetail";
@@ -158,7 +155,6 @@ public class BoardController {
 		log.info("문의사항 서비스 이용 목록 : {}", qnaServiceList);
 		log.info("문의사항 수거 배송 목록 : {}", qnaPickupList);
 		log.info("문의사항 결제 포인트 목록 : {}", qnaPayList);
-		log.info("문의사항 서비스 불만족 목록 : {}", qnaComplainList);
 
 		model.addAttribute("qnaServiceList", qnaServiceList);
 		model.addAttribute("qnaPickupList", qnaPickupList);
@@ -183,10 +179,19 @@ public class BoardController {
 	public String eventList() {
 		return "/user/board/eventList";
 	}
+	
+	/*공지사항 > 상세글 조회*/
+	@GetMapping("/noticeDetail")
+	public String noticeDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
+								,@RequestParam(name = "totalNo", required = false) int totalNo 
+								,Model model) {
 
-	/**
-	 * 메인 > 공지사항 목록 조회
-	 */
+		Board board = boardService.getBoardDetailByCode(boardMenuCode, totalNo);
+		model.addAttribute("board", board);
+		return "/user/board/noticeDetail";
+	}
+
+	/*공지사항 목록 조회*/
 	@GetMapping("/noticeList")
 	public String noticeList(Model model) {
 		List<Board> noticeList = boardService.getNoticeList();

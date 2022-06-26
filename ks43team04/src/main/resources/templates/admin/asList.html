@@ -69,7 +69,7 @@
 					<td th:text="${l.asNumber}"></td> <!-- status.count -->
 					<td th:text="${l.asState}"></td>
 					<td th:text="${sl.laundryName}"></td>
-					<td><strong><a th:href="@{/admin/asDetail(asCode=${l.asCode})}" th:text="${l.asTitle}"></strong></a></td>
+					<td><strong><a th:href="@{/admin/asDetail(asCode=${l.asCode})}" th:text="${l.asTitle}"></a></strong></td>
 					<td th:text="${l.asAddFile}"></td>
 					<td th:text="${sl.memberId}"></td>
 					<td th:text="${l.updateTime}"></td>					
@@ -89,22 +89,22 @@
 			<table id="reportList" class="table table-striped table-bordered" style="width: 100%;">
 			<thead>
 				<tr>
-					<th>번호</th>
-					<th>진행상태</th>	
-					<th>세탁소명</th>	
-					<th>제목</th>
-					<th>첨부</th>
-					<th>작성자</th>
-					<th>작성일</th>					
+					<th style="width: 5%;">번호</th>
+					<th style="width: 10%;">진행상태</th>	
+					<th style="width: 15%;">세탁소명</th>	
+					<th style="width: 35%;">제목</th>
+					<th style="width: 5%;">첨부</th>
+					<th style="width: 10%;">작성자</th>
+					<th style="width: 20%;">작성일</th>					
 				</tr>
 			</thead>
 			<tbody>
 			<th:block th:if="${not #lists.isEmpty(asList)}" th:each="l : ${asList}">
-				<tr th:if="${not #lists.isEmpty(LaundryList)}" th:each="sl, status :${LaundryList}">
-					<td th:text="${l.<td th:text=}"></td>
+				<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl, status :${l.LaundryList}">
+					<td th:text="${l.asNumber}"></td> <!-- status.count -->
 					<td th:text="${l.asState}"></td>
 					<td th:text="${sl.laundryName}"></td>
-					<td th:text="${l.asTitle}"></td>
+					<td><strong><a th:href="@{/admin/asDetail(asCode=${l.asCode})}" th:text="${l.asTitle}"></a></strong></td>
 					<td th:text="${l.asAddFile}"></td>
 					<td th:text="${sl.memberId}"></td>
 					<td th:text="${l.updateTime}"></td>					
@@ -112,10 +112,9 @@
 				<tr th:unless="${not #lists.isEmpty(asList)}">
 					<td colspan="7">조회된 내용이 없습니다.</td>
 				</tr>
-			</th:block>	
-				<tr th:unless="${not #lists.isEmpty(LaundryList)}">
-						<td colspan="7">조회된 내용이 없습니다.</td>
-					</tr>
+				
+				
+					</th:block>
 				</tbody>
 		</table>
 			</div>

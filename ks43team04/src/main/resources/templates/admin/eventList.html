@@ -40,18 +40,18 @@
 								<th>삭제</th>	
 							</tr>
 						</thead>
-							<tr th:if="${not #lists.isEmpty(noticeList)}" th:each="l : ${noticeList}">
-								<td th:text="${l.boardParentNo}"></td>
-								<td th:text="${l.boardParentNo}"></td>
-								<td th:text="${l.boardTitle}"></td>
-								<td th:text="${l.boardAddFile}"></td>
-								<td th:text="${l.memeberId}"></td>
-								<td th:text="${l.updateTime}"></td>
-								<td th:text="${l.boardReadCount}"></td>
+							<tr th:if="${not #lists.isEmpty(eventList)}" th:each="l : ${eventList}">
+								<td th:text="${l.eventNo}"></td>
+								<td th:text="${l.eventState}"></td>
+								<td><strong><a th:href="@{/admin/eventDetail(eventCode=${l.eventCode})}" th:text="${l.eventTitle}"></a></strong></td>
+								<td th:text="${l.eventAddFile}"></td>
+								<td th:text="${l.memberId}"></td>
+								<td th:text="${l.registTime}"></td>
+								<td th:text="${l.eventReadCount}"></td>
 								<td><a href="#">수정</a></td>
 								<td><a href="#">삭제</a></td>
 							</tr>
-							<tr th:unless="${not #lists.isEmpty(noticeList)}">
+							<tr th:unless="${not #lists.isEmpty(eventList)}">
 								<td colspan="9">조회된 내용이 없습니다.</td>
 							</tr>
 					</table>
@@ -74,18 +74,18 @@
 								<th>삭제</th>	
 							</tr>
 						</thead>
-							<tr th:if="${not #lists.isEmpty(noticeList)}" th:each="l : ${noticeList}">
-								<td th:text="${l.boardParentNo}"></td>
-								<td th:text="${l.boardParentNo}"></td>
-								<td th:text="${l.boardTitle}"></td>
-								<td th:text="${l.boardAddFile}"></td>
-								<td th:text="${l.memeberId}"></td>
-								<td th:text="${l.updateTime}"></td>
-								<td th:text="${l.boardReadCount}"></td>
+							<tr th:if="${not #lists.isEmpty(runEventList)}" th:each="l : ${runEventList}">
+								<td th:text="${l.eventNo}"></td>
+								<td th:text="${l.eventState}"></td>
+								<td><strong><a th:href="@{/admin/eventDetail(eventCode=${l.eventCode})}" th:text="${l.eventTitle}"></a></strong></td>
+								<td th:text="${l.eventAddFile}"></td>
+								<td th:text="${l.memberId}"></td>
+								<td th:text="${l.registTime}"></td>
+								<td th:text="${l.eventReadCount}"></td>
 								<td><a href="#">수정</a></td>
 								<td><a href="#">삭제</a></td>
 							</tr>
-							<tr th:unless="${not #lists.isEmpty(noticeList)}">
+							<tr th:unless="${not #lists.isEmpty(runEventList)}">
 								<td colspan="9">조회된 내용이 없습니다.</td>
 							</tr>
 					</table>
@@ -109,18 +109,18 @@
 								<th>삭제</th>	
 							</tr>
 						</thead>
-							<tr th:if="${not #lists.isEmpty(noticeList)}" th:each="l : ${noticeList}">
-								<td th:text="${l.boardParentNo}"></td>
-								<td th:text="${l.boardParentNo}"></td>
-								<td th:text="${l.boardTitle}"></td>
-								<td th:text="${l.boardAddFile}"></td>
-								<td th:text="${l.memeberId}"></td>
-								<td th:text="${l.updateTime}"></td>
-								<td th:text="${l.boardReadCount}"></td>
+							<tr th:if="${not #lists.isEmpty(endEventList)}" th:each="l : ${endEventList}">
+								<td th:text="${l.eventNo}"></td>
+								<td th:text="${l.eventState}"></td>
+								<td><strong><a th:href="@{/admin/eventDetail(eventCode=${l.eventCode})}" th:text="${l.eventTitle}"></a></strong></td>
+								<td th:text="${l.eventAddFile}"></td>
+								<td th:text="${l.memberId}"></td>
+								<td th:text="${l.registTime}"></td>
+								<td th:text="${l.eventReadCount}"></td>
 								<td><a href="#">수정</a></td>
 								<td><a href="#">삭제</a></td>
 							</tr>
-							<tr th:unless="${not #lists.isEmpty(noticeList)}">
+							<tr th:unless="${not #lists.isEmpty(endEventList)}">
 								<td colspan="9">조회된 내용이 없습니다.</td>
 							</tr>
 					</table>

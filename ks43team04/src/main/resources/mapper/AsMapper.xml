@@ -36,6 +36,41 @@
 		</collection>
 	</resultMap>
 	
+	
+	<insert id="asForm" parameterType="As">
+		/* AS 작성 */
+		INSERT INTO tb_as
+			(as_code
+			,laundry_code
+			,as_number
+			,as_state
+			,as_title
+			,as_content
+			,as_add_file
+			,as_add_file_name
+			,as_add_file_change_name
+			,as_add_file_vol
+			,regist_time
+			,update_time)
+		VALUES (
+			(SELECT
+			CONCAT('as_code','_',max(CAST(substring(as_code,9)+1 AS DECIMAL))) AS as_code from tb_as ALIAS_FOR_SUBQUERY)
+		, 'laundry_code_002'		
+		, (SELECT
+			IFNULL(MAX(a.as_number), 0)+1
+			FROM
+			tb_as AS a)
+		, '대기'		
+		, #{asTitle}
+		, #{asContent}
+		, '0'
+		, '0'
+		, '0'
+		, '0'
+		, NOW()
+		, NOW());
+	</insert>
+	
 	<select id="getAsDetail" resultMap="asResultMap">
 		/*AS 상세 조회*/
 		SELECT

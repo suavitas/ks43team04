@@ -26,11 +26,11 @@
 				</tr>
 			</thead>
 				<tr th:if="${not #lists.isEmpty(noticeList)}" th:each="l : ${noticeList}">
-					<td th:text="${l.boardParentNo}"></td>
-					<td th:text="${l.boardTitle}"></td>
+					<td th:text="${l.totalNo}"></td>
+					<td><a th:href="@{/admin/noticeDetail(boardMenuCode=${l.boardMenuCode},totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a></td>
 					<td th:text="${l.boardAddFile}"></td>
 					<td th:text="${l.memeberId}"></td>
-					<td th:text="${l.updateTime}"></td>
+					<td th:text="${l.registTime}"></td>
 					<td th:text="${l.boardReadCount}"></td>
 					<td><a href="#">수정</a></td>
 					<td><a href="#">삭제</a></td>

@@ -65,20 +65,24 @@
 					
 				</tr>
 			</thead>
-				<tr th:if="${not #lists.isEmpty(noticeList)}" th:each="l : ${noticeList}">
-					<td th:text="${l.boardParentNo}"></td>
-					<td><a href="#">답변대기</a></td>
+			<tbody>
+				<tr th:if="${not #lists.isEmpty(qnaServiceList)}" th:each="l : ${qnaServiceList}">
+					<td th:text="${l.totalNo}"></td>
+					<td th:text="${l.commentState}"></td>
 					<td th:text="${l.boardSecret}"></td>
-					<td th:text="${l.boardTitle}"></td>
+					<td>
+					<a th:href="@{/admin/qnaDetail(boardMenuCode=${l.boardMenuCode},totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a>
+					</td>
 					<td th:text="${l.boardAddFile}"></td>
 					<td th:text="${l.memeberId}"></td>
-					<td th:text="${l.updateTime}"></td>
+					<td th:text="${l.registTime}"></td>
 					<td th:text="${l.boardReadCount}"></td>
 					
 				</tr>
-				<tr th:unless="${not #lists.isEmpty(noticeList)}">
+				<tr th:unless="${not #lists.isEmpty(qnaServiceList)}">
 					<td colspan="8">조회된 내용이 없습니다.</td>
 				</tr>
+				</tbody>
 		</table>
 			</div>
 			
@@ -98,20 +102,24 @@
 					
 				</tr>
 			</thead>
-				<tr th:if="${not #lists.isEmpty(noticeList)}" th:each="l : ${noticeList}">
-					<td th:text="${l.boardParentNo}"></td>
-					<td><a href="#">답변대기</a></td>
+				<tbody>
+				<tr th:if="${not #lists.isEmpty(qnaPickupList)}" th:each="l : ${qnaPickupList}">
+					<td th:text="${l.totalNo}"></td>
+					<td th:text="${l.commentState}"></td>
 					<td th:text="${l.boardSecret}"></td>
-					<td th:text="${l.boardTitle}"></td>
+					<td>
+					<a th:href="@{/admin/qnaDetail(boardMenuCode=${l.boardMenuCode},totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a>
+					</td>
 					<td th:text="${l.boardAddFile}"></td>
 					<td th:text="${l.memeberId}"></td>
-					<td th:text="${l.updateTime}"></td>
+					<td th:text="${l.registTime}"></td>
 					<td th:text="${l.boardReadCount}"></td>
 					
 				</tr>
-				<tr th:unless="${not #lists.isEmpty(noticeList)}">
+				<tr th:unless="${not #lists.isEmpty(qnaPickupList)}">
 					<td colspan="8">조회된 내용이 없습니다.</td>
 				</tr>
+				</tbody>
 		</table>
 			</div>
 			
@@ -131,20 +139,24 @@
 					
 				</tr>
 			</thead>
-				<tr th:if="${not #lists.isEmpty(noticeList)}" th:each="l : ${noticeList}">
-					<td th:text="${l.boardParentNo}"></td>
-					<td><a href="#">답변대기</a></td>
+					<tbody>
+				<tr th:if="${not #lists.isEmpty(qnaPayList)}" th:each="l : ${qnaPayList}">
+					<td th:text="${l.totalNo}"></td>
+					<td th:text="${l.commentState}"></td>
 					<td th:text="${l.boardSecret}"></td>
-					<td th:text="${l.boardTitle}"></td>
+					<td>
+					<a th:href="@{/admin/qnaDetail(boardMenuCode=${l.boardMenuCode},totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a>
+					</td>
 					<td th:text="${l.boardAddFile}"></td>
 					<td th:text="${l.memeberId}"></td>
-					<td th:text="${l.updateTime}"></td>
+					<td th:text="${l.registTime}"></td>
 					<td th:text="${l.boardReadCount}"></td>
 					
 				</tr>
-				<tr th:unless="${not #lists.isEmpty(noticeList)}">
+				<tr th:unless="${not #lists.isEmpty(qnaPayList)}">
 					<td colspan="8">조회된 내용이 없습니다.</td>
 				</tr>
+				</tbody>
 		</table>
 			</div>
 			
@@ -164,20 +176,24 @@
 					
 				</tr>
 			</thead>
-				<tr th:if="${not #lists.isEmpty(noticeList)}" th:each="l : ${noticeList}">
-					<td th:text="${l.boardParentNo}"></td>
-					<td><a href="#">답변대기</a></td>
+					<tbody>
+				<tr th:if="${not #lists.isEmpty(qnaComplainList)}" th:each="l : ${qnaComplainList}">
+					<td th:text="${l.totalNo}"></td>
+					<td th:text="${l.commentState}"></td>
 					<td th:text="${l.boardSecret}"></td>
-					<td th:text="${l.boardTitle}"></td>
+					<td>
+					<a th:href="@{/admin/qnaDetail(boardMenuCode=${l.boardMenuCode},totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a>
+					</td>
 					<td th:text="${l.boardAddFile}"></td>
 					<td th:text="${l.memeberId}"></td>
-					<td th:text="${l.updateTime}"></td>
+					<td th:text="${l.registTime}"></td>
 					<td th:text="${l.boardReadCount}"></td>
 					
 				</tr>
-				<tr th:unless="${not #lists.isEmpty(noticeList)}">
+				<tr th:unless="${not #lists.isEmpty(qnaComplainList)}">
 					<td colspan="8">조회된 내용이 없습니다.</td>
 				</tr>
+				</tbody>
 		</table>
 			</div>
 			

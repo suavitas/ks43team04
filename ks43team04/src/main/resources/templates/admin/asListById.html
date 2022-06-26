@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/adminDefault}">
+	 
+	 	  	<th:block layout:fragment="customCss">
+		<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css}">
+	</th:block>  
+	
+	<th:block layout:fragment="customJsPlugin">
+		<script th:src="@{https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js}"></script>
+	</th:block>
+	
+	<th:block layout:fragment="customJsScript">
+		<script>
+		/*setTimeout(function(){datatable.columns.adjust().draw();},200);*/
+			$(function(){
+				$('.tbqnaList').DataTable({
+					language : {'info':'맘대로'}
+				});
+			});
+		
+		</script>
+		
+		
+	</th:block> 
+	  
+	  
+	<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+ 	
+ 	<div class="admin-board-list" style="margin-top: 100px;">
+ 		<h4 style="margin-bottom: 50px;">##님의 고장 신고 내역</h4>
+		
+			<div class="x_content">
+			
+			
+			
+			<div>
+			<table id="reportList" class="table table-striped table-bordered" style="width: 100%; text-align: center;">
+			<thead>
+				<tr>
+					<th style="width: 5%;">번호</th>
+					<th style="width: 10%;">진행상태</th>	
+					<th style="width: 15%;">세탁소명</th>	
+					<th style="width: 35%;">제목</th>
+					<th style="width: 5%;">첨부</th>
+					<th style="width: 10%;">작성자</th>
+					<th style="width: 20%;">작성일</th>					
+				</tr>
+			</thead>
+			<tbody>
+			<th:block th:if="${not #lists.isEmpty(asList)}" th:each="l : ${asList}">
+				<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl, status :${l.LaundryList}">
+					<td th:text="${l.asNumber}"></td> <!-- status.count -->
+					<td th:text="${l.asState}"></td>
+					<td th:text="${sl.laundryName}"></td>
+					<td><strong><a th:href="@{/admin/asDetail(asCode=${l.asCode})}" th:text="${l.asTitle}">></a></strong></td>
+					<td th:text="${l.asAddFile}"></td>
+					<td th:text="${sl.memberId}"></td>
+					<td th:text="${l.updateTime}"></td>					
+				</tr>
+				<tr th:unless="${not #lists.isEmpty(asList)}">
+					<td colspan="7">조회된 내용이 없습니다.</td>
+				</tr>
+				
+				
+					</th:block>
+				</tbody>
+		</table>
+			</div>
+			
+			<div class="row justify-content-center" style="margin-top: 100px;">
+			<a th:href="@{/admin/asForm}"><button type="button" class="btn btn-secondary" style="margin: 10px;">신고하기</button></a>
+			</div>
+		
+			</div>
+			
+			
+		
+		
+		
+
+
+</div>
+</th:block>
+
+</html>

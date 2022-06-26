@@ -5,10 +5,19 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import ks43team04.dto.Board;
+import ks43team04.dto.Event;
 import ks43team04.dto.Review;
 
 @Mapper
 public interface BoardMapper {
+	
+	// 이벤트 상세 조회
+	public Event eventDetail(String event);
+	
+	// 이벤트 목록 조회
+	public List<Event> getEventList();
+	public List<Event> runEventList();
+	public List<Event> endEventList();
 	
 	// 리뷰 조회
 	public List<Review> getReviewList();
@@ -18,12 +27,14 @@ public interface BoardMapper {
 
 	// 공지사항 글 작성
 	public int noticeWrite(Board board);
+	public int noticeForm(Board board);
+	
+	// 문의사항 글 작성
+	public int qnaWrite(Board board);
 
 	// 분류별 게시물 조회
-	public Board getBoardDetailByCode(String boardMenuCode, int boardParentNo);
+	public Board getBoardDetailByCode(String boardMenuCode, int totalNo);
 
-	// 문의사항(서비스 불만족) 답변 목록 조회
-	public List<Board> getAnsComplainList();
 
 	// 문의사항(서비스 불만족) 목록 조회
 	public List<Board> getQnaComplainList();

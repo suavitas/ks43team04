@@ -14,14 +14,14 @@
 	
 		<div class="x_content">
 
-				<form class="form-horizontal form-label-left">
+				<form class="form-horizontal form-label-left" th:action="@{/admin/noticeForm}" method="POST">
 				
 				
 				
 				<div class="form-group row">
 				<label class="control-label col-md-1 col-sm-1 ">작성자</label>
 				<div class="col-md-4 col-sm-4 ">
-				<input type="text" class="form-control" readonly="readonly" placeholder="관리자">
+				<input type="text" class="form-control" readonly="readonly" placeholder="관리자" name="memeberId" id="name" >
 				</div>
 				</div>
 				
@@ -29,7 +29,7 @@
 				<div class="form-group row ">
 				<label class="control-label col-md-1 col-sm-1 ">제목</label>
 				<div class="col-md-8 col-sm-8 ">
-				<input type="text" class="form-control" placeholder="제목">
+				<input type="text" class="form-control" placeholder="제목" name="boardTitle" id="subject">
 				</div>
 				</div>
 				
@@ -97,9 +97,9 @@
 					<a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
 					</div>
 					</div>
-					<div id="editor-one" class="editor-wrapper placeholderText" contenteditable="true"></div>
-					<textarea name="descr" id="descr" style="display:none;"></textarea>
-					
+					<div id="editor-one" class="editor-wrapper">
+					<textarea id="editor-one" class="editor-wrapper" name="boardContent" style="width: 100%; height: 100px;"></textarea>
+						</div>
 					</div>
 									
 				
@@ -113,7 +113,7 @@
 				<div class="form-group">
 				<div class="col-md-8 col-sm-8  offset-md-2" style="margin-left: 0; text-align: center; padding-top: 50px;">
 				<a th:href="@{/admin/noticeList}"><button type="button" class="btn btn-primary" style="margin-right: 30px;">취소</button></a>
-				<a th:href="@{/admin/noticeList}"><button type="submit" class="btn btn-success" style="margin-left: 30px;">등록</button></a>
+				<a th:href="@{/admin/noticeList}"><button type="submit" class="btn btn-success" value="Submit" style="margin-left: 30px;">등록</button></a>
 				</div>
 				</div>
 				</form>

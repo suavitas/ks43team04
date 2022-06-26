@@ -9,6 +9,9 @@ import ks43team04.dto.As;
 @Mapper
 public interface AsMapper {
 
+	//AS 작성
+	public int asForm(As as);
+	
 	//AS 상세 조회
 	public As getAsDetail(String asCode);
 	

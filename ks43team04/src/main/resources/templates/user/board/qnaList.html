@@ -11,7 +11,7 @@
 		<script th:src="@{https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js}"></script>
 	</th:block>
 	
-	<th:block layout:fragment="customJsScript">
+	<!-- <th:block layout:fragment="customJsScript">
 		<script>
 		/*setTimeout(function(){datatable.columns.adjust().draw();},200);*/
 			$(function(){
@@ -23,7 +23,7 @@
 		</script>
 		
 		
-	</th:block>
+	</th:block> -->
 	  
 	  
 	  
@@ -84,14 +84,14 @@
 									</thead>
 									<tbody>				
 										<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaServiceList)}" th:each="l : ${qnaServiceList}">
-											<td class="product-remove" th:text="${l.boardParentNo}"></td>
+											<td class="product-remove" th:text="${l.totalNo}"></td>
 											<td class="product-remove" th:text="${l.boardSecret}"></td>
 											<td class="product-image">
-											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardParentNo=${l.boardParentNo})}" th:text="${l.boardTitle}"></a>
+											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a>
 											</td>
 											<td class="product-name" th:text="${l.boardAddFile}"></td>
 											<td class="product-price" th:text="${l.memeberId}"></td>
-											<td class="product-quantity" th:text="${l.updateTime}"></td>
+											<td class="product-quantity" th:text="${l.registTime}"></td>
 											<td class="product-total" th:text="${l.boardReadCount}"></td>
 										</tr>
 										<tr th:unless="${not #lists.isEmpty(qnaServiceList)}">
@@ -124,14 +124,14 @@
 									</thead>
 									<tbody>				
 										<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaPickupList)}" th:each="l : ${qnaPickupList}">
-											<td class="product-remove" th:text="${l.boardParentNo}"></td>
+											<td class="product-remove" th:text="${l.totalNo}"></td>
 											<td class="product-remove" th:text="${l.boardSecret}"></td>
 											<td class="product-image">
-											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardParentNo=${l.boardParentNo})}" th:text="${l.boardTitle}"></a>
+											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a>
 											</td>
 											<td class="product-name" th:text="${l.boardAddFile}"></td>
 											<td class="product-price" th:text="${l.memeberId}"></td>
-											<td class="product-quantity" th:text="${l.updateTime}"></td>
+											<td class="product-quantity" th:text="${l.registTime}"></td>
 											<td class="product-total" th:text="${l.boardReadCount}"></td>
 										</tr>
 										<tr th:unless="${not #lists.isEmpty(qnaPickupList)}">
@@ -163,14 +163,14 @@
 									</thead>
 									<tbody>				
 										<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaPayList)}" th:each="l : ${qnaPayList}">
-											<td class="product-remove" th:text="${l.boardParentNo}"></td>
+											<td class="product-remove" th:text="${l.totalNo}"></td>
 											<td class="product-remove" th:text="${l.boardSecret}"></td>
 											<td class="product-image">
-											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardParentNo=${l.boardParentNo})}" th:text="${l.boardTitle}"></a>
+											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a>
 											</td>
 											<td class="product-name" th:text="${l.boardAddFile}"></td>
 											<td class="product-price" th:text="${l.memeberId}"></td>
-											<td class="product-quantity" th:text="${l.updateTime}"></td>
+											<td class="product-quantity" th:text="${l.registTime}"></td>
 											<td class="product-total" th:text="${l.boardReadCount}"></td>
 										</tr>
 										<tr th:unless="${not #lists.isEmpty(qnaPayList)}">
@@ -205,14 +205,14 @@
 									</thead>
 									<tbody>				
 										<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaComplainList)}" th:each="l : ${qnaComplainList}">
-											<td class="product-remove" th:text="${l.boardParentNo}"></td>
+											<td class="product-remove" th:text="${l.totalNo}"></td>
 											<td class="product-remove" th:text="${l.boardSecret}"></td>
 											<td class="product-image">
-											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardParentNo=${l.boardParentNo})}" th:text="${l.boardTitle}"></a>
+											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a>
 											</td>
 											<td class="product-name" th:text="${l.boardAddFile}"></td>
 											<td class="product-price" th:text="${l.memeberId}"></td>
-											<td class="product-quantity" th:text="${l.updateTime}"></td>
+											<td class="product-quantity" th:text="${l.registTime}"></td>
 											<td class="product-total" th:text="${l.boardReadCount}"></td>
 										</tr>
 										<tr th:unless="${not #lists.isEmpty(qnaComplainList)}">

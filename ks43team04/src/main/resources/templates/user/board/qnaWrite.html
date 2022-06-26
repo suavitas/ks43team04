@@ -40,18 +40,18 @@
 					</div>
 				 	<div id="form_status">
 					<div class="contact-form">
-						<form type="POST" id="fruitkha-contact" onSubmit="return valid_datas( this );">
+						<form id="fruitkha-contact" th:action="@{/user/board/qnaWrite}" method="POST">
 							<table class="col-lg-8 col-lg-12">
 								<colgroup>
 									<col style="width:120px">
 									<col>
 									</colgroup>
-								<tbody>
+								<tbody style="background:none;">
 									<tr>
 										<th scope="row" class="table-head">작성자</th>
 										<td class="table-data">
 											<p>
-												<input type="text" placeholder="이름(작성자ID)" name="name" id="name"  style="padding: 5px 15px 5px 15px; margin-top: 10px; margin-bottom: 10px; width: 30%" readonly="readonly">
+												<input type="text" placeholder="이름(작성자ID)" name="memeberId" id="name"  style="padding: 5px 15px 5px 15px; margin-top: 10px; margin-bottom: 10px; width: 30%" readonly="readonly">
 											</p>
 										</td>
 									</tr>
@@ -62,22 +62,23 @@
 										<th scope="row" class="table-head table-row">문의유형</th>
 										<td class="table-data">
 										
-										<select name="question-cate" id="q-cate"  style="padding: 5px 15px 5px 5px;">
+										<select name="boardMenuCode" id="q-cate"  style="padding: 5px 15px 5px 5px;">
 											<option value="">카테고리 선택</option>
-											<option>1</option>
-											<option>2</option>
-											<option>3</option>
+											<option value="notice_menu_code_002">서비스 이용</option>
+											<option value="notice_menu_code_003">수거/배송</option>
+											<option value="notice_menu_code_004">결제/포인트</option>
+											<option value="notice_menu_code_005">서비스 불만족</option>
 										</select>
 										
 										<label style="padding-left: 10px; margin-left: 10px;">
-										  <input type="checkbox" name="secret">  비밀글
+										  <input type="checkbox" name="boardSecret">  비밀글
 										</label>
 									
 									<tr>
 										<th scope="row" class="table-head">제목</th>
 										<td class="table-data">
 											<p>
-												<input type="text" placeholder="Subject" name="subject" id="subject"  style="padding: 5px 15px 5px 15px; margin-top: 10px; margin-bottom: 10px; width: 100%">
+												<input type="text" placeholder="Subject" name="boardTitle" id="subject"  style="padding: 5px 15px 5px 15px; margin-top: 10px; margin-bottom: 10px; width: 100%">
 											</p>
 										</td>
 									</tr>
@@ -85,7 +86,7 @@
 									<tr>
 										<th scope="row" class="table-head">문의내용</th>
 										<td class="table-data">
-											<p><textarea name="message" id="message" cols="30" rows="10" placeholder="Message"></textarea></p>
+											<p><textarea name="boardContent" id="message" cols="30" rows="10" placeholder="Message"></textarea></p>
 												<input type="hidden" name="token" value="FsWga4&@f6aw" />
 												<!-- 2000자 제한할것인가 (지마켓)
 												<span class="text__limit"><em class="text__active">48</em>/2000자</span> -->
@@ -119,8 +120,8 @@
 					
 						
 							<p style="text-align: center;">
-							<a th:href="@{/user/board/qnaList}" class="backBtn">BACK</a>
-							<input type="submit" value="Submit" style=" margin: 50px;">
+							<a th:href="@{/user/board/qnaList}"><button type="button" class="backBtn">BACK</button></a>
+							<a th:href="@{/user/board/qnaList}"><button type="submit" value="Submit" style=" margin: 50px;">등록</button></a>
 							</p>
 						</form>
 					</div>

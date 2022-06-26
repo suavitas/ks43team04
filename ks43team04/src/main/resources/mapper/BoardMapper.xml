@@ -4,20 +4,41 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks43team04.mapper.BoardMapper">
 
-	<resultMap type="Board" id="boardResultMap">
-		<id 	column="board_code" 			property="boardCode"/>
-		<result column="board_menu_code" 		property="boardMenuCode"/>
-		<result column="m_id" 					property="memeberId"/>
-		<result column="board_parent_no" 		property="boardParentNo"/>
-		<result column="board_read_count" 		property="boardReadCount"/>
-		<result column="board_title" 			property="boardTitle"/>
-		<result column="board_content" 			property="boardContent"/>
-		<result column="board_secret" 			property="boardSecret"/>
-		<result column="board_add_file" 		property="boardAddFile"/>
-		<result column="board_add_file_name" 	property="boardAddFileName"/>
-		<result column="board_add_file_vol" 	property="boardAddFileVol"/>
-		<result column="regist_time" 			property="registTime"/>
-		<result column="update_time" 			property="updateTime"/>
+	<resultMap type="Board" 								id="boardResultMap">
+		<id 	column="board_code" 						property="boardCode"/>
+		<result column="board_menu_code" 					property="boardMenuCode"/>
+		<result column="total_no" 							property="totalNo"/>
+		<result column="m_id" 								property="memeberId"/>
+		<result column="board_parent_no" 					property="boardParentNo"/>
+		<result column="board_child_no" 					property="boardChildNo"/>
+		<result column="board_read_count" 					property="boardReadCount"/>
+		<result column="board_title" 						property="boardTitle"/>
+		<result column="board_content" 						property="boardContent"/>
+		<result column="board_secret" 						property="boardSecret"/>
+		<result column="board_add_file" 					property="boardAddFile"/>
+		<result column="board_add_file_name" 				property="boardAddFileName"/>
+		<result column="board_add_file_change_name" 		property="boardAddFileChangeName"/>
+		<result column="board_add_file_vol" 				property="boardAddFileVol"/>
+		<result column="regist_time" 						property="registTime"/>
+		<result column="update_time" 						property="updateTime"/>
+		<result column="comment_state" 						property="commentState"/>
+	</resultMap>
+
+	<resultMap type="Event" 								id="eventResultMap">
+		<id 	column="event_code" 						property="eventCode"/>
+		<result column="m_id" 								property="memberId"/>
+		<result column="event_no" 							property="eventNo"/>
+		<result column="event_state" 						property="eventState"/>
+		<result column="event_title" 						property="eventTitle"/>
+		<result column="event_content" 						property="eventContent"/>
+		<result column="event_add_file" 					property="eventAddFile"/>
+		<result column="event_add_file_name" 				property="eventAddFileName"/>
+		<result column="event_add_file_change_name" 		property="eventAddFileChangeName"/>
+		<result column="event_add_file_vol" 				property="eventAddFileVol"/>
+		<result column="regist_time" 						property="registTime"/>
+		<result column="update_time" 						property="updateTime"/>
+		<result column="event_read_count" 					property="eventReadCount"/>
+		
 	</resultMap>
 	
 	<resultMap type="Review" id="reviewResultMap">
@@ -27,8 +48,78 @@
 		<result	column="counting_star"			property="countingStar"/>
 	</resultMap>
 	
+	<select id="eventDetail" resultMap="eventResultMap">
+		/*이벤트 상세 조회*/
+		SELECT
+			e.event_code
+			,e.event_state
+			,e.event_title
+			,e.event_content
+			,e.event_add_file_name
+			,e.m_id
+			,e.regist_time
+			,e.event_read_count
+		FROM
+			tb_event AS e
+		WHERE
+			e.event_code = #{eventCode};	
+		
+	</select>
 	
 	
+	
+	<select id="getEventList" resultMap="eventResultMap">
+		/*이벤트 목록 조회*/
+		SELECT
+			e.event_code
+			,e.event_no
+			,e.event_state
+			,e.event_title
+			,e.event_add_file
+			,e.m_id
+			,e.regist_time
+			,e.event_read_count
+		FROM
+			tb_event AS e
+		order by e.event_no DESC;		
+	</select>
+	
+	<select id="runEventList" resultMap="eventResultMap">
+		/*진행중인 이벤트 목록 조회*/
+		SELECT
+			e.event_code
+			,e.event_no
+			,e.event_state
+			,e.event_title
+			,e.event_add_file
+			,e.m_id
+			,e.regist_time
+			,e.event_read_count
+		FROM
+			tb_event AS e
+		where
+			e.event_state = '진행중'	
+		order by e.event_no DESC;		
+	</select>
+	
+	<select id="endEventList" resultMap="eventResultMap">
+		/*종료 이벤트 목록 조회*/
+			SELECT
+			e.event_code
+			,e.event_no
+			,e.event_state
+			,e.event_title
+			,e.event_add_file
+			,e.m_id
+			,e.regist_time
+			,e.event_read_count
+		FROM
+			tb_event AS e
+		where
+			e.event_state = '종료'	
+		order by e.event_no DESC;
+		
+	</select>
 	
 	
 	
@@ -47,20 +138,22 @@
 			WHERE board_code = #{boardCode};
 	</update>
 	
-	
-	<insert id="noticeWrite" parameterType="Board">
+	<insert id="noticeForm" parameterType="Board">
 		/* 공지 글 작성 */
 	 INSERT INTO tb_board
-		(board_code
+			(board_code
 			,board_menu_code
 			,m_id
+			,total_no
 			,board_parent_no
+			,board_child_no
 			,board_read_count
 			,board_title
 			,board_content
 			,board_secret
 			,board_add_file
 			,board_add_file_name
+			,board_add_file_change_name
 			,board_add_file_vol
 			,regist_time
 			,update_time)
@@ -70,9 +163,18 @@
 		, 'notice_menu_code_001'
 		, 'id001'			
 		, (SELECT
-			IFNULL(MAX(b.board_parent_no), 0)+1
+			IFNULL(MAX(b.total_no), 0)+1
 			FROM
-			tb_board AS b)
+			tb_board AS b
+			WHERE
+			b.board_menu_code = 'notice_menu_code_001')
+		, (SELECT
+			IFNULL(MAX(b.total_no), 0)+1
+			FROM
+			tb_board AS b
+			WHERE
+			b.board_menu_code = 'notice_menu_code_001')
+		, 0	
 		, 0		
 		, #{boardTitle}
 		, #{boardContent}
@@ -80,9 +182,111 @@
 		, '0'
 		, '0'
 		, '0'
-		, CURDATE()
-		, CURDATE());
-
+		, '0'
+		, NOW()
+		, NOW());
+	</insert>
+	
+	
+	<insert id="noticeWrite" parameterType="Board">
+		/* 공지 글 작성 */
+	 INSERT INTO tb_board
+			(board_code
+			,board_menu_code
+			,m_id
+			,total_no
+			,board_parent_no
+			,board_child_no
+			,board_read_count
+			,board_title
+			,board_content
+			,board_secret
+			,board_add_file
+			,board_add_file_name
+			,board_add_file_change_name
+			,board_add_file_vol
+			,regist_time
+			,update_time)
+		VALUES (
+			(SELECT
+			CONCAT('notice_code','_',max(CAST(substring(board_code,13)+1 AS DECIMAL))) AS board_code from tb_board ALIAS_FOR_SUBQUERY)
+		, 'notice_menu_code_001'
+		, 'id001'			
+		, (SELECT
+			IFNULL(MAX(b.total_no), 0)+1
+			FROM
+			tb_board AS b
+			WHERE
+			b.board_menu_code = 'notice_menu_code_001')
+		, (SELECT
+			IFNULL(MAX(b.total_no), 0)+1
+			FROM
+			tb_board AS b
+			WHERE
+			b.board_menu_code = 'notice_menu_code_001')
+		, 0	
+		, 0		
+		, #{boardTitle}
+		, #{boardContent}
+		, '0'
+		, '0'
+		, '0'
+		, '0'
+		, '0'
+		, NOW()
+		, NOW());
+	</insert>
+	
+	<insert id="qnaWrite" parameterType="Board">
+		/*문의사항 글 작성*/
+		 INSERT INTO tb_board
+			(board_code
+			,board_menu_code
+			,m_id
+			,total_no
+			,board_parent_no
+			,board_child_no
+			,board_read_count
+			,board_title
+			,board_content
+			,board_secret
+			,board_add_file
+			,board_add_file_name
+			,board_add_file_change_name
+			,board_add_file_vol
+			,regist_time
+			,update_time
+			,comment_state)
+		VALUES (
+			(SELECT
+			CONCAT('notice_code','_',max(CAST(substring(board_code,13)+1 AS DECIMAL))) AS board_code from tb_board ALIAS_FOR_SUBQUERY)
+		, #{boardMenuCode}
+		, 'id001'			
+		, (SELECT
+			IFNULL(MAX(b.total_no), 0)+1
+			FROM
+			tb_board AS b
+			WHERE
+			b.board_menu_code = #{boardMenuCode})
+		, (SELECT
+			IFNULL(MAX(b.total_no), 0)+1
+			FROM
+			tb_board AS b
+			WHERE
+			b.board_menu_code = #{boardMenuCode})
+		, 0	
+		, 0		
+		, #{boardTitle}
+		, #{boardContent}
+		, '0'
+		, '0'
+		, '0'
+		, '0'
+		, '0'
+		, NOW()
+		, NOW()
+		, #{commentState});
+	
 	</insert>
 
 	
@@ -90,21 +294,24 @@
 	
 	 /* 게시물 조회 */
 		SELECT
-			 b.board_parent_no
+			 b.total_no
 			,b.board_secret
 			,b.board_title
 			,b.board_content
 			,b.board_add_file
 			,b.board_add_file_name
 			,b.m_id
-			,b.update_time
+			,b.regist_time
 			,b.board_read_count
+			,b.comment_state
 		FROM
 			tb_board AS b
 		WHERE
 			b.board_menu_code = #{boardMenuCode}
 		and
-			b.board_parent_no = #{boardParentNo};		 		
+			b.total_no = #{totalNo}
+		order by b.total_no DESC;	
+				 		
 	</select>	
 			
 			
@@ -138,84 +345,96 @@
 		/* 문의사항(서비스 불만족) 목록 조회 */
 		SELECT
 			b.board_menu_code
-			,b.board_parent_no
+			,b.total_no
 			,b.board_secret
 			,b.board_title
 			,b.board_add_file
 			,b.m_id
-			,b.update_time
+			,b.regist_time
 			,b.board_read_count
+			,b.comment_state
 		FROM
 			tb_board AS b
 		WHERE
-		b.board_menu_code= 'notice_menu_code_005';		
+		b.board_menu_code= 'notice_menu_code_005'
+		order by b.total_no DESC;		
 	</select>	
 	
 	<select id="getQnaPayList" resultMap="boardResultMap">
 		/* 문의사항(결제 포인트) 목록 조회 */
 		SELECT
 			b.board_menu_code
-			,b.board_parent_no
+			,b.total_no
 			,b.board_secret
 			,b.board_title
 			,b.board_add_file
 			,b.m_id
-			,b.update_time
+			,b.regist_time
 			,b.board_read_count
+			,b.comment_state
 		FROM
 			tb_board AS b
 		WHERE
-			b.board_menu_code= 'notice_menu_code_004';		
+			b.board_menu_code= 'notice_menu_code_004'
+		order by b.total_no DESC;			
 	</select>	
 		
 	<select id="getQnaPickupList" resultMap="boardResultMap">
 		/* 문의사항(수거 배송) 목록 조회 */
 		SELECT		
 			b.board_menu_code
-			,b.board_parent_no
+			,b.total_no
 			,b.board_secret
 			,b.board_title
 			,b.board_add_file
 			,b.m_id
-			,b.update_time
+			,b.regist_time
 			,b.board_read_count
+			,b.comment_state
 		FROM
 			tb_board AS b
 		WHERE
-			b.board_menu_code= 'notice_menu_code_003';		
+			b.board_menu_code= 'notice_menu_code_003'
+		order by b.total_no DESC;			
 	</select>	
 
 	<select id="getQnaServiceList" resultMap="boardResultMap">
 		/* 문의사항(서비스 이용) 목록 조회 */
 		SELECT
 			b.board_menu_code
-			,b.board_parent_no
+			,b.total_no
 			,b.board_secret
 			,b.board_title
 			,b.board_add_file
 			,b.m_id
-			,b.update_time
+			,b.regist_time
 			,b.board_read_count
+			,b.comment_state
 		FROM
 			tb_board AS b
 		WHERE
-				b.board_menu_code= 'notice_menu_code_002';
+				b.board_menu_code= 'notice_menu_code_002'
+		order by b.total_no DESC;
 	</select>
+	
+	
+
 
 	<select id="getNoticeList" resultMap="boardResultMap">
 	  	/* 공지사항 목록 조회 */
 		SELECT
 			b.board_menu_code
-			,b.board_parent_no
+			,b.total_no
 			,b.board_title
 			,b.board_add_file
 			,b.m_id
-			,b.update_time
+			,b.regist_time
 			,b.board_read_count
 		FROM
 			tb_board AS b
 		WHERE
-		b.board_menu_code= 'notice_menu_code_001';
+		b.board_menu_code= 'notice_menu_code_001'
+		order by b.total_no DESC;
 	</select>
 
 
