@@ -152,6 +152,22 @@
 						<label for="password"><strong>비밀번호</strong></label> 
 						<input type="text" class="form-control" id="memberPw" name="memberPw"/> 
 					</div>
+					
+					<div class="mb-3" style="margin: 20px auto;">
+						<label for="passwordQna"><strong>비밀번호찾기 질문/답변</strong></label> 
+						<select name="searchKey" class="form-control text-center" style="width: 85%;">
+									<option  value="pw016"> :: 선택 :: </option>
+									<option  value="m_pw_Q_code_001">가장 좋아하는 음식은 ?</option>
+									<option  value="m_pw_Q_code_002">가장 좋아하는 옷은 ?</option>
+									<option  value="m_pw_Q_code_003">가장 좋아하는 브랜드는?</option>
+									<option  value="m_pw_Q_code_004">나의 어릴적 꿈은?</option>
+									<option  value="m_pw_Q_code_005">내가 졸업한 국민/초등학교는? </option>
+									<option  value="m_pw_Q_code_006">현재 살고 있는 지역은? </option>
+						</select>		
+					</div>
+					<div class="mb-3" style="margin: 10px auto;">
+						<input type="text" class="form-control" id="passwordQna" name="passwordQna" placeholder="답변"/> 
+					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="email"><strong>이름</strong></label>
@@ -382,7 +398,7 @@
 
 						<div class="mb-5" style="padding: 50px;">				
 							<a th:href="@{/user/login}"><input type="button" class="btnContactSubmit" value="취소" style="width: 15%;"/></a>
-							<input type="submit" class="btnContactSubmit" id="addMemberBtn" value="회원가입" style="width: 15%;"/>
+							<input type="button" class="btnContactSubmit" id="addMemberBtn" value="회원가입" style="width: 15%;"/>
 							<!-- <a th:href="@{/user/index}"><input type="button" id="addMemberLaundryBtn" value="회원가입" style="width: 15%;"/></ -->
 						</div>
 					</div>
