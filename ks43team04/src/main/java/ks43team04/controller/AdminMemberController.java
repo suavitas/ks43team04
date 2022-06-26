@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ks43team04.dto.Laundry;
+import ks43team04.dto.LoginHistory;
 import ks43team04.dto.Member;
+import ks43team04.dto.MemberOut;
+import ks43team04.dto.UserLevel;
 import ks43team04.mapper.AdminMemberMapper;
 import ks43team04.service.AdminMemberService;
 
@@ -30,14 +33,39 @@ public class AdminMemberController {
 		this.adminMemberService = adminMemberService;
 		this.adminMemberMapper = adminMemberMapper;
 	}
-	//어드민페이지 등급관리 화면
-	@GetMapping("/Level")
-	public String Level(Model model) {		
-		model.addAttribute("title", "등급관리");		
-		return "adminmember/Level";		
+	//관리자페이지 로그인 회원접속내역 화면
+	@GetMapping("/loginHistory")
+	public String loginHistory(Model model) {
+		List<LoginHistory> loginHistory = adminMemberService.getLoginHistory();
+		log.info("회원접속내역 :{}", loginHistory);		
+		model.addAttribute("title", "회원접속내역");
+		model.addAttribute("loginHistory", loginHistory);
+		return "adminmember/loginHistory";
 	}
 	
-	//어드민페이지 아이디 중복체크 여부
+	//관리자페이지 회원탈퇴 화면
+	@GetMapping("/adminMemberOut")
+	public String adminMemberOut(Model model) {
+		List<MemberOut> adminMemberOut = adminMemberService.getMemberOut();
+		log.info("회원탈퇴 :{}", adminMemberOut);		
+		model.addAttribute("title", "회원탈퇴");
+		model.addAttribute("adminMemberOut", adminMemberOut);
+		return "adminmember/adminMemberOut";
+	}
+	
+	//관리자페이지 등급관리 화면
+	@GetMapping("/userLevel")
+	public String userLevel(Model model) {		
+		List<UserLevel> userLevel = adminMemberService.getUserLevel();		
+		log.info("고객 등급혜택 :{}", userLevel);		
+		model.addAttribute("title", "등급관리");
+		model.addAttribute("titleName", "회원 등급 혜택 및 기준");
+		model.addAttribute("userLevel", userLevel);
+		
+		return "adminmember/userLevel";
+	}
+	
+	//관리자페이지 아이디 중복체크 여부
 	@PostMapping("/idCheck")
 	@ResponseBody
 	public boolean isIdCheck(@RequestParam(value = "memberId") String memberId) {

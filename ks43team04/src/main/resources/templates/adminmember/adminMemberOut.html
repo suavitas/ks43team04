@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/adminDefault}">
+	
+	<th:block layout:fragment="customCss">
+		<!-- datepicker -->
+		<link th:href="@{/admin/build/css/datepicker.css}" rel="stylesheet">
+	</th:block>
+
+<style>
+	.column-title {
+		font-size: 8px;
+	}
+</style>
+
+	<!-- 사용자정의 contents -->
+	<th:block layout:fragment="customContents">
+   	<h4>탈퇴 회원 관리</h4>
+   	<div class="col-md-12 col-sm-12 mt-5">
+			<div class="x_panel">
+			<h2>탈퇴 회원 목록</h2>
+			<div class="x_title">
+			</div>
+				<div class="x_content">
+				  <div class="table-responsive">
+					<div class="mb-2">
+						<!-- START : 검색 바 -->
+						<div th:include="member/searchDate :: searchDateFragment"></div>
+						<!-- END : 검색 바 -->
+					</div>
+					
+					<div class="mb-2">
+						<div class="checkbox">
+							<label>권한별 조회</label>
+							<label class="btn btn-default">
+								<input type="checkbox" name="options" id="option1" class="flat"> 회원
+							</label>
+							<label class="btn btn-default">
+								<input type="checkbox" name="options" id="option2" class="flat"> 일반점주
+							</label>
+							<label class="btn btn-default">
+								<input type="checkbox" name="options" id="option3" class="flat"> 무인점주
+							</label>
+						</div>					
+					</div>					
+					<div class="clearfix">
+	                        <div class="float-left">
+	                            <span>Total : </span>
+	                        </div>
+	                        <div class="float-right pr-2"></div>
+                    </div>                   
+					<form th:action="@{/admin/adminMemberOut}" method="get">
+						<div class="form-row">
+							<div class="form-group col-md-7">
+								<input type="text" class="form-control" name="searchValue" placeholder="Search" aria-label="Text input with dropdown button">
+							</div>
+							<div class="form-group col-md-2">
+								<button type="submit" class="btn btn-success" id="searchBtn"><i class="fa fa-search"></i> 검색</button>
+								<button type="reset" class="btn btn-info" id="btn_reset"><i class="fa fa-minus-circle"></i> 초기화</button>
+							</div>
+						</div>
+					</form>
+					
+						<table class="table table-striped jambo_table bulk_action">					
+							<thead>
+								<tr class="headings" style="text-align: center;">
+									<th>
+										<input type="checkbox" id="check-all" class="flat">
+									</th>
+									<th class="column-title">아이디</th>
+									<th class="column-title">탈퇴신청시각</th>
+									<th class="column-title">탈퇴승인시각</th>
+									<th class="column-title">탈퇴신청구분</th>
+									<th class="column-title">탈퇴사유</th>
+									<th class="column-title">미승인사유</th>
+									<th class="column-title">탈퇴승인</th>
+									<th class="column-title">탈퇴삭제</th>
+									<th class="bulk-actions" colspan="13">
+										<a class="antoo" style="color:#fff; font-weight:500;">전체 선택 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${not #lists.isEmpty(adminMemberOut)}" th:each="l : ${adminMemberOut}" class="even pointer">
+									<td class="a-center">
+										<input type="checkbox" class="flat" name="table_records">
+									</td>
+									<td th:text="${l.memberId}" style="text-align: center;"></td>
+									<td th:text="${l.mOutRequestTime}" style="text-align: center;"></td>
+									<td th:text="${l.mOutOkayTime}" style="text-align: center;"></td>
+									<td th:text="${l.mOutOkayState}" style="text-align: center;"></td>
+									<td th:text="${l.mOutReason}" style="text-align: center;"></td>
+									<td th:text="${l.mNotOkayReason}" style="text-align: center;"></td>
+									<td>
+										<div style="text-align: center;">							
+										<button type="button"  class="btn btn-warning btn-sm" >승인</button>
+										</div>
+									</td>
+									<td>
+										<div style="text-align: center;">							
+										<button type="button"  class="btn btn-secondary btn-sm" >삭제</button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					
+					<nav aria-label="Page navigation example">
+						<ul class="pagination justify-content-center">
+							<li class="page-item">
+								<a class="page-link" th:href="@{/admin/adminMemberOut}" tabindex="-1"> <
+								</a>
+							</li>
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item">
+								<a class="page-link" href="#">></a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+	</div>
+</th:block>
+
+</html>

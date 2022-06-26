@@ -59,8 +59,92 @@
 				<result column="admin_level_code" 		property="adminLevelCode"/>
 				<result column="regist_time" 			property="registTime"/>
 			</collection> -->
+
+		<resultMap type="UserLevel" 						id="userLevelResultMap">
+			<result column="user_level_cal_code" 			property="userLevelCalCode"/>
+			<result column="level_code" 					property="levelCode"/>
+			<result column="range_start" 					property="rangeStart"/>
+			<result column="range_end" 						property="rangeEnd"/>
+			<result column="save_point_percent" 			property="savePointPercent"/>
+			<result column="admin_level_code" 				property="adminLevelCode"/>
+			<result column="regist_time" 					property="registTime"/>
+			<result column="update_time" 					property="updateTime"/>
+		</resultMap>
+		
+		<resultMap type="MemberOut" 				id="memberOutResultMap">
+			<id column="m_out_code" 				property="mOutCode"/>
+			<result column="m_id" 					property="memberId"/>
+			<result column="m_out_reason" 			property="mOutReason"/>
+			<result column="m_out_request_time" 	property="mOutRequestTime"/>
+			<result column="m_out_okay_time" 		property="mOutOkayTime"/>
+			<result column="m_out_okay_state" 		property="mOutOkayState"/>
+			<result column="m_not_okay_reason" 		property="mNotOkayReason"/>
+			<result column="admin_level_code" 		property="adminLevelCode"/>
+			<result column="regist_time" 			property="registTime"/>
+			<result column="change_round" 			property="changeRound"/>
+			<result column="final_state" 			property="finalState"/>
+		</resultMap>
+		
+		<resultMap type="LoginHistory" 				id="loginHistoryResultMap">
+			<id column="m_login_code" 				property="mLoginCode"/>
+			<result column="m_id" 					property="memberId"/>
+			<result column="m_login_time" 			property="mLoginTime"/>
+			<result column="m_logout_time" 			property="mLogoutTime"/>
+			<result column="IP_Address" 			property="IpAddress"/>
+			<result column="OS" 					property="Os"/>
+			<result column="browser" 				property="browser"/>
+			<result column="admin_level_code" 		property="adminLevelCode"/>
+		</resultMap>
+		
+		<select id="getLoginHistory" parameterType="String" resultMap="loginHistoryResultMap">
+			/* 회원접속내역 조회 */
+			SELECT
+				m.m_login_code
+				,m.m_id
+				,m.m_login_time
+				,m.m_logout_time
+				,m.mIP_Address
+				,m.mOS
+				,m.mbrowser
+				,m.madmin_level_code
+			FROM
+				tb_member_login AS m
+		</select>
+		
+		<select id="getMemberOut" parameterType="String" resultMap="memberOutResultMap">
+			/* 탈퇴회원 조회 */
+			SELECT
+				m.m_out_code
+				,m.m_id
+				,m.m_out_reason
+				,m.m_out_request_time
+				,m.m_out_okay_time
+				,m.admin_level_code
+				,m.m_out_okay_state
+				,m.m_not_okay_reason
+				,m.admin_level_code
+				,m.regist_time
+				,m.change_round
+				,m.final_state
+			FROM
+				tb_member_out AS m
+		</select>
 	
-	
+		<select id="getUserLevel" parameterType="String" resultMap="userLevelResultMap">
+			/*회원 등급 기준 및 혜택 */
+			SELECT
+				u.user_level_cal_code
+				,u.level_code
+				,u.range_start
+				,u.range_end
+				,u.save_point_percent
+				,u.admin_level_code
+				,u.regist_time
+				,u.update_time
+			FROM
+				tb_user_level_cal AS u
+		</select>
+
 		<select id="getLaundryList" resultMap="laundryResultMap"> 
 			/*세탁소 전체회원 조회 */
 			SELECT
