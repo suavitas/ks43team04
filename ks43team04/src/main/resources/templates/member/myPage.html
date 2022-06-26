@@ -108,7 +108,7 @@
       <a href="#" class="list-group-item list-group-item-action">예약 현황</a>
       <a href="#" class="list-group-item list-group-item-action">수거배송 조회</a>
       <a href="#" class="list-group-item list-group-item-action">결제 내역</a>
-      <a th:href="@{/user/myPageRefund}" class="list-group-item list-group-item-action">환불 내역</a>
+      <a href="#" class="list-group-item list-group-item-action">환불 내역</a>
       <a th:href="@{/user/myPagePoint}" class="list-group-item list-group-item-action">포인트 조회</a>
       <a th:href="@{/user/myPageWrite}" class="list-group-item list-group-item-action">내가 쓴 글</a>
       <a href="#" class="list-group-item list-group-item-action">리뷰?</a>
@@ -155,7 +155,7 @@
 						<label for="password"><strong>비밀번호</strong></label> 
 						<input type="text" class="form-control" id="memberPw" th:value="${member.memberPw}" readonly="readonly">
 					</div>
-
+					
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="email"><strong>이름</strong></label>
 						<input type="email" class="form-control" id="memberName" th:value="${member.memberName}" readonly="readonly">
