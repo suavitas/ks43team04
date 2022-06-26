@@ -6,12 +6,21 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import ks43team04.dto.Laundry;
+import ks43team04.dto.LoginHistory;
 import ks43team04.dto.Member;
+import ks43team04.dto.MemberOut;
+import ks43team04.dto.UserLevel;
 
 @Mapper
 public interface AdminMemberMapper {
+	//관리자페이지  로그인 회원접속내역 조회
+	public List<LoginHistory> getLoginHistory();
 	
-
+	//관리자페이지 회원탈퇴 조회
+	public List<MemberOut> getMemberOut();
+	
+	//관리자페이지 기준 및 혜택 정보 조회
+	public List<UserLevel> getUserLevel();
 	
 	//관리자페이지 회원상세정보 조회
 	public Member getMemberInfoById(String memberId);
@@ -37,6 +46,7 @@ public interface AdminMemberMapper {
 	
 	/* 로그인 이력 조회 (페이징) */
 	public List<Map<String, Object>> getLoginHistory(Map<String, Object> paramMap);
+
 
 
 }

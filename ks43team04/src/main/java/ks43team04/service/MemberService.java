@@ -34,7 +34,7 @@ public class MemberService {
 		return addMember;	
 	}
 
-
+	//점주 상세정보 조회
 	public Member getStoreOwnerInfoById(String memberId) {
 		Member laundryOwner = memberMapper.getStoreOwnerInfoById(memberId);
 		return laundryOwner;

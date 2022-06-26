@@ -1,6 +1,6 @@
 package ks43team04.dto;
 
-public class Level {
+public class MemberLevel {
 	private String levelCode;
 	private String levelName;
 	private String adminLevelCode;

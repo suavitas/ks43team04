@@ -2,19 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/adminDefault}">
-	
-	<th:block layout:fragment="customCss">
-		<!-- datepicker -->
-		<link th:href="@{/admin/build/css/datepicker.css}" rel="stylesheet">
-	</th:block>
-
-<style>
-	.column-title {
-		font-size: 8px;
-	}
-</style>
-
+	  
 	<!-- 사용자정의 contents -->
+	<th:block layout:fragment="customContents">
+	
+	
+		<!-- 사용자정의 contents -->
 	<th:block layout:fragment="customContents">
    	<h4>세탁소 점주 회원관리</h4>
    	<div class="col-md-12 col-sm-12 mt-5">
@@ -35,7 +28,7 @@
 	                        </div>
 	                        <div class="float-right pr-2"></div>
                     </div>
-					<form th:action="@{/admin/LaundryList}" method="get">
+					<form th:action="@{/admin/LoginHistory}" method="get">
 						<div class="form-row">
 							<div class="form-group col-md-2">
 								<select name="searchKey" class="form-control text-center">
@@ -80,7 +73,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:if="${not #lists.isEmpty(LaundryList)}" th:each="l : ${LaundryList}" class="even pointer">
+								<tr th:if="${not #lists.isEmpty(LoginHistory)}" th:each="l : ${LoginHistory}" class="even pointer">
 									<td class="a-center">
 										<input type="checkbox" class="flat" name="table_records">
 									</td>
@@ -121,6 +114,7 @@
 				</div>
 			</div>
 	</div>
-</th:block>
+	
+	</th:block>
 
 </html>
