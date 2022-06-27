@@ -160,8 +160,19 @@
             </div>
 	  <script type="text/javascript" th:src="@{/common/jquery-3.6.0.min.js}"></script>
       <script type="text/javascript">
-     
-            	
+	    var inputForm = document.querySelectorAll('.input-form');
+        var btnH = document.querySelectorAll('.btn-h');
+        
+        for(var i=0; i<btnH.length; i++){
+           btnH[i].addEventListener('click',function(e){
+              var memberId = e.target.parentElement.parentElement.querySelector('.memberId').value
+              console.log(memberId);
+              
+              if(memberId == ''){
+                 alert('다시 입력해주세요.');
+              } 
+           });
+        }     	
       </script>
 		
    </th:block>

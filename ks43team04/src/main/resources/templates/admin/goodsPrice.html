@@ -31,7 +31,7 @@
 				th:each="l : ${eachGoodsPriceList}">
 				<td th:text="${l.get('laundryName')}"></td>
 				<td th:text="${l.get('gName')}"></td>
-				<td th:text="${l.get('gPrice')}"></td>
+				<td th:text="${#numbers.arrayFormatInteger(l.get('gPrice'),3,'COMMA') + '원'}"></td>
 
 				<td><input type="button" value="수정" href="{#}"></td>
 				<td id="submit" colspan="2"><input id="tblbutton" type="button"
@@ -41,7 +41,7 @@
 			</tr>
 		</tbody>
 	</table>
-	<nav aria-label="Page navigation example">
+	<nav id="GPNum">
 		<ul class="pagination justify-content-center">
 			<li class="page-item"><a class="page-link"
 				th:href="@{/admin/goodsPrice}" tabindex="-1">처음</a></li>

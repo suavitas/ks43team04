@@ -3,31 +3,161 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/adminDefault}">
 
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css}">
+</th:block>
+
+<th:block layout:fragment="customJsPlugin">
+	<script
+		th:src="@{https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js}"></script>
+</th:block>
+
+<th:block layout:fragment="customJsScript">
+	<script>
+		/*setTimeout(function(){datatable.columns.adjust().draw();},200);*/
+		$(function() {
+			$('.tbqnaList').DataTable({
+				language : {
+					'info' : '맘대로'
+				}
+			});
+		});
+	</script>
 
 
+</th:block>
 <!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
 
-	<h1>세탁소 월별 수입 - 금액에 원 넣을수 있는분 좀 넣어줘요</h1>
-		<table id="reportList" class="table table-striped table-bordered" style="width: 50%;">
-			<thead>
-				<tr>
-					<th>세탁소 이름</th>
-					<th>기간별 매출</th>
-				</tr>
-			</thead>
-			<tbody>
-				<th:block th:if="${not #lists.isEmpty(laundryIncomeList)}" th:each="l : ${laundryIncomeList}">
-				<tr>
-					<td th:text="${l.laundry_name}"></td>
-					<td th:text="${l.income}"></td>
-				</tr>
-				</th:block>		
-				<tr th:unless="${not #lists.isEmpty(laundryIncomeList)}">
-					<td colspan="8">조회된 내용이 없습니다.</td>
-				</tr>
-			</tbody>
-		</table>
+	<div class="admin-board-list" style="margin-top: 100px;">
+		<h4 style="margin-bottom: 50px;">고장 신고 목록 조회</h4>
+		
+		<div class="x_content">
+			<ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+				<li class="nav-item"><a class="nav-link active" id="home-tab"
+					data-toggle="tab" href="#total" role="tab" aria-controls="home"
+					aria-selected="true">1개월</a></li>
+				<li class="nav-item"><a class="nav-link" id="profile-tab"
+					data-toggle="tab" href="#wait" role="tab" aria-controls="profile"
+					aria-selected="false">3개월</a></li>
+				<li class="nav-item"><a class="nav-link" id="contact-tab"
+					data-toggle="tab" href="#ready" role="tab" aria-controls="contact"
+					aria-selected="false">6개월</a></li>
+				<li class="nav-item"><a class="nav-link" id="contact-tab2"
+					data-toggle="tab" href="#end" role="tab" aria-controls="contact2"
+					aria-selected="false">1년</a></li>
+			</ul>
+
+
+			<!-- END : 검색 바 -->
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade active show" id="total" role="tabpanel"
+					aria-labelledby="home-tab">
+					<table id="reportList" class="table table-striped table-bordered"
+						style="width: 100%;">
+						<thead>
+							<tr>
+								<th style="width: 5%;">세탁소 이름</th>
+								<th style="width: 10%;"><span style="color: red;">1개월</span> 매출</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:if="${not #lists.isEmpty(laundryIncomeList)}"
+								th:each="l : ${laundryIncomeList}">
+								<tr>
+									<td th:text="${l.laundry_name}"></td>
+									<td
+										th:text="${#numbers.formatInteger(l.income,3,'COMMA') + '원'}"></td>
+								</tr>
+								<tr th:unless="${not #lists.isEmpty(laundryIncomeList)}">
+									<td colspan="8">조회된 내용이 없습니다.</td>
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="tab-pane fade" id="wait" role="tabpanel"
+					aria-labelledby="profile-tab">
+					<table id="reportList" class="table table-striped table-bordered"
+						style="width: 100%;">
+						<thead>
+							<tr>
+								<th style="width: 5%;">세탁소 이름</th>
+								<th style="width: 10%;"><span style="color: red;">3개월</span> 매출</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:if="${not #lists.isEmpty(laundryIncomeList)}"
+								th:each="l : ${laundryIncomeList}">
+								<tr>
+									<td th:text="${l.laundry_name}"></td>
+									<td
+										th:text="${#numbers.formatInteger(l.income,3,'COMMA') + '원'}"></td>
+								</tr>
+								<tr th:unless="${not #lists.isEmpty(laundryIncomeList)}">
+									<td colspan="8">조회된 내용이 없습니다.</td>
+								</tr>
+							</th:block>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="tab-pane fade" id="ready" role="tabpanel"
+					aria-labelledby="contact-tab">
+					<table id="reportList" class="table table-striped table-bordered"
+						style="width: 100%;">
+						<thead>
+							<tr>
+								<th style="width: 5%;">세탁소 이름</th>
+								<th style="width: 10%;"><span style="color: red;">6개월</span> 매출</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:if="${not #lists.isEmpty(laundryIncomeList)}"
+								th:each="l : ${laundryIncomeList}">
+								<tr>
+									<td th:text="${l.laundry_name}"></td>
+									<td
+										th:text="${#numbers.formatInteger(l.income,3,'COMMA') + '원'}"></td>
+								</tr>
+							</th:block>
+							<tr th:unless="${not #lists.isEmpty(laundryIncomeList)}">
+								<td colspan="8">조회된 내용이 없습니다.</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="tab-pane fade" id="end" role="tabpanel"
+					aria-labelledby="contact-tab2">
+					<table id="reportList" class="table table-striped table-bordered"
+						style="width: 100%;">
+						<thead>
+							<tr>
+								<th style="width: 5%;">세탁소 이름</th>
+								<th style="width: 10%;"><span style="color: red;">1년</span> 매출</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:if="${not #lists.isEmpty(laundryIncomeList)}"
+								th:each="l : ${laundryIncomeList}">
+								<tr>
+									<td th:text="${l.laundry_name}"></td>
+									<td
+										th:text="${#numbers.formatInteger(l.income,3,'COMMA') + '원'}"></td>
+								</tr>
+							</th:block>
+							<tr th:unless="${not #lists.isEmpty(laundryIncomeList)}">
+								<td colspan="8">조회된 내용이 없습니다.</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </th:block>
 
 </html>

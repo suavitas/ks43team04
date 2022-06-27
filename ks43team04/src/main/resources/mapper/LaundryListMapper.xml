@@ -79,16 +79,9 @@
          tb_bill AS b
          ON
          b.user_code = o.user_code	
-			<trim prefix="WHERE" prefixOverrides="AND |OR ">
-				<if test="searchValue != null and searchValue != ''">
-					l.laundry_name like CONCAT('%',#{searchValue},'%') and
-				</if>
-			</trim>
-			<trim prefix="WHERE" prefixOverrides="AND |OR ">
-				<if test="searchValue  != null and searchValue != ''">
-					result.pay_ok_date BETWEEN #{searchValue}
-				</if>
-			</trim>
+			WHERE
+					l.laundry_name like CONCAT('%','크','%') and
+					pay_ok_date BETWEEN '2022-04-01' AND '2022-04-31'
 			)as result
 			GROUP BY result.laundry_name;
    </select>
