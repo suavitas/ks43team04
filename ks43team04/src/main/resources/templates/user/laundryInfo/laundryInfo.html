@@ -4,94 +4,174 @@
 	layout:decorate="~{layouts/userDefault}">
 <!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
-<!-- 모달 팝업 fragment 연결문 -->
-<th:block th:replace="/user/commons/popup/searchmappopup.html :: searchModal"></th:block> 
-	<div id="container">
+	<!-- 모달 팝업 fragment 연결문 -->
+	<th:block
+		th:replace="/user/commons/popup/searchmappopup.html :: searchModal"></th:block>
+	<div id="container" style="width: 100%; height: 1200px;">
 
-		<div class="tit-area">
-			<h3>매장찾기</h3>
-			<p class="sub-tx">
-				원하시는 <span style="font-weight: bolder;">지역</span>을 검색해 주세요.
-			</p>
-		</div>
+			<div class="left-tit-area">
+		<div class="tit-area"
+			style=" margin: 0; border-right: 1px solid #f2f2f2; background-color: #fff; padding: 30px 0px; height: 1000px;" >
+				<h4>매장찾기</h4>
+				<p class="sub-tx" style="margin: 0;">
+					원하시는 <span style="font-weight: bolder;">지역</span>을 검색해 주세요.
+				</p>
 
-		<div class="search-map">
-			<form onsubmit="searchPlaces(); return false;">
-			<div id = "laundryValueDiv">
-				
-				<input type="radio" id="muinMapCheck" name="laundryMapRadio" value="무인세탁"><label for="muinMapCheck" >무인</label>
-				
-				<input type="radio" id="ilbanMapCheck" name="laundryMapRadio" value="기능세탁"><label for="ilbanMapCheck">기능</label>
-			</div>	
-				<input type="text" value="" id="keyword" name="hiddenKeyword" size="15"  placeholder="예) 전주"> 
-					<input type="hidden" value="크린토피아 " id="keywordaa" name="hiddenKeyword" size="15">
-					<input type="hidden" value=" 효자동" id="keywordbb" name="hiddenKeyword" size="15">
-					<input type="hidden" value=" 드라이크리닝" id="keywordcc" name="hiddenKeyword" size="15">
-				<button type="submit" id="search-map-btn">
-				
-					<p style="color: #fff">.</p>
-				</button>
-			</form>
+				<div class="search-map">
+					<form onsubmit="searchPlaces(); return false;">
+						<div id="laundryValueDiv">
 
-		</div>
+							<input type="radio" id="muinMapCheck" name="laundryMapRadio"
+								value="무인세탁"><label for="muinMapCheck">무인</label> <input
+								type="radio" id="ilbanMapCheck" name="laundryMapRadio"
+								value="기능세탁"><label for="ilbanMapCheck">기능</label>
+						</div>
+						<input type="text" value="" id="keyword" name="hiddenKeyword"
+							style="width: 132px;" size="15" placeholder="예) 전주"> <input
+							type="hidden" value="크린토피아 " id="keywordaa" name="hiddenKeyword"
+							size="15"> <input type="hidden" value=" 효자동"
+							id="keywordbb" name="hiddenKeyword" size="15"> <input
+							type="hidden" value=" 드라이크리닝" id="keywordcc" name="hiddenKeyword"
+							size="15">
+						<button type="submit" id="search-map-btn">
+
+							<p style="color: #fff">.</p>
+						</button>
+					</form>
+
+				</div>
+				<div class="tab-content">
+					<p style="display: inline; margin-right: 10px;">지도만 보기</p>
+					<input type="checkbox" id="mapCheck" onclick="mapChecked()"
+						style="margin-top: 30px;">
+
+					<div class="tab-pane active" id="home" role="tabpanel"
+						aria-labelledby="home-tab">
+						<div class="map_wrap" style="margin-left: 0; margin-top: -30px;">
+							<div id="map"
+								style="width: inherit; height: 700px; overflow: hidden;">
+								<div class="hAddr">
+									<span class="title">지도중심기준 행정동 주소정보</span> <span
+										id="centerAddr"></span>
+								</div>
+							</div>
+
+							<div id="menu_wrap" class="bg_white" style="margin: 0;">
+								<div class="option">
+									<div></div>
+								</div>
+								<hr>
+								<ul id="placesList"></ul>
+								<div id="pagination"></div>
+							</div>
+						</div>
+						<script type="text/javascript">
+							function mapChecked() {
+
+								var menuWrap = document
+										.getElementById('menu_wrap');
+								var mapCheck = document
+										.getElementById('mapCheck');
+
+								if (mapCheck.checked == true) {
+									menuWrap.style.display = "none";
+								} else {
+									menuWrap.style.display = "block";
+								}
+							}
+						</script>
+					</div>
+					<div class="tab-pane" id="profile" role="tabpanel"
+						aria-labelledby="profile-tab"></div>
+				</div>
+			</div>
+			</div>
+			<div class="ldry-info-right-area">
+				<div class="ldry-info-right-wrap">
+					<div class="ldry-info-right-head">
+							<h4>현우세탁소</h4>
+						<div class="review-star-img">
+							<img alt="star"
+								src="https://jpassets.jobplanet.co.kr/production/uploads/material/media/99/ic_star_green500_sm.svg">
+							<span>4.0</span> <span class="gray-span">일반세탁소</span>
+							
+						</div>
+
+					</div>
+					<nav>
+					  <div class="nav nav-tabs" id="nav-tab" role="tablist" style="border-bottom: 0;">
+					    <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">기본정보</a>
+					    <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">기능별 가격</a>
+					    <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">리뷰</a>
+					  </div>
+					</nav>
+					
+					
+						<div class="tab-content" id="nav-tabContent">
+						  <!-- 기본정보 탭 -->
+						  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" style="border-bottom: 1px solid #f2f2f2; border-right: 1px solid #f2f2f2;">
+						  
+						  121212
+						  
+						  </div>
+						  
+						  
+						  
+						  <!-- 기능별 가격 탭 -->
+						  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" style="border-bottom: 1px solid #f2f2f2; border-right: 1px solid #f2f2f2;">
+
+
+							1212121
+					      </div>
+						
+						
+						
+						  <!-- 리뷰 탭 -->
+						  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" style="border-bottom: 1px solid #f2f2f2; border-right: 1px solid #f2f2f2;">
+						  
+						  1212121
+						  
+						  </div>
+						  
+						  
+						  </div>
+					
+			</div>
+
+
+
 
 		
-
-		<div class="tab-content">
-
-			<div class="tab-pane active" id="home" role="tabpanel"
-				aria-labelledby="home-tab">
-				<div class="map_wrap">
-					<div id="map" style="width: 80%; height: 700px; overflow: hidden;">
-						<div class="hAddr">
-							<span class="title">지도중심기준 행정동 주소정보</span> <span id="centerAddr"></span>
-						</div>
-					</div>
-
-					<div id="menu_wrap" class="bg_white">
-						<div class="option">
-							<div></div>
-						</div>
-						<hr>
-						<ul id="placesList"></ul>
-						<div id="pagination"></div>
-					</div>
-				</div>
-
-			</div>
-			<div class="tab-pane" id="profile" role="tabpanel"
-				aria-labelledby="profile-tab"></div>
-		</div>
-
-	
 	</div>
-			<!--매장정보 모달 -->
-			<div class="modal fade" id="exampleModal" tabindex="-1"
-				aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">매장정보</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body" style="padding: 30px;">
-							<h5>매장 정보를 확인하시겠습니까?</h5>
-							<p>세세한 매장 정보들을 한눈에 볼 수 있습니다!</p>
-						</div>
-						<div class="modal-footer" style="padding: 0;">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal"
-								style="margin: 0; border: 0; border-radius: 0; padding: 0; float: left; width: 50%; height: 50px; font-size: 20px;">닫기</button>
-							<button type="button" class="btn btn-primary" onClick="location.href='/user/laundryInfo'"
-								style="border: 0; border-radius: 0; margin: 0; padding: 0; float: right; width: 50%; height: 50px; font-size: 20px;">확인</button>
-						</div>
-					</div>
+
+	<!--매장정보 모달 -->
+	<div class="modal fade" id="exampleModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">매장정보</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" style="padding: 30px;">
+					<h5>매장 정보를 확인하시겠습니까?</h5>
+					<p>세세한 매장 정보들을 한눈에 볼 수 있습니다!</p>
+				</div>
+				<div class="modal-footer" style="padding: 0;">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal"
+						style="margin: 0; border: 0; border-radius: 0; padding: 0; float: left; width: 50%; height: 50px; font-size: 20px;">닫기</button>
+					<button type="button" class="btn btn-primary"
+						onClick="location.href='/user/laundryInfo'"
+						style="border: 0; border-radius: 0; margin: 0; padding: 0; float: right; width: 50%; height: 50px; font-size: 20px;">확인</button>
 				</div>
 			</div>
-			<!-- 매장정보 모달 끝 -->
+		</div>
+	</div>
+	<!-- 매장정보 모달 끝 -->
 	<!--자바스크립트-->
 
 	<script type="text/javascript"
@@ -109,8 +189,6 @@
 		// 지도를 생성합니다    
 		var map = new kakao.maps.Map(mapContainer, mapOption);
 
-		
-
 		// 장소 검색 객체를 생성합니다
 		var ps = new kakao.maps.services.Places();
 
@@ -123,18 +201,20 @@
 		searchPlaces();
 
 		// 키워드 검색을 요청하는 함수입니다
-			
+
 		function searchPlaces() {
-					
-			var keywordaa = document.getElementById('keywordaa').value;	//크린토피아
+
+			var keywordaa = document.getElementById('keywordaa').value; //크린토피아
 			var keywordbb = document.getElementById('keywordbb').value; //효자동
 			var keywordcc = document.getElementById('keywordcc').value; //효자동
-			
-			if (document.getElementById('muinMapCheck').checked == true) {			
-				var keyword = keywordaa + document.getElementById('keyword').value + keywordbb;	//크린토피아 + 검색어(전주) + 효자동
-			}else if(document.getElementById('ilbanMapCheck').checked == true){
-				var keyword = document.getElementById('keyword').value + keywordcc;	// 검색어(전주) + 드라이크리닝
-			}else{
+
+			if (document.getElementById('muinMapCheck').checked == true) {
+				var keyword = keywordaa
+						+ document.getElementById('keyword').value + keywordbb; //크린토피아 + 검색어(전주) + 효자동
+			} else if (document.getElementById('ilbanMapCheck').checked == true) {
+				var keyword = document.getElementById('keyword').value
+						+ keywordcc; // 검색어(전주) + 드라이크리닝
+			} else {
 				var keyword = document.getElementById('keyword').value
 			}
 
@@ -241,20 +321,23 @@
 				itemStr += '    <span>' + places.address_name + '</span>';
 			}
 
-			itemStr += '  <span class="tel">' + places.phone + '</span>'
-					+ '</div>' +
-					'<button type="button" class="map-yayak-btn" data-toggle="modal" data-target="#exampleModal">' +'매장정보' + '</button>'
-				
-					+
-					'<button type="button" data-toggle="modal" data-target="#modalFragment" class="map-yayak-btn">' + '바로예약' 
-					+'</button>';
+			itemStr += '  <span class="tel">'
+					+ places.phone
+					+ '</span>'
+					+ '</div>'
+					+ '<button type="button" class="map-yayak-btn" data-toggle="modal" data-target="#exampleModal">'
+					+ '매장정보'
+					+ '</button>'
+
+					+ '<button type="button" data-toggle="modal" data-target="#modalFragment" class="map-yayak-btn">'
+					+ '바로예약' + '</button>';
 
 			el.innerHTML = itemStr;
 			el.className = 'item';
 
 			return el;
 		}
-		
+
 		// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 		function addMarker(position, idx, title) {
 			var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
@@ -331,6 +414,7 @@
 			}
 		}
 	</script>
+
 
 
 
