@@ -2,20 +2,21 @@ package ks43team04.dto;
 
 public class LoginHistory {
 
-	private String mLoginCode;
+	private String memberLoginCode;
 	private String memberId;
-	private String mLoginTime;
-	private String mLogoutTime;
-	private String IpAddress;
-	private String Os;
+	private String memberLoginTime;
+	private String memberLogoutTime;
+	private String ipAddress;
+	private String os;
 	private String browser;
 	private String adminLevelCode;
 	
-	public String getmLoginCode() {
-		return mLoginCode;
+	
+	public String getMemberLoginCode() {
+		return memberLoginCode;
 	}
-	public void setmLoginCode(String mLoginCode) {
-		this.mLoginCode = mLoginCode;
+	public void setMemberLoginCode(String memberLoginCode) {
+		this.memberLoginCode = memberLoginCode;
 	}
 	public String getMemberId() {
 		return memberId;
@@ -23,29 +24,29 @@ public class LoginHistory {
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
-	public String getmLoginTime() {
-		return mLoginTime;
+	public String getMemberLoginTime() {
+		return memberLoginTime;
 	}
-	public void setmLoginTime(String mLoginTime) {
-		this.mLoginTime = mLoginTime;
+	public void setMemberLoginTime(String memberLoginTime) {
+		this.memberLoginTime = memberLoginTime;
 	}
-	public String getmLogoutTime() {
-		return mLogoutTime;
+	public String getMemberLogoutTime() {
+		return memberLogoutTime;
 	}
-	public void setmLogoutTime(String mLogoutTime) {
-		this.mLogoutTime = mLogoutTime;
+	public void setMemberLogoutTime(String memberLogoutTime) {
+		this.memberLogoutTime = memberLogoutTime;
 	}
 	public String getIpAddress() {
-		return IpAddress;
+		return ipAddress;
 	}
 	public void setIpAddress(String ipAddress) {
-		IpAddress = ipAddress;
+		this.ipAddress = ipAddress;
 	}
 	public String getOs() {
-		return Os;
+		return os;
 	}
 	public void setOs(String os) {
-		Os = os;
+		this.os = os;
 	}
 	public String getBrowser() {
 		return browser;
@@ -59,28 +60,28 @@ public class LoginHistory {
 	public void setAdminLevelCode(String adminLevelCode) {
 		this.adminLevelCode = adminLevelCode;
 	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("LoginHistory [mLoginCode=");
-		builder.append(mLoginCode);
+		builder.append("LoginHistory [memberLoginCode=");
+		builder.append(memberLoginCode);
 		builder.append(", memberId=");
 		builder.append(memberId);
-		builder.append(", mLoginTime=");
-		builder.append(mLoginTime);
-		builder.append(", mLogoutTime=");
-		builder.append(mLogoutTime);
-		builder.append(", IpAddress=");
-		builder.append(IpAddress);
-		builder.append(", Os=");
-		builder.append(Os);
+		builder.append(", memberLoginTime=");
+		builder.append(memberLoginTime);
+		builder.append(", memberLogoutTime=");
+		builder.append(memberLogoutTime);
+		builder.append(", ipAddress=");
+		builder.append(ipAddress);
+		builder.append(", os=");
+		builder.append(os);
 		builder.append(", browser=");
 		builder.append(browser);
 		builder.append(", adminLevelCode=");
 		builder.append(adminLevelCode);
 		builder.append("]");
 		return builder.toString();
-	}
-	
+	}	
 	
 }

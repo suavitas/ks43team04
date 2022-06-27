@@ -72,13 +72,13 @@
 		</resultMap>
 		
 		<resultMap type="MemberOut" 				id="memberOutResultMap">
-			<id column="m_out_code" 				property="mOutCode"/>
+			<id column="m_out_code" 				property="memberOutCode"/>
 			<result column="m_id" 					property="memberId"/>
-			<result column="m_out_reason" 			property="mOutReason"/>
-			<result column="m_out_request_time" 	property="mOutRequestTime"/>
-			<result column="m_out_okay_time" 		property="mOutOkayTime"/>
-			<result column="m_out_okay_state" 		property="mOutOkayState"/>
-			<result column="m_not_okay_reason" 		property="mNotOkayReason"/>
+			<result column="m_out_reason" 			property="memberOutReason"/>
+			<result column="m_out_request_time" 	property="memberOutRequestTime"/>
+			<result column="m_out_okay_time" 		property="memberOutOkayTime"/>
+			<result column="m_out_okay_state" 		property="memberOutOkayState"/>
+			<result column="m_not_okay_reason" 		property="memberNotOkayReason"/>
 			<result column="admin_level_code" 		property="adminLevelCode"/>
 			<result column="regist_time" 			property="registTime"/>
 			<result column="change_round" 			property="changeRound"/>
@@ -86,12 +86,12 @@
 		</resultMap>
 		
 		<resultMap type="LoginHistory" 				id="loginHistoryResultMap">
-			<id column="m_login_code" 				property="mLoginCode"/>
+			<id column="m_login_code" 				property="memberLoginCode"/>
 			<result column="m_id" 					property="memberId"/>
-			<result column="m_login_time" 			property="mLoginTime"/>
-			<result column="m_logout_time" 			property="mLogoutTime"/>
-			<result column="IP_Address" 			property="IpAddress"/>
-			<result column="OS" 					property="Os"/>
+			<result column="m_login_time" 			property="memberLoginTime"/>
+			<result column="m_logout_time" 			property="memberLogoutTime"/>
+			<result column="IP_Address" 			property="ipAddress"/>
+			<result column="OS" 					property="os"/>
 			<result column="browser" 				property="browser"/>
 			<result column="admin_level_code" 		property="adminLevelCode"/>
 		</resultMap>
@@ -103,10 +103,10 @@
 				,m.m_id
 				,m.m_login_time
 				,m.m_logout_time
-				,m.mIP_Address
-				,m.mOS
-				,m.mbrowser
-				,m.madmin_level_code
+				,m.IP_Address
+				,m.OS
+				,m.browser
+				,m.admin_level_code
 			FROM
 				tb_member_login AS m
 		</select>
@@ -119,7 +119,6 @@
 				,m.m_out_reason
 				,m.m_out_request_time
 				,m.m_out_okay_time
-				,m.admin_level_code
 				,m.m_out_okay_state
 				,m.m_not_okay_reason
 				,m.admin_level_code
