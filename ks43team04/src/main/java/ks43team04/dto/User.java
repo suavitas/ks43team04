@@ -1,11 +1,42 @@
 package ks43team04.dto;
 
+import java.util.List;
+
 public class User {
 	private String userCode;
 	private String mId;
 	private String userLevelChangeCode;
 	private String pointUpdate;
-	private String adminLevelCode;
+	private String adminLevelCode;	
+	
+	private List<Order> orderList;
+	private List<Bill> billList;
+	private List<IlbanGprice> ilbanGpriceList;
+	
+	
+	public List<Order> getOrderList() {
+		return orderList;
+	}
+
+	public void setOrderList(List<Order> orderList) {
+		this.orderList = orderList;
+	}
+
+	public List<Bill> getBillList() {
+		return billList;
+	}
+
+	public void setBillList(List<Bill> billList) {
+		this.billList = billList;
+	}
+
+	public List<IlbanGprice> getIlbanGpriceList() {
+		return ilbanGpriceList;
+	}
+
+	public void setIlbanGpriceList(List<IlbanGprice> ilbanGpriceList) {
+		this.ilbanGpriceList = ilbanGpriceList;
+	}
 
 	public String getUserCode() {
 		return userCode;
@@ -49,19 +80,9 @@ public class User {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("User [userCode=");
-		builder.append(userCode);
-		builder.append(", mId=");
-		builder.append(mId);
-		builder.append(", userLevelChangeCode=");
-		builder.append(userLevelChangeCode);
-		builder.append(", pointUpdate=");
-		builder.append(pointUpdate);
-		builder.append(", adminLevelCode=");
-		builder.append(adminLevelCode);
-		builder.append("]");
-		return builder.toString();
+		return "User [userCode=" + userCode + ", mId=" + mId + ", userLevelChangeCode=" + userLevelChangeCode
+				+ ", pointUpdate=" + pointUpdate + ", adminLevelCode=" + adminLevelCode + ", orderList=" + orderList
+				+ ", billList=" + billList + ", ilbanGpriceList=" + ilbanGpriceList + "]";
 	}
 
 }
