@@ -37,16 +37,15 @@
 									<div class="card-body">
 										<div class="billing-address-form">
 											<form action="index.html">
-												<p>
-												모달에 데이터값 가져오기 키워드로 검색하여 해결하자.
-												</p>
-												<p>
-												</p>
-												<p>
-												</p>
-												<p>
-												</p>
-												<p>
+												
+												매장이름 : <input type="text" id="ldryName" value="" style="width: 250px;"> <br>
+												
+												매장주소 : <input type="text" id="ldryAddr" value="" style="width: 250px;"> <br>
+												
+												매장번호 : <input type="text" id="ldryNum" value="" style="width: 250px;">
+												
+												
+												
 													<textarea name="bill" id="bill" cols="30" rows="10"
 														placeholder="배송시 요청사항"></textarea>
 												</p>
@@ -55,20 +54,6 @@
 									</div>
 								</div>
 								
-								<th:block layout:fragment="customJsScript">
-									<script>
-										$(function(){
-											$(document).on('click', '.bookBtn', function(){
-												console.log($(this).parent().find('div').children());
-												var storeInfoObj = $(this).parent().find('div').children();
-												console.log($(storeInfoObj).eq(0).text());
-												console.log($(storeInfoObj).eq(1).text());
-												console.log($(storeInfoObj).eq(2).text());
-												console.log($(storeInfoObj).eq(3).text());
-											});
-										});
-									</script>
-								</th:block>
 								
 							</div>
 							<div class="card single-accordion">
@@ -376,7 +361,7 @@
 					'<button type="button" class="map-yayak-btn" data-toggle="modal" data-target="#exampleModal">' +'매장정보' + '</button>'
 				
 					+
-					'<button type="button" data-toggle="modal" data-target="#modalFragment" class="map-yayak-btn bookBtn">' + '바로예약' 
+					'<button type="button" data-toggle="modal" data-target="#modalFragment" data-id="`${ldryName}`" class="map-yayak-btn bookBtn">' + '바로예약' 
 					+'</button>';
 
 			el.innerHTML = itemStr;
@@ -469,12 +454,31 @@
 		<script>
 			$(function(){
 				$(document).on('click', '.bookBtn', function(){
-					console.log($(this).parent().find('div').children());
 					var storeInfoObj = $(this).parent().find('div').children();
+					var ldryName = $(storeInfoObj).eq(0).text();
+					var ldryAddr = $(storeInfoObj).eq(1).text();
+					var ldryNum = $(storeInfoObj).eq(3).text();
+				    $("#ldryName").val(ldryName);
+				    $("#ldryAddr").val(ldryAddr);
+				    $("#ldryNum").val(ldryNum);
+					
+					console.log($(this).parent().find('div').children());
+					
 					console.log($(storeInfoObj).eq(0).text());
 					console.log($(storeInfoObj).eq(1).text());
 					console.log($(storeInfoObj).eq(2).text());
 					console.log($(storeInfoObj).eq(3).text());
+					
+										
+					
+				});
+			});
+			
+			
+			$(document).ready(function(){
+				$('#modalFragment').on('show.bs.modal',function(event){
+					LAUNDRYNAME = $(event.relatedTarget).data('laundryname');
+					console.log(LAUNDRYNAME);
 				});
 			});
 		</script>
