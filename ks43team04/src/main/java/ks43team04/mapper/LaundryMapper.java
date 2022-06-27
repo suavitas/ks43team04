@@ -13,8 +13,9 @@ import ks43team04.dto.MuinMachienSpec;
 @Mapper
 public interface LaundryMapper {
 
-	/* 세탁소 조회 */
+	/* 세탁소 조건 조회 */
 	public List<LaundryList> LaundryList(String searchKey, String searchValue);
+	/* 세탁소 전체 조회 */
 	public List<LaundryList> LaundryList();
 
 	/* 무인 장비 스팩 */

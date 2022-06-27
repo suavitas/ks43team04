@@ -7,62 +7,75 @@
 
 <!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
-	<div class="x_content">
-		<div th:include="search/laundrySearch :: searchLaundryFragment"></div>
-		<br /> ::::세탁소 휴일 추가::::<input type="button" value="추가" href="{#}"><br />
-		<br />
-		<div style= "overflow: scroll; width: 100%; height: 750px;">
-			<table id="reportList" class="table table-striped table-bordered" style="width: 100%;">
-				<thead>
-					<tr>
-						<th>세탁소 이름</th>
-						<th>휴일명</th>
-						<th>휴일 날짜</th>
-						<th>휴일 사용 여부</th>
-						<th>수정</th>
-						<th>삭제</th>
-					</tr>
-				</thead>
-				<tbody>
-					<th:block th:if="${not #lists.isEmpty(getLaundryList)}"
-						th:each="l : ${getLaundryList}">
-						<tr th:if="${not #lists.isEmpty(l.holidayList)}"
-							th:each="sl, status : ${l.holidayList}">
-							<td th:if="${status.index == 0}" th:text="${l.laundryName}"
-								th:rowspan="${#lists.size(l.holidayList)}"></td>
-							<td th:text="${sl.yearlyHolidayName}"></td>
-							<td th:text="${sl.yearlyHolidayDate}"></td>
-							<td th:text="${sl.holidayCodeUse}"></td>
 
-							<td><input type="button" value="수정" href="{#}"></td>
-							<td id="submit" colspan="2"><input id="tblbutton"
-								type="button" value="삭제" onclick="removeCheck()"></td>
-						</tr>
+	<div class="x_panel">
+		<h2>세탁소별 휴일 목록</h2>
+		<div class="x_title"></div>
 
-						<tr th:unless="${not #lists.isEmpty(l.holidayList)}">
-							<td colspan="8">등록된 휴일이 없습니다.</td>
+		<div class="clearfix">
+
+			<div class="float-right pr-2"></div>
+		</div>
+
+		<div class="x_content">
+			<div th:include="search/laundrySearch :: searchLaundryFragment"></div>
+			<br /> ::::세탁소 휴일 추가::::<input type="button" value="추가" href="{#}"><br />
+			<br />
+			<div style="overflow: scroll; width: 100%; height: 750px;">
+				<table id="reportList"
+					class="table table-striped jambo_table bulk_action"
+					style="width: 100%;">
+					<thead>
+						<tr>
+							<th>세탁소 이름</th>
+							<th>휴일명</th>
+							<th>휴일 날짜</th>
+							<th>휴일 사용 여부</th>
+							<th>수정</th>
+							<th>삭제</th>
 						</tr>
-					</th:block>
-					<tr th:unless="${not #lists.isEmpty(getLaundryList)}">
-						<td colspan="8">조회된 내용이 없습니다.</td>
-					</tr>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<th:block th:if="${not #lists.isEmpty(getLaundryList)}"
+							th:each="l : ${getLaundryList}">
+							<tr th:if="${not #lists.isEmpty(l.holidayList)}"
+								th:each="sl, status : ${l.holidayList}">
+								<td th:if="${status.index == 0}" th:text="${l.laundryName}"
+									th:rowspan="${#lists.size(l.holidayList)}"></td>
+								<td th:text="${sl.yearlyHolidayName}"></td>
+								<td th:text="${sl.yearlyHolidayDate}"></td>
+								<td th:text="${sl.holidayCodeUse}"></td>
+
+								<td><input type="button" value="수정" href="{#}"></td>
+								<td id="submit" colspan="2"><input id="tblbutton"
+									type="button" value="삭제" onclick="removeCheck()"></td>
+							</tr>
+
+							<tr th:unless="${not #lists.isEmpty(l.holidayList)}">
+								<td colspan="8">등록된 휴일이 없습니다.</td>
+							</tr>
+						</th:block>
+						<tr th:unless="${not #lists.isEmpty(getLaundryList)}">
+							<td colspan="8">조회된 내용이 없습니다.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 	<script type="text/javascript">
-		function removeCheck() {
+				function removeCheck() {
 
-			if (confirm("정말 삭제하시겠습니까??") == true) {
-				document.removefrm.submit();
+					if (confirm("정말 삭제하시겠습니까??") == true) {
+						document.removefrm.submit();
 
-			} else {
-				return false;
+					} else {
+						return false;
 
-			}
+					}
 
-		}
-	</script>
+				}
+			</script>
 </th:block>
 
 </html>
