@@ -25,4 +25,9 @@ public class BillService {
 		return BillList;
 
 	}
+	
+	public int getBillCount(String memberId){
+		int getBillCount = billMapper.getBillCount(memberId);
+		return getBillCount;
+	}
 }

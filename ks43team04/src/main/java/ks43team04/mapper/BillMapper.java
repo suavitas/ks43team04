@@ -12,4 +12,6 @@ public interface BillMapper {
 	
 	public List<Bill> getBillList();
 	
+	/* 마이페이지 > 결제건수 조회 row 수*/
+	public int getBillCount(String memberId);
 }

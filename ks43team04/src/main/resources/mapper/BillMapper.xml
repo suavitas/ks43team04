@@ -36,6 +36,16 @@
 			total_pay_groupcode
 		FROM 
 			tb_bill
-
+ 	</select>
+ 	
+ 	<select id="getBillCount" parameterType="String" resultType="int">
+	 	SELECT
+			COUNT(bill_code)
+		FROM
+			tb_bill
+		WHERE
+			order_num_groupcode
+		LIKE 
+			CONCAT('%', #{memberId}, '%');
  	</select>
 </mapper>

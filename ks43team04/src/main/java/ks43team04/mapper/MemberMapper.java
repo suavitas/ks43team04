@@ -33,5 +33,4 @@ public interface MemberMapper {
 	
 	/* 로그인 이력 조회 (페이징) */
 	public List<Map<String, Object>> getLoginHistory(Map<String, Object> paramMap);
-	
 }

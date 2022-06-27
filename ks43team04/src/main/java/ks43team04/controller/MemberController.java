@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks43team04.dto.Laundry;
 import ks43team04.dto.Member;
+import ks43team04.mapper.BillMapper;
 import ks43team04.mapper.MemberMapper;
 import ks43team04.service.MemberService;
 
@@ -27,10 +28,12 @@ public class MemberController {
 
 	private final MemberService memberService;
 	private final MemberMapper memberMapper;
+	private final BillMapper billMapper;
 
-	public MemberController(MemberService memberService, MemberMapper memberMapper) {
+	public MemberController(MemberService memberService, MemberMapper memberMapper,BillMapper billMapper) {
 		this.memberService = memberService;
 		this.memberMapper = memberMapper;
+		this.billMapper = billMapper;
 	}
 	/**
 	 * 고객 마이페이지 > 환불내역
@@ -58,9 +61,12 @@ public class MemberController {
 
 		String sessionId = (String) session.getAttribute("SID");
 		String sessionName = (String) session.getAttribute("SNAME");
-
+		String memberId = sessionId;
+		
 		Member member = memberService.getMemberInfoById(sessionId);
-
+		int rowCount = billMapper.getBillCount(memberId);
+		
+		model.addAttribute("rowCount", rowCount);
 		model.addAttribute("title", "마이페이지");
 		model.addAttribute("sessionName", sessionName);
 		model.addAttribute("member", member);
