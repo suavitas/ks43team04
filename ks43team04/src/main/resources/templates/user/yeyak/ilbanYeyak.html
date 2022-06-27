@@ -17,7 +17,9 @@
 							<h4 th:text="${l.get('laundryName')}"></h4>
 							<h5 class="product-price" th:text="${l.get('laundryAddr')}"></h5>
 							<p>영업상태</p>
-							<h3 class="laundry-state" th:text="${l.get('laundryState')}"></h3> 
+							<h3 class="laundry-state" th:text="${l.get('laundryState')}"></h3>
+							<p>매장시간</p>
+							<p>09 : 00 ~ 18 : 00</p> 
 							<p th:text="${l.get('laundryTel')}"></p>
 							세탁자격증 보유 여부
 							<p th:text="${l.get('skillLicence')}"></p>
@@ -49,8 +51,8 @@
 																<div class="billing-address-form">
 																	<form action="index.html">
 																		<h5>수거일 예약 신청</h5>
-																		<input type="date" value="2022-04-21">
-																		<input type="time" style="margin-bottom: 20px;">
+																		<input type="date" class="currentDate">
+																		<input type="time" class="currentDateTime" style="margin-bottom: 20px;">
 																		<p>수거는 예약날짜 및 시간 으로 부터 <br/>최대 24시간의 시간이 소요 됩니다.</p>
 																			<div th:class="${'append-info'}">
 																				<div class="boxbox">
@@ -222,6 +224,16 @@
 			});
 		}	
 		
+		/*수거배송 신청예약 폼 내일날짜로 셋팅*/
+		var currentDates = document.querySelectorAll('.currentDate');
+		var currentDateTimes = document.querySelectorAll('.currentDateTime');
+		for(var i=0; i<currentDates.length; i++){
+			var tomorrowDate = new Date
+			tomorrowDate.setHours(tomorrowDate.getHours()+6)
+			tomorrowDate.setDate(tomorrowDate.getDate()+1)
+			currentDates[i].value = tomorrowDate.toISOString().substring(0, 10);		
+			currentDateTimes[i].value = tomorrowDate.toISOString().slice(11, 16);		
+		}
 	</script>
 </th:block>
 
