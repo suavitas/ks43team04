@@ -1,5 +1,7 @@
 package ks43team04.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -19,6 +21,7 @@ import ks43team04.dto.Member;
 import ks43team04.mapper.BillMapper;
 import ks43team04.mapper.MemberMapper;
 import ks43team04.service.MemberService;
+import ks43team04.service.UserService;
 
 @Controller
 @RequestMapping("/user")
@@ -27,13 +30,15 @@ public class MemberController {
 	private static final Logger log = LoggerFactory.getLogger(MemberController.class);
 
 	private final MemberService memberService;
+	private final UserService userService;
 	private final MemberMapper memberMapper;
 	private final BillMapper billMapper;
 
-	public MemberController(MemberService memberService, MemberMapper memberMapper,BillMapper billMapper) {
+	public MemberController(MemberService memberService, MemberMapper memberMapper,BillMapper billMapper,UserService userService) {
 		this.memberService = memberService;
 		this.memberMapper = memberMapper;
 		this.billMapper = billMapper;
+		this.userService = userService;
 	}
 	/**
 	 * 고객 마이페이지 > 환불내역
@@ -57,8 +62,11 @@ public class MemberController {
 	 * 고객 마이페이지 > 결제내역
 	 */
 	@GetMapping("/myPagePayment")
-	public String myPagePayment(Model model, HttpSession session) {
+	public String myPagePayment(@RequestParam(name = "currentPage", required = false, defaultValue = "1") int currentPage,
+			Model model, HttpSession session) {
 
+		Map<String, Object> resultMap = userService.getPaymentList(currentPage, session);
+		
 		String sessionId = (String) session.getAttribute("SID");
 		String sessionName = (String) session.getAttribute("SNAME");
 		String memberId = sessionId;
@@ -69,7 +77,14 @@ public class MemberController {
 		model.addAttribute("rowCount", rowCount);
 		model.addAttribute("title", "마이페이지");
 		model.addAttribute("sessionName", sessionName);
-		model.addAttribute("member", member);
+		
+		model.addAttribute("resultMap", resultMap);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("getPaymentList", resultMap.get("getPaymentList"));
+		model.addAttribute("lastPage", resultMap.get("lastPage"));
+		model.addAttribute("startPageNum", resultMap.get("startPageNum"));
+		model.addAttribute("endPageNum", resultMap.get("endPageNum"));
+		
 
 		return "/member/myPagePayment";
 	}
