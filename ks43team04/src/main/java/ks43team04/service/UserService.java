@@ -32,7 +32,7 @@ public class UserService {
 		String memberId = sessionId;
 		
 		// 페이지 내 몇개를 보여줄까?
-		int rowPerPage = 10;
+		int rowPerPage = 4;
 		int startPageNum = 1;
 		int endPageNum = 5;
 
