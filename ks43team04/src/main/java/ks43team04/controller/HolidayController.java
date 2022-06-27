@@ -32,6 +32,8 @@ public class HolidayController {
 
 		if ("laundryName".equals(searchKey)) {
 			searchKey = "laundry_name";
+		}if ("yearlyHolidayDate".equals(searchKey)) {
+			searchKey = "yearly_holiday_date";
 		} else {
 			searchKey = "laundry_addr";
 		}
