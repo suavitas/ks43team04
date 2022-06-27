@@ -7,48 +7,56 @@
 
 <!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
-	<h1>세탁소별 가격</h1>
- 	<div class="x_content">
-		<div th:include="search/laundrySearch :: searchLaundryFragment"></div><br/>
-		
-		::::세탁소 휴일 추가::::<input type="button" value="추가" href="{#}"><br/><br/>
-		<table id="reportList" class="table table-striped table-bordered" style="width: 100%;">
-			<thead>
-				<tr>
-					<th>세탁소 이름</th>
-					<th>상품 이름</th>
-					<th>상품 가격</th>
-					<th>수정</th>	
-					<th>삭제</th>	
-				</tr>
-			</thead>
-			<tbody>
-				<th:block th:if="${not #lists.isEmpty(ilbangoodsPrice)}" th:each="l : ${ilbangoodsPrice}">
-					<tr th:if="${not #lists.isEmpty(l.ilbanGoodsPrice)}" th:each="sl, status : ${l.ilbanGoodsPrice}">
-						<td th:text="${l.laundryName}"></td>
-						<td th:text="${sl.goodsName}"></td>
-						<td th:text="${sl.goodsPrice}"></td>
-			
+	<div class="x_title">
+		<h2>[[${sessionName}]] 님 세탁소</h2>
+		<h2>매장 가격표</h2>
 
-						
-						<td>
-							<input type="button" value="수정" href="{#}">
-						</td>
-						<td id="submit" colspan="2">
-					    	<input id="tblbutton" type="button" value="삭제" onclick="removeCheck()">
-					    </td>
-					</tr>
-
-					<tr th:unless="${not #lists.isEmpty(l.ilbanGoodsPrice)}">
-						<td colspan="8">등록된 휴일이 없습니다.</td>
-					</tr>
-					</th:block>		
-			</tbody>
-		</table>
+		<div class="clearfix"></div>
 	</div>
 
+	<table id="reportList"
+		class="table table-striped jambo_table bulk_action"
+		style="width: 100%;">
+		<thead>
+			<tr>
+				<th>세탁소 이름</th>
+				<th>상품 이름</th>
+				<th>상품 가격</th>
+				<th>수정</th>
+				<th>삭제</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${not #lists.isEmpty(eachGoodsPriceList)}"
+				th:each="l : ${eachGoodsPriceList}">
+				<td th:text="${l.get('laundryName')}"></td>
+				<td th:text="${l.get('gName')}"></td>
+				<td th:text="${l.get('gPrice')}"></td>
 
-
+				<td><input type="button" value="수정" href="{#}"></td>
+				<td id="submit" colspan="2"><input id="tblbutton" type="button"
+					value="삭제" onclick="removeCheck()"></td>
+			<tr th:unless="${not #lists.isEmpty(eachGoodsPriceList)}">
+				<td colspan="8">등록된 상품이 없습니다.</td>
+			</tr>
+		</tbody>
+	</table>
+	<nav aria-label="Page navigation example">
+		<ul class="pagination justify-content-center">
+			<li class="page-item"><a class="page-link"
+				th:href="@{/admin/goodsPrice}" tabindex="-1">처음</a></li>
+			<th:block
+				th:each="num : ${#numbers.sequence(startPageNum, endPageNum)}">
+				<li class="page-item"></li>
+				<li><a class="page-link" th:unless="${currentPage eq num}"
+					th:href="@{/admin/goodsPrice(currentPage=${num})}"
+					th:text="${(num < 5)? '0'+ num: num}"></a></li>
+			</th:block>
+			<li class="page-item">
+			<li class="page-item"><a class="page-link"
+				th:href="@{/admin/goodsPrice(currentPage=${lastPage})}">마지막</a></li>
+		</ul>
+	</nav>
 </th:block>
 
 </html>

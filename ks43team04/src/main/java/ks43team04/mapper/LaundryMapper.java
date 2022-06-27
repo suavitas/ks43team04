@@ -1,6 +1,7 @@
 package ks43team04.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -28,9 +29,11 @@ public interface LaundryMapper {
 	/* 전체 일반 세탁소 상품 가격 조회 */
 	public List<Laundry> ilbanGoodsPriceList();
 	
-	/* 매장별 일반 세탁소 상품 가격 조회 */
-	public List<Laundry> eachGoodsPriceList();
+	/* 매장별 일반 세탁소 상품 가격 페이징 처리 */
+	public List<Map<String, Object>> eachGoodsPriceList(Map<String, Object> paramMap);
 
+	/* 매장별 일반 세탁소 상품 튜플수 */
+	public int GoodsPriceLookUpCount();
 
 	/* 일반세탁소 스킬 목록 */
 	public List<IlbanSkill> ilbanSkillList();

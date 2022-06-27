@@ -74,7 +74,8 @@
 									<th class="column-title">자격증</th>
 									<th class="column-title">사업자등록번호</th>
 									<th class="column-title">상세조회</th>
-									<th class="bulk-actions" colspan="13">
+									<th class="column-title">삭제</th>
+									<th class="bulk-actions" colspan="12">
 										<a class="antoo" style="color:#fff; font-weight:500;">전체 선택 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
 									</th>
 								</tr>
@@ -96,7 +97,12 @@
 									<td th:text="${l.businessNumber}"></td>
 									<td>
 										<div style="text-align: center;">							
-										<button type="button">상세 조회</button>
+										<button type="button"  class="btn btn-warning btn-sm">상세 조회</button>
+										</div>
+									</td>
+									<td>
+										<div style="text-align: center;">							
+										<button type="button"  class="btn btn-secondary btn-sm" >삭제</button>
 										</div>
 									</td>
 								</tr>
