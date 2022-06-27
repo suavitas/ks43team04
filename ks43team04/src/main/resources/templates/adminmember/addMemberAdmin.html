@@ -3,8 +3,8 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/adminDefault}">	  
 	  
-<!-- 사용자정의 contents -->
-<th:block layout:fragment="customContents">
+
+<link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
 <!-- 사용자 정의 JsScript 파일-->
 <th:block layout:fragment="customJsScript">
@@ -122,17 +122,22 @@
       -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
       box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
     }
+
 </style>
 
-
-<div class="container"  style="margin-top: 80px; margin-bottom: 100px;">
-		    <div class="input-form-backgroud row">
+	<!-- 사용자정의 contents -->
+	<th:block layout:fragment="customContents">
+	<h4>관리자 등록</h4>
+	<div class="container"  style="margin-top: 80px; margin-bottom: 100px;">
+			 <div class="input-form-backgroud row">
 		      <div class="input-form col-md-12 mx-auto">
-		        <h4 class="mb-3" >관리자 등록</h4>
-			      <br>
-				<form id="addMemberAdminForm" th:action="@{/admin/addMemberAdmin}" method="post" class="validation-form" novalidate>
+		      <div class="x_panel">
+				<h2>관리자 등록</h2>
+				<div class="x_title">
+				</div>
+				<form id="addMemberAdminForm"  style="margin: 30px auto; width: 45%;" th:action="@{/admin/addMemberAdmin}" method="post" class="validation-form" novalidate>
 				
-					<div class="mb-3"  style="margin: 20px auto;  width: 35%;">
+					<div class="mb-3" >
 						<label for="id"><strong>아이디</strong></label> 
 						<div style="display: flex; margin: 0 auto;">
 							<input type="text" class="form-control" id="memberId" name="memberId" />	
@@ -141,56 +146,63 @@
 							<div>
 								<span id="idCheckResult"></span> 
 							</div>
+					</div>	
+					
+                  <div class="mb-3">
+                  		<label for="password" style="display: block;"><strong>비밀번호</strong></label>
+							<input class="form-control" type="password" id="password1" name="memberPw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}" 
+								title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character" required style="display: inline;"/>											                 			
+	                  			<span onclick="hideshow()" style="position: relative; left:45%; top:5%; bottom: 100%; display: inline;">
+									<!-- <i id="slash" class="fa fa-eye-slash"></i>
+									<i id="eye" class="fa fa-eye"></i> -->
+								</span>
+                  			<div>
+						</div>
 					</div>					
 
-					<div class="mb-3" style="margin: 20px auto; width: 35%;">
-						<label for="password"><strong>비밀번호</strong></label> 
-						<input type="text" class="form-control" id="memberPw" name="memberPw"/> 
-					</div>
-
-					<div class="mb-3" style="margin: 20px auto; width: 35%;">
+					<div class="mb-3" >
 						<label for="email"><strong>이름</strong></label>
 						<input type="email" class="form-control" id="memberName"  name="memberName"/>
 					</div>
 
-					<div class="mb-3" style="margin: 20px auto; width: 35%;">
+					<div class="mb-3" >
 						<label for="birth"><strong>생년월일</strong></label> 
 						<input type="date" class="form-control" id="memberBirth" name="memberBirth"/>
 					</div>
 
-					<div class="mb-3"  style="margin: 20px auto;  width: 35%;">
+					<div class="mb-3">
 						<label for="email"><strong>주소</strong></label> 
 						<div style="display: flex;">
 							<input type="text" class="form-control" name="memberPostNum" id="memberPostNum" placeholder="우편번호"/>
 							<input type="button" class="btn btn-success" id="memberPostNum" name="memberPostNum" style="width: 20%;" onclick="searchAddForm()" value="우편찾기"/>			
 						</div>
 					</div>	
-					<div class="mb-3" style="margin: 20px auto; width: 35%;">		
+					<div class="mb-3">		
 							<input type="text" class="form-control" name="memberAddr" id="memberAddr" placeholder="주소" />
 					</div>
-					<div class="mb-3" style="margin: 20px auto; width: 35%;">		
+					<div class="mb-3">		
 							<input type="text" class="form-control" name="memberDetailAddr" id="memberDetailAddr" placeholder="상세주소"/>
 					</div>
 
-					<div class="mb-3" style="margin: 20px auto; width: 35%;">
+					<div class="mb-3" >
 						<label for="address"><strong>전화번호</strong></label> 
 						<input type="text" class="form-control" id="memberPhone" name="memberPhone" placeholder="전화번호 입력" />
 					</div>
 					
-					<div class="mb-3" style="margin: 20px auto; width: 35%;">
+					<div class="mb-3" >
 						<label for="email"><strong>성별 선택</strong></label> 
 						<input type='checkbox' name='memberGender' value="여" style="margin: 20px;"/><strong>여성</strong>
   						<input type='checkbox' name='memberGender' value="남" style="margin: 20px;"/><strong>남성</strong>
 					</div>
 
-					<div class="mb-3" style="margin: 20px auto; width: 35%;">
+					<div class="mb-3">
 						<label for="eamil"><strong>이메일</strong></label> 
 						<input type="text"class="form-control" id="memberEmail" name="memberEmail" placeholder="이메일 입력"/>
 					</div>
-					<div class="custom-control custom-checkbox" style="text-align: center; margin: 35px;">
+					<div class="custom-control custom-checkbox" style="text-align: center;">
 						<div class="mb-5" style="padding: 50px;">				
-							<a th:href="@{/admin}"><input type="button" class="btnContactSubmit" value="취소" style="width: 10%;"/></a>
-							<input type="submit" class="btnContactSubmit" id="addMemberBtn" value="등록" style="width: 10%;"/>
+							<a th:href="@{/admin}"><input type="button" class="btn btn-primary" value="취소" style="width: 30%;"/></a>
+							<input type="submit" class="btn btn-success" id="addMemberBtn" value="등록" style="width: 30%;"/>
 							<!-- <a th:href="@{/user/index}"><input type="button" id="addMemberLaundryBtn" value="회원가입" style="width: 15%;"/></ -->
 						</div>
 					</div>
@@ -198,6 +210,29 @@
 				</div>
 			</div>				
 		</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="../vendors/validator/multifield.js"></script>
+<script src="../vendors/validator/validator.js"></script>
+	<!-- Javascript functions	-->
+	<script type="text/javascript">
+		function hideshow(){
+			var password = document.getElementById("memberPw");
+			var slash = document.getElementById("slash");
+			var eye = document.getElementById("eye");
+			
+			if(password.type === 'memberPw'){
+				password.type = "text";
+				slash.style.display = "block";
+				eye.style.display = "none";
+			}
+			else{
+				password.type = "password";
+				slash.style.display = "none";
+				eye.style.display = "block";
+			}
+		}		
+	</script>
+	</div>
    </th:block>
 </html>
   

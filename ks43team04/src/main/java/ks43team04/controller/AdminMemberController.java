@@ -33,6 +33,23 @@ public class AdminMemberController {
 		this.adminMemberService = adminMemberService;
 		this.adminMemberMapper = adminMemberMapper;
 	}
+	//관리자페이지 세탁점주 상세정보조회
+
+	
+	
+	//관리자페이지 회원관리 상세정보조회 
+	@GetMapping("/detailMember")
+	public String getDetailMemberInfo(Model model
+									,@RequestParam(name="memberId", required = false) String memberId) {		
+		Member member = adminMemberService.getMemberInfoById(memberId);		
+		log.info("회원 상세정보:{}", member);		
+		model.addAttribute("title", "회원 관리");
+		model.addAttribute("titleName", "회원 상세정보");
+		model.addAttribute("member", member);
+		return "adminmember/detailMember";
+	}
+	
+	
 	//관리자페이지 로그인 회원접속내역 화면
 	@GetMapping("/loginHistory")
 	public String loginHistory(Model model) {

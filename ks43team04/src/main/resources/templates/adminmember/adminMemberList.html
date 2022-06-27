@@ -12,8 +12,7 @@
 	.column-title {
 		font-size: 8px;
 	}
-</style>  
-	  
+</style>  	  
 	  
 	<!-- 사용자정의 contents -->
 	<th:block layout:fragment="customContents">
@@ -41,10 +40,9 @@
 							<div class="form-group col-md-2">
 								<select name="searchKey" class="form-control text-center">
 									<option value=""> :: 선택 :: </option>
-									<option value="member_id">아이디</option>
-									<option value="seller_store_name">세탁소 명</option>
-									<option value="seller_store_addr">대표번호</option>
-									<option value="seller_store_phone">세탁소 주소</option>
+									<option value="m_id">아이디</option>
+									<option value="m_name">회원이름</option>
+									<option value="laundry_name">주소</option>
 								</select>
 							</div>
 							<div class="form-group col-md-6">
@@ -75,7 +73,7 @@
 									<th class="column-title">성별</th>
 									<th class="column-title">이메일</th>
 									<th class="column-title">가입일</th>
-									<th class="column-title">수정</th>
+									<th class="column-title">상세조회</th>
 									<th class="column-title">삭제</th>
 									<th class="bulk-actions" colspan="12">
 										<a class="antoo" style="color:#fff; font-weight:500;">전체 선택 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
@@ -99,8 +97,8 @@
 										<td th:text="${l.memberEmail}"></td>
 										<td th:text="${l.memberRegDate}"></td>
 									<td>
-										<div style="text-align: center;">							
-										<button type="button"  class="btn btn-warning btn-sm">상세 조회</button>
+										<div style="text-align: center;">	
+											<a th:href="@{/admin/detailMember(memberId=${l.memberId})}"><button type="button" class="btn btn-warning btn-sm">상세조회</button></a>	
 										</div>
 									</td>
 									<td>

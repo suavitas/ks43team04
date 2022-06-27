@@ -60,15 +60,15 @@
 				<result column="regist_time" 			property="registTime"/>
 			</collection> -->
 
-		<resultMap type="UserLevel" 						id="userLevelResultMap">
-			<result column="user_level_cal_code" 			property="userLevelCalCode"/>
-			<result column="level_code" 					property="levelCode"/>
-			<result column="range_start" 					property="rangeStart"/>
-			<result column="range_end" 						property="rangeEnd"/>
-			<result column="save_point_percent" 			property="savePointPercent"/>
-			<result column="admin_level_code" 				property="adminLevelCode"/>
-			<result column="regist_time" 					property="registTime"/>
-			<result column="update_time" 					property="updateTime"/>
+		<resultMap type="UserLevel" 				id="userLevelResultMap">
+			<result column="user_level_cal_code" 	property="userLevelCalCode"/>
+			<result column="level_code" 			property="levelCode"/>
+			<result column="range_start" 			property="rangeStart"/>
+			<result column="range_end" 				property="rangeEnd"/>
+			<result column="save_point_percent" 	property="savePointPercent"/>
+			<result column="admin_level_code" 		property="adminLevelCode"/>
+			<result column="regist_time" 			property="registTime"/>
+			<result column="update_time" 			property="updateTime"/>
 		</resultMap>
 		
 		<resultMap type="MemberOut" 				id="memberOutResultMap">
@@ -95,6 +95,31 @@
 			<result column="browser" 				property="browser"/>
 			<result column="admin_level_code" 		property="adminLevelCode"/>
 		</resultMap>
+
+		<select id="getMemberInfoById" parameterType="String" resultMap="memberResultMap">
+			/* 회원 상세정보 조회*/
+			SELECT
+			     m.m_id
+			    ,m.level_code
+				,m.m_pw
+				,m.m_pw_QnA_code
+				,m.m_name
+				,m.m_birth
+				,m.m_post_num
+				,m.m_addr
+				,m.m_detail_addr
+				,m.m_phone
+				,m.m_gender
+				,m.m_out_code
+				,m.m_email
+				,m.m_reg_date   
+				,m.admin_level_code   
+				,m.regist_time   
+			FROM
+			   tb_member AS m
+			WHERE
+			   m.m_id = #{memberId};
+		</select>
 		
 		<select id="getLoginHistory" parameterType="String" resultMap="loginHistoryResultMap">
 			/* 회원접속내역 조회 */
@@ -167,7 +192,7 @@
 		</select>
 	
 		<select id="getAdminMemberList" resultMap="memberResultMap">
-			/*관리자 회원 목록 조회*/
+			/*관리자페이지 회원 목록 조회*/
 			SELECT 
 				 m_id
 				,level_code 
@@ -190,7 +215,7 @@
 		</select>
 		
 		<insert id="addMemberAdmin" parameterType="Member">
- 		/* 관리자 회원가입 */
+ 		/* 관리자 등록 회원가입 */
  		INSERT INTO tb_member
 			(m_id
 			,m_pw
