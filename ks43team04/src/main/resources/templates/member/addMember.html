@@ -38,6 +38,7 @@
 	            }
 	        }).open();
 	    }
+		 //아이디 중복체크 
          $(function(){
             function validationCheck(data){
                if(typeof data == 'undefined' || data == '' || data == null){
@@ -45,7 +46,7 @@
                }
                return true;
             }
-            //중복체크 
+           
             $('#idCheck').click(function(){
                var memberId = $('input[name="memberId"]').val();
                console.log(validationCheck(memberId));

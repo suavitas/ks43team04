@@ -52,8 +52,7 @@ public class AdminMemberService {
 	
 	//관리자페이지 관리자 권한 회원가입
 	public int addMemberAdmin(Member member) {		
-		int addMemberAdmin = adminMemberMapper.addMemberAdmin(member);
-		
+		int addMemberAdmin = adminMemberMapper.addMemberAdmin(member);		
 		return addMemberAdmin;	
 	}
 	
