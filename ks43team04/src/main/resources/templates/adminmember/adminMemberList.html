@@ -2,61 +2,136 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/adminDefault}">
-<style>
+	  
+	<th:block layout:fragment="customCss">
+		<!-- datepicker -->
+		<link th:href="@{/admin/build/css/datepicker.css}" rel="stylesheet">
+	</th:block>
 
-</style>	  
+<style>
+	.column-title {
+		font-size: 8px;
+	}
+</style>  
 	  
 	  
 	<!-- 사용자정의 contents -->
 	<th:block layout:fragment="customContents">
-
    	<h4>전체 회원관리</h4>
+   	<div class="col-md-12 col-sm-12 mt-5">
+			<div class="x_panel">
+			<h2>회원 목록</h2>
+			<div class="x_title">
+			</div>
+				<div class="x_content">
+				  <div class="table-responsive">
+					<div class="mb-2">
+						<!-- START : 검색 바 -->
+						<div th:include="member/searchDate :: searchDateFragment"></div>
+						<!-- END : 검색 바 -->
+					</div>
+					<div class="clearfix">
+	                        <div class="float-left">
+	                            <span>Total : </span>
+	                        </div>
+	                        <div class="float-right pr-2"></div>
+                    </div>
+					<form th:action="@{/admin/adminMemberList}" method="get">
+						<div class="form-row">
+							<div class="form-group col-md-2">
+								<select name="searchKey" class="form-control text-center">
+									<option value=""> :: 선택 :: </option>
+									<option value="member_id">아이디</option>
+									<option value="seller_store_name">세탁소 명</option>
+									<option value="seller_store_addr">대표번호</option>
+									<option value="seller_store_phone">세탁소 주소</option>
+								</select>
+							</div>
+							<div class="form-group col-md-6">
+								<input type="text" class="form-control" name="searchValue" placeholder="Search"
+								aria-label="Text input with dropdown button">
+							</div>
+							<div class="form-group col-md-2">
+								<button type="submit" class="btn btn-success" id="searchBtn"><i class="fa fa-search"></i> 검색</button>
+								<button type="reset" class="btn btn-info" id="btn_reset"><i class="fa fa-minus-circle"></i> 초기화</button>
+							</div>
+						</div>
+					</form>
+					
+					<table class="table table-striped jambo_table bulk_action">					
+							<thead>
+								<tr class="headings" style="text-align: center;">
+									<th>
+										<input type="checkbox" id="check-all" class="flat">
+									</th>
+									<th class="column-title" >아이디</th>
+									<th class="column-title" >비밀번호</th>
+									<th class="column-title">이름</th>
+									<th class="column-title">생년월일</th>
+									<th class="column-title">우편번호</th>
+									<th class="column-title">주소</th>
+									<th class="column-title">상세주소</th>
+									<th class="column-title">전화번호</th>
+									<th class="column-title">성별</th>
+									<th class="column-title">이메일</th>
+									<th class="column-title">가입일</th>
+									<th class="column-title">수정</th>
+									<th class="column-title">삭제</th>
+									<th class="bulk-actions" colspan="12">
+										<a class="antoo" style="color:#fff; font-weight:500;">전체 선택 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${not #lists.isEmpty(adminMemberList)}" th:each="l : ${adminMemberList}" class="even pointer">
+									<td class="a-center">
+										<input type="checkbox" class="flat" name="table_records">
+									</td>
+										<td th:text="${l.memberId}" style="text-align: center;"></td>
+										<td th:text="${l.memberPw}" style="text-align: center;"></td>
+										<td th:text="${l.memberName}"></td>
+										<td th:text="${l.memberBirth}"></td>
+										<td th:text="${l.memberPostNum}"></td>
+										<td th:text="${l.memberAddr}"></td>
+										<td th:text="${l.memberDetailAddr}"></td>
+										<td th:text="${l.memberPhone}"></td>
+										<td th:text="${l.memberGender}"></td>
+										<td th:text="${l.memberEmail}"></td>
+										<td th:text="${l.memberRegDate}"></td>
+									<td>
+										<div style="text-align: center;">							
+										<button type="button"  class="btn btn-warning btn-sm">상세 조회</button>
+										</div>
+									</td>
+									<td>
+										<div style="text-align: center;">							
+										<button type="button"  class="btn btn-secondary btn-sm" >삭제</button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					
+					<nav aria-label="Page navigation example">
+						<ul class="pagination justify-content-center">
+							<li class="page-item">
+								<a class="page-link" th:href="@{/admin/adminMemberList}" tabindex="-1"> <
+								</a>
+							</li>
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item">
+								<a class="page-link" href="#">></a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>	
 
-
-	<table id="reportList" class="table table-striped table-bordered" style="width: 100%;">
-		<thead>
-			<tr>
-				<th>아이디</th>
-				<th>비밀번호</th>
-				<th>이름</th>
-				<th>생년월일</th>
-				<th>우편번호</th>
-				<th>주소</th>
-				<th>상세주소</th>
-				<th>전화번호</th>
-				<th>성별</th>
-				<th>이메일</th>
-				<th>가입일</th>
-				<th>수정</th>
-				<th>삭제</th>				
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:if="${not #lists.isEmpty(adminMemberList)}" th:each="l : ${adminMemberList}">
-				<td th:text="${l.memberId}"></td>
-				<td th:text="${l.memberPw}"></td>
-				<td th:text="${l.memberName}"></td>
-				<td th:text="${l.memberBirth}"></td>
-				<td th:text="${l.memberPostNum}"></td>
-				<td th:text="${l.memberAddr}"></td>
-				<td th:text="${l.memberDetailAddr}"></td>
-				<td th:text="${l.memberPhone}"></td>
-				<td th:text="${l.memberGender}"></td>
-				<td th:text="${l.memberEmail}"></td>
-				<td th:text="${l.memberRegDate}"></td>
-				<td>			 
-				<a href="#">수정</a>
-				</td>
-				<td>
-				<a href="#">삭제</a>					
-				</td>
-			</tr>
-			<tr th:unless="${not #lists.isEmpty(adminMemberList)}">
-				<td colspan="13">조회된 내용이 없습니다.</td>
-			</tr>
-		</tbody>
 	</table>
-
 </th:block>
 
 </html>

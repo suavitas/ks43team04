@@ -3,16 +3,23 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/adminDefault}">
 	  
+	<th:block layout:fragment="customCss">
+		<!-- datepicker -->
+		<link th:href="@{/admin/build/css/datepicker.css}" rel="stylesheet">
+	</th:block>
+
+<style>
+	.column-title {
+		font-size: 8px;
+	}
+</style>
+
 	<!-- 사용자정의 contents -->
 	<th:block layout:fragment="customContents">
-	  
-	
-    <!-- 사용자정의 contents -->
-	<th:block layout:fragment="customContents">
-   	<h4>세탁소 점주 회원관리</h4>
+   	<h4>회원 접속 관리</h4>
    	<div class="col-md-12 col-sm-12 mt-5">
 			<div class="x_panel">
-			<h2>세탁소 목록</h2>
+			<h2>로그인/로그아웃 목록</h2>
 			<div class="x_title">
 			</div>
 				<div class="x_content">
@@ -22,26 +29,31 @@
 						<div th:include="member/searchDate :: searchDateFragment"></div>
 						<!-- END : 검색 바 -->
 					</div>
+					
+					<div class="mb-2">
+						<div class="checkbox">
+							<label>권한별 조회</label>
+							<label class="btn btn-default">
+								<input type="checkbox" name="options" id="option1" class="flat"> 회원
+							</label>
+							<label class="btn btn-default">
+								<input type="checkbox" name="options" id="option2" class="flat"> 일반점주
+							</label>
+							<label class="btn btn-default">
+								<input type="checkbox" name="options" id="option3" class="flat"> 무인점주
+							</label>
+						</div>					
+					</div>					
 					<div class="clearfix">
 	                        <div class="float-left">
 	                            <span>Total : </span>
 	                        </div>
 	                        <div class="float-right pr-2"></div>
-                    </div>
-					<form th:action="@{/admin/LoginHistory}" method="get">
+                    </div>                   
+					<form th:action="@{/admin/loginHistory}" method="get">
 						<div class="form-row">
-							<div class="form-group col-md-2">
-								<select name="searchKey" class="form-control text-center">
-									<option value=""> :: 선택 :: </option>
-									<option value="member_id">아이디</option>
-									<option value="seller_store_name">세탁소 명</option>
-									<option value="seller_store_addr">대표번호</option>
-									<option value="seller_store_phone">세탁소 주소</option>
-								</select>
-							</div>
-							<div class="form-group col-md-6">
-								<input type="text" class="form-control" name="searchValue" placeholder="Search"
-								aria-label="Text input with dropdown button">
+							<div class="form-group col-md-7">
+								<input type="text" class="form-control" name="searchValue" placeholder="Search" aria-label="Text input with dropdown button">
 							</div>
 							<div class="form-group col-md-2">
 								<button type="submit" class="btn btn-success" id="searchBtn"><i class="fa fa-search"></i> 검색</button>
@@ -56,40 +68,32 @@
 									<th>
 										<input type="checkbox" id="check-all" class="flat">
 									</th>
-									<th class="column-title">세탁소 코드</th>
-									<th class="column-title">아이디</th>
-									<th class="column-title">등급코드</th>
-									<th class="column-title">세탁소 명</th>
-									<th class="column-title">우편번호</th>
-									<th class="column-title">주소</th>
-									<th class="column-title">상세주소</th>
-									<th class="column-title">대표번호</th>
-									<th class="column-title">자격증</th>
-									<th class="column-title">사업자등록번호</th>
-									<th class="column-title">상세조회</th>
-									<th class="bulk-actions" colspan="13">
+									<th class="column-title">최근 로그인 시각</th>
+									<th class="column-title">접속 아이디</th> 
+									<th class="column-title">접속 IP 주소</th>
+									<th class="column-title">운영체제</th>
+									<th class="column-title">브라우저 / 앱</th>
+									<th class="column-title">최근 로그아웃 시각</th>
+									<th class="column-title">삭제</th>
+									<th class="bulk-actions" colspan="7">
 										<a class="antoo" style="color:#fff; font-weight:500;">전체 선택 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
 									</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:if="${not #lists.isEmpty(LoginHistory)}" th:each="l : ${LoginHistory}" class="even pointer">
+								<tr th:if="${not #lists.isEmpty(loginHistory)}" th:each="l : ${loginHistory}" class="even pointer">
 									<td class="a-center">
 										<input type="checkbox" class="flat" name="table_records">
 									</td>
-									<td th:text="${l.laundryCode}"></td>
-									<td th:text="${l.memberId}"></td>
-									<td th:text="${l.levelCode}"></td>
-									<td th:text="${l.laundryName}"></td>
-									<td th:text="${l.laundryPostNum}"></td>
-									<td th:text="${l.laundryAddr}"></td>
-									<td th:text="${l.laundryDetailAddr}"></td>
-									<td th:text="${l.laundryTel}"></td>
-									<td th:text="${l.skillLicence}"></td>
-									<td th:text="${l.businessNumber}"></td>
+									<td th:text="${l.memberLoginTime}" style="text-align: center;"></td>
+									<td th:text="${l.memberId}" style="text-align: center;"></td>
+									<td th:text="${l.ipAddress}" style="text-align: center;"></td>
+									<td th:text="${l.os}" style="text-align: center;"></td>
+									<td th:text="${l.browser}" style="text-align: center;"></td>
+									<td th:text="${l.memberLogoutTime}" style="text-align: center;"></td>
 									<td>
 										<div style="text-align: center;">							
-										<button type="button">상세 조회</button>
+										<button type="button"  class="btn btn-secondary btn-sm" >삭제</button>
 										</div>
 									</td>
 								</tr>
@@ -100,7 +104,7 @@
 					<nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center">
 							<li class="page-item">
-								<a class="page-link" th:href="@{/admin/LaundryList}" tabindex="-1"> <
+								<a class="page-link" th:href="@{/admin/loginHistory}" tabindex="-1"> <
 								</a>
 							</li>
 							<li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -113,8 +117,6 @@
 					</nav>
 				</div>
 			</div>
-	</div>
-	
+		</div>
 	</th:block>
-
 </html>

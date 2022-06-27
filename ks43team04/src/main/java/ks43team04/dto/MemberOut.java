@@ -1,24 +1,24 @@
 package ks43team04.dto;
 
 public class MemberOut {
-	private String mOutCode;
+	private String memberOutCode;
 	private String memberId;
-	private String mOutReason;
-	private String mOutRequestTime;
-	private String mOutOkayTime;
-	private String mOutOkayState;
-	private String mNotOkayReason;
+	private String memberOutReason;
+	private String memberOutRequestTime;
+	private String memberOutOkayTime;
+	private String memberOutOkayState;
+	private String memberNotOkayReason;
 	private String adminLevelCode;
 	private String registTime;
 	private String changeRound;
 	private String finalState;
 	
 	
-	public String getmOutCode() {
-		return mOutCode;
+	public String getMemberOutCode() {
+		return memberOutCode;
 	}
-	public void setmOutCode(String mOutCode) {
-		this.mOutCode = mOutCode;
+	public void setMemberOutCode(String memberOutCode) {
+		this.memberOutCode = memberOutCode;
 	}
 	public String getMemberId() {
 		return memberId;
@@ -26,35 +26,35 @@ public class MemberOut {
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
-	public String getmOutReason() {
-		return mOutReason;
+	public String getMemberOutReason() {
+		return memberOutReason;
 	}
-	public void setmOutReason(String mOutReason) {
-		this.mOutReason = mOutReason;
+	public void setMemberOutReason(String memberOutReason) {
+		this.memberOutReason = memberOutReason;
 	}
-	public String getmOutRequestTime() {
-		return mOutRequestTime;
+	public String getMemberOutRequestTime() {
+		return memberOutRequestTime;
 	}
-	public void setmOutRequestTime(String mOutRequestTime) {
-		this.mOutRequestTime = mOutRequestTime;
+	public void setMemberOutRequestTime(String memberOutRequestTime) {
+		this.memberOutRequestTime = memberOutRequestTime;
 	}
-	public String getmOutOkayTime() {
-		return mOutOkayTime;
+	public String getMemberOutOkayTime() {
+		return memberOutOkayTime;
 	}
-	public void setmOutOkayTime(String mOutOkayTime) {
-		this.mOutOkayTime = mOutOkayTime;
+	public void setMemberOutOkayTime(String memberOutOkayTime) {
+		this.memberOutOkayTime = memberOutOkayTime;
 	}
-	public String getmOutOkayState() {
-		return mOutOkayState;
+	public String getMemberOutOkayState() {
+		return memberOutOkayState;
 	}
-	public void setmOutOkayState(String mOutOkayState) {
-		this.mOutOkayState = mOutOkayState;
+	public void setMemberOutOkayState(String memberOutOkayState) {
+		this.memberOutOkayState = memberOutOkayState;
 	}
-	public String getmNotOkayReason() {
-		return mNotOkayReason;
+	public String getMemberNotOkayReason() {
+		return memberNotOkayReason;
 	}
-	public void setmNotOkayReason(String mNotOkayReason) {
-		this.mNotOkayReason = mNotOkayReason;
+	public void setMemberNotOkayReason(String memberNotOkayReason) {
+		this.memberNotOkayReason = memberNotOkayReason;
 	}
 	public String getAdminLevelCode() {
 		return adminLevelCode;
@@ -83,20 +83,20 @@ public class MemberOut {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("MemberOut [mOutCode=");
-		builder.append(mOutCode);
+		builder.append("MemberOut [memberOutCode=");
+		builder.append(memberOutCode);
 		builder.append(", memberId=");
 		builder.append(memberId);
-		builder.append(", mOutReason=");
-		builder.append(mOutReason);
-		builder.append(", mOutRequestTime=");
-		builder.append(mOutRequestTime);
-		builder.append(", mOutOkayTime=");
-		builder.append(mOutOkayTime);
-		builder.append(", mOutOkayState=");
-		builder.append(mOutOkayState);
-		builder.append(", mNotOkayReason=");
-		builder.append(mNotOkayReason);
+		builder.append(", memberOutReason=");
+		builder.append(memberOutReason);
+		builder.append(", memberOutRequestTime=");
+		builder.append(memberOutRequestTime);
+		builder.append(", memberOutOkayTime=");
+		builder.append(memberOutOkayTime);
+		builder.append(", memberOutOkayState=");
+		builder.append(memberOutOkayState);
+		builder.append(", memberNotOkayReason=");
+		builder.append(memberNotOkayReason);
 		builder.append(", adminLevelCode=");
 		builder.append(adminLevelCode);
 		builder.append(", registTime=");
@@ -107,6 +107,8 @@ public class MemberOut {
 		builder.append(finalState);
 		builder.append("]");
 		return builder.toString();
-	}	
-
+	}
+	
+	
+	
 }
