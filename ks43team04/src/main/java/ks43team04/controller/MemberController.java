@@ -49,6 +49,26 @@ public class MemberController {
 
 		return "/member/myPageRefund";
 	}
+	
+	/**
+	 * 고객 마이페이지 > 결제내역
+	 */
+	@GetMapping("/myPagePayment")
+	public String myPagePayment(Model model, HttpSession session) {
+
+		String sessionId = (String) session.getAttribute("SID");
+		String sessionName = (String) session.getAttribute("SNAME");
+
+		Member member = memberService.getMemberInfoById(sessionId);
+
+		model.addAttribute("title", "마이페이지");
+		model.addAttribute("sessionName", sessionName);
+		model.addAttribute("member", member);
+
+		return "/member/myPagePayment";
+	}
+
+	
 	/**
 	 * 고객 마이페이지 > 내가 쓴 글 조회
 	 */
