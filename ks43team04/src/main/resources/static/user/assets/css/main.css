@@ -309,13 +309,55 @@ to {
 }
 
 .mt-150 {
-
+	
 }
 
-상단 네비게이션 바 아래 빈 공간 없앰
+상단
+
+
+ 
+
+
+네비게이션
+
+
+ 
+
+
+바
+
+
+ 
+
+
+아래
+
+
+ 
+
+
+빈
+
+
+ 
+
+
+공간
+
+
+ 
+
+
+없앰
+
+
+
+
+
+
 @media only screen and (max-width: 767.96px) {
 	.mt-150 {
-	
+		
 	}
 }
 
@@ -508,65 +550,74 @@ a.boxed-btn, a.bordered-btn, a.cart-btn {
 }
 
 /**********board style****************/
+#top-loca {
+	padding: 80px 0;
+	text-align: center;
+}
 
-#top-loca{
-   padding: 80px 0;
-   text-align: center;
+.boardPath {
+	display: block;
+	margin-bottom: 10px;
 }
-.boardPath{   
-   display: block;
-   margin-bottom: 10px;
+
+.boardPath a {
+	color: #999;
+	font-size: 10px;
 }
-.boardPath a{
-   color: #999;
-   font-size: 10px;
+
+.listSearchbox {
+	position: relative;
+	margin-bottom: 30px;
+	text-align: right;
+	font-size: 0;
 }
-.listSearchbox{
-   position: relative;
-   margin-bottom: 30px;
-   text-align: right;
-   font-size: 0;
+
+.listSearchbox .boardNum {
+	position: absolute;
+	top: 0;
+	left: 0;
+	line-height: 40px;
+	font-size: 12px;
 }
-.listSearchbox .boardNum{
-   position: absolute;
-   top: 0;
-   left: 0;
-   line-height: 40px;
-   font-size: 12px;
+
+.colorOrange {
+	color: #F28123;
+	font-weight: 700;
 }
-.colorOrange{
-   color: #F28123;
-   font-weight: 700; 
+
+.btnArea .goList {
+	list-style: none;
 }
-.btnArea .goList{
-   list-style: none;
+
+#qna-btn {
+	padding-top: 20px;
 }
-#qna-btn{
-   padding-top: 20px;
+
+#qna-btn .btnArea {
+	margin-top: 0;
+	border-top: none;
 }
-#qna-btn .btnArea{
-   margin-top: 0;
-    border-top: none;
+
+#qna-btn .qnaWrite {
+	text-align: right;
 }
-#qna-btn .qnaWrite{
-   text-align: right;
-}
+
 a.backBtn {
-  font-family: 'Poppins', sans-serif;
-  display: inline-block;
-  background-color: #051922;
-  color: #F28123;
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 15px;
-    border: none !important;
-    cursor: pointer;
-    padding: 15px 25px;
-    border-radius: 50px;
+	font-family: 'Poppins', sans-serif;
+	display: inline-block;
+	background-color: #051922;
+	color: #F28123;
+	font-weight: 700;
+	text-transform: uppercase;
+	font-size: 15px;
+	border: none !important;
+	cursor: pointer;
+	padding: 15px 25px;
+	border-radius: 50px;
 }
 
-.card-body p{
-	margin: 0; 
+.card-body p {
+	margin: 0;
 	padding: 0;
 }
 
@@ -588,7 +639,6 @@ ul.navbar-nav li.nav-item a.nav-link, ul.navbar-nav li.nav-item.active a.nav-lin
 	width: 100%;
 	padding: 20px 0;
 	background-color: #051922;
-	
 }
 
 .top-header-area.white ul.navbar-nav li.nav-item a.nav-link,
@@ -621,7 +671,7 @@ nav.main-menu ul li a {
 	color: #fff;
 	font-weight: 700;
 	display: block;
-	padding: 15px 30px;
+	padding: 15px 15px;
 	letter-spacing: 1.8px;
 	font-size: 15px;
 }
@@ -690,6 +740,7 @@ nav.main-menu ul>li:hover ul {
 nav.main-menu ul li:last-child a {
 	display: inline-block;
 }
+
 nav.main-menu-top ul ul.sub-menu {
 	position: absolute;
 	background-color: #fff;
@@ -709,7 +760,6 @@ nav.main-menu-top ul ul.sub-menu {
 	z-index: 1;
 }
 
-
 nav.main-menu-top  ul ul.sub-menu li {
 	display: block;
 	text-align: left;
@@ -726,6 +776,7 @@ nav.main-menu-top ul>li:hover ul {
 	opacity: 1;
 	visibility: visible;
 }
+
 nav.main-menu-top ul ul.sub-menu li {
 	display: block;
 	text-align: left;
@@ -746,6 +797,7 @@ nav.main-menu-top ul>li:hover ul {
 nav.main-menu-top ul li:last-child a {
 	display: inline-block;
 }
+
 .site-logo {
 	float: left;
 	max-width: 150px;
@@ -834,10 +886,10 @@ nav.main-menu ul li.current-list-main>a {
 nav.main-menu li:hover>a {
 	color: #F28123;
 }
+
 .main-menu-top li:hover>a {
 	color: #F28123;
 }
-
 
 nav.main-menu li a {
 	-webkit-transition: 0.3s;
@@ -2142,7 +2194,8 @@ span.comment-date {
 
 ----------------------------------------------------------------------------- */
 .testimonail-section {
-	background:transparent url("/user/assets/img/laundry/laundry3.jpg") no-repeat;
+	background: transparent url("/user/assets/img/laundry/laundry3.jpg")
+		no-repeat;
 	background-size: 100%;
 	height: 875px;
 	opacity: 0.7;
@@ -3298,7 +3351,6 @@ input::placeholder {
 	height: 2000px;
 }
 
-
 #container .tit-area h2 {
 	padding: 0 0 25px;
 	color: #121212;
@@ -3580,10 +3632,12 @@ input::placeholder {
 	font-size: 5px;
 	font-weight: 700;
 }
-.map-yayak-btn:hover{
-	background-color:#F28123;
+
+.map-yayak-btn:hover {
+	background-color: #F28123;
 	color: #fff;
 }
+
 ===========================================================================================
 /*Fit image in bootstrap div*/
 .fit-image {
@@ -3595,9 +3649,10 @@ input::placeholder {
 .mb-3 {
 	width: 50%;
 }
+
 >>>>>>>
 refs /heads/develop
-	/* ================== 결제 페이지 ==================== */ 
+	/* ================== 결제 페이지 ==================== */    
 
 .payForm {
 	display: block;
@@ -3605,10 +3660,12 @@ refs /heads/develop
 	margin: 0;
 	padding: 0;
 }
-.payForm button:hover{
+
+.payForm button:hover {
 	background-color: white;
 	color: black;
 }
+
 #payContainer div {
 	display: block;
 }
@@ -3683,13 +3740,15 @@ refs /heads/develop
 }
 
 .tb-products {
-    border :1px solid #e9e9e9;
+	border: 1px solid #e9e9e9;
 	width: 100%;
 	text-align: center;
 }
-.point-plus th{
-	 padding: 5px;
+
+.point-plus th {
+	padding: 5px;
 }
+
 .destination-wrap {
 	position: relative;
 	padding-bottom: 40px;
@@ -3713,8 +3772,8 @@ refs /heads/develop
 	padding: 31px 50px 31px 49px;
 	width: 750px;
 	border-bottom: 1px solid #e9e9e9;
-    border-right: 1px solid #e9e9e9;
-    height: 100%;
+	border-right: 1px solid #e9e9e9;
+	height: 100%;
 }
 
 .deliver-option-wrap {
@@ -3722,14 +3781,15 @@ refs /heads/develop
 	zoom: 1;
 }
 
-#addr-list-byDB{
+#addr-list-byDB {
 	padding-top: 7px;
 	margin-top: 15px;
 	border-top: 1px solid #e8e8e8;
 	padding: 14px 0 20px;
 	color: #000;
 }
-#addr-list-byDB2{
+
+#addr-list-byDB2 {
 	padding-top: 7px;
 	margin-top: 15px;
 	border-top: 1px solid #e8e8e8;
@@ -3737,7 +3797,7 @@ refs /heads/develop
 	color: #000;
 }
 
-#addr-list-byDB ul ,#addr-list-byDB2 ul{
+#addr-list-byDB ul, #addr-list-byDB2 ul {
 	list-style: none;
 	display: block;
 	margin-block-start: 1em;
@@ -3747,21 +3807,23 @@ refs /heads/develop
 	padding-inline-start: 40px;
 }
 
-#addr-list-byDB li ,#addr-list-byDB2 li{
+#addr-list-byDB li, #addr-list-byDB2 li {
 	padding-top: 9px;
 	word-break: break-all;
 	display: list-item;
 	text-align: -webkit-match-parent;
 	height: 30px;
-	
 }
+
 .addr-list {
 	display: none;
 }
-.radio-inline-list li{
+
+.radio-inline-list li {
 	display: inline-block;
 	padding: 5px 10px 0px 0px;
 }
+
 .safe-number {
 	display: inline-block;
 	margin: 0 0 0 22px;
@@ -3814,19 +3876,20 @@ refs /heads/develop
 	zoom: 1;
 	width: 1098px;
 	height: 298.88px;
-	
 }
-#price-yejung , #point-yejung{
+
+#price-yejung, #point-yejung {
 	margin-top: 6px;
 	float: left;
 }
+
 .discount-info {
 	background-color: #fff;
 	position: relative;
 	float: left;
 	padding: 30px 10px 31px 49px;
 	border-bottom: 1px solid #e9e9e9;
-    border-right: 1px solid #e9e9e9;
+	border-right: 1px solid #e9e9e9;
 	width: 750px;
 	height: 258.88px;
 	font-size: 14px;
@@ -3872,8 +3935,6 @@ refs /heads/develop
 	table-layout: fixed;
 	line-height: 25px;
 }
-
-
 
 .list-discount .input-area input, .list-discount .input-area .value {
 	float: left;
@@ -3939,9 +4000,11 @@ refs /heads/develop
 	padding-top: 13px;
 	vertical-align: top;
 }
-.area-item a{
+
+.area-item a {
 	color: #fff;
 }
+
 .input-area {
 	position: relative;
 	float: left;
@@ -3970,7 +4033,7 @@ refs /heads/develop
 
 .checkbox-point {
 	margin-right: 2px;
-	margin-left : 10px;
+	margin-left: 10px;
 	margin-bottom: 7px;
 	width: 19px;
 	height: 18px;
@@ -4051,7 +4114,6 @@ refs /heads/develop
 	position: relative;
 	padding: 0;
 	color: #888;
-	
 }
 
 .calc-list strong {
@@ -4068,7 +4130,7 @@ refs /heads/develop
 
 .calc-list p em {
 	font-family: tahoma, geneva, sans-serif;
-	margin-right: 3px;	
+	margin-right: 3px;
 }
 
 .calc-list+.total-list {
@@ -4077,15 +4139,14 @@ refs /heads/develop
 	border-top: 1px solid #e2e2e2;
 	width: 100%;
 }
- 
+
 .payment-info {
-	
 	background-color: #fff;
 	position: relative;
 	float: left;
 	padding: 30px 10px 31px 49px;
 	border-bottom: 1px solid #e9e9e9;
-    border-right: 1px solid #e9e9e9;
+	border-right: 1px solid #e9e9e9;
 	width: 750px;
 	height: 100%;
 	font-size: 14px;
@@ -4095,12 +4156,13 @@ refs /heads/develop
 	display: block;
 }
 /* 결제 수단 부트스트랩 css */
-.paymethod-list .nav-pills .nav-link.active, .paymethod-list .nav-pills .show>.nav-link {
-    color: #fff;
-    background-color: #F28123;
-    
+.paymethod-list .nav-pills .nav-link.active, .paymethod-list .nav-pills .show>.nav-link
+	{
+	color: #fff;
+	background-color: #F28123;
 }
-.payment-wrap{
+
+.payment-wrap {
 	position: relative;
 	padding-bottom: 40px;
 	color: #1e1e23;
@@ -4146,6 +4208,7 @@ refs /heads/develop
 	box-sizing: border-box;
 	text-indent: initial;
 }
+
 .ec-base-table colgroup {
 	display: table-column-group;
 }
@@ -4229,148 +4292,223 @@ refs /heads/develop
 	vertical-align: middle;
 	border: none;
 }
-.dropdown-wrap input{
+
+.dropdown-wrap input {
 	width: 500px;
 	height: 50px
 }
-.discount-info button{
+
+.discount-info button {
 	background-color: #F28123;
-    border-radius: 0.25rem;
-    color: #fff;
-    padding: 5px 10px;
-    cursor: pointer;
-    text-decoration: none;
-    box-sizing: border-box;
-    font-size: 14px;
+	border-radius: 0.25rem;
+	color: #fff;
+	padding: 5px 10px;
+	cursor: pointer;
+	text-decoration: none;
+	box-sizing: border-box;
+	font-size: 14px;
 }
 
-.user-info button, .tb-products button{
+.user-info button, .tb-products button {
 	background-color: transparent;
 	border: 0;
 	cursor: pointer;
-	 box-sizing: border-box;
-	 margin-left: 8px;
+	box-sizing: border-box;
+	margin-left: 8px;
 }
-#infoUpdateBtn{
-	background-color: #fff;
-    border-radius: 0.25rem;
-    border:0;
-    color: #333;
-    cursor: pointer;
-    text-decoration: none;
-    box-sizing: border-box;
-    font-size: 14px;
-    margin-left: 8px;
-    font-size: 14px;
-     	
-}
-#infoUpdateBtn:hover{
-	color:#F28123;
-}
-.payment-point-info{  
-    background-color: #fff;
-    padding: 50px;
 
-    border-bottom: 1px solid #e9e9e9;
-    border-right: 1px solid #e9e9e9;
+#infoUpdateBtn {
+	background-color: #fff;
+	border-radius: 0.25rem;
+	border: 0;
+	color: #333;
+	cursor: pointer;
+	text-decoration: none;
+	box-sizing: border-box;
+	font-size: 14px;
+	margin-left: 8px;
+	font-size: 14px;
 }
-.payment-point-wrap{
+
+#infoUpdateBtn:hover {
+	color: #F28123;
+}
+
+.payment-point-info {
+	background-color: #fff;
+	padding: 50px;
+	border-bottom: 1px solid #e9e9e9;
+	border-right: 1px solid #e9e9e9;
+}
+
+.payment-point-wrap {
 	position: relative;
 	color: #1e1e23;
 	letter-spacing: -0.5px;
 	zoom: 1;
 	width: 100%;
-	height:100%;
+	height: 100%;
 }
 
-.tb-point-view{
+.tb-point-view {
 	border: 1px solid #eaeaea;
 	width: 100%;
 	box-sizing: border-box;
 	text-align: center;
 	font-size: 15px;
-	}
-
-.tb-point-view th{
-	padding: 11px 18px;
-    border: 1px solid #f0f0f0;
-    border-bottom-width: 0;
-    color: #333333;
-    font-weight: normal;
-    background-color: #fbfafa;
-    
 }
-.tb-point-view td{
+
+.tb-point-view th {
+	padding: 11px 18px;
+	border: 1px solid #f0f0f0;
+	border-bottom-width: 0;
+	color: #333333;
+	font-weight: normal;
+	background-color: #fbfafa;
+}
+
+.tb-point-view td {
 	border: 1px solid #f0f0f0;
 }
 
-.discount-inline-modal button{
+.discount-inline-modal button {
 	color: #fff;
-    background-color: #F28123;
-    border : 0;
+	background-color: #F28123;
+	border: 0;
 }
+
 .discount-inline-modal .btn-primary:focus {
 	color: #fff;
-    background-color: #F28123;
-    border : 0;
-}
-.discount-inline-modal .btn-primary {
-    color: #fff;
-    background-color: #F28123;
-    border : 0;
+	background-color: #F28123;
+	border: 0;
 }
 
+.discount-inline-modal .btn-primary {
+	color: #fff;
+	background-color: #F28123;
+	border: 0;
+}
 
 .payment-info .agree-wrap {
-    margin: 30px 40px 0 0;
-    padding-top: 30px;
-    border-top: 1px solid #efefef;
-    letter-spacing: -0.5px;
+	margin: 30px 40px 0 0;
+	padding-top: 30px;
+	border-top: 1px solid #efefef;
+	letter-spacing: -0.5px;
 }
+
 .agree-wrap .agree-section {
-    padding: 16px 14px;
-    border: solid 1px #efeeef;
-    background-color: #fff;
-    line-height: 16px;
-    color: #303038;
+	padding: 16px 14px;
+	border: solid 1px #efeeef;
+	background-color: #fff;
+	line-height: 16px;
+	color: #303038;
 }
+
 .agree-wrap .area-detail {
-    position: relative;
-    display: inline-block;
-    margin-left: 5px;
-    vertical-align: top;
-    line-height: 16px;
-    color: #303038;
+	position: relative;
+	display: inline-block;
+	margin-left: 5px;
+	vertical-align: top;
+	line-height: 16px;
+	color: #303038;
 }
+
 .agree-wrap .area-detail .button-detail {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    line-height: 16px;
-    letter-spacing: -0.5px;
-    color: #303038;
-    text-decoration: underline;
-    vertical-align: top;
-    cursor: pointer;
-    border: 0;
-    background: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	line-height: 16px;
+	letter-spacing: -0.5px;
+	color: #303038;
+	text-decoration: underline;
+	vertical-align: top;
+	cursor: pointer;
+	border: 0;
+	background: none;
 }
+
 .agree-wrap .area-notice {
-    margin-top: 24px;
+	margin-top: 24px;
 }
+
 .agree-wrap .area-notice .notice {
-    font-weight: bold;
-    line-height: 14px;
-    color: #1e1e23;
-    text-align: center;
+	font-weight: bold;
+	line-height: 14px;
+	color: #1e1e23;
+	text-align: center;
 }
+
 .payment-agree-wrap {
-    position: relative;
-    text-align: center;
-    padding: 40px 0 65px;
-    border: 1px solid #fff;
-    border-top: 0;
-    font-size: 0;
-
+	position: relative;
+	text-align: center;
+	padding: 40px 0 65px;
+	border: 1px solid #fff;
+	border-top: 0;
+	font-size: 0;
 }
 
+/*매장정보 css 시작*/
+.ldry-info-right-area {
+	float: right;
+	width: 75%;
+	padding: 40px 15px 0 15px;
+	text-align: center;
+	height: 1200px;
+	box-sizing: border-box;
+	background-color: #f9f9f9;
+}
+
+.ldry-info-right-wrap {
+	height: 1000px;
+	border-bottom: 1px solid #f2f2f2;
+	border-right: 1px solid #f2f2f2;
+	background-color: #fff;
+	padding: 30px 30px;
+}
+.ldry-info-right-head{
+	width: 600px;
+	height: 90px
+}
+.ldry-info-right-head h4 , .ldry-info-right-head .review-star-img{
+	text-align: left;
+	
+}
+.ldry-info-right-wrap h4{
+	margin-bottom: 10px;
+}
+
+.left-tit-area {
+	border-bottom: 1px solid #f2f2f2;
+	border-right: 1px solid #f2f2f2;
+	background-color: #f9f9f9;
+	width: 25%;
+	padding: 40px 15px 0;
+	height: 1200px;
+	float: left;
+}
+.review-star-img{
+	display: flex;
+    align-items: center;
+    margin-right: 16px;
+    height: 34px;
+    line-height: 36px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #323438;
+}
+.review-star-img span{
+	line-height: 36px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #323438;
+    margin-left: 6px;
+}
+.review-star-img .gray-span{
+	vertical-align: middle;
+    display: inline-block;
+    height: 19px;
+    line-height: 22px;
+    font-size: 12px;
+    color: #a4a6ad;
+    text-align: left;
+}
