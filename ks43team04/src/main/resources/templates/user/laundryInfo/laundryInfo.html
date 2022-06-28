@@ -5,8 +5,122 @@
 <!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
 	<!-- 모달 팝업 fragment 연결문 -->
-	<th:block
-		th:replace="/user/commons/popup/searchmappopup.html :: searchModal"></th:block>
+<div class="modal fade" id="modalFragment" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">예약사항</h4>
+				</div>
+				<div class="modal-body">
+					<!-- 예약사항 폼 시작-->
+					<div class="checkout-accordion-wrap">
+						<div class="accordion" id="accordionExample">
+							<div class="card single-accordion">
+								<div class="card-header" id="headingOne">
+									<h5 class="mb-0">
+										<button class="btn btn-link" type="button"
+											data-toggle="collapse" data-target="#collapseOne"
+											aria-expanded="true" aria-controls="collapseOne">수거
+											및 배송신청</button>
+									</h5>
+								</div>
+
+								<div id="collapseOne" class="collapse show"
+									aria-labelledby="headingOne" data-parent="#accordionExample">
+									<div class="card-body">
+										<div class="billing-address-form">
+											<form action="index.html">
+												
+												매장이름 : <input type="text" id="ldryName" value="" style="width: 250px;"> <br>
+												
+												매장주소 : <input type="text" id="ldryAddr" value="" style="width: 250px;"> <br>
+												
+												매장번호 : <input type="text" id="ldryNum" value="" style="width: 250px;">
+												
+												
+												
+													<textarea name="bill" id="bill" cols="30" rows="10"
+														placeholder="배송시 요청사항"></textarea>
+												</p>
+											</form>
+										</div>
+									</div>
+								</div>
+								
+								
+							</div>
+							<div class="card single-accordion">
+								<div class="card-header" id="headingTwo">
+									<h5 class="mb-0">
+										<button class="btn btn-link collapsed" type="button"
+											data-toggle="collapse" data-target="#collapseTwo"
+											aria-expanded="false" aria-controls="collapseTwo">
+											할부</button>
+									</h5>
+								</div>
+								<div id="collapseTwo" class="collapse"
+									aria-labelledby="headingTwo" data-parent="#accordionExample">
+									<div class="card-body">
+										<div class="shipping-address-form">
+											<p>구현중</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card single-accordion">
+								<div class="card-header" id="headingThree">
+									<h5 class="mb-0">
+										<button class="btn btn-link collapsed" type="button"
+											data-toggle="collapse" data-target="#collapseThree"
+											aria-expanded="false" aria-controls="collapseThree">
+											만나서결제</button>
+									</h5>
+								</div>
+								<div id="collapseThree" class="collapse"
+									aria-labelledby="headingThree" data-parent="#accordionExample">
+									<div class="card-body">
+										<div class="card-details">
+											<p>구현중</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!-- 예약사항 폼 끝-->
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary" onclick = "location.href='/user/payment';">결제하기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var laundryBox = document.querySelectorAll('.laundry-box');
+		var laundryState = document.querySelectorAll('.laundry-state');
+		var yeyakBtn = document.querySelectorAll('.yeyak-btn');
+		
+		for(var i=0; i<laundryState.length; i++){
+			var lState = laundryState[i].innerText;
+			if(lState == 'close'){
+				yeyakBtn[i].innerText ='폐업';
+				yeyakBtn[i].removeAttribute('data-target');
+				yeyakBtn[i].addEventListener('click',function(){
+					alert('하지마셈 망한곳임');
+				});
+			}
+		}
+      </script>
+      <!-- 바로예약 모달 끝 -->
+      
 	<div id="container" style="width: 100%; height: 1200px;">
 
 			<div class="left-tit-area">
@@ -111,11 +225,15 @@
 						  <!-- 기본정보 탭 -->
 						  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" style="border-bottom: 1px solid #f2f2f2; border-right: 1px solid #f2f2f2;">
 						  
-						  121212
+								   매장이름 : <input type="text" id="ldryName" value="" style="width: 250px;"> <br>
+                                    
+                               	     매장주소 : <input type="text" id="ldryAddr" value="" style="width: 250px;"> <br>
+                                    
+                                   	 매장번호 : <input type="text" id="ldryNum" value="" style="width: 250px;">
 						  
 						  </div>
 						  
-						  
+						
 						  
 						  <!-- 기능별 가격 탭 -->
 						  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" style="border-bottom: 1px solid #f2f2f2; border-right: 1px solid #f2f2f2;">
@@ -141,7 +259,7 @@
 
 
 
-		
+		</div>
 	</div>
 
 	<!--매장정보 모달 -->
@@ -152,7 +270,7 @@
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">매장정보</h5>
 					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+						aria-label="Close" data-id="`${ldryName}`">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -419,7 +537,39 @@
 
 
 </th:block>
-
+ <th:block layout:fragment="customJsScript">
+      <script>
+         $(function(){
+            $(document).on('click', '.bookBtn', function(){
+               var storeInfoObj = $(this).parent().find('div').children();
+               var ldryName = $(storeInfoObj).eq(0).text();
+               var ldryAddr = $(storeInfoObj).eq(1).text();
+               var ldryNum = $(storeInfoObj).eq(3).text();
+                $("#ldryName").val(ldryName);
+                $("#ldryAddr").val(ldryAddr);
+                $("#ldryNum").val(ldryNum);
+               
+               console.log($(this).parent().find('div').children());
+               
+               console.log($(storeInfoObj).eq(0).text());
+               console.log($(storeInfoObj).eq(1).text());
+               console.log($(storeInfoObj).eq(2).text());
+               console.log($(storeInfoObj).eq(3).text());
+               
+                              
+               
+            });
+         });
+         
+         
+         $(document).ready(function(){
+            $('#modalFragment').on('show.bs.modal',function(event){
+               LAUNDRYNAME = $(event.relatedTarget).data('laundryname');
+               console.log(LAUNDRYNAME);
+            });
+         });
+      </script>
+   </th:block>
 
 
 </html>
