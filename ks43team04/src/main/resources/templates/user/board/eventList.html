@@ -57,39 +57,40 @@
 	<div class="latest-news mt-150 mb-150">
 		<div class="container">
 			<div class="row">
+				<th:block  th:if="${not #lists.isEmpty(eventList)}" th:each="l : ${eventList}"></th:block>
 				<div class="col-lg-4 col-md-6">
 					<div class="single-latest-news">
-						<a href="single-news.html"><div class="latest-news-bg news-bg-1" style="height: 500px; border-radius: 20px;"></div></a>
+						<a th:href="@{/user/board/eventDetail(eventCode=event_code_6)}"><div class="latest-news-bg news-bg-1" style="height: 500px; border-radius: 20px;"></div></a>
 						
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<div class="single-latest-news">
-						<a href="single-news.html"><div class="latest-news-bg news-bg-2" style="height: 500px; border-radius: 20px;"></div></a>
-				
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-latest-news">
-						<a href="single-news.html"><div class="latest-news-bg news-bg-3" style="height: 500px; border-radius: 20px;"></div></a>
+						<a th:href="@{/user/board/eventDetail(eventCode=event_code_5)}"><div class="latest-news-bg news-bg-2" style="height: 500px; border-radius: 20px;"></div></a>
 						
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<div class="single-latest-news">
-						<a href="single-news.html"><div class="latest-news-bg news-bg-4" style="height: 500px; border-radius: 20px;"></div></a>
+						<a th:href="@{/user/board/eventDetail(eventCode=event_code_4)}"><div class="latest-news-bg news-bg-3" style="height: 500px; border-radius: 20px;"></div></a>
 						
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<div class="single-latest-news">
-						<a href="single-news.html"><div class="latest-news-bg news-bg-5" style="height: 500px; border-radius: 20px;"></div></a>
-						
+						<a th:href="@{/user/board/eventDetail(eventCode=event_code_3)}"><div class="latest-news-bg news-bg-4" style="height: 500px; border-radius: 20px;"></div></a>
+					
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<div class="single-latest-news">
-						<a href="single-news.html"><div class="latest-news-bg news-bg-6" style="height: 500px; border-radius: 20px;"></div></a>
+						<a th:href="@{/user/board/eventDetail(eventCode=event_code_2)}"><div class="latest-news-bg news-bg-5" style="height: 500px; border-radius: 20px;"></div></a>
+					
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="single-latest-news">
+						<a th:href="@{/user/board/eventDetail(eventCode=event_code_1)}"><div class="latest-news-bg news-bg-6" style="height: 500px; border-radius: 20px;"></div></a>
 					
 					</div>
 				</div>

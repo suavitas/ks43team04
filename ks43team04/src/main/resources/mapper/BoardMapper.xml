@@ -67,7 +67,6 @@
 		</collection>
 	</resultMap>
 	
-	
 		<update id="noticeModify" parameterType="Board">
 		/* 공지 글 수정 */
 			UPDATE 
@@ -82,8 +81,10 @@
 			WHERE board_code = #{boardCode};
 	</update>
 	
+
+	
 	<insert id="eventForm" parameterType="Event">
-		/* 이벤트 등록 */
+		/*이벤트 등록 */
 		INSERT INTO tb_event
 		(event_code
 		, m_id
@@ -289,9 +290,20 @@
 		, NOW());
 	</insert>
 	
+	<update id="commentComplete" parameterType="Board">
+		UPDATE 
+			tb_board AS b
+		SET
+			b.comment_state='답변완료'
+		WHERE 
+			b.board_menu_code=#{boardMenuCode}
+		and
+			b.board_idx = #{boardIdx};	
+	</update>
+	
 	<insert id="qnaComment"	parameterType="Board">
 		/* 문의사항 답변 작성 */
-		 INSERT INTO tb_board
+		  INSERT INTO tb_board
 			(board_idx
 			,board_menu_code
 			,m_id
@@ -332,8 +344,8 @@
 	</insert>
 	
 	<insert id="qnaWrite" parameterType="Board">
-		/ *문의사항 작성 */
-		 INSERT INTO tb_board
+		/*문의사항 작성 */
+		  INSERT INTO tb_board
 			(board_idx
 			,board_menu_code
 			,m_id
@@ -361,7 +373,7 @@
 			FROM
 				tb_board AS b
 			WHERE b.board_menu_code = #{boardMenuCode})
-		, 0
+		, 0	
 		, 0		
 		, #{boardTitle}
 		, #{boardContent}
@@ -372,7 +384,6 @@
 		, '0'
 		, NOW()
 		, '답변대기');
-	
 	</insert>
 
 	

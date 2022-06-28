@@ -14,7 +14,7 @@
 	
 		<div class="x_content">
 
-				<form class="form-horizontal form-label-left" th:action="@{/admin/eventForm}" method="POST">
+				<form class="form-horizontal form-label-left" th:action="@{/user/board/eventWrite}" method="POST">
 				
 				
 				
@@ -97,9 +97,9 @@
 					<a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
 					</div>
 					</div>
-					<div id="editor-one" class="editor-wrapper placeholderText" contenteditable="true"></div>
-					<textarea name="eventContent" id="descr" style="display:none;"></textarea>
-					
+					<div id="editor-one" class="editor-wrapper">
+					<textarea name="eventContent" id="editor-one" class="editor-wrapper" style="width: 100%; height: 100px;"></textarea>
+						</div>
 					</div>
 									
 				

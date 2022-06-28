@@ -15,7 +15,7 @@ public interface BoardMapper {
 	public int eventForm(Event event);
 	
 	//이벤트 상세 조회
-	public Event eventDetail(String event);
+	public Event eventDetail(String eventCode);
 	
 	//이벤트 목록 조회
 	public List<Event> getEventList();
@@ -31,6 +31,9 @@ public interface BoardMapper {
 	//공지사항 작성
 	public int noticeWrite(Board board);
 	public int noticeForm(Board board);
+	
+	//문의사항 답변 작성 시 상태변경
+	public int commentComplete(Board board);
 	
 	//문의사항 답변 작성
 	public int qnaComment(Board board);

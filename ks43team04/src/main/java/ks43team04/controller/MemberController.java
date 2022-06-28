@@ -116,11 +116,13 @@ public class MemberController {
 
 		String sessionId = (String) session.getAttribute("SID");
 		String sessionName = (String) session.getAttribute("SNAME");
+		String sessionLevel = (String) session.getAttribute("SLEVEL");
 
 		Member member = memberService.getMemberInfoById(sessionId);
 
 		model.addAttribute("title", "마이페이지");
 		model.addAttribute("sessionName", sessionName);
+		model.addAttribute("sessionLevel", sessionLevel);
 		model.addAttribute("member", member);
 		return "/member/myPagePoint";
 	}

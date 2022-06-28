@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/userDefault}">
+	  
+	  
+<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+
+	<!-- 게시판 타이틀 -->
+	<div id="container">
+		<div id="top-loca">
+			<div class="boardPath">
+				<a th:href="@{/}">HOME</a>
+				 > 
+				<a th:href="@{/user/board/eventList}">이벤트</a>
+			</div>	
+			<h2>이벤트</h2>			
+		</div>
+	</div>	
+		
+	<!-- 게시판 탭  -->			
+	<div class="list-group list-group-horizontal col-sm-6" style="margin:0 auto; text-align: center;">
+  		<a th:href="@{/user/board/noticeList}" class="list-group-item list-group-item-action">공지사항	</a>
+		<a th:href="@{/user/board/eventList}" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">
+		이벤트
+		</a>
+		<a th:href="@{/user/board/faqList}" class="list-group-item list-group-item-action">FAQ</a>
+		<a th:href="@{/user/board/qnaList}" class="list-group-item list-group-item-action">문의사항</a>
+	</div>
+	
+	
+	<!--공지사항 상세 글 조회 테이블 -->
+	<div class="cart-section mt-150 mb-150" style="background-color: #f5f6fa; padding: 60px 0 100px; margin: 0; border-top: #e5e5e5 1px solid;">
+		<div class="container">
+			<div class="row" style="float: none; margin: 100 auto;">
+				<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
+
+	<!--상세 글 보기 -->
+		<div class="subject" style="border-bottom: 1px solid #d8d8d8">
+			<h3 style="padding: 11px 0 12px 0; margin: 0; font-size: 20px; font-weight: bold;" th:text="${event.eventTitle}"></h3>	
+		</div>
+		<div class="info">
+			<div class="xleft" style="text-align: right; padding: 10px 0 10px 0; font-size: 13px;">
+					<span class="addFile">
+	                    <a href="#" title="#">
+	                       <i class="bi bi-download" title="첨부파일"></i>
+	                        	    <th:block th:text="${event.eventAddFileName}"></th:block>         
+	                      </a>
+                    </span> 
+                    <span class="split">|</span>                 
+	              	<span class="han" th:text="${event.memberId}"></span> 
+	                <span class="split">|</span> 
+	                <span class="han" th:text="${event.registTime}"></span> 
+	                <span class="split">|</span> 
+					<span class="han">조회</span> <span class="num" th:text="${event.eventReadCount}"></span> 
+	              
+			</div>
+		</div>
+		
+		<div id="nContent" class="content" style="padding-top: 40px;">
+			<p th:text="${event.eventContent}"></p>
+
+		</div>
+
+				
+						
+						
+						
+					
+					
+						
+							
+		<!-- 목록버튼(공지사항 목록으로 돌아가기) -->
+		<div class="row">
+			
+			<div class="btnArea col-lg-6 col-sm-12" style="padding-top: 0px; margin-top: 80px;">
+				<span>
+						<a th:href="@{/user/board/noticeModify}" class="cart-btn btn-lg">수정</a>
+						<a th:href="@{/user/board/noticeRemove}" class="cart-btn btn-lg">삭제</a>
+				</span>
+			</div>
+			<div class="btnArea col-lg-6 col-sm-12" style="text-align:right; 0px; margin-top: 80px;">
+				<span>
+						<a th:href="@{/user/board/eventList}" class="cart-btn btn-lg">목록보기</a>
+				</span>
+			</div>	
+			
+			
+		</div>
+					</div>
+				</div>
+
+		</div>
+
+
+
+		
+			
+		
+		
+		
+		
+		
+		
+
+	
+		
+			
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		
+</th:block>
+</html>

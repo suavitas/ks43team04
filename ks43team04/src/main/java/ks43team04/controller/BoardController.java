@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ks43team04.dto.Board;
+import ks43team04.dto.Event;
 import ks43team04.mapper.BoardMapper;
 import ks43team04.service.BoardService;
 
@@ -69,14 +70,7 @@ public class BoardController {
 		return "/user/board/noticeModify";
 	}
 
-	/**
-	 * 이벤트 > 글 작성하기
-	 */
-	@GetMapping("/eventWrite")
-	public String eventWrite() {
-
-		return "/user/board/eventWrite";
-	}
+	
 
 
 
@@ -96,7 +90,8 @@ public class BoardController {
 	@PostMapping("/qnaComment")
 	public String qnaComment(Board board, HttpSession session) {
 		String sessionId = (String) session.getAttribute("SID");
-		boardService.qnaComment(board, sessionId);		
+		boardService.qnaComment(board, sessionId);	
+		boardService.commentComplete(board);
 		return "redirect:/user/board/qnaList"; 
 	}	
 	
@@ -149,9 +144,34 @@ public class BoardController {
 		return "/user/board/faqList";
 	}
 
+	/*이벤트 작성*/
+	@GetMapping("/eventWrite")
+	public String eventWrite(Model model) {
+		model.addAttribute("title", "이벤트 등록");
+		model.addAttribute("titleName", "이벤트 등록");
+		return "/user/board/eventWrite";
+	}
+	@PostMapping("/eventWrite")
+	public String eventWrite(Event event, HttpSession session) {
+		String sessionId = (String) session.getAttribute("SID");
+		boardService.eventForm(event, sessionId);
+		return "redirect:/user/board/eventList";
+	}
+	
+	/*이벤트 상세 조회*/
+	@GetMapping("/eventDetail")
+	public String eventDetail(@RequestParam(name = "eventCode", required = false) String eventCode,
+								Model model) {
+		Event event = boardService.eventDetail(eventCode);
+		model.addAttribute("event", event);
+		return "/user/board/eventDetail";
+	}
+	
 	/*이벤트 목록 조회*/
 	@GetMapping("/eventList")
-	public String eventList() {
+	public String eventList(Model model) {
+		List<Event> eventList = boardService.getEventList();
+		model.addAttribute("eventList", eventList);
 		return "/user/board/eventList";
 	}
 	
