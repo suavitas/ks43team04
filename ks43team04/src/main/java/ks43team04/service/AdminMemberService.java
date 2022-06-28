@@ -22,6 +22,11 @@ public class AdminMemberService {
 	public AdminMemberService(AdminMemberMapper adminMemberMapper) {
 		this.adminMemberMapper = adminMemberMapper;
 	}
+	//관리자페이지 세탁소점주 상세정보 조회
+	public Laundry getLaundryInfoByCode(String laundryCode) {
+		return adminMemberMapper.getLaundryInfoByCode(laundryCode);
+	}
+	
 	//관리자페이지 로그인 회원접속내역 조회
 	public List<LoginHistory> getLoginHistory(){
 		List<LoginHistory> loginHistory = adminMemberMapper.getLoginHistory();	

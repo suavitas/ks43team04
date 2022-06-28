@@ -38,7 +38,16 @@ public class AdminMemberController {
 		this.userMapper = userMapper;
 	}
 	//관리자페이지 세탁점주 상세정보조회
-
+	@GetMapping("/detailLaundry")
+	public String getDetailLaundryInfo(Model model
+									,@RequestParam(name="laundryCode", required = false) String laundryCode) {
+		Laundry laundry = adminMemberService.getLaundryInfoByCode(laundryCode);
+		log.info("세탁소 상세정보:{}", laundry);
+		model.addAttribute("title", "세탁소 점주회원 관리");
+		model.addAttribute("titleName", "세탁소 상세정보");
+		model.addAttribute("laundry", laundry);
+		return "adminmember/detailLaundry";
+	}
 	
 	
 	//관리자페이지 회원관리 상세정보조회 

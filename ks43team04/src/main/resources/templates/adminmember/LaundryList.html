@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/adminDefault}">
@@ -63,19 +63,17 @@
 									<th>
 										<input type="checkbox" id="check-all" class="flat">
 									</th>
-									<th class="column-title">세탁소 코드</th>
-									<th class="column-title">아이디</th>
-									<th class="column-title">등급코드</th>
-									<th class="column-title">세탁소 명</th>
-									<th class="column-title">우편번호</th>
-									<th class="column-title">주소</th>
+									<th class="column-title">업체 명</th>
+									<th class="column-title">가입 아이디</th>
+									<th class="column-title">업체 주소</th>
 									<th class="column-title">상세주소</th>
 									<th class="column-title">대표번호</th>
-									<th class="column-title">자격증</th>
+									<th class="column-title">자격증 유무</th>
 									<th class="column-title">사업자등록번호</th>
+									<th class="column-title">업체 등록날짜</th>								
 									<th class="column-title">상세조회</th>
 									<th class="column-title">삭제</th>
-									<th class="bulk-actions" colspan="12">
+									<th class="bulk-actions" colspan="10">
 										<a class="antoo" style="color:#fff; font-weight:500;">전체 선택 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
 									</th>
 								</tr>
@@ -85,19 +83,17 @@
 									<td class="a-center">
 										<input type="checkbox" class="flat" name="table_records">
 									</td>
-									<td th:text="${l.laundryCode}"></td>
-									<td th:text="${l.memberId}"></td>
-									<td th:text="${l.levelCode}"></td>
-									<td th:text="${l.laundryName}"></td>
-									<td th:text="${l.laundryPostNum}"></td>
-									<td th:text="${l.laundryAddr}"></td>
-									<td th:text="${l.laundryDetailAddr}"></td>
-									<td th:text="${l.laundryTel}"></td>
-									<td th:text="${l.skillLicence}"></td>
-									<td th:text="${l.businessNumber}"></td>
+									<td th:text="${l.laundryName}" style="text-align: center;"></td>
+									<td th:text="${l.memberId}" style="text-align: center;"></td>
+									<td th:text="${l.laundryAddr}" style="text-align: center;"></td>
+									<td th:text="${l.laundryDetailAddr}" style="text-align: center;"></td>
+									<td th:text="${l.laundryTel}" style="text-align: center;"></td>
+									<td th:text="${l.skillLicence}" style="text-align: center;"></td>
+									<td th:text="${l.businessNumber}" style="text-align: center;"></td>
+									<td th:text="${l.registTime}" style="text-align: center;"></td>
 									<td>
 										<div style="text-align: center;">							
-										<button type="button"  class="btn btn-warning btn-sm">상세 조회</button>
+											<a th:href="@{/admin/detailLaundry(laundryCode=${l.laundryCode})}"><button type="button" class="btn btn-warning btn-sm">상세조회</button></a>	
 										</div>
 									</td>
 									<td>
