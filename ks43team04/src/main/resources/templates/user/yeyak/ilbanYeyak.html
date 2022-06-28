@@ -67,13 +67,14 @@
 																					<select class="igp">
 																						<th:block th:each="ls , st : ${ilbanGoodsPriceList}"> 	
 																							<th:block th:each="lss : ${ls.ilbanGoodsPrice}"> 	
-																								<option th:if="${ls.laundryName} eq ${l.laundryName}" th:text="${lss.goodsName}" th:value="${lss.goodsPrice}"></option>
+																								<option th:if="${ls.laundryName} eq ${l.laundryName}" th:text="${lss.goodsName}" th:value="'상품: '+${lss.goodsName}+' 가격: '+${lss.goodsPrice}"></option>
 																							</th:block>	
 																						</th:block>
 																					</select>
 																				</div>
 																			</div>
 																			<br/>
+																			<div class="strBox"></div>
 																			<div style="margin-bottom: 20px">
 																				<button type="button" class="btn btn-info append-btn">추가하기</button>
 																				<button type="button" class="btn btn-info remove-btn">제거하기</button>
@@ -195,42 +196,46 @@
 			}
 		}
 			
-		/*추가하기 클릭시 세탁기능, 세탁물 선택창 추가*/
+		/*추가하기 클릭시 세탁기능, 추가*/
 		var appendBtn = document.querySelectorAll('.append-btn');
 		var removeBtn = document.querySelectorAll('.remove-btn');
 		
 		for(var i=0; i<appendBtn.length; i++){
 			appendBtn[i].addEventListener('click',function(e){
-				var boxs = e.target.parentElement.parentElement.querySelectorAll('.boxbox');
-				var cloneC = boxs[0].cloneNode(true);
-				if(boxs.length < 3) {						
-					e.target.parentElement.parentElement.querySelector('.append-info').appendChild(cloneC);
-				}else{
-					alert('더이상 추가 할 수 없습니다.')
-				}
+				var box = e.target.parentElement.parentElement.querySelector('.boxbox')
+				var strGp = box.querySelector('.igp').value;
+			
+				e.target.parentElement.parentElement.querySelector('.strBox').innerHTML += '<p>' + strGp + '</p>';
+				
 			});
 		}
 		
 		/*제거하기 클릭시 세탁기능, 세탁물 선택창 제거*/
 		for(var i=0; i<removeBtn.length; i++){
 			removeBtn[i].addEventListener('click',function(e){
-				var boxs = e.target.parentElement.parentElement.querySelectorAll('.boxbox');
-				var l = boxs.length;
-				if(l > 1){						
-					boxs[l-1].remove();						
-				}else{
-					alert('더이상 제거 할 수 없습니다.')
+				var strBox = e.target.parentElement.parentElement.querySelector('.strBox')
+				var ps = strBox.querySelectorAll('p');
+				var l = ps.length;
+	
+				if(l <= 0){
+					alert('더이상 제거 할 수 없습니다.');
+				}else {
+					ps[l-1].remove();
 				}
+				
 			});
 		}	
 		
 		/*수거배송 신청예약 폼 내일날짜로 셋팅*/
 		var currentDates = document.querySelectorAll('.currentDate');
 		var currentDateTimes = document.querySelectorAll('.currentDateTime');
+		
+		var tomorrowDate = new Date
+		
+		tomorrowDate.setHours(tomorrowDate.getHours()+9)
+		tomorrowDate.setDate(tomorrowDate.getDate()+1)
+		
 		for(var i=0; i<currentDates.length; i++){
-			var tomorrowDate = new Date
-			tomorrowDate.setHours(tomorrowDate.getHours()+6)
-			tomorrowDate.setDate(tomorrowDate.getDate()+1)
 			currentDates[i].value = tomorrowDate.toISOString().substring(0, 10);		
 			currentDateTimes[i].value = tomorrowDate.toISOString().slice(11, 16);		
 		}
