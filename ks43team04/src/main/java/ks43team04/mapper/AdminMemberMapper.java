@@ -13,9 +13,9 @@ import ks43team04.dto.UserLevel;
 
 @Mapper
 public interface AdminMemberMapper {
-	//관리자페이지 회원관리 상세조회
-	
-	
+	//관리자페이지 세탁소 점주상세조회
+	public Laundry getLaundryInfoByCode(String laundryCode);
+
 	//관리자페이지  로그인 회원접속내역 조회
 	public List<LoginHistory> getLoginHistory();
 	

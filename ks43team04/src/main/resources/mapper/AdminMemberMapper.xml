@@ -95,6 +95,30 @@
 			<result column="browser" 				property="browser"/>
 			<result column="admin_level_code" 		property="adminLevelCode"/>
 		</resultMap>
+		
+		<select id="getLaundryInfoByCode" parameterType="String" resultMap="laundryResultMap">
+			/* 세탁소 점주 상세정보 조회*/
+			SELECT
+				l.laundry_code
+			    ,l.m_id
+			    ,l.level_code
+				,l.laundry_name
+				,l.laundry_state
+				,l.laundry_post_num
+				,l.laundry_addr
+				,l.laundry_detail_addr 	
+				,l.laundry_tel
+				,l.laundry_license_img
+				,l.laundry_img 
+				,l.skill_licence
+				,l.business_number
+				,l.admin_level_code
+				,l.regist_time				
+			FROM
+			   tb_laundry AS l
+			WHERE
+			   l.laundry_code = #{laundryCode};
+		</select>
 
 		<select id="getMemberInfoById" parameterType="String" resultMap="memberResultMap">
 			/* 회원 상세정보 조회*/
