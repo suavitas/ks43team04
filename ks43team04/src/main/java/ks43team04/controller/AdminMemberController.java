@@ -37,6 +37,7 @@ public class AdminMemberController {
 		this.adminMemberMapper = adminMemberMapper;
 		this.userMapper = userMapper;
 	}
+	
 	//관리자페이지 세탁점주 상세정보조회
 	@GetMapping("/detailLaundry")
 	public String getDetailLaundryInfo(Model model
