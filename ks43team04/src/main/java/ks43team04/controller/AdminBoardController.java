@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -32,13 +33,17 @@ public class AdminBoardController {
 
 	}
 	
-	//고장신고접수등록
+
+
+	
+	/*고장 신고 등록*/
 	@GetMapping("/asForm")
 	public String asForm(Model model) {
 		model.addAttribute("title", "AS등록");
 		model.addAttribute("titleName", "AS등록");
 		return "/admin/asForm";
 	}
+	
 	@PostMapping("/asForm")
 	public String asForm(As as, HttpSession session) {
 		String sessionId = (String) session.getAttribute("SID");
@@ -48,16 +53,16 @@ public class AdminBoardController {
 		return "redirect:/admin/asListById";
 	}
 	
-	//나의 고장신고접수 내역 확인
-		@GetMapping("/asListById")
-		public String asListById() {
-			return "admin/asListById";
-		}
+	/*나의 고장 신고 내역 확인*/
+	@GetMapping("/asListById")
+	public String asListById() {
+		return "admin/asListById";
+	}
 	
-	//고장신고접수 상세조회
+	/*고장 신고 상세 조회*/
 	@GetMapping("/asDetail")
 	public String asDetail(@RequestParam(name = "asCode", required = false) String asCode
-							, Model model) {
+							,Model model) {
 		As as = boardService.getAsDetail(asCode);
 		model.addAttribute("as", as);
 		log.info("as목록 : {}", as);
@@ -65,9 +70,7 @@ public class AdminBoardController {
 		return "admin/asDetail";
 	}
 	
-	
-	
-	//고장신고접수목록
+	/*고장 신고 목록*/
 	@GetMapping("/asList")
 	public String asList(Model model) {
 		List<As> asList = boardService.getAsList();
@@ -82,108 +85,103 @@ public class AdminBoardController {
 		return "admin/asList";
 	}
 	
-	
-	//리뷰 목록
+	/*리뷰 목록 조회*/
 	@GetMapping("/review")
 	public String review(Model model) {
 		List<Review> reviewList = boardService.getReviewList();
 		model.addAttribute("reviewList", reviewList);
 		return "admin/review";
 	}
-	//Q&A 상세글 조회
+	
+	/*Q&A(문의사항) 상세 조회*/
 	@GetMapping("/qnaDetail")
 	public String qnaDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
 							,@RequestParam(name = "boardIdx", required = false) int boardIdx, Model model) {
-
 		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
-
 		model.addAttribute("board", board);
 		return "/admin/qnaDetail";
 	}
-
 	
-
-	//Q&A 목록
+	/*Q&A(문의사항) 목록 조회*/
 	@GetMapping("/qnaList")
 	public String qnaList(Model model) {
 		List<Board> qnaServiceList = boardService.getQnaServiceList();
 		List<Board> qnaPickupList = boardService.getQnaPickupList();
 		List<Board> qnaPayList = boardService.getQnaPayList();
 		List<Board> qnaComplainList = boardService.getQnaComplainList();
-
 		log.info("문의사항 서비스 이용 목록 : {}", qnaServiceList);
 		log.info("문의사항 수거 배송 목록 : {}", qnaPickupList);
 		log.info("문의사항 결제 포인트 목록 : {}", qnaPayList);
-
 		model.addAttribute("qnaServiceList", qnaServiceList);
 		model.addAttribute("qnaPickupList", qnaPickupList);
 		model.addAttribute("qnaPayList", qnaPayList);
-		model.addAttribute("qnaComplainList", qnaComplainList);
-		
+		model.addAttribute("qnaComplainList", qnaComplainList);		
 		return "admin/qnaList";
 	}
 	
-	//이벤트 작성
+	/*이벤트 등록*/
 	@GetMapping("/eventForm")
-	public String eventForm() {
+	public String eventForm(Model model) {
+		model.addAttribute("title", "이벤트 등록");
+		model.addAttribute("titleName", "이벤트 등록");
 		return "admin/eventForm";
+	}	
+	@PostMapping("/eventForm")
+	public String eventForm(Event event, HttpSession session) {
+		String sessionId = (String) session.getAttribute("SID");
+		boardService.eventForm(event, sessionId);
+		return "redirect:/admin/eventList";
 	}
 	
-	//이벤트 상세조회
+	/*이벤트 상세 조회*/
 	@GetMapping("/eventDetail")
 		public String eventDetail(@RequestParam(name = "eventCode", required = false) String eventCode
 								, Model model) {
 		Event event = boardService.eventDetail(eventCode);
 		model.addAttribute("event", event);
-			return "admin/eventDetail";
+		return "admin/eventDetail";
 		}		
 
-	//이벤트 목록
+	/*이벤트 목록 조회*/
 	@GetMapping("/eventList")
 	public String eventList(Model model) {
 		List<Event> eventList = boardService.getEventList();
 		List<Event> runEventList = boardService.runEventList();
-		List<Event> endEventList = boardService.endEventList();
-		
+		List<Event> endEventList = boardService.endEventList();		
 		model.addAttribute("eventList", eventList);
 		model.addAttribute("runEventList", runEventList);
 		model.addAttribute("endEventList", endEventList);
 		return "admin/eventList";
 	}
 	
-	//공지사항 작성
+	/*공지사항 작성*/
 	@GetMapping("/noticeForm")
 	public String noticeForm(Model model) {
-
 		model.addAttribute("title", "공지등록");
 		model.addAttribute("titleName", "공지등록");
 		return "/admin/noticeForm";
 	}
+	
 	@PostMapping("/noticeForm")
 	public String noticeForm(Board board, HttpSession session) {
 		String sessionId = (String) session.getAttribute("SID");
 		boardService.noticeForm(board, sessionId);
-
 		log.info("공지 등록 data : {}", board);
 		log.info("화면에서 입력받은 data: {}, boardIdx");
-
 		return "redirect:/admin/noticeList";
 	}
 	
-	//공지사항 상세글 조회
+	/*공지사항 상세 조회*/
 	@GetMapping("/noticeDetail")
 	public String noticeDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
 								,@RequestParam(name = "boardIdx", required = false) int boardIdx
 								, Model model) {
-
 		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
-
 		model.addAttribute("board", board);
-
 		return "admin/noticeDetail";
 	}
 	
-	//공지사항 목록
+	/*공지사항 목록 조회*/
 	@GetMapping("/noticeList")
 	public String noticeList(Model model) {
 		List<Board> noticeList = boardService.getNoticeList();
