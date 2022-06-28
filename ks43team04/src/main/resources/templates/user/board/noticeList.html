@@ -68,9 +68,9 @@
 							</thead>
 							<tbody>
 								<tr class="table-body-row" th:if="${not #lists.isEmpty(noticeList)}" th:each="l : ${noticeList}">
-									<td class="product-remove" th:text="${l.totalNo}"></td>
+									<td class="product-remove" th:text="${#numbers.formatInteger(l.boardIdx,0)}"></td>
 									<td class="product-image">
-									<a th:href="@{/user/board/noticeDetail(boardMenuCode=${l.boardMenuCode}, totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a>
+									<a th:href="@{/user/board/noticeDetail(boardMenuCode=${l.boardMenuCode}, boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 									</td>
 									<td class="product-image" th:text="${l.boardAddFile}"></td>
 									<td class="product-name" th:text="${l.memeberId}"></td>

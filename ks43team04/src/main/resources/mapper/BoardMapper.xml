@@ -5,12 +5,12 @@
 <mapper namespace="ks43team04.mapper.BoardMapper">
 
 	<resultMap type="Board" 								id="boardResultMap">
-		<id 	column="board_code" 						property="boardCode"/>
+		<id column="board_idx" 								property="boardIdx"/>
 		<result column="board_menu_code" 					property="boardMenuCode"/>
-		<result column="total_no" 							property="totalNo"/>
+		<result column="board_idx" 							property="boardIdx"/>
 		<result column="m_id" 								property="memeberId"/>
-		<result column="board_parent_no" 					property="boardParentNo"/>
-		<result column="board_child_no" 					property="boardChildNo"/>
+		<result column="board_group_no" 					property="boardGroupNo"/>
+		<result column="board_order_no" 					property="boardOrderNo"/>
 		<result column="board_read_count" 					property="boardReadCount"/>
 		<result column="board_title" 						property="boardTitle"/>
 		<result column="board_content" 						property="boardContent"/>
@@ -43,10 +43,51 @@
 	
 	<resultMap type="Review" id="reviewResultMap">
 		<id		column="review_code"			property="reviewCode"/>
+		<id		column="reveiw_num"				property="reveiwNum"/>
 		<result	column="laundry_code"			property="laundryCode"/>
+		<result	column="m_id"					property="memberId"/>
 		<result	column="review_content"			property="reviewContent"/>
 		<result	column="counting_star"			property="countingStar"/>
+		<result	column="regist_time"			property="registTime"/>
+		<collection property="LaundryList"         		ofType="LaundryList">
+	      <id column="laundry_code"                 	property="laundryCode"/>
+	      <result column="m_id"                      	property="memberId"/>
+	      <result column="level_code"                	property="levelCode"/>
+	      <result column="laundry_name"                 property="laundryName"/>
+	      <result column="laundry_state"                property="laundryState"/>
+	      <result column="laundry_post_num"             property="laundryPostNum"/>
+	      <result column="laundry_addr"                 property="laundryAddr"/>
+	      <result column="laundry_detail_addr"          property="laundryDetailAddr"/>
+	      <result column="laundry_tel"                	property="laundryTel"/>
+	      <result column="laundry_license_img"          property="laundryLicenseImg"/>
+	      <result column="laundry_img"                	property="laundryImg"/>
+	      <result column="skill_licence"                property="skillLicence"/>
+	      <result column="business_number"             	property="businessNumber"/>
+	      <result column="admin_level_code"             property="adminLevelCode"/>
+	      <result column="regist_time"               	property="registTime"/>
+		</collection>
 	</resultMap>
+	
+	<select id="getReviewList" resultMap="reviewResultMap">
+		/*리뷰 목록 조회*/
+			SELECT
+			r.review_code
+			,r.reveiw_num
+			,l.laundry_name
+			,r.m_id
+			,r.review_content
+			,r.counting_star
+			,r.regist_time
+		FROM
+			tb_review AS r
+		INNER join
+			tb_laundry AS l
+		on
+			r.laundry_code = l.laundry_code
+		order by r.reveiw_num desc;
+	</select>
+	
+	
 	
 	<select id="eventDetail" resultMap="eventResultMap">
 		/*이벤트 상세 조회*/
@@ -140,13 +181,12 @@
 	
 	<insert id="noticeForm" parameterType="Board">
 		/* 공지 글 작성 */
-	 INSERT INTO tb_board
-			(board_code
+	 	 INSERT INTO tb_board
+			(board_idx
 			,board_menu_code
 			,m_id
-			,total_no
-			,board_parent_no
-			,board_child_no
+			,board_group_no
+			,board_order_no
 			,board_read_count
 			,board_title
 			,board_content
@@ -155,25 +195,19 @@
 			,board_add_file_name
 			,board_add_file_change_name
 			,board_add_file_vol
-			,regist_time
-			,update_time)
+			,regist_time)
 		VALUES (
 			(SELECT
-			CONCAT('notice_code','_',max(CAST(substring(board_code,13)+1 AS DECIMAL))) AS board_code from tb_board ALIAS_FOR_SUBQUERY)
+				max(b.board_idx)+1
+			FROM
+				tb_board AS b)
 		, 'notice_menu_code_001'
 		, 'id001'			
 		, (SELECT
-			IFNULL(MAX(b.total_no), 0)+1
+				max(b.board_group_no)+1
 			FROM
-			tb_board AS b
-			WHERE
-			b.board_menu_code = 'notice_menu_code_001')
-		, (SELECT
-			IFNULL(MAX(b.total_no), 0)+1
-			FROM
-			tb_board AS b
-			WHERE
-			b.board_menu_code = 'notice_menu_code_001')
+				tb_board AS b
+			WHERE b.board_menu_code = 'notice_menu_code_001')
 		, 0	
 		, 0		
 		, #{boardTitle}
@@ -183,7 +217,6 @@
 		, '0'
 		, '0'
 		, '0'
-		, NOW()
 		, NOW());
 	</insert>
 	
@@ -191,12 +224,11 @@
 	<insert id="noticeWrite" parameterType="Board">
 		/* 공지 글 작성 */
 	 INSERT INTO tb_board
-			(board_code
+			(board_idx
 			,board_menu_code
 			,m_id
-			,total_no
-			,board_parent_no
-			,board_child_no
+			,board_group_no
+			,board_order_no
 			,board_read_count
 			,board_title
 			,board_content
@@ -205,25 +237,19 @@
 			,board_add_file_name
 			,board_add_file_change_name
 			,board_add_file_vol
-			,regist_time
-			,update_time)
+			,regist_time)
 		VALUES (
 			(SELECT
-			CONCAT('notice_code','_',max(CAST(substring(board_code,13)+1 AS DECIMAL))) AS board_code from tb_board ALIAS_FOR_SUBQUERY)
+				max(b.board_idx)+1
+			FROM
+				tb_board AS b)
 		, 'notice_menu_code_001'
 		, 'id001'			
 		, (SELECT
-			IFNULL(MAX(b.total_no), 0)+1
+				max(b.board_group_no)+1
 			FROM
-			tb_board AS b
-			WHERE
-			b.board_menu_code = 'notice_menu_code_001')
-		, (SELECT
-			IFNULL(MAX(b.total_no), 0)+1
-			FROM
-			tb_board AS b
-			WHERE
-			b.board_menu_code = 'notice_menu_code_001')
+				tb_board AS b
+			WHERE b.board_menu_code = 'notice_menu_code_001')
 		, 0	
 		, 0		
 		, #{boardTitle}
@@ -233,19 +259,59 @@
 		, '0'
 		, '0'
 		, '0'
-		, NOW()
+		, NOW());
+	</insert>
+	
+	<insert id="qnaComment"	parameterType="Board">
+		/*문의사항 답변 작성*/
+		 INSERT INTO tb_board
+			(board_idx
+			,board_menu_code
+			,m_id
+			,board_group_no
+			,board_order_no
+			,board_read_count
+			,board_title
+			,board_content
+			,board_secret
+			,board_add_file
+			,board_add_file_name
+			,board_add_file_change_name
+			,board_add_file_vol
+			,regist_time)
+		VALUES (
+			(SELECT
+				max(b.board_idx)+1
+			FROM
+				tb_board AS b)
+		, #{boardMenuCode}
+		, 'id001'			
+		, (SELECT
+				b.board_group_no
+			FROM
+				tb_board AS b
+			WHERE
+				b.board_idx = #{boardIdx})
+		, 1	
+		, 0		
+		, #{boardTitle}
+		, #{boardContent}
+		, '0'
+		, '0'
+		, '0'
+		, '0'
+		, '0'
 		, NOW());
 	</insert>
 	
 	<insert id="qnaWrite" parameterType="Board">
 		/*문의사항 글 작성*/
 		 INSERT INTO tb_board
-			(board_code
+			(board_idx
 			,board_menu_code
 			,m_id
-			,total_no
-			,board_parent_no
-			,board_child_no
+			,board_group_no
+			,board_order_no
 			,board_read_count
 			,board_title
 			,board_content
@@ -255,26 +321,20 @@
 			,board_add_file_change_name
 			,board_add_file_vol
 			,regist_time
-			,update_time
 			,comment_state)
 		VALUES (
 			(SELECT
-			CONCAT('notice_code','_',max(CAST(substring(board_code,13)+1 AS DECIMAL))) AS board_code from tb_board ALIAS_FOR_SUBQUERY)
+				max(b.board_idx)+1
+			FROM
+				tb_board AS b)
 		, #{boardMenuCode}
 		, 'id001'			
 		, (SELECT
-			IFNULL(MAX(b.total_no), 0)+1
+				max(b.board_group_no)+1
 			FROM
-			tb_board AS b
-			WHERE
-			b.board_menu_code = #{boardMenuCode})
-		, (SELECT
-			IFNULL(MAX(b.total_no), 0)+1
-			FROM
-			tb_board AS b
-			WHERE
-			b.board_menu_code = #{boardMenuCode})
-		, 0	
+				tb_board AS b
+			WHERE b.board_menu_code = #{boardMenuCode})
+		, 0
 		, 0		
 		, #{boardTitle}
 		, #{boardContent}
@@ -284,8 +344,7 @@
 		, '0'
 		, '0'
 		, NOW()
-		, NOW()
-		, #{commentState});
+		, '답변대기');
 	
 	</insert>
 
@@ -294,7 +353,8 @@
 	
 	 /* 게시물 조회 */
 		SELECT
-			 b.total_no
+			b.board_menu_code
+			,b.board_idx
 			,b.board_secret
 			,b.board_title
 			,b.board_content
@@ -309,43 +369,17 @@
 		WHERE
 			b.board_menu_code = #{boardMenuCode}
 		and
-			b.total_no = #{totalNo}
-		order by b.total_no DESC;	
+			b.board_idx = #{boardIdx};
 				 		
 	</select>	
 			
-			
-		<!-- SELECT
-			*
-			from(
-			SELECT
-			@rownum:=@rownum+1, a.*
-			from
-			(SELECT
-				b.board_menu_code
-				,b.board_parent_no
-				,b.board_secret
-				,b.board_title
-				,b.board_add_file
-				,b.m_id
-				,b.update_time
-				,b.board_read_count
-			FROM
-				tb_board AS b
-			WHERE
-			b.board_menu_code= #{boardMenuCode}
-			and
-				b.board_parent_no = #{boardParentNo}) as a,
-			(SELECT @rownum:=0) AS r) AS c
-			
-			ORDER BY board_parent_no DESC; -->
 
 
 	<select id="getQnaComplainList" resultMap="boardResultMap">
 		/* 문의사항(서비스 불만족) 목록 조회 */
 		SELECT
 			b.board_menu_code
-			,b.total_no
+			,b.board_idx
 			,b.board_secret
 			,b.board_title
 			,b.board_add_file
@@ -357,14 +391,14 @@
 			tb_board AS b
 		WHERE
 		b.board_menu_code= 'notice_menu_code_005'
-		order by b.total_no DESC;		
+		order by b.board_group_no DESC, b.board_order_no asc;	
 	</select>	
 	
 	<select id="getQnaPayList" resultMap="boardResultMap">
 		/* 문의사항(결제 포인트) 목록 조회 */
 		SELECT
 			b.board_menu_code
-			,b.total_no
+			,b.board_idx
 			,b.board_secret
 			,b.board_title
 			,b.board_add_file
@@ -376,14 +410,14 @@
 			tb_board AS b
 		WHERE
 			b.board_menu_code= 'notice_menu_code_004'
-		order by b.total_no DESC;			
+		order by b.board_group_no DESC, b.board_order_no asc;			
 	</select>	
 		
 	<select id="getQnaPickupList" resultMap="boardResultMap">
 		/* 문의사항(수거 배송) 목록 조회 */
 		SELECT		
 			b.board_menu_code
-			,b.total_no
+			,b.board_idx
 			,b.board_secret
 			,b.board_title
 			,b.board_add_file
@@ -395,14 +429,14 @@
 			tb_board AS b
 		WHERE
 			b.board_menu_code= 'notice_menu_code_003'
-		order by b.total_no DESC;			
+		order by b.board_group_no DESC, b.board_order_no asc;			
 	</select>	
 
 	<select id="getQnaServiceList" resultMap="boardResultMap">
 		/* 문의사항(서비스 이용) 목록 조회 */
 		SELECT
 			b.board_menu_code
-			,b.total_no
+			,b.board_idx
 			,b.board_secret
 			,b.board_title
 			,b.board_add_file
@@ -414,7 +448,7 @@
 			tb_board AS b
 		WHERE
 				b.board_menu_code= 'notice_menu_code_002'
-		order by b.total_no DESC;
+		order by b.board_group_no DESC, b.board_order_no asc;
 	</select>
 	
 	
@@ -424,17 +458,19 @@
 	  	/* 공지사항 목록 조회 */
 		SELECT
 			b.board_menu_code
-			,b.total_no
+			,b.board_idx
+			,b.board_secret
 			,b.board_title
 			,b.board_add_file
 			,b.m_id
 			,b.regist_time
 			,b.board_read_count
+			,b.comment_state
 		FROM
 			tb_board AS b
 		WHERE
-		b.board_menu_code= 'notice_menu_code_001'
-		order by b.total_no DESC;
+				b.board_menu_code= 'notice_menu_code_001'
+		order by b.board_idx DESC;
 	</select>
 
 

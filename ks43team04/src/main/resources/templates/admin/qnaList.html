@@ -67,11 +67,11 @@
 			</thead>
 			<tbody>
 				<tr th:if="${not #lists.isEmpty(qnaServiceList)}" th:each="l : ${qnaServiceList}">
-					<td th:text="${l.totalNo}"></td>
+					<td th:text="${l.boardIdx}"></td>
 					<td th:text="${l.commentState}"></td>
 					<td th:text="${l.boardSecret}"></td>
 					<td>
-					<a th:href="@{/admin/qnaDetail(boardMenuCode=${l.boardMenuCode},totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a>
+					<a th:href="@{/admin/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 					</td>
 					<td th:text="${l.boardAddFile}"></td>
 					<td th:text="${l.memeberId}"></td>
@@ -104,11 +104,11 @@
 			</thead>
 				<tbody>
 				<tr th:if="${not #lists.isEmpty(qnaPickupList)}" th:each="l : ${qnaPickupList}">
-					<td th:text="${l.totalNo}"></td>
+					<td th:text="${l.boardIdx}"></td>
 					<td th:text="${l.commentState}"></td>
 					<td th:text="${l.boardSecret}"></td>
 					<td>
-					<a th:href="@{/admin/qnaDetail(boardMenuCode=${l.boardMenuCode},totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a>
+					<a th:href="@{/admin/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 					</td>
 					<td th:text="${l.boardAddFile}"></td>
 					<td th:text="${l.memeberId}"></td>
@@ -141,11 +141,11 @@
 			</thead>
 					<tbody>
 				<tr th:if="${not #lists.isEmpty(qnaPayList)}" th:each="l : ${qnaPayList}">
-					<td th:text="${l.totalNo}"></td>
+					<td th:text="${l.boardIdx}"></td>
 					<td th:text="${l.commentState}"></td>
 					<td th:text="${l.boardSecret}"></td>
 					<td>
-					<a th:href="@{/admin/qnaDetail(boardMenuCode=${l.boardMenuCode},totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a>
+					<a th:href="@{/admin/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 					</td>
 					<td th:text="${l.boardAddFile}"></td>
 					<td th:text="${l.memeberId}"></td>
@@ -178,11 +178,11 @@
 			</thead>
 					<tbody>
 				<tr th:if="${not #lists.isEmpty(qnaComplainList)}" th:each="l : ${qnaComplainList}">
-					<td th:text="${l.totalNo}"></td>
+					<td th:text="${l.boardIdx}"></td>
 					<td th:text="${l.commentState}"></td>
 					<td th:text="${l.boardSecret}"></td>
 					<td>
-					<a th:href="@{/admin/qnaDetail(boardMenuCode=${l.boardMenuCode},totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a>
+					<a th:href="@{/admin/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 					</td>
 					<td th:text="${l.boardAddFile}"></td>
 					<td th:text="${l.memeberId}"></td>

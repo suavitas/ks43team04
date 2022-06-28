@@ -31,14 +31,7 @@ public class BoardController {
 		this.boardMapper = boardMapper;
 	}
 
-	/**
-	 * Qna > 답글작성
-	 */
-	@GetMapping("/qnaComment")
-	public String qnaComment() {
 
-		return "/user/board/qnaComment";
-	}
 
 	/**
 	 * Qna > 삭제하기
@@ -109,6 +102,30 @@ public class BoardController {
 	}
 
 	/**
+	 * Qna > 답글작성
+	 */
+	@GetMapping("/qnaComment")
+	public String qnaComment(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
+							,@RequestParam(name = "boardIdx", required = false) int boardIdx
+							, Model model) {
+		log.info("답글 작성 : {}", boardMenuCode);
+		log.info("답글 작성 : {}", boardIdx);
+		model.addAttribute("title", "답변등록");
+		model.addAttribute("titleName", "답변등록");
+		model.addAttribute("boardMenuCode", boardMenuCode);
+		model.addAttribute("boardIdx", boardIdx);
+		return "/user/board/qnaComment";
+	}
+	@PostMapping("/qnaComment")
+	public String qnaComment(Board board, HttpSession session) {
+		String sessionId = (String) session.getAttribute("SID");
+		boardService.qnaComment(board, sessionId);
+		
+		return "redirect:/user/board/qnaList"; 
+	}
+	
+	
+	/**
 	 * Q&A > 문의하기
 	 */
 	@GetMapping("/qnaWrite")
@@ -122,7 +139,7 @@ public class BoardController {
 		String sessionId = (String) session.getAttribute("SID");
 		boardService.qnaWrite(board, sessionId);
 		log.info("문의사항 등록 data : {}", board);
-		log.info("화면에서 입력받은 data : P{, boardCode");
+		log.info("화면에서 입력받은 data : {}, boardCode");
 		return "redirect:/user/board/qnaList";
 	}
 	
@@ -134,9 +151,9 @@ public class BoardController {
 
 	@GetMapping("/qnaDetail")
 	public String qnaDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
-							,@RequestParam(name = "totalNo", required = false) int totalNo, Model model) {
+							,@RequestParam(name = "boardIdx", required = false) int boardIdx, Model model) {
 
-		Board board = boardService.getBoardDetailByCode(boardMenuCode, totalNo);
+		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
 
 		model.addAttribute("board", board);
 		return "/user/board/qnaDetail";
@@ -183,10 +200,10 @@ public class BoardController {
 	/*공지사항 > 상세글 조회*/
 	@GetMapping("/noticeDetail")
 	public String noticeDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
-								,@RequestParam(name = "totalNo", required = false) int totalNo 
+								,@RequestParam(name = "boardIdx", required = false) int boardIdx 
 								,Model model) {
 
-		Board board = boardService.getBoardDetailByCode(boardMenuCode, totalNo);
+		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
 		model.addAttribute("board", board);
 		return "/user/board/noticeDetail";
 	}

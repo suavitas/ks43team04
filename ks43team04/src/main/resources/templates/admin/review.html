@@ -22,18 +22,22 @@
 					<th>삭제</th>	
 				</tr>
 			</thead>
-				<tr th:if="${not #lists.isEmpty(noticeList)}" th:each="l : ${noticeList}">
-					<td th:text="${l.boardParentNo}"></td>
-					<td th:text="${l.boardTitle}"></td>
-					<td th:text="${l.boardAddFile}"></td>
-					<td th:text="${l.memeberId}"></td>
-					<td th:text="${l.updateTime}"></td>
-					<td th:text="${l.boardReadCount}"></td>
+			<tbody>
+			<th:block th:if="${not #lists.isEmpty(reviewList)}" th:each="l : ${reviewList}">
+				<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl, status :${l.LaundryList}">
+					<td th:text="${l.reveiwNum}"></td>
+					<td th:text="${sl.laundryName}"></td>
+					<td th:text="${l.countingStar}"></td>
+					<td th:text="${l.reviewContent}"></td>
+					<td th:text="${l.memberId}"></td>
+					<td th:text="${l.registTime}"></td>
 					<td><a href="#">삭제</a></td>
 				</tr>
-				<tr th:unless="${not #lists.isEmpty(noticeList)}">
+				<tr th:unless="${not #lists.isEmpty(reviewList)}">
 					<td colspan="7">조회된 내용이 없습니다.</td>
 				</tr>
+				</th:block>
+				</tbody>
 		</table>
 </div>
 </th:block>

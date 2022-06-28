@@ -17,4 +17,7 @@ public interface AsMapper {
 	
 	//AS 목록 
 	public List<As> getAsList();
+	public List<As> readyAsList();
+	public List<As> startAsList();
+	public List<As> endAsList();
 }

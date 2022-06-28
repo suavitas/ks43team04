@@ -50,8 +50,7 @@
 			,as_add_file_name
 			,as_add_file_change_name
 			,as_add_file_vol
-			,regist_time
-			,update_time)
+			,regist_time)
 		VALUES (
 			(SELECT
 			CONCAT('as_code','_',max(CAST(substring(as_code,9)+1 AS DECIMAL))) AS as_code from tb_as ALIAS_FOR_SUBQUERY)
@@ -67,7 +66,6 @@
 		, '0'
 		, '0'
 		, '0'
-		, NOW()
 		, NOW());
 	</insert>
 	
@@ -82,7 +80,7 @@
 			,a.as_content
 			,a.as_add_file
 			,a.as_add_file_name			
-			,a.update_time
+			,a.regist_time
 		FROM
 			tb_as AS a
 		INNER JOIN
@@ -104,13 +102,76 @@
 			,a.as_title
 			,a.as_add_file
 			,l.m_id
-			,a.update_time
+			,a.regist_time
 		FROM
 			tb_as AS a
 		INNER JOIN
 			tb_laundry AS l
 		ON 
 			a.laundry_code = l.laundry_code
+		order by a.as_number desc;
+	</select>
+	
+	<select id="readyAsList" resultMap="asResultMap">
+	  	/* AS 대기 목록 조회 */
+		SELECT
+			a.as_code
+			,a.as_number
+			,a.as_state
+			,l.laundry_name
+			,a.as_title
+			,a.as_add_file
+			,l.m_id
+			,a.regist_time
+		FROM
+			tb_as AS a
+		INNER JOIN
+			tb_laundry AS l
+		ON 
+			a.laundry_code = l.laundry_code
+		AND a.as_state = '대기'		
+		order by a.as_number desc;
+	</select>
+	
+	<select id="startAsList" resultMap="asResultMap">
+	  	/* AS 접수 목록 조회 */
+		SELECT
+			a.as_code
+			,a.as_number
+			,a.as_state
+			,l.laundry_name
+			,a.as_title
+			,a.as_add_file
+			,l.m_id
+			,a.regist_time
+		FROM
+			tb_as AS a
+		INNER JOIN
+			tb_laundry AS l
+		ON 
+			a.laundry_code = l.laundry_code
+		AND a.as_state = '접수'				
+		order by a.as_number desc;
+	</select>
+	
+	<select id="endAsList" resultMap="asResultMap">
+	  	/* AS 완료 목록 조회 */
+		SELECT
+			a.as_code
+			,a.as_number
+			,a.as_state
+			,l.laundry_name
+			,a.as_title
+			,a.as_add_file
+			,l.m_id
+			,a.regist_time
+		FROM
+			tb_as AS a
+		INNER JOIN
+			tb_laundry AS l
+		ON 
+			a.laundry_code = l.laundry_code
+		AND a.as_state = '완료'	
 		order by a.as_number desc;
 	</select>
 	
