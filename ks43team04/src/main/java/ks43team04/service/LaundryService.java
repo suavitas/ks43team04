@@ -34,13 +34,37 @@ public class LaundryService {
 
 		return MachineSpecList;
 	}
-	
+
+	/* 세탁소 기간별 매출 */
 	public List<LaundryList> laundryList(){
 		
 		
 		List<LaundryList> laundryIncomeList = laundryListMapper.laundryList();
 
 		return laundryIncomeList;
+	}
+	/* 세탁소 3개월 매출 */
+	public List<LaundryList> Month3laundryList(){
+				
+		List<LaundryList> Month3laundryList = laundryListMapper.Month3laundryList();
+		
+		return Month3laundryList;
+	}
+	
+	/* 세탁소 6개월 매출 */
+	public List<LaundryList> Month6laundryList(){
+				
+		List<LaundryList> Month6laundryList = laundryListMapper.Month6laundryList();
+		
+		return Month6laundryList;
+	}
+	
+	/* 세탁소 1년 매출 */
+	public List<LaundryList> yearlaundryList(){
+				
+		List<LaundryList> yearlaundryList = laundryListMapper.yearlaundryList();
+		
+		return yearlaundryList;
 	}
 	
 	
@@ -78,5 +102,7 @@ public class LaundryService {
 		
 	}
 	
+	
+
 
 }

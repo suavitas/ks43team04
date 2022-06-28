@@ -10,4 +10,13 @@ import ks43team04.dto.LaundryList;
 public interface LaundryListMapper {
 
 	public List<LaundryList> laundryList();
+	
+	public List<LaundryList> Month3laundryList();
+	
+	public List<LaundryList> Month6laundryList();
+	
+	public List<LaundryList> yearlaundryList();
+	
+	
+	
 }

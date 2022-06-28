@@ -26,10 +26,18 @@ public class IncomeController {
 	@GetMapping("/income")
 	public String laundryIncomeList(Model model) {
 		List<LaundryList> laundryIncomeList = laundryService.laundryList();
-		
+		List<LaundryList> Month3laundryList = laundryService.Month3laundryList();
+		List<LaundryList> Month6laundryList = laundryService.Month6laundryList();
+		List<LaundryList> yearlaundryList = laundryService.yearlaundryList();
 		model.addAttribute("laundryIncomeList", laundryIncomeList);
+		model.addAttribute("Month3laundryList", Month3laundryList);
+		model.addAttribute("Month6laundryList", Month6laundryList);
+		model.addAttribute("yearlaundryList", yearlaundryList);
 		
 		System.out.println(laundryIncomeList);
+		System.out.println(Month3laundryList);
+		System.out.println(Month6laundryList);
+		System.out.println(yearlaundryList);
 		return "admin/income";
 	}
 

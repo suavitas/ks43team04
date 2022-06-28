@@ -29,7 +29,7 @@
          <result column="regist_time"          property="registTime"/>
          <result column="g_price_use_state"          property="goodsPriceUseState"/>
       </collection>
-      <collection property="billList"             ofType="Bill"> 
+      <collection property="billList"             ofType="MonthBill"> 
          <id    column="bill_code"             property="billCode"/>
          <result column="order_num_groupcode"             property="orderNumGroupcode"/>
          <result column="total_price"       property="totalPrice"/>
@@ -71,21 +71,104 @@
          tb_ilban_g_price AS gp
          on
          l.laundry_code = gp.laundry_code
-         INNER JOIN
-         tb_order AS o
+         CROSS join
+         tb_month_bill AS b
          on
-         o.ilban_G_price_code = gp.ilban_G_price_code
-         INNER JOIN 
-         tb_bill AS b
-         ON
-         b.user_code = o.user_code	
-			WHERE
-					l.laundry_name like CONCAT('%','크','%') and
-					pay_ok_date BETWEEN '2022-04-01' AND '2022-04-31'
+         l.laundry_code = gp.laundry_code
+ 			WHERE
+					pay_ok_date BETWEEN '2021-01-01' AND '2021-01-31'
 			)as result
 			GROUP BY result.laundry_name;
    </select>
    
+   <select id="Month3laundryList" resultType="Map">
+	SELECT
+		result.laundry_name,
+		SUM(result.g_price) as income
+	FROM
+		(
+     SELECT
+      l.laundry_name
+      ,gp.g_name
+      ,gp.g_price
+      ,b.total_price
+      ,b.pay_ok_date
+      FROM 
+         tb_laundry AS l
+         INNER join
+         tb_ilban_g_price AS gp
+         on
+         l.laundry_code = gp.laundry_code
+         CROSS join
+         tb_month_bill AS b
+         on
+         l.laundry_code = gp.laundry_code
+ 			WHERE
+					l.laundry_name like CONCAT('%','크','%') and
+					pay_ok_date BETWEEN '2021-01-01' AND '2021-04-31'
+			)as result
+			GROUP BY result.laundry_name;
+   </select>
+   
+
+   
+     <select id="Month6laundryList" resultType="Map">
+	SELECT
+		result.laundry_name,
+		SUM(result.g_price) as income
+	FROM
+		(
+     SELECT
+      l.laundry_name
+      ,gp.g_name
+      ,gp.g_price
+      ,b.total_price
+      ,b.pay_ok_date
+      FROM 
+         tb_laundry AS l
+         INNER join
+         tb_ilban_g_price AS gp
+         on
+         l.laundry_code = gp.laundry_code
+         CROSS join
+         tb_month_bill AS b
+         on
+         l.laundry_code = gp.laundry_code
+ 			WHERE
+					l.laundry_name like CONCAT('%','크','%') and
+					pay_ok_date BETWEEN '2021-01-01' AND '2021-07-31'
+			)as result
+			GROUP BY result.laundry_name;
+   </select>
+   
+        <select id="yearlaundryList" resultType="Map">
+	SELECT
+		result.laundry_name,
+		SUM(result.g_price) as income
+	FROM
+		(
+     SELECT
+      l.laundry_name
+      ,gp.g_name
+      ,gp.g_price
+      ,b.total_price
+      ,b.pay_ok_date
+      FROM 
+         tb_laundry AS l
+         INNER join
+         tb_ilban_g_price AS gp
+         on
+         l.laundry_code = gp.laundry_code
+         CROSS join
+         tb_month_bill AS b
+         on
+         l.laundry_code = gp.laundry_code
+ 			WHERE
+					l.laundry_name like CONCAT('%','크','%') and
+					pay_ok_date BETWEEN '2021-01-01' AND '2022-01-31'
+			)as result
+			GROUP BY result.laundry_name;
+   </select>
    
    
    
