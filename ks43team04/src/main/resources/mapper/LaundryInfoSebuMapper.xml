@@ -5,7 +5,7 @@
 <mapper namespace="ks43team04.mapper.LaundryInfoSebuMapper">
 
    
-   <resultMap type="Laundry"                      id="laundryResultMap">
+   <resultMap type="LaundryInfoSebu"               id="LaundryInfoResultMap">
       <id column="laundry_code"                   property="laundryCode"/>
       <result column="m_id"                      property="memberId"/>
       <result column="level_code"                property="levelCode"/>
@@ -17,26 +17,17 @@
       <result column="business_number"             property="businessNumber"/>
       <result column="admin_level_code"             property="adminLevelCode"/>
       <result column="regist_time"                property="registTime"/>
-      <collection property="ilbanGoodsPrice"          ofType="ilbanGprice">
-         <id column="ilban_G_price_code"            property="ilbanGoodsPriceCode"/>
-         <result column="laundry_code"             property="laundryCode"/>
-         <result column="ilban_skill_code"          property="ilbanSkillCode"/>
-         <result column="g_name"                property="goodsName"/>
-         <result column="g_price"                property="goodsPrice"/>
-         <result column="regist_time"             property="registTime"/>
-         <result column="g_price_use_state"          property="goodsPriceUseState"/>
-      </collection>
    </resultMap>
    
-   <select id="LaundryInfoSebu" fetchSize="1000" parameterType="String" resultMap="LaundryInfoListResultMap">
-   SELECT 
-		  laundry_name
-		, laundry_state
-		, laundry_addr
-		, laundry_tel
-		, level_code
-	FROM 
-		tb_laundry
+   <select id="laundryInfoSebu" parameterType="String" resultMap="LaundryInfoResultMap">
+	   SELECT 
+			  laundry_name
+			, laundry_state
+			, laundry_addr
+			, laundry_tel
+			, level_code
+		FROM 
+			tb_laundry
    </select>
    
    
