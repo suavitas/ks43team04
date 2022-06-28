@@ -74,6 +74,7 @@
 									<thead class="cart-table-head">
 										<tr class="table-head-row">
 											<th class="product-remove">번호</th>
+											<th class="product-remove">답변상태</th>
 											<th class="product-remove">비밀글</th>
 											<th class="product-image">제목</th>
 											<th class="product-name">첨부</th>
@@ -85,6 +86,7 @@
 									<tbody>				
 										<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaServiceList)}" th:each="l : ${qnaServiceList}">
 											<td class="product-remove" th:text="${l.boardIdx}"></td>
+											<td class="product-remove" th:text="${l.commentState}"></td>
 											<td class="product-remove" th:text="${l.boardSecret}"></td>
 											<td class="product-image">
 											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
@@ -95,7 +97,7 @@
 											<td class="product-total" th:text="${l.boardReadCount}"></td>
 										</tr>
 										<tr th:unless="${not #lists.isEmpty(qnaServiceList)}">
-   									<td colspan="7">조회된 내용이 없습니다.</td>
+   									<td colspan="8">조회된 내용이 없습니다.</td>
    										</tr>
 									</tbody>
 								</table>
@@ -114,6 +116,7 @@
 									<thead class="cart-table-head">
 										<tr class="table-head-row">
 											<th class="product-remove">번호</th>
+											<th class="product-remove">답변상태</th>
 											<th class="product-remove">비밀글</th>
 											<th class="product-image">제목</th>
 											<th class="product-name">첨부</th>
@@ -125,6 +128,7 @@
 									<tbody>				
 										<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaPickupList)}" th:each="l : ${qnaPickupList}">
 											<td class="product-remove" th:text="${l.boardIdx}"></td>
+											<td class="product-remove" th:text="${l.commentState}"></td>
 											<td class="product-remove" th:text="${l.boardSecret}"></td>
 											<td class="product-image">
 											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
@@ -135,7 +139,7 @@
 											<td class="product-total" th:text="${l.boardReadCount}"></td>
 										</tr>
 										<tr th:unless="${not #lists.isEmpty(qnaPickupList)}">
-   									<td colspan="7">조회된 내용이 없습니다.</td>
+   									<td colspan="8">조회된 내용이 없습니다.</td>
    										</tr>
 								</table>
 							</div>
@@ -152,7 +156,8 @@
 								<table class="cart-table tbqnaList">
 									<thead class="cart-table-head">
 										<tr class="table-head-row">
-											<th class="product-remove">번호</th>
+											<th class="product-remove">번호</th>										
+											<th class="product-remove">답변상태</th>										
 											<th class="product-remove">비밀글</th>
 											<th class="product-image">제목</th>
 											<th class="product-name">첨부</th>
@@ -164,6 +169,7 @@
 									<tbody>				
 										<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaPayList)}" th:each="l : ${qnaPayList}">
 											<td class="product-remove" th:text="${l.boardIdx}"></td>
+											<td class="product-remove" th:text="${l.commentState}"></td>
 											<td class="product-remove" th:text="${l.boardSecret}"></td>
 											<td class="product-image">
 											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
@@ -174,7 +180,7 @@
 											<td class="product-total" th:text="${l.boardReadCount}"></td>
 										</tr>
 										<tr th:unless="${not #lists.isEmpty(qnaPayList)}">
-   									<td colspan="7">조회된 내용이 없습니다.</td>
+   									<td colspan="8">조회된 내용이 없습니다.</td>
    										</tr>
 									</tbody>
 								</table>
@@ -195,6 +201,7 @@
 									<thead class="cart-table-head">
 										<tr class="table-head-row">
 											<th class="product-remove">번호</th>
+											<th class="product-remove">답변상태</th>
 											<th class="product-remove">비밀글</th>
 											<th class="product-image">제목</th>
 											<th class="product-name">첨부</th>
@@ -206,6 +213,7 @@
 									<tbody>				
 										<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaComplainList)}" th:each="l : ${qnaComplainList}">
 											<td class="product-remove" th:text="${l.boardIdx}"></td>
+											<td class="product-remove" th:text="${l.commentState}"></td>
 											<td class="product-remove" th:text="${l.boardSecret}"></td>
 											<td class="product-image">
 											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
@@ -216,7 +224,7 @@
 											<td class="product-total" th:text="${l.boardReadCount}"></td>
 										</tr>
 										<tr th:unless="${not #lists.isEmpty(qnaComplainList)}">
-   									<td colspan="7">조회된 내용이 없습니다.</td>
+   									<td colspan="8">조회된 내용이 없습니다.</td>
    										</tr>
 									</tbody>
 								</table>

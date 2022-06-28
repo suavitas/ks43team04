@@ -103,7 +103,13 @@ public class BoardService {
 		return endEventList;
 	}
 	
-	/*(USER)문의사항 답변 작성*/
+	/*문의사항 상태 변경*/
+	public int commentComplete(Board board) {
+		int result = boardMapper.commentComplete(board);
+		return result;
+	}
+	
+	/*문의사항 답변 작성*/
 	public int qnaComment(Board board, String sessionId) {
 		board.setMemeberId(sessionId);
 		int result = boardMapper.qnaComment(board);

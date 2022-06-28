@@ -92,6 +92,25 @@ public class AdminBoardController {
 		model.addAttribute("reviewList", reviewList);
 		return "admin/review";
 	}
+	/*Q&A(문의사항)답글 작성*/
+	@GetMapping("/qnaComment")
+	public String qnaComment(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
+							,@RequestParam(name = "boardIdx", required = false) int boardIdx
+							, Model model) {
+		model.addAttribute("title", "답변등록");
+		model.addAttribute("titleName", "답변등록");
+		model.addAttribute("boardMenuCode", boardMenuCode);
+		model.addAttribute("boardIdx", boardIdx);
+		return "admin/qnaComment";
+	}
+	
+	@PostMapping("/qnaComment")
+	public String qnaComment(Board board, HttpSession session) {
+		String sessionId = (String) session.getAttribute("SID");
+		boardService.qnaComment(board, sessionId);
+		boardService.commentComplete(board);
+		return "redirect:/admin/qnaList";
+	}
 	
 	/*Q&A(문의사항) 상세 조회*/
 	@GetMapping("/qnaDetail")
