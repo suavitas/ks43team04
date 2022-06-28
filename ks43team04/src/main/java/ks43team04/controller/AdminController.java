@@ -76,12 +76,7 @@ public class AdminController {
 		return "admin/lundrymachine";
 	}
 
-	// 세탁소별 회원목록
 
-	@GetMapping("/lundryUser")
-	public String lundryUser() {
-		return "admin/lundryUser";
-	}
 
 	// 세탁소별 회원 포인트
 

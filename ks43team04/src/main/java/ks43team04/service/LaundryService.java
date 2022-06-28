@@ -6,21 +6,25 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import ks43team04.dto.Delivery;
 import ks43team04.dto.Laundry;
 import ks43team04.dto.LaundryList;
 import ks43team04.dto.MuinMachienSpec;
 import ks43team04.mapper.LaundryListMapper;
 import ks43team04.mapper.LaundryMapper;
+import ks43team04.mapper.UserMapper;
 
 @Service
 public class LaundryService {
 
 	private final LaundryMapper laundryMapper;
+	private final UserMapper userMapper;
 	private final LaundryListMapper laundryListMapper;
 
-	public LaundryService(LaundryMapper laundryMapper, LaundryListMapper laundryListMapper) {
+	public LaundryService(LaundryMapper laundryMapper, LaundryListMapper laundryListMapper,UserMapper userMapper) {
 		this.laundryMapper = laundryMapper;
 		this.laundryListMapper = laundryListMapper;
+		this.userMapper = userMapper;
 	}
 
 	public List<LaundryList> LaundryList(String searchKey, String searchValue) {
@@ -102,7 +106,12 @@ public class LaundryService {
 		
 	}
 	
+	/* 세탁소별 회원 목록 */
+	public List<Delivery> LaundryUserList(){
 	
-
+		List<Delivery> LaundryUserList = userMapper.LaundryUserList();
+		
+		return LaundryUserList;
+	}
 
 }
