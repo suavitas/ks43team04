@@ -26,7 +26,16 @@ public class LaundryList {
 	private List<IlbanGprice> ilbanGpriceList;
 	private List<Order> orderList;
 	private List<Bill> billList;	
+	private List<MonthBill> monthbillList;	
 	
+	public List<MonthBill> getMonthbillList() {
+		return monthbillList;
+	}
+
+	public void setMonthbillList(List<MonthBill> monthbillList) {
+		this.monthbillList = monthbillList;
+	}
+
 	public List<IlbanGprice> getIlbanGpriceList() {
 		return ilbanGpriceList;
 	}
@@ -220,6 +229,8 @@ public class LaundryList {
 		builder.append(orderList);
 		builder.append(", billList=");
 		builder.append(billList);
+		builder.append(", monthbillList=");
+		builder.append(monthbillList);
 		builder.append("]");
 		return builder.toString();
 	}

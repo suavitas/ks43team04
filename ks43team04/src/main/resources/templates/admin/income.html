@@ -13,27 +13,24 @@
 		th:src="@{https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js}"></script>
 </th:block>
 
-<th:block layout:fragment="customJsScript">
-	<script>
-		/*setTimeout(function(){datatable.columns.adjust().draw();},200);*/
-		$(function() {
-			$('.tbqnaList').DataTable({
-				language : {
-					'info' : '맘대로'
-				}
-			});
-		});
-	</script>
+
 
 
 </th:block>
 <!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
 
-	<div class="admin-board-list" style="margin-top: 100px;">
-		<h4 style="margin-bottom: 50px;">기간별 매출</h4>
+	<div class="admin-board-list">
+		<h4 style="margin-bottom: 50px; color: black;">기간별 매출</h4>
 
-		<div class="x_content">
+		<div class="x_content" style="display: inline;">
+			<div class="col-md-6">
+				<div id="reportrange" class="pull-right"
+					style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+					<i class="glyphicon glyphicon-calendar fa fa-calendar"></i> <span>May
+						29, 2022 - June 27, 2022</span> <b class="caret"></b>
+				</div>
+			</div>
 			<ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
 				<li class="nav-item"><a class="nav-link active" id="home-tab"
 					data-toggle="tab" href="#total" role="tab" aria-controls="home"
@@ -48,22 +45,9 @@
 					data-toggle="tab" href="#end" role="tab" aria-controls="contact2"
 					aria-selected="false">1년</a></li>
 			</ul>
-			<div style="margin-bottom: 15px;">
-				<input style="display: inline; width: 180px" type="date"
-					class="datepicker form-control searchDatepicker" name="startDate"
-					placeholder="연도-월-일" id="startDate"> 
-					
-					~ 
-					
-					<input
-					style="display: inline; width: 180px" type="date"
-					class="datepicker form-control searchDatepicker" name="endDate"
-					placeholder="연도-월-일" id="endDate"> 
-					
-					<input style="display: inline;" alt="조회"
-					id="order-search-btn" type="image"
-					src="http://99juice.co.kr/_sp/image/cafe24/myshop/btn_search.gif">
-			</div>
+
+
+
 
 
 
@@ -109,14 +93,14 @@
 							</tr>
 						</thead>
 						<tbody>
-							<th:block th:if="${not #lists.isEmpty(laundryIncomeList)}"
-								th:each="l : ${laundryIncomeList}">
+							<th:block th:if="${not #lists.isEmpty(Month3laundryList)}"
+								th:each="l : ${Month3laundryList}">
 								<tr>
 									<td th:text="${l.laundry_name}"></td>
 									<td
 										th:text="${#numbers.formatInteger(l.income,3,'COMMA') + '원'}"></td>
 								</tr>
-								<tr th:unless="${not #lists.isEmpty(laundryIncomeList)}">
+								<tr th:unless="${not #lists.isEmpty(Month3laundryList)}">
 									<td colspan="8">조회된 내용이 없습니다.</td>
 								</tr>
 							</th:block>
@@ -136,15 +120,15 @@
 							</tr>
 						</thead>
 						<tbody>
-							<th:block th:if="${not #lists.isEmpty(laundryIncomeList)}"
-								th:each="l : ${laundryIncomeList}">
+							<th:block th:if="${not #lists.isEmpty(Month6laundryList)}"
+								th:each="l : ${Month6laundryList}">
 								<tr>
 									<td th:text="${l.laundry_name}"></td>
 									<td
 										th:text="${#numbers.formatInteger(l.income,3,'COMMA') + '원'}"></td>
 								</tr>
 							</th:block>
-							<tr th:unless="${not #lists.isEmpty(laundryIncomeList)}">
+							<tr th:unless="${not #lists.isEmpty(Month6laundryList)}">
 								<td colspan="8">조회된 내용이 없습니다.</td>
 							</tr>
 						</tbody>
@@ -163,15 +147,15 @@
 							</tr>
 						</thead>
 						<tbody>
-							<th:block th:if="${not #lists.isEmpty(laundryIncomeList)}"
-								th:each="l : ${laundryIncomeList}">
+							<th:block th:if="${not #lists.isEmpty(yearlaundryList)}"
+								th:each="l : ${yearlaundryList}">
 								<tr>
 									<td th:text="${l.laundry_name}"></td>
 									<td
 										th:text="${#numbers.formatInteger(l.income,3,'COMMA') + '원'}"></td>
 								</tr>
 							</th:block>
-							<tr th:unless="${not #lists.isEmpty(laundryIncomeList)}">
+							<tr th:unless="${not #lists.isEmpty(yearlaundryList)}">
 								<td colspan="8">조회된 내용이 없습니다.</td>
 							</tr>
 						</tbody>
@@ -181,72 +165,139 @@
 		</div>
 	</div>
 	<div class="col-md-12 col-sm-12 ">
-              <div class="dashboard_graph">
+		<div class="dashboard_graph">
 
-                <div class="row x_title">
-                  <div class="col-md-6">
-                    <h3><small>세탁소별</small>  월별 매출</h3>
-                  </div>
-                  <div class="col-md-6">
-                    <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                      <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                      <span>May 29, 2022 - June 27, 2022</span> <b class="caret"></b>
-                    </div>
-                  </div>
-                </div>
+			<div class="row x_title">
+				<div class="col-md-6">
+					<h3>
+						<small>세탁소별</small> 월별 매출
+					</h3>
+				</div>
 
-                <div class="col-md-9 col-sm-9 ">
-                  <div id="chart_plot_01" class="demo-placeholder" style="padding: 0px; position: relative;"><canvas class="flot-base" width="821" height="350" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 657px; height: 280px;"></canvas><div class="flot-text" style="position: absolute; inset: 0px; font-size: smaller; color: rgb(84, 84, 84);"><div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; inset: 0px; display: block;"><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 115px; top: 263px; left: 46px; text-align: center;">Jan 01</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 115px; top: 263px; left: 149px; text-align: center;">Jan 02</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 115px; top: 263px; left: 251px; text-align: center;">Jan 03</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 115px; top: 263px; left: 354px; text-align: center;">Jan 04</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 115px; top: 263px; left: 457px; text-align: center;">Jan 05</div><div class="flot-tick-label tickLabel" style="position: absolute; max-width: 115px; top: 263px; left: 559px; text-align: center;">Jan 06</div></div><div class="flot-y-axis flot-y1-axis yAxis y1Axis" style="position: absolute; inset: 0px; display: block;"><div class="flot-tick-label tickLabel" style="position: absolute; top: 250px; left: 13px; text-align: right;">0</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 231px; left: 7px; text-align: right;">10</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 212px; left: 7px; text-align: right;">20</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 192px; left: 7px; text-align: right;">30</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 173px; left: 7px; text-align: right;">40</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 154px; left: 7px; text-align: right;">50</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 135px; left: 7px; text-align: right;">60</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 115px; left: 7px; text-align: right;">70</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 96px; left: 7px; text-align: right;">80</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 77px; left: 7px; text-align: right;">90</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 58px; left: 1px; text-align: right;">100</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 38px; left: 2px; text-align: right;">110</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 19px; left: 1px; text-align: right;">120</div><div class="flot-tick-label tickLabel" style="position: absolute; top: 0px; left: 1px; text-align: right;">130</div></div></div><canvas class="flot-overlay" width="821" height="350" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 657px; height: 280px;"></canvas></div>
-                </div>
-                <div class="col-md-3 col-sm-3  bg-white">
-                  <div class="x_title">
-                    <h2>세탁소별 매출</h2>
-                    <div class="clearfix"></div>
-                  </div>
+			</div>
 
-                  <div class="col-md-12 col-sm-12 ">
-                    <div>
-                      <p>덕진사컴퓨터드라이크리닝</p>
-                      <div class="">
-                        <div class="progress progress_sm" style="width: 76%;">
-                          <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="80" aria-valuenow="79" style="width: 80%;"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <p>홈드라이클리닝</p>
-                      <div class="">
-                        <div class="progress progress_sm" style="width: 76%;">
-                          <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="20" aria-valuenow="40" style="width: 1%;"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12 col-sm-12 ">
-                    <div>
-                      <p>크린토피아 홈플러스전주효자점
-                      </p>
-                      <div class="">
-                        <div class="progress progress_sm" style="width: 76%;">
-                          <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="1" aria-valuenow="1" style="width: 1%;"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <p>크린토피아 코인워시 전주병원점</p>
-                      <div class="">
-                        <div class="progress progress_sm" style="width: 76%;">
-                          <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="1" aria-valuenow="1" style="width: 1%;"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+			<div class="col-md-9 col-sm-9 ">
+				<div id="chart_plot_01" class="demo-placeholder"
+					style="padding: 0px; position: relative;">
+					<canvas class="flot-base" width="821" height="350"
+						style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 657px; height: 280px;"></canvas>
+					<div class="flot-text"
+						style="position: absolute; inset: 0px; font-size: smaller; color: rgb(84, 84, 84);">
+						<div class="flot-x-axis flot-x1-axis xAxis x1Axis"
+							style="position: absolute; inset: 0px; display: block;">
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; max-width: 115px; top: 263px; left: 46px; text-align: center;">Jan
+								01</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; max-width: 115px; top: 263px; left: 149px; text-align: center;">Jan
+								02</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; max-width: 115px; top: 263px; left: 251px; text-align: center;">Jan
+								03</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; max-width: 115px; top: 263px; left: 354px; text-align: center;">Jan
+								04</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; max-width: 115px; top: 263px; left: 457px; text-align: center;">Jan
+								05</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; max-width: 115px; top: 263px; left: 559px; text-align: center;">Jan
+								06</div>
+						</div>
+						<div class="flot-y-axis flot-y1-axis yAxis y1Axis"
+							style="position: absolute; inset: 0px; display: block;">
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; top: 250px; left: 13px; text-align: right;">0</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; top: 231px; left: 7px; text-align: right;">10</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; top: 212px; left: 7px; text-align: right;">20</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; top: 192px; left: 7px; text-align: right;">30</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; top: 173px; left: 7px; text-align: right;">40</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; top: 154px; left: 7px; text-align: right;">50</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; top: 135px; left: 7px; text-align: right;">60</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; top: 115px; left: 7px; text-align: right;">70</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; top: 96px; left: 7px; text-align: right;">80</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; top: 77px; left: 7px; text-align: right;">90</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; top: 58px; left: 1px; text-align: right;">100</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; top: 38px; left: 2px; text-align: right;">110</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; top: 19px; left: 1px; text-align: right;">120</div>
+							<div class="flot-tick-label tickLabel"
+								style="position: absolute; top: 0px; left: 1px; text-align: right;">130</div>
+						</div>
+					</div>
+					<canvas class="flot-overlay" width="821" height="350"
+						style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 657px; height: 280px;"></canvas>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-3  bg-white">
+				<div class="x_title">
+					<h2>세탁소별 매출</h2>
+					<div class="clearfix"></div>
+				</div>
 
-                </div>
-
-                <div class="clearfix"></div>
-              </div>
-            </div>
+				<div class="col-md-12 col-sm-12 ">
+					<div>
+						<p>덕진사컴퓨터드라이크리닝</p>
+						<div class="">
+							<div class="progress progress_sm" style="width: 76%;">
+								<div class="progress-bar bg-green" role="progressbar"
+									data-transitiongoal="30" aria-valuenow="1" style="width: 1%;"></div>
+							</div>
+						</div>
+					</div>
+					<div>
+						<p>우신드라이크리닝</p>
+						<div class="">
+							<div class="progress progress_sm" style="width: 76%;">
+								<div class="progress-bar bg-green" role="progressbar"
+									data-transitiongoal="80" aria-valuenow="1" style="width: 1%;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12 col-sm-12 ">
+					<div>
+						<p>중앙드라이크리닝</p>
+						<div class="">
+							<div class="progress progress_sm" style="width: 76%;">
+								<div class="progress-bar bg-green" role="progressbar"
+									data-transitiongoal="68" aria-valuenow="1" style="width: 1%;"></div>
+							</div>
+						</div>
+					</div>
+					<div>
+						<p>현대드라이크리닝</p>
+						<div class="">
+							<div class="progress progress_sm" style="width: 76%;">
+								<div class="progress-bar bg-green" role="progressbar"
+									data-transitiongoal="45" aria-valuenow="1" style="width: 1%;"></div>
+							</div>
+						</div>
+					</div>
+					<div>
+						<p>홈드라이크리닝</p>
+						<div class="">
+							<div class="progress progress_sm" style="width: 76%;">
+								<div class="progress-bar bg-green" role="progressbar"
+									data-transitiongoal="60" aria-valuenow="1" style="width: 1%;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 </th:block>
 
