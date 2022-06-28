@@ -18,9 +18,10 @@ public class Laundry {
 	private String businessNumber;
 	private String adminLevelCode;
 	private String registTime;
-
+	
 	private List<IlbanGprice> ilbanGoodsPrice;
 
+	
 	public List<IlbanGprice> getIlbanGoodsPrice() {
 		return ilbanGoodsPrice;
 	}
