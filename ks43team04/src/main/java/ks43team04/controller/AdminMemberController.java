@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ks43team04.dto.Delivery;
 import ks43team04.dto.Laundry;
 import ks43team04.dto.LoginHistory;
 import ks43team04.dto.Member;
 import ks43team04.dto.MemberOut;
 import ks43team04.dto.UserLevel;
 import ks43team04.mapper.AdminMemberMapper;
+import ks43team04.mapper.UserMapper;
 import ks43team04.service.AdminMemberService;
 
 @Controller
@@ -28,10 +30,12 @@ public class AdminMemberController {
 	
 	private final AdminMemberService adminMemberService;
 	private final AdminMemberMapper adminMemberMapper;
+	private final UserMapper userMapper;
 	
-	public AdminMemberController(AdminMemberService adminMemberService,  AdminMemberMapper adminMemberMapper) {
+	public AdminMemberController(AdminMemberService adminMemberService,  AdminMemberMapper adminMemberMapper,UserMapper userMapper) {
 		this.adminMemberService = adminMemberService;
 		this.adminMemberMapper = adminMemberMapper;
+		this.userMapper = userMapper;
 	}
 	//관리자페이지 세탁점주 상세정보조회
 
@@ -138,13 +142,13 @@ public class AdminMemberController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
+	@GetMapping("/lundryUser")
+	public String LaundryUserList(Model model) {
+		List<Delivery> LaundryUserList = userMapper.LaundryUserList();
+		model.addAttribute("LaundryUserList",LaundryUserList);
+		System.out.println(LaundryUserList);
+		return "admin/lundryUser";
+	}
 	
 	
 	

@@ -3,11 +3,77 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/adminDefault}">
 	  
-	  
+	<th:block layout:fragment="customCss">
+		<!-- datepicker -->
+		<link th:href="@{/admin/build/css/datepicker.css}" rel="stylesheet">
+	</th:block>
+
+<style>
+	.column-title {
+		font-size: 8px;
+	}
+</style>  	  
 	  
 	<!-- 사용자정의 contents -->
 	<th:block layout:fragment="customContents">
-	<h1> 세탁소별 회원목록 넣을 겁니다</h1>
+   	<h4>매장별 회원관리</h4>
+   	<div class="col-md-12 col-sm-12 mt-5">
+			<div class="x_panel">
+			<h2>회원 목록</h2>
+			<div class="x_title">
+			</div>
+				<div class="x_content">
+				  <div class="table-responsive"style="overflow: scroll; width: 100%; height: 480px;">
+				
+					<table class="table table-striped jambo_table bulk_action" >					
+							<thead>
+								<tr class="headings" style="text-align: center;">
+									<th>
+										<input type="checkbox" id="check-all" class="flat">
+									</th>
+									<th class="column-title" >세탁소 명</th>
+									<th class="column-title" >회원 아이디</th>
+									<th class="column-title">회원 이름</th>
+									<th class="column-title">회원 주소</th>
+										
+									<th class="bulk-actions" colspan="12">
+										<a class="antoo" style="color:#fff; font-weight:500;">전체 선택 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${not #lists.isEmpty(LaundryUserList)}" th:each="l : ${LaundryUserList}" class="even pointer">
+									<td class="a-center">
+										<input type="checkbox" class="flat" name="table_records">
+									</td>
+										<td th:text="${l.laundryName}" style="text-align: center;"></td>
+										<td th:text="${l.UserName}" style="text-align: center;"></td>
+										<td th:text="${l.UserId}" style="text-align: center;"></td>
+										<td th:text="${l.UserAdrr}" style="text-align: center;"></td>			
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					
+					<nav aria-label="Page navigation example">
+						<ul class="pagination justify-content-center">
+							<li class="page-item">
+								<a class="page-link" th:href="@{/admin/lundryUser}" tabindex="-1"> <
+								</a>
+							</li>
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item">
+								<a class="page-link" th:href="@{/admin/lundryUser}" tabindex="-3">></a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>	
+
+	</table>
 </th:block>
 
 </html>
