@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ks43team04.dto.As;
 import ks43team04.dto.Board;
 import ks43team04.dto.Event;
+import ks43team04.dto.Review;
 import ks43team04.mapper.AsMapper;
 import ks43team04.mapper.BoardMapper;
 
@@ -24,6 +25,13 @@ public class BoardService {
 		this.boardMapper = boardMapper;
 		this.asMapper = asMapper;
 	}
+	
+	/*리뷰 목록 조회*/
+	public List<Review> getReviewList(){
+		List<Review> reviewList = boardMapper.getReviewList();
+		return reviewList;
+	}
+	
 	/**
 	 * AS 접수
 	 */
@@ -52,6 +60,18 @@ public class BoardService {
 		List<As> asList = asMapper.getAsList();
 		return asList;
 	}
+	public List<As> readyAsList(){
+		List<As> asList = asMapper.readyAsList();
+		return asList;
+	}
+	public List<As> startAsList(){
+		List<As> asList = asMapper.startAsList();
+		return asList;
+	}
+	public List<As> endAsList(){
+		List<As> asList = asMapper.endAsList();
+		return asList;
+	}
 	
 	/*이벤트 상세 조회*/
 	public Event eventDetail(String eventCode) {
@@ -73,6 +93,14 @@ public class BoardService {
 	public List<Event> endEventList(){
 		List<Event> endEventList = boardMapper.endEventList();
 		return endEventList;
+	}
+	/**
+	 * 문의사항 답변 작성
+	 */
+	public int qnaComment(Board board, String sessionId) {
+		board.setMemeberId(sessionId);
+		int result = boardMapper.qnaComment(board);
+		return result;
 	}
 	
 	/**
@@ -113,8 +141,8 @@ public class BoardService {
 	 * @param boardMenuCode
 	 * @return Board
 	 */
-	public Board getBoardDetailByCode(String boardMenuCode, int totalNo) {
-		Board board = boardMapper.getBoardDetailByCode(boardMenuCode, totalNo);
+	public Board getBoardDetailByCode(String boardMenuCode, int boardIdx) {
+		Board board = boardMapper.getBoardDetailByCode(boardMenuCode, boardIdx);
 		return board;
 	}
 

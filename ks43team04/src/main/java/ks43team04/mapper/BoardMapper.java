@@ -19,6 +19,7 @@ public interface BoardMapper {
 	public List<Event> runEventList();
 	public List<Event> endEventList();
 	
+	
 	// 리뷰 조회
 	public List<Review> getReviewList();
 
@@ -29,11 +30,14 @@ public interface BoardMapper {
 	public int noticeWrite(Board board);
 	public int noticeForm(Board board);
 	
+	// 문의사항 답변 작성
+	public int qnaComment(Board board);
+	
 	// 문의사항 글 작성
 	public int qnaWrite(Board board);
 
 	// 분류별 게시물 조회
-	public Board getBoardDetailByCode(String boardMenuCode, int totalNo);
+	public Board getBoardDetailByCode(String boardMenuCode, int boardIdx);
 
 
 	// 문의사항(서비스 불만족) 목록 조회

@@ -84,10 +84,10 @@
 									</thead>
 									<tbody>				
 										<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaServiceList)}" th:each="l : ${qnaServiceList}">
-											<td class="product-remove" th:text="${l.totalNo}"></td>
+											<td class="product-remove" th:text="${l.boardIdx}"></td>
 											<td class="product-remove" th:text="${l.boardSecret}"></td>
 											<td class="product-image">
-											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a>
+											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 											</td>
 											<td class="product-name" th:text="${l.boardAddFile}"></td>
 											<td class="product-price" th:text="${l.memeberId}"></td>
@@ -124,10 +124,10 @@
 									</thead>
 									<tbody>				
 										<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaPickupList)}" th:each="l : ${qnaPickupList}">
-											<td class="product-remove" th:text="${l.totalNo}"></td>
+											<td class="product-remove" th:text="${l.boardIdx}"></td>
 											<td class="product-remove" th:text="${l.boardSecret}"></td>
 											<td class="product-image">
-											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a>
+											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 											</td>
 											<td class="product-name" th:text="${l.boardAddFile}"></td>
 											<td class="product-price" th:text="${l.memeberId}"></td>
@@ -163,10 +163,10 @@
 									</thead>
 									<tbody>				
 										<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaPayList)}" th:each="l : ${qnaPayList}">
-											<td class="product-remove" th:text="${l.totalNo}"></td>
+											<td class="product-remove" th:text="${l.boardIdx}"></td>
 											<td class="product-remove" th:text="${l.boardSecret}"></td>
 											<td class="product-image">
-											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a>
+											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 											</td>
 											<td class="product-name" th:text="${l.boardAddFile}"></td>
 											<td class="product-price" th:text="${l.memeberId}"></td>
@@ -205,10 +205,10 @@
 									</thead>
 									<tbody>				
 										<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaComplainList)}" th:each="l : ${qnaComplainList}">
-											<td class="product-remove" th:text="${l.totalNo}"></td>
+											<td class="product-remove" th:text="${l.boardIdx}"></td>
 											<td class="product-remove" th:text="${l.boardSecret}"></td>
 											<td class="product-image">
-											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},totalNo=${l.totalNo})}" th:text="${l.boardTitle}"></a>
+											<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 											</td>
 											<td class="product-name" th:text="${l.boardAddFile}"></td>
 											<td class="product-price" th:text="${l.memeberId}"></td>

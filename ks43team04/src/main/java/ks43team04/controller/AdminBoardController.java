@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ks43team04.dto.As;
 import ks43team04.dto.Board;
 import ks43team04.dto.Event;
+import ks43team04.dto.Review;
 import ks43team04.service.BoardService;
 
 @Controller
@@ -70,7 +71,13 @@ public class AdminBoardController {
 	@GetMapping("/asList")
 	public String asList(Model model) {
 		List<As> asList = boardService.getAsList();
+		List<As> readyAsList = boardService.readyAsList();
+		List<As> startAsList = boardService.startAsList();
+		List<As> endAsList = boardService.endAsList();
 		model.addAttribute("asList", asList);
+		model.addAttribute("readyAsList", readyAsList);
+		model.addAttribute("startAsList", startAsList);
+		model.addAttribute("endAsList", endAsList);
 		System.out.println(asList);
 		return "admin/asList";
 	}
@@ -78,16 +85,17 @@ public class AdminBoardController {
 	
 	//리뷰 목록
 	@GetMapping("/review")
-	public String review() {
-		
+	public String review(Model model) {
+		List<Review> reviewList = boardService.getReviewList();
+		model.addAttribute("reviewList", reviewList);
 		return "admin/review";
 	}
 	//Q&A 상세글 조회
 	@GetMapping("/qnaDetail")
 	public String qnaDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
-							,@RequestParam(name = "totalNo", required = false) int totalNo, Model model) {
+							,@RequestParam(name = "boardIdx", required = false) int boardIdx, Model model) {
 
-		Board board = boardService.getBoardDetailByCode(boardMenuCode, totalNo);
+		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
 
 		model.addAttribute("board", board);
 		return "/admin/qnaDetail";
@@ -157,7 +165,7 @@ public class AdminBoardController {
 		boardService.noticeForm(board, sessionId);
 
 		log.info("공지 등록 data : {}", board);
-		log.info("화면에서 입력받은 data: {}, boardCode");
+		log.info("화면에서 입력받은 data: {}, boardIdx");
 
 		return "redirect:/admin/noticeList";
 	}
@@ -165,10 +173,10 @@ public class AdminBoardController {
 	//공지사항 상세글 조회
 	@GetMapping("/noticeDetail")
 	public String noticeDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
-								,@RequestParam(name = "totalNo", required = false) int totalNo
+								,@RequestParam(name = "boardIdx", required = false) int boardIdx
 								, Model model) {
 
-		Board board = boardService.getBoardDetailByCode(boardMenuCode, totalNo);
+		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
 
 		model.addAttribute("board", board);
 

@@ -74,7 +74,7 @@
 				<span>
 						<a th:href="@{/user/board/qnaModify}" class="cart-btn btn-lg">수정</a>
 						<a th:href="@{/user/board/qnaRemove}" class="cart-btn btn-lg">삭제</a>
-						<a th:href="@{/user/board/qnaComment}" class="cart-btn btn-lg">답변하기</a>
+						<a th:href="@{/user/board/qnaComment(boardMenuCode=${board.boardMenuCode},boardIdx=${board.boardIdx})}" class="cart-btn btn-lg">답변하기</a>
 				</span>
 			</div>
 			<div class="btnArea col-lg-6 col-sm-12" style="text-align:right; 0px; margin-top: 80px;">

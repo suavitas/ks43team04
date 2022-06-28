@@ -1,12 +1,11 @@
 package ks43team04.dto;
 
 public class Board {
-	private String boardCode;
 	private String boardMenuCode;
-	private String totalNo;
+	private String boardIdx;
 	private String memeberId;
-	private String boardParentNo;
-	private String boardChildNo;
+	private String boardGroupNo;
+	private String boardOrderNo;
 	private String boardReadCount;
 	private String boardTitle;
 	private String boardContent;
@@ -18,23 +17,18 @@ public class Board {
 	private String registTime;
 	private String updateTime;
 	private String commentState;
-	public String getBoardCode() {
-		return boardCode;
-	}
-	public void setBoardCode(String boardCode) {
-		this.boardCode = boardCode;
-	}
+	
 	public String getBoardMenuCode() {
 		return boardMenuCode;
 	}
 	public void setBoardMenuCode(String boardMenuCode) {
 		this.boardMenuCode = boardMenuCode;
 	}
-	public String getTotalNo() {
-		return totalNo;
+	public String getBoardIdx() {
+		return boardIdx;
 	}
-	public void setTotalNo(String totalNo) {
-		this.totalNo = totalNo;
+	public void setBoardIdx(String boardIdx) {
+		this.boardIdx = boardIdx;
 	}
 	public String getMemeberId() {
 		return memeberId;
@@ -42,17 +36,17 @@ public class Board {
 	public void setMemeberId(String memeberId) {
 		this.memeberId = memeberId;
 	}
-	public String getBoardParentNo() {
-		return boardParentNo;
+	public String getBoardGroupNo() {
+		return boardGroupNo;
 	}
-	public void setBoardParentNo(String boardParentNo) {
-		this.boardParentNo = boardParentNo;
+	public void setBoardGroupNo(String boardGroupNo) {
+		this.boardGroupNo = boardGroupNo;
 	}
-	public String getBoardChildNo() {
-		return boardChildNo;
+	public String getBoardOrderNo() {
+		return boardOrderNo;
 	}
-	public void setBoardChildNo(String boardChildNo) {
-		this.boardChildNo = boardChildNo;
+	public void setBoardOrderNo(String boardOrderNo) {
+		this.boardOrderNo = boardOrderNo;
 	}
 	public String getBoardReadCount() {
 		return boardReadCount;
@@ -117,24 +111,23 @@ public class Board {
 	public String getCommentState() {
 		return commentState;
 	}
-	public void setComment_state(String commentState) {
+	public void setCommentState(String commentState) {
 		this.commentState = commentState;
 	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Board [boardCode=");
-		builder.append(boardCode);
+	
 		builder.append(", boardMenuCode=");
 		builder.append(boardMenuCode);
-		builder.append(", totalNo=");
-		builder.append(totalNo);
+		builder.append(", boardIdx=");
+		builder.append(boardIdx);
 		builder.append(", memeberId=");
 		builder.append(memeberId);
-		builder.append(", boardParentNo=");
-		builder.append(boardParentNo);
-		builder.append(", boardChildNo=");
-		builder.append(boardChildNo);
+		builder.append(", boardGroupNo=");
+		builder.append(boardGroupNo);
+		builder.append(", boardOrderNo=");
+		builder.append(boardOrderNo);
 		builder.append(", boardReadCount=");
 		builder.append(boardReadCount);
 		builder.append(", boardTitle=");
@@ -160,6 +153,7 @@ public class Board {
 		builder.append("]");
 		return builder.toString();
 	}
+
 	
 	
 	
