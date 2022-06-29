@@ -94,8 +94,68 @@
 			<result column="OS" 					property="os"/>
 			<result column="browser" 				property="browser"/>
 			<result column="admin_level_code" 		property="adminLevelCode"/>
-		</resultMap>
+		</resultMap>	
 		
+		<update id="modifyLaundry" parameterType="Laundry">
+			/* 세탁소점주 상세보기 수정 */
+			UPDATE tb_laundry
+			<trim prefix="SET" prefixOverrides=",">
+				<if test="laundryName != null and laundryName != ''">	
+					,laundry_name = #{laundryName}
+				</if>
+				<if test="laundryPostNum != null and laundryPostNum != ''">	
+					,laundry_post_num = #{laundryPostNum}
+				</if>
+				<if test="laundryAddr != null and laundryAddr != ''">	
+					,laundry_addr = #{laundryAddr}
+				</if>	
+				<if test="laundryDetailAddr != null and laundryDetailAddr != ''">	
+					,laundry_detail_addr = #{laundryDetailAddr}
+				</if>
+				<if test="laundryTel != null and laundryTel != ''">		
+					,laundry_tel = #{laundryTel}
+				</if>
+				<if test="businessNumber != null and businessNumber != ''">		
+					,business_number = #{businessNumber}
+				</if>		
+				<if test="registTime != null and registTime != ''">		
+					,regist_time = #{registTime}
+				</if>		
+				WHERE 
+					laundry_code = #{laundryCode};
+			</trim>		
+		</update>
+
+		<update id="modifyMember" parameterType="Member">
+			/* 회원 상세보기 수정 */
+			UPDATE tb_member
+			<trim prefix="SET" prefixOverrides=",">
+				<if test="memberName != null and memberName != ''">	
+					,m_name = #{memberName}
+				</if>
+				<if test="memberBirth != null and memberBirth != ''">		
+					,m_birth = #{memberBirth}
+				</if>	
+				<if test="memberPostNum != null and memberPostNum != ''">	
+					,m_post_num = #{memberPostNum}
+				</if>
+				<if test="memberAddr != null and memberAddr != ''">	
+					,m_addr = #{memberAddr}
+				</if>	
+				<if test="memberDetailAddr != null and memberDetailAddr != ''">	
+					,m_detail_addr = #{memberDetailAddr}
+				</if>
+				<if test="memberPhone != null and memberPhone != ''">		
+					,m_phone = #{memberPhone}
+				</if>	
+				<if test="memberEmail != null and memberEmail != ''">		
+					,m_email = #{memberEmail}
+				</if>		
+				WHERE 
+					m_id = #{memberId};
+			</trim>		
+		</update>
+	
 		<select id="getLaundryInfoByCode" parameterType="String" resultMap="laundryResultMap">
 			/* 세탁소 점주 상세정보 조회*/
 			SELECT

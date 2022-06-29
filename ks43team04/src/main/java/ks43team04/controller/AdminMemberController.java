@@ -37,13 +37,48 @@ public class AdminMemberController {
 		this.adminMemberMapper = adminMemberMapper;
 		this.userMapper = userMapper;
 	}
+	//관리자페이지 세탁점주 상세정보 수정처리
+	@PostMapping("/modifyLaundry")
+	public String modifyLaundry(Laundry laundry) {		
+		log.info("세탁점주 상세보기 수정정보:{}", laundry);			
+		adminMemberService.modifyLaundry(laundry);			
+		return "redirect:/admin/LaundryList";
+	}
 	
-	//관리자페이지 세탁점주 상세정보조회
+	//관리자페이지 세탁점주 상세정보 수정화면
+	@GetMapping("/modifyLaundry")
+	public String modifyLaundry(@RequestParam (name="laundryCode", required=false) String laundryCode
+								,Model model) {
+		log.info("화면에서 입력받은 data: {}", laundryCode);
+		Laundry laundry = adminMemberService.getLaundryInfoByCode(laundryCode);		
+		model.addAttribute("laundry", laundry);		
+		return "adminmember/modifyLaundry";
+	}
+	
+	//관리자페이지 회원관리 상세정보 수정처리
+	@PostMapping("/modifyMember")
+	public String modifyMember(Member member) {		
+		log.info("회원 상세보기 수정정보:{}", member);			
+		adminMemberService.modifyMember(member);			
+		return "redirect:/admin/adminMemberList";
+	}
+	
+	//관리자페이지 회원관리 상세정보 수정화면 
+	@GetMapping("/modifyMember")
+	public String modifyMember(@RequestParam (name="memberId", required=false) String memberId
+								,Model model) {
+		log.info("화면에서 입력받은 data: {}", memberId);
+		Member member = adminMemberService.getMemberInfoById(memberId);		
+		model.addAttribute("member", member);		
+		return "adminmember/modifyMember";
+	}
+	
+	//관리자페이지 세탁점주 상세정보 조회
 	@GetMapping("/detailLaundry")
 	public String getDetailLaundryInfo(Model model
 									,@RequestParam(name="laundryCode", required = false) String laundryCode) {
 		Laundry laundry = adminMemberService.getLaundryInfoByCode(laundryCode);
-		log.info("세탁소 상세정보:{}", laundry);
+		log.info("세탁소 상세보기:{}", laundry);
 		model.addAttribute("title", "세탁소 점주회원 관리");
 		model.addAttribute("titleName", "세탁소 상세정보");
 		model.addAttribute("laundry", laundry);
@@ -56,7 +91,7 @@ public class AdminMemberController {
 	public String getDetailMemberInfo(Model model
 									,@RequestParam(name="memberId", required = false) String memberId) {		
 		Member member = adminMemberService.getMemberInfoById(memberId);		
-		log.info("회원 상세정보:{}", member);		
+		log.info("회원 상세보기:{}", member);		
 		model.addAttribute("title", "회원 관리");
 		model.addAttribute("titleName", "회원 상세정보");
 		model.addAttribute("member", member);
@@ -154,9 +189,11 @@ public class AdminMemberController {
 	
 	@GetMapping("/lundryUser")
 	public String LaundryUserList(Model model) {
+		
 		List<Delivery> LaundryUserList = userMapper.LaundryUserList();
 		model.addAttribute("LaundryUserList",LaundryUserList);
 		System.out.println(LaundryUserList);
+		
 		return "admin/lundryUser";
 	}
 	
