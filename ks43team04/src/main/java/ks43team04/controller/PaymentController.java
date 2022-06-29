@@ -31,6 +31,11 @@ public class PaymentController {
 		return "user/payment/payment";
 	}
 	
+	@GetMapping("/user/paymentComplete")
+	public String paymentComplete() {
+		return "user/payment/paymentComplete";
+	}
+	
 	@GetMapping("/admin/goodsPrice")
 	public String eachGoodsPriceList(@RequestParam(name = "currentPage", required = false, defaultValue = "1") int currentPage,
 	Model model, HttpSession session) {

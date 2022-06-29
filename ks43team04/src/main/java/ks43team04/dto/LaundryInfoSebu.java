@@ -2,12 +2,12 @@ package ks43team04.dto;
 
 
 public class LaundryInfoSebu {
-	private String levelCode;
-	@Override
-	public String toString() {
-		return "LaundryInfoList [levelCode=" + levelCode + ", laundryName=" + laundryName + ", laundryState="
-				+ laundryState + ", laundryAddr=" + laundryAddr + ", laundryTel=" + laundryTel + "]";
-	}
+	private String laundryName;
+	private String laundryState;
+	private String laundryAddr;
+	private String laundryTel;
+	private String levelCode;	
+	
 	public String getLevelCode() {
 		return levelCode;
 	}
@@ -38,8 +38,8 @@ public class LaundryInfoSebu {
 	public void setLaundryTel(String laundryTel) {
 		this.laundryTel = laundryTel;
 	}
-	private String laundryName;
-	private String laundryState;
-	private String laundryAddr;
-	private String laundryTel;
+	public String toString() {
+		return "LaundryInfoList [levelCode=" + levelCode + ", laundryName=" + laundryName + ", laundryState="
+				+ laundryState + ", laundryAddr=" + laundryAddr + ", laundryTel=" + laundryTel + "]";
+	}
 }

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/userDefault}">
+
+
+<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+<style>
+.complete-area table tr td:last-child{
+	width: 400px;
+}
+.complete-area table tr td:first-child{
+	width: 150px;
+}
+.complete-area table{
+	margin: 0 auto;
+}
+
+</style>
+	<form id="payForm" name="payForm" method="post">
+
+		<div class="complete-area" style="width: 100%; padding: 100px 200px 200px 200px; text-align: left;">
+
+
+
+
+	<h2 style="margin: 0 auto; padding-bottom:100px; text-align: center;">주문이 완료되었습니다.</h2>
+			<table border="1">
+			
+				<tbody>
+					<tr>
+						<td rowspan="3"> 세탁소 정보 </td>
+						<td> 세탁소 명 </td>
+					</tr>
+					<tr>			
+						<td> 세탁소 주소 </td>
+					</tr>
+					<tr>						
+						<td> 세탁소 번호 </td>
+					</tr>
+					<tr>
+						<td> 요청 사항 </td>
+						<td> 요청 사항 </td>
+					</tr>
+					<tr>
+						<td> 결제 정보 </td>
+						<td> 결제 정보 </td>
+					</tr>
+					<tr>
+						<td> 결제 지급 포인트 </td>
+						<td> 결제 지급 포인트 </td>
+					</tr>
+					<tr>
+						<td> 배송지 정보 </td>
+						<td> 배송지 정보 </td>
+					</tr>
+					<tr>
+						<td> 세탁물  </td>
+						<td> 세탁물  </td>
+					</tr>
+					<tr>
+						<td> 총 비용 금액  </td>
+						<td> 총 비용 금액  </td>
+					</tr>
+					<tr>
+						<td> 배송비  </td>
+						<td> 배송비  </td>
+					</tr>
+					<tr>
+						<td> 포인트 할인  </td>
+						<td> 포인트 할인  </td>
+					</tr>
+					<tr>
+						<td> 최종결제금액  </td>
+						<td> 최종 결제 금액  </td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</form>
+	
+	
+	
+</th:block>
+
+
+
+</html>
