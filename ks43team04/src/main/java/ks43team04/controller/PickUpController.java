@@ -25,7 +25,7 @@ public class PickUpController {
 
 	}
 	
-	/*매장별 수거 배송 현황*/
+	/*매장별 수거 현황*/
 	@GetMapping("/pickUpByStore")
 	public String pickUpByStore() {
 		

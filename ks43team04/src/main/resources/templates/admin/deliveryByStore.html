@@ -9,11 +9,11 @@
 	
 <th:block layout:fragment="customContents">
 
-   	<h4>매장별 수거 현황</h4>
+   	<h4>매장별  배송 현황</h4>
    	<br>
    	<br>
    	<br>
-<h2 style="color:#417556;">매장별 수거 현황</h2>
+<h2 style="color:#417556;">매장별 배송 현황</h2>
 
 	<table id="reportList" class="table table-striped table-bordered" style="width: 100%;">
 		<thead>
@@ -41,13 +41,13 @@
 				<th:block  th:unless="${not #lists.isEmpty(l.pickupFinishTime)}">
 					<td style="color:red">수거 미완료</td>
 				</th:block>
-				<td><a th:href="@{/admin/OrderbyDelivery}"><button type="button"
-					class="btn btn-secondary">배달(딜리버리)로 연결!</button></a></td>
+				<td><a th:href="@{/admin/OrderbyAllCheck}"><button type="button"
+					class="btn btn-secondary">세탁배송확인?(올체크로) 연결!</button></a></td>
 			</tr>
 			<tr th:unless="${not #lists.isEmpty(getPickUpList)}">
 				<td colspan="9">조회된 내용이 없습니다.</td>
-				<td><a th:href="@{/admin/deliveryByStore}"><button type="button"
-					class="btn btn-secondary">배달(딜리버리)로 연결!</button></a></td>
+				<td><a th:href="@{/admin/OrderbyAllCheck}"><button type="button"
+					class="btn btn-secondary">세탁배송확인?(올체크로) 연결!</button></a></td>
 				
 			</tr>
 		</tbody>

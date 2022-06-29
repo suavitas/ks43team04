@@ -52,4 +52,12 @@ public class DeliveryController {
 		return "member/myPageDelivery";
 	}
 
+	
+	/*매장별 배송 현황*/
+	@GetMapping("/admin/deliveryByStore")
+	public String deliveryByStore() {
+		
+		
+		return "admin/deliveryByStore";
+	}
 }
