@@ -22,6 +22,19 @@ public class AdminMemberService {
 	public AdminMemberService(AdminMemberMapper adminMemberMapper) {
 		this.adminMemberMapper = adminMemberMapper;
 	}
+
+	//관리자페이지 세탁소점주 상세정보 수정
+	public int modifyLaundry(Laundry laundry) {
+		System.out.println(laundry);		
+		return adminMemberMapper.modifyLaundry(laundry);
+	}
+
+	//관리자페이지 회원 상세정보 수정
+	public int modifyMember(Member member) {		
+		System.out.println(member);		
+		return adminMemberMapper.modifyMember(member);
+	}
+	
 	//관리자페이지 세탁소점주 상세정보 조회
 	public Laundry getLaundryInfoByCode(String laundryCode) {
 		return adminMemberMapper.getLaundryInfoByCode(laundryCode);
@@ -44,7 +57,7 @@ public class AdminMemberService {
 		return userLevel;
 	}
 	
-	//관리자페이지 세탁소 점주 정보조회
+	//관리자페이지 세탁소점주 정보조회
 	public List<Laundry> getLaundryList() {		
 		   List<Laundry> LaundryList = adminMemberMapper.getLaundryList();		
 		return LaundryList;
@@ -66,4 +79,7 @@ public class AdminMemberService {
 		   List<Member> adminMemberList = adminMemberMapper.getAdminMemberList();		
 		return adminMemberList;
 	}
+
+
+	
 }
