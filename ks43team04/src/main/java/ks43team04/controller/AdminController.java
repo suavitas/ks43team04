@@ -42,13 +42,6 @@ public class AdminController {
 		return "admin/retrun";
 	}
 
-	// 회원별 포인트
-
-	@GetMapping("/memberPoint")
-	public String memberPoint() {
-		return "admin/memberPoint";
-	}
-
 	// 전 매장 장비 현황
 	@GetMapping("/machine")
 	public String machine() {
