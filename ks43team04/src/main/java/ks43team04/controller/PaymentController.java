@@ -46,7 +46,10 @@ public class PaymentController {
 		
 		return "user/payment/payment";
 	}
-
+	@GetMapping("/user/paymentComplete")
+	public String paymentComplete() {
+		return "user/payment/paymentComplete";
+	}
 	@GetMapping("/user/payment")
 	public String payment(Model model, HttpSession session) {
 
