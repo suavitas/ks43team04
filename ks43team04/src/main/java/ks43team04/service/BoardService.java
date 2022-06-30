@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ks43team04.dto.As;
 import ks43team04.dto.Board;
 import ks43team04.dto.Event;
+import ks43team04.dto.LaundryList;
 import ks43team04.dto.Review;
 import ks43team04.mapper.AsMapper;
 import ks43team04.mapper.BoardMapper;
+import ks43team04.mapper.LaundryMapper;
 
 @Service
 @Transactional
@@ -21,10 +23,17 @@ public class BoardService {
 
 	private final BoardMapper boardMapper;
 	private final AsMapper asMapper;
+	private final LaundryMapper laundryMapper;
 
-	public BoardService(BoardMapper boardMapper, AsMapper asMapper) {
+	public BoardService(BoardMapper boardMapper, AsMapper asMapper,LaundryMapper laundryMapper) {
 		this.boardMapper = boardMapper;
 		this.asMapper = asMapper;
+		this.laundryMapper = laundryMapper;
+	}
+	/*멤버이름으로 세탁소조회*/
+	public List<LaundryList> getMemberLaundryList(String memberId){
+		List<LaundryList> getMemberLaundryList = laundryMapper.getMemberLaundryList(memberId);
+		return getMemberLaundryList;
 	}
 	
 	/*리뷰 목록 조회*/
@@ -34,9 +43,15 @@ public class BoardService {
 	}
 	
 	/*AS 접수*/
+	public int asReceipt(As as) {
+		int result = asMapper.asReceipt(as);
+		return result;
+	}
+	
+	/*AS 신고*/
 	public int asForm(As as, String sessionId) {
 
-		as.setLaundryCode(sessionId);
+		as.setMemberId(sessionId);
 
 		int result = asMapper.asForm(as);
 		return result;
@@ -46,6 +61,12 @@ public class BoardService {
 	public As getAsDetail(String asCode) {
 		As as = asMapper.getAsDetail(asCode);
 		return as;
+	}
+	
+	/*회원별 AS 목록*/
+	public List<As> asListById(String memberId){
+		List<As> asListById = asMapper.asListById(memberId);
+		return asListById;
 	}
 	
 	/*AS 전체 목록*/

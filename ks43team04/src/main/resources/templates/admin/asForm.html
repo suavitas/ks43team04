@@ -23,15 +23,16 @@
 	
 				<div class="form-group row">
 				<label class="control-label col-md-1 col-sm-1 ">세탁소명</label>
-				<div class="col-md-4 col-sm-4">
-				<input type="text" class="form-control" readonly="readonly" placeholder="세탁소이름" name="laundryCode" id="code">
+				<div class="col-md-4 col-sm-4"  th:each="l : ${getMemberLaundryList}">
+				<input type="text" class="form-control" readonly="readonly" placeholder="세탁소이름" name="laundryCode" th:value="${l.laundryCode}" id="code">
+			
 				</div>
 				</div>
 				
 				<div class="form-group row">
 				<label class="control-label col-md-1 col-sm-1 ">작성자</label>
 				<div class="col-md-4 col-sm-4 ">
-				<input type="text" class="form-control" readonly="readonly" placeholder="점주 ID">
+				<input type="text" class="form-control" id="memberId" readonly="readonly"  th:value="${member.memberId}" placeholder="점주 ID">
 				</div>
 				<div class="checkbox">
 				<label class="smsCheck" style="margin: 10px 0 10px 20px;">

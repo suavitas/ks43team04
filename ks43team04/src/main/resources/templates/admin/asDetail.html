@@ -8,6 +8,61 @@
 	<!-- 사용자정의 contents -->
 	<th:block layout:fragment="customContents">
  	
+ 	
+		
+		<!-- Modal -->
+		<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="staticBackdropLabel">접수</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      
+		      <form class="asReceipt" th:action="@{/admin/asList}" method="POST">
+		      
+		      <div class="modal-body">
+		      	  
+		        <table class="table table col-md-12">
+				<tbody>
+					<tr th:each="l : ${as.LaundryList}">
+						<input type="hidden" name="asCode" th:value="${as.asCode}">
+						<th scope="row">세탁소명</th>
+						<td th:text="${l.laundryName}"></td>
+						<th scope="row">작성자</th>
+						<td th:text="${l.memberId}"></td>
+					</tr>
+					<tr>
+						<th scope="row">제목</th>
+						 <td><span th:text="${as.asTitle}"></span></td>
+						<th scope="row"></th>
+						 <td th:text="${as.asState}" style="display: none;"></td>
+					 </tr>
+					 <tr>
+						 <th scope="row">내용</th>
+						 <td colspan="3"><span th:text="${as.asContent}"></span></td>
+					</tr>
+					</tbody>
+				</table>
+					<div style="text-align: center">
+					<h5>방문 예정일</h5>
+					<input type="datetime-local" class="goDateTime" name="visitTime" th:value="${as.visitTime}">
+					<p style="padding-top: 30px;">
+					<textarea name="asmessage" id="asmessage" placeholder="Message" style="width:400px"></textarea>
+					</p>
+					</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+		        <a th:href="@{/admin/asList}"><button type="submit" name="submit" value="submit" class="btn btn-primary">접수</button></a>
+		      </div>
+		      </form>
+		    </div>
+		  </div>
+		</div>
+		 	
  	<div class="admin-board-list" style="margin-top: 100px;">
  		<h4 style="margin-bottom: 50px;">고장 신고 상세 조회</h4>
 		
@@ -23,7 +78,8 @@
 				<th scope="row">처리상태</th>
 				<td><span th:text="${as.asState}"></span></td>
 				<th scope="row">작성시간</th>
-				<td><span th:text="${as.updateTime}"></span></td>
+				<td><span th:text="${as.registTime}"></span></td>
+				
 			</tr>
 			<tr th:each="l : ${as.LaundryList}" >
 				<th scope="row">세탁소명</th>
@@ -51,20 +107,47 @@
 			<div class="form-group">
 				<div class="col-md-8 col-sm-8  offset-md-2" style="margin-left: 0; text-align: center; padding-top: 50px;">
 				
-				<a th:href="@{/admin/asList}"><button type="button" class="btn btn-primary" style="margin-right: 30px;">취소</button></a>
-				<button type="submit" class="btn btn-success" style="margin-left: 30px;">접수</button>
+				<a th:href="@{/admin/asList}"><button type="button" class="btn btn-success" style="margin-right: 30px;">취소</button></a>
+				
+					<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+		  접수
+		</button>
+		
+				<a th:href="@{/admin/asList}"><button type="button" class="btn btn-default" style="margin-right: 30px;">완료</button></a>
+			
+			
 				</div>
 				</div>
-							
-			
-	
-			
-	
 		
-		
-
 
 </div>
+
+<th:block layout:fragment="customJsScript">  
+	<script type="text/javascript">
+	
+	/*AS방문 내일날짜로 셋팅*/
+	var currentDates = document.querySelectorAll('.currentDate');
+	var currentDateTimes = document.querySelectorAll('.currentDateTime');
+	
+	var tomorrowDate = new Date
+	
+	tomorrowDate.setHours(tomorrowDate.getHours()+9)
+	tomorrowDate.setDate(tomorrowDate.getDate())
+	
+	for(var i=0; i<currentDates.length; i++){
+		currentDates[i].value = tomorrowDate.toISOString().substring(0, 10);		
+		currentDateTimes[i].value = tomorrowDate.toISOString().slice(11, 16);		
+	}
+	
+	/*접수 버튼 클릭 시 값 불러오기*/
+	
+	
+	
+	
+	
+</script>
+</th:block>
 </th:block>
 
 </html>

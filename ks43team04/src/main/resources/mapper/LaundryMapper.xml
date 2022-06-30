@@ -88,6 +88,18 @@
 				property="goodsPriceUseState" />
 		</collection>
 	</resultMap>
+	
+	  <select id="getMemberLaundryList" parameterType="String" resultMap="laundryResultMap">
+   		/*멤버이름으로 세탁소 조회*/
+   		SELECT
+			l.laundry_name
+			,l.laundry_code
+		FROM
+			tb_laundry AS l
+		WHERE 
+			l.m_id = #{memberId};	
+   	</select>
+   
 
 	<select id="laundryGoodsNameAndPrice" parameterType="String"
 		resultMap="laundryResultMap">
