@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import ks43team04.dto.HolidayList;
+import ks43team04.dto.LaundryList;
 import ks43team04.dto.YearlyHoliday;
 import ks43team04.mapper.HolidayMapper;
 
@@ -23,22 +24,22 @@ public class HolidayService {
 
 		return yearlyHolidayList;
 	}
-	
-	/* 세탁소별 휴일 삭제 서비스 */
-	public boolean getRemoveHolidayByHolidayCode(String holidayCode) {
-		
-		boolean holidayCodeCheck = false;
 
-		HolidayList holidayList = holidayMapper.getRemoveHolidayByHolidayCode(holidayCode);
-		if (holidayList != null) {
-			String billCodeCheck = holidayList.getHolidayCode();
-			if (holidayCode.equals(billCodeCheck)) {
-				holidayCodeCheck = true;
-				holidayMapper.getRemoveHolidayByHolidayCode(holidayCode);
+	/* 세탁소별 휴일 정보 */
+	public HolidayList getHolidayByHolidayCode(String holidayCode) {
 		
-			}
-		}
-				return holidayCodeCheck;
+		System.out.println("________ServiceStart__________");
+		HolidayList getHolidayByHolidayCode = holidayMapper.getHolidayByHolidayCode(holidayCode);
+		System.out.println("________ServiceEnd__________");
+		
+		return getHolidayByHolidayCode;
+	}
+
+	/* 세탁소별 휴일 수정 */
+	public int modifyHoliday(HolidayList Laundryholiday) {
+		int result = holidayMapper.modifyHoliday(Laundryholiday);
+
+		return result;
 	}
 
 }
