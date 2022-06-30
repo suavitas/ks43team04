@@ -50,7 +50,7 @@
 	
 									<td rowspan="1">3000원</td>
 									<td>1000원</td>
-									<td th:text="${ls.goodsPrice}">가격</td>
+									<td th:text="${#numbers.formatInteger(ls.goodsPrice,3,'COMMA')+'원'}">가격</td>
 								</tr>
 							
 						</tbody>
