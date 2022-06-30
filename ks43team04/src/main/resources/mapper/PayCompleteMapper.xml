@@ -2,11 +2,43 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ks43team04.mapper.LaundryInfoSebuMapper">
-
+<mapper namespace="ks43team04.mapper.PayCompleteMapper">
    
-   
-   
+   <resultMap type="Member" 					id="memberResultMap">
+		<id column="m_id" 						property="memberId"/>
+		<result column="level_code" 			property="levelCode"/>
+		<result column="m_pw" 					property="memberPw"/>
+		<result column="m_pw_QnA_code" 			property="memberPwQnACode"/>
+		<result column="m_name" 				property="memberName"/>
+		<result column="m_birth" 				property="memberBirth"/>
+		<result column="m_post_num" 			property="memberPostNum"/>
+		<result column="m_addr" 				property="memberAddr"/>
+		<result column="m_detail_addr" 			property="memberDetailAddr"/>
+		<result column="m_phone" 				property="memberPhone"/>
+		<result column="m_gender" 				property="memberGender"/>
+		<result column="m_out_code" 			property="memberOutCode"/>
+		<result column="m_email" 				property="memberEmail"/>
+		<result column="m_reg_date" 			property="memberRegDate"/>
+		<result column="admin_level_code" 		property="adminLevelCode"/>
+		<result column="regist_time" 			property="registTime"/>
+		<collection property="laundryList" ofType="Laundry">
+			<id column="laundry_code" 					property="laundryCode"/>
+			<result column="m_id" 						property="memberId"/>
+			<result column="level_code" 				property="levelCode"/>
+			<result column="laundry_name" 				property="laundryName"/>
+			<result column="laundry_state" 				property="laundryState"/>
+			<result column="laundry_post_num" 			property="laundryPostNum"/>
+			<result column="laundry_addr"				property="laundryAddr"/>
+			<result column="laundry_detail_addr"		property="laundryDetailAddr"/>
+			<result column="laundry_tel" 				property="laundryTel"/>
+			<result column="laundry_license_img" 		property="laundryLicenseImg"/>
+			<result column="laundry_img" 				property="laundryImg"/>
+			<result column="skill_licence" 				property="skillLicence"/>
+			<result column="business_number" 			property="businessNumber"/>
+			<result column="admin_level_code" 			property="adminLevelCode"/>
+			<result column="regist_time" 				property="registTime"/>
+		</collection>
+	</resultMap>
    
    
 </mapper>

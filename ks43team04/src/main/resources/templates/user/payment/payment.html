@@ -95,31 +95,16 @@
 							}
 						</script>
 						<ul class=" " id="addr-list-byDB">
-							<li>이현우 <em>(중화산동2가 232 새한그린파크 1605호)</em></li>
-							<li>010-2498-0735
-								<div class="safe-number">
-									<input type="checkbox" id="reliefPhoneNumber-1"
-										class="-click(nmp.front.order.order-sheet.checkFirstNumber(1)) -reliefPhoneNumberCheckbox-1">
-									<label for="reliefPhoneNumber-1">안심번호 서비스 사용</label>
-								</div>
-							</li>
-							<li>(54984) 전라북도 전주시 완산구 영경1길 22 (중화산동2가, 새한그린파크아파트) 1605호
-								<button type="button" id="infoUpdateBtn"
-									onclick="searchAddrBtn()">정보수정</button>
-
-							</li>
+						
+							<li id="memberId" th:text="${paymember.memberName}"></li>
+							<li th:text="${paymember.memberPhone}"></li>
+							<li id="memberTotalAddr" th:text="'('+${paymember.memberPostNum}+')'+' '+${paymember.memberAddr}+' '+${paymember.memberDetailAddr}">
 						</ul>
-
+						
 						<div class="addr-list" id="addr-list-search">
 							<ul id="addr-list-byDB2">
-								<li>이현우</li>
-								<li>010-2498-0735
-									<div class="safe-number">
-										<input type="checkbox"
-											class="-click(nmp.front.order.order-sheet.checkFirstNumber(1)) -reliefPhoneNumberCheckbox-1">
-										<label for="reliefPhoneNumber-1">안심번호 서비스 사용</label>
-									</div>
-								</li>
+								<li th:text="${paymember.memberName}"></li>
+								<li th:text="${paymember.memberPhone}"></li>
 							</ul>
 							<input type="text" id="sample4_postcode" placeholder="우편번호">
 							<input type="button" onclick="sample4_execDaumPostcode()"
