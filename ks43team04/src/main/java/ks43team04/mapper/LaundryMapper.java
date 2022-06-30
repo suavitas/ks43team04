@@ -38,5 +38,8 @@ public interface LaundryMapper {
 
 	/* 일반세탁소 스킬 목록 */
 	public List<IlbanSkill> ilbanSkillList();
+	
+	/*일반세탁소별 상품이름으로 사용중인 가격조회*/
+	public List<Laundry> laundryGoodsNameAndPrice(String goodsName,String laundryName);
 
 }

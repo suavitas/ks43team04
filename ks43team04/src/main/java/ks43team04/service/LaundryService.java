@@ -27,6 +27,12 @@ public class LaundryService {
 		this.userMapper = userMapper;
 	}
 
+	/*일반세탁소별 상품이름으로 사용중인 가격조회*/
+	public List<Laundry> getLaundryGoodsNameAndPrice(String laundryName,String goodsName){
+		List<Laundry> getLaundryGoodsNameAndPrice = laundryMapper.laundryGoodsNameAndPrice(goodsName, laundryName);
+		return getLaundryGoodsNameAndPrice;
+	}
+	
 	public List<LaundryList> LaundryList(String searchKey, String searchValue) {
 		List<LaundryList> getLaundryList = laundryMapper.LaundryList(searchKey, searchValue);
 		return getLaundryList;
