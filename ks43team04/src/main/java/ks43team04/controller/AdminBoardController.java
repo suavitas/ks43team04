@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ks43team04.dto.As;
 import ks43team04.dto.Board;
 import ks43team04.dto.Event;
+import ks43team04.dto.LaundryList;
+import ks43team04.dto.Member;
 import ks43team04.dto.Review;
 import ks43team04.service.BoardService;
+import ks43team04.service.MemberService;
 
 @Controller
 @RequestMapping("/admin")
@@ -26,21 +29,26 @@ public class AdminBoardController {
 	
 	private static final Logger log = LoggerFactory.getLogger(AdminBoardController.class);
 
+	private final MemberService memberService;
 	private final BoardService boardService;
 
-	public AdminBoardController( BoardService boardService) {
+	public AdminBoardController( BoardService boardService, MemberService memberService) {
 		this.boardService = boardService;
-
+		this.memberService = memberService;
 	}
-	
 
 
 	
 	/*고장 신고 등록*/
 	@GetMapping("/asForm")
-	public String asForm(Model model) {
+	public String asForm(Model model, HttpSession session) {
+		String sessionId = (String) session.getAttribute("SID");
+		Member member = memberService.getMemberInfoById(sessionId);
+		List<LaundryList> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
 		model.addAttribute("title", "AS등록");
 		model.addAttribute("titleName", "AS등록");
+		model.addAttribute("member", member);
+		model.addAttribute("getMemberLaundryList", getMemberLaundryList);
 		return "/admin/asForm";
 	}
 	
@@ -48,14 +56,25 @@ public class AdminBoardController {
 	public String asForm(As as, HttpSession session) {
 		String sessionId = (String) session.getAttribute("SID");
 		boardService.asForm(as, sessionId);
-		log.info("as 등록 data : {}", as);
-		log.info("화면에서 입력받은 data: {}, laundryCode");
+		System.out.println("as입니다"+as);
 		return "redirect:/admin/asListById";
 	}
 	
 	/*나의 고장 신고 내역 확인*/
 	@GetMapping("/asListById")
-	public String asListById() {
+	public String asListById(Model model, HttpSession session) {
+		
+		String sessionId = (String) session.getAttribute("SID");
+		String sessionName = (String) session.getAttribute("SNAME");
+		Member member = memberService.getMemberInfoById(sessionId);
+		
+		List<LaundryList> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
+		List<As> asListById = boardService.asListById(sessionId);
+		
+		model.addAttribute("sessionName", sessionName);
+		model.addAttribute("getMemberLaundryList", getMemberLaundryList);
+		model.addAttribute("asListById", asListById);
+		System.out.println(asListById);
 		return "admin/asListById";
 	}
 	
@@ -64,6 +83,8 @@ public class AdminBoardController {
 	public String asDetail(@RequestParam(name = "asCode", required = false) String asCode
 							,Model model) {
 		As as = boardService.getAsDetail(asCode);
+		
+		
 		model.addAttribute("as", as);
 		log.info("as목록 : {}", as);
 		System.out.println(as);
@@ -83,6 +104,12 @@ public class AdminBoardController {
 		model.addAttribute("endAsList", endAsList);
 		System.out.println(asList);
 		return "admin/asList";
+	}
+	/*고장 신고 접수*/
+	@PostMapping("/asList")
+	public String asList(As as) {
+		boardService.asReceipt(as);
+		return "redirect:/admin/asList";
 	}
 	
 	/*리뷰 목록 조회*/
