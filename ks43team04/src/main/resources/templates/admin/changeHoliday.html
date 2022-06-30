@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/adminDefault}">
+
+
+<th:block layout:fragment="customContents">
+	<form  th:action="@{/admin/changeHoliday}" method="post"
+		style="text-align: center;">
+		<table class="table table-striped jambo_table bulk_action"
+			style="width: 50%; margin: 0 auto; margin-top: 80px; border-collapse: separate;">
+			<thead>
+				<tr class="headings">
+					<th class="column-title" colspan="2">휴일 정보</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="even pointer">
+					<td>세탁소 명</td>
+					<td><input type="text" name="laundryName" th:value="${laundryName}" readonly="readonly"></td>
+				</tr>
+				<tr class="even pointer">
+					<td>휴일 명</td>
+					<td><input type="text" name="yearlyHolidayName" th:value="${yearlyHolidayName}" readonly="readonly"></td>
+				</tr>
+				<tr class="even pointer">
+					<td>휴일 날짜</td>
+					<td><input type="text" name="yearlyHolidayDate" th:value="${yearlyHolidayDate}" readonly="readonly"></td>
+					
+				</tr>
+				<tr class="even pointer" id="O">
+					<td>사용 현황</td>
+					<td>O<input type="radio" name="holidayCodeUse" th:value="O">
+					<br>X<input type="radio" name="holidayCodeUse" th:value="X"></td>
+				</tr>
+
+				<tr class="even pointer">
+					<td colspan="2">
+						<button type="submit" class="btn btn-danger btn-sm"
+							data-toggle="modal" data-target="#deleteModal">휴일 정보 수정</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<input type="hidden" name="holidayCode" th:value="${holidayCode}">
+	</form>
+	
+</th:block>
+</html>

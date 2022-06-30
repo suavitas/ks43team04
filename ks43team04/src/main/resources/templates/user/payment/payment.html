@@ -5,6 +5,8 @@
 
 <!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
+<th:block th:each="l : ${laundryGoodsNameAndPrice}">
+<th:block th:each="ls : ${l.ilbanGoodsPrice}">
 	<div class="payContainer" style="background-color: #FCFCFC;">
 		<div id="payOrder">
 			<div id="payH3">
@@ -40,22 +42,17 @@
 						</thead>
 						<tbody>
 
-
-
-
-							<tr>
-								<td><img th:src=@{/user/assets/img/lovetruck.png}></td>
-								<td rowspan="1">현우세탁소</td>
-								<td>&nbsp;&nbsp;&nbsp;2개 &nbsp;&nbsp;&nbsp;|
-									<button type="button" onclick="location.href='#';">상세</button>
-								</td>
-
-								<td rowspan="1">3000원</td>
-								<td>1000원</td>
-								<td>15000원</td>
-							</tr>
-
-
+							
+								<tr>
+									<td><img th:src=@{/user/assets/img/lovetruck.png}></td>
+									<td rowspan="1" th:text="${l.laundryName}">세탁소명</td>
+									<td th:text="${ls.goodsName}"></td>
+	
+									<td rowspan="1">3000원</td>
+									<td>1000원</td>
+									<td th:text="${#numbers.formatInteger(ls.goodsPrice,3,'COMMA')+'원'}">가격</td>
+								</tr>
+							
 						</tbody>
 					</table>
 				</div>
@@ -515,7 +512,7 @@
 										data-dismiss="modal"
 										style="margin: 0; border: 0; border-radius: 0; padding: 0; float: left; width: 50%; height: 50px; font-size: 20px;">닫기</button>
 									<button type="button" class="btn btn-primary"
-										onClick="location.href='/user/paymentComplete'" style="border: 0; border-radius: 0; margin: 0; padding: 0; float: right; width: 50%; height: 50px; font-size: 20px;">결제하기</button>
+										style="border: 0; border-radius: 0; margin: 0; padding: 0; float: right; width: 50%; height: 50px; font-size: 20px;">결제하기</button>
 								</div>
 							</div>
 						</div>
@@ -525,9 +522,9 @@
 			</form>
 		</div>
 	</div>
+</th:block>
 
-
-
+</th:block>
 
 	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>

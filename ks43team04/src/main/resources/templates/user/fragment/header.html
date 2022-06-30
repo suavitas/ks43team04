@@ -23,7 +23,7 @@
 		<div class="container" style="padding: 0;">
 			<!-- logo -->
 			<div class="site-logo">
-				<a th:href="@{/}"> <img th:src="@{/admin/images/main/세탁소아이콘.png}"
+				<a th:href="@{/}"> <img th:src="@{/user/assets/img/main/logoimage.png}"
 					alt="로고이미지">
 				</a>
 			</div>
@@ -37,12 +37,12 @@
 							<ul> 
 								<li>
 									<a th:href="@{/user/myPage}"  style="font-size: 13.5px;">
-									<span th:if="${session.SLEVEL == 'level_code_02'|| session.SLEVEL == 'level_code_03'|| session.SLEVEL == 'level_code_04'}" style="color: #F49403;">마이페이지</span>
+									<span th:if="${session.SLEVEL == 'level_code_02'|| session.SLEVEL == 'level_code_03'|| session.SLEVEL == 'level_code_04'}" style="color: #F28123;">마이페이지</span>
 									</a>
 								</li>
 		                        <li>
 		                        	<div th:if="${session.SLEVEL == 'level_code_01' || session.SLEVEL == 'level_code_00' || session.SLEVEL == 'level_code_02' || session.SLEVEL == 'level_code_03'}">
-                                		<a th:href="@{/admin}" style="color: #FAFCFC; font-size: 13.5px;"><strong>관리 페이지</strong></a>
+                                		<a th:href="@{/admin}" style="color: #F28123; font-size: 13.5px;"><strong>관리 페이지</strong></a>
                                 	</div>
                            		</li>
                            		<li><a th:if="${session.SID == null}" th:href="@{/user/login}" style="color: #ADB4B6;"><i class="fa fa-user"></i>로그인</a></li>							
@@ -53,7 +53,7 @@
 										<li><a th:href="@{/user/addMemberLaundry}">무인 점주 가입</a></li>
 									</ul></li>							
 		                        <li><a th:if="${session.SID != null}" th:href="@{/user/logout}"style="color: #ADB4B6;" ><span>[</span>[[${session.SNAME}]]님 접속중]</a></li>	
-		                        <li><a th:unless="${session.SID == null}" th:href="@{/user/logout}"><i class="fa fa-user"></i> 로그아웃</a></li>
+		                        <li><a th:unless="${session.SID == null}" th:href="@{/user/logout}" style="color: #F28123"><i class="fa fa-user"></i> 로그아웃</a></li>
 							</ul>
 						</nav>
 						<nav class="main-menu">
