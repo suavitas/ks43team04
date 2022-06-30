@@ -18,8 +18,15 @@ public class PointService {
 		this.pointMapper = pointMapper;
 	}
 	
+	/*포인트 사용내역*/
 	public List<Bill> getPointUseList(){
 		List<Bill> getPointUseList = pointMapper.getPointUseList();
 		return getPointUseList;
+	}
+	
+	/*포인트 결제 횟수*/
+	public List<Bill> getPoitnUseCount(){
+		List<Bill> getPointUseCount = pointMapper.getPointUseCount();
+		return getPointUseCount;
 	}
 }

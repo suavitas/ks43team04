@@ -3,8 +3,8 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ks43team04.mapper.PointMapper">
-		<resultMap type="Bill" id="BillResultMap">
-		<id 	column="bill_code" 						property="billCode"/>
+		<resultMap type="Bill" 						id="BillResultMap">
+		<id 	column="bill_code" 					property="billCode"/>
 		<result column="order_num_groupcode" 		property="orderNumGroupcode"/>
 		<result column="total_price" 				property="totalPrice"/>
 		<result column="user_code" 					property="userCode"/>
@@ -30,4 +30,18 @@
 			b.pay_use_point > 0
    </select>
    
+   <select id="getPointUseCount" resultMap="BillResultMap">
+  		 /*포인트사용 결제 횟수*/
+	   	SELECT
+			SUBSTRING_INDEX(order_num_groupcode,'_',1) AS user_code,
+			count(SUBSTRING_INDEX(order_num_groupcode,'_',1)) AS order_num_groupcode,
+			sum(b.pay_use_point) AS pay_use_point,
+			max(b.pay_ok_date) AS pay_ok_date
+		FROM
+			tb_bill AS b
+		WHERE
+			b.pay_use_point > 0
+		GROUP BY
+			order_num_groupcode
+   </select>
 </mapper>

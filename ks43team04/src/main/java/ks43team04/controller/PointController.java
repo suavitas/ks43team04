@@ -25,10 +25,13 @@ public class PointController {
 	public String memberPoint(Model model) {
 		
 		List<Bill> getPointUseList = pointService.getPointUseList();
+		List<Bill> getPointUseCount = pointService.getPoitnUseCount();
 		
 		System.out.println(getPointUseList+"<--------- getPointUseList 리스트 출력");
+		System.out.println(getPointUseCount+"<--------- getPointUseCount 리스트 출력");
 		
 		model.addAttribute("getPointUseList", getPointUseList);
+		model.addAttribute("getPointUseCount", getPointUseCount);
 		
 		return "admin/point/memberPoint";
 	}
