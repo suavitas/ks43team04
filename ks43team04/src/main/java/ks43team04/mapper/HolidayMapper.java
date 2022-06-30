@@ -20,5 +20,9 @@ public interface HolidayMapper {
 	 * 
 	 */
 	public List<YearlyHoliday> yearlyHolidayList();
+	
+	/* 세탁소별 휴일 정보 */
+	public HolidayList getRemoveHolidayByHolidayCode(String holidayCode);
+
 
 }

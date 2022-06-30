@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -45,6 +46,35 @@ public class HolidayController {
 		System.out.println(getLaundryList);
 
 		return "admin/lundryHoliday";
+	}
+	
+	/* 세탁소별 휴일 삭제로 이동 */
+	@GetMapping("/removeHoliday")
+	public String removeHoliday(@RequestParam(name = "laundryName") String laundryName,
+			@RequestParam(name = "yearlyHolidayName") String yearlyHolidayName,
+			@RequestParam(name = "yearlyHolidayDate") String yearlyHolidayDate, 
+			@RequestParam(name = "holidayCodeUse") String holidayCodeUse,
+			@RequestParam(name = "holidayCode") String holidayCode,
+			Model model) {
+	
+
+		model.addAttribute("laundryName", laundryName);
+		model.addAttribute("holidayCode", holidayCode);
+		model.addAttribute("yearlyHolidayName", yearlyHolidayName);
+		model.addAttribute("yearlyHolidayDate", yearlyHolidayDate);
+		model.addAttribute("holidayCodeUse", holidayCodeUse);
+		
+		return "admin/removeHoliday";
+	}
+
+	/* 세탁소별 휴일 삭제 sql실행 */
+	@PostMapping("/removeHoliday")
+	public String removeHoliday(@RequestParam(name = "holidayCode") String holidayCode) {
+
+		holidayService.getRemoveHolidayByHolidayCode(holidayCode);
+
+		// return "admin/sales/ilbanSales";
+		return "redirect:/admin/removeHoliday";
 	}
 
 	/* 공휴일 목록 */
