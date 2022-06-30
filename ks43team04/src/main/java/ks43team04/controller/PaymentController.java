@@ -13,19 +13,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ks43team04.dto.Laundry;
 import ks43team04.dto.Member;
+import ks43team04.dto.PayMember;
 import ks43team04.service.LaundryService;
 import ks43team04.service.MemberService;
+import ks43team04.service.PaymentService;
 
 @Controller
 public class PaymentController {
 	
 	private final LaundryService laundryService;
 	private final MemberService memberService;
+	private final PaymentService paymentService;
 
-	public PaymentController(LaundryService laundryService, MemberService memberService) {
+	public PaymentController(LaundryService laundryService, MemberService memberService, PaymentService paymentService) {
 		this.laundryService = laundryService;
 		this.memberService = memberService;
-
+		this.paymentService = paymentService;
 	}
 	
 	@PostMapping("/user/payment")
@@ -45,10 +48,21 @@ public class PaymentController {
 	}
 
 	@GetMapping("/user/payment")
-	public String payment() {
+	public String payment(Model model, HttpSession session) {
+
+		String sessionId = (String) session.getAttribute("SID");
+		String sessionName = (String) session.getAttribute("SNAME");
+
+		PayMember paymember = paymentService.getPayMInfo(sessionId);
+
+		model.addAttribute("title", "마이페이지");
+		model.addAttribute("sessionName", sessionName);
+		model.addAttribute("paymember", paymember);
+
 		return "user/payment/payment";
 	}
 	
+
 	@GetMapping("/admin/goodsPrice")
 	public String eachGoodsPriceList(@RequestParam(name = "currentPage", required = false, defaultValue = "1") int currentPage,
 	Model model, HttpSession session) {
