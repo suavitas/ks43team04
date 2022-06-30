@@ -5,30 +5,6 @@
 <mapper namespace="ks43team04.mapper.LaundryInfoSebuMapper">
 
    
-   <resultMap type="LaundryInfoSebu"               id="LaundryInfoResultMap">
-      <id column="laundry_code"                   property="laundryCode"/>
-      <result column="m_id"                      property="memberId"/>
-      <result column="level_code"                property="levelCode"/>
-      <result column="laundry_name"                property="laundryName"/>
-      <result column="laundry_state"               property="laundryState"/>
-      <result column="laundry_addr"                property="laundryAddr"/>
-      <result column="laundry_tel"                property="laundryTel"/>
-      <result column="skill_licence"                property="skillLicence"/>
-      <result column="business_number"             property="businessNumber"/>
-      <result column="admin_level_code"             property="adminLevelCode"/>
-      <result column="regist_time"                property="registTime"/>
-   </resultMap>
-   
-   <select id="laundryInfoSebu" parameterType="String" resultMap="LaundryInfoResultMap">
-	   SELECT 
-			  laundry_name
-			, laundry_state
-			, laundry_addr
-			, laundry_tel
-			, level_code
-		FROM 
-			tb_laundry
-   </select>
    
    
    
