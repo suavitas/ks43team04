@@ -8,14 +8,17 @@ import ks43team04.dto.HolidayList;
 import ks43team04.dto.LaundryList;
 import ks43team04.dto.YearlyHoliday;
 import ks43team04.mapper.HolidayMapper;
+import ks43team04.mapper.LaundryListMapper;
 
 @Service
 public class HolidayService {
 
 	private final HolidayMapper holidayMapper;
+	private final LaundryListMapper laundryListMapper;
 
-	public HolidayService(HolidayMapper holidayMapper) {
+	public HolidayService(HolidayMapper holidayMapper, LaundryListMapper laundryListMapper) {
 		this.holidayMapper = holidayMapper;
+		this.laundryListMapper = laundryListMapper;
 	}
 
 	public List<YearlyHoliday> yearlyHolidayList() {
@@ -41,5 +44,23 @@ public class HolidayService {
 
 		return result;
 	}
+	
+	/* 세탁소별 휴일 추가를 위한 세탁소 이름 조회 */
+	public List<LaundryList> addHoliday() {
+		
+		List<LaundryList> addlaundryName = laundryListMapper.addlaundryName();
+
+		return addlaundryName;
+	}
+	
+	/* 세탁소별 휴일 정보 */
+	public int addHoliday(String laundryCode, String yearlyHolidayName,String yearlyHolidayDate){
+		
+		
+		int result = holidayMapper.addHoliday(laundryCode, yearlyHolidayName, yearlyHolidayDate);
+		
+		return result;
+	}
+	
 
 }

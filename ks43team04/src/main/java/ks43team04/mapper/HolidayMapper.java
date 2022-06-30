@@ -28,6 +28,9 @@ public interface HolidayMapper {
 
 	/* 세탁소별 휴일 정보 수정 */
 	public int modifyHoliday(HolidayList Laundryholiday);
+	
+	/* 세탁소별 휴일 추가 */
+	public int addHoliday(String laundryCode, String yearlyHolidayName,String yearlyHolidayDate);
 
 
 }

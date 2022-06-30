@@ -48,6 +48,23 @@
 
 
 	</update>
+	<insert id="addHoliday" parameterType="String"> <!--parameterType-> dto 클래스명-->
+ 		/* 세탁소별 휴일 추가 */
+ 		INSERT INTO tb_holiday
+			(holiday_code 
+			,laundry_code
+			,yearly_holiday_date 
+			,yearly_holiday_name 
+			,holiday_code_use)
+		
+		VALUES(
+			(SELECT MAX(holiday_code)+1 FROM tb_holiday AS L)
+			,#{laundryCode}
+			,#{yearlyHolidayDate}
+			,#{yearlyHolidayName}
+			,'O');
+ 	</insert>
+ 
 	
 	
 	
