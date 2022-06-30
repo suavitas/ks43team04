@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.PointMapper">
+		<resultMap type="Bill" id="BillResultMap">
+		<id 	column="bill_code" 						property="billCode"/>
+		<result column="order_num_groupcode" 		property="orderNumGroupcode"/>
+		<result column="total_price" 				property="totalPrice"/>
+		<result column="user_code" 					property="userCode"/>
+		<result column="pay_use_point" 				property="payUsePoint"/>
+		<result column="pay_method" 				property="payMethod"/>
+		<result column="pay_ok_date" 				property="payOkDate"/>
+		<result column="refund_code" 				property="refundCode"/>
+		<result column="after_use_point_pay" 		property="afterUsePointPay"/>
+		<result column="add_pay" 					property="addPay"/>
+		<result column="delivery_pay" 				property="deliveryPay"/>
+		<result column="total_pay_groupcode" 		property="totalPayGroupcode"/>
+	</resultMap> 
+   
+   <select id="getPointUseList" resultMap="BillResultMap">
+   		/* 포인트 사용내역 */
+	   SELECT
+			SUBSTRING_INDEX(order_num_groupcode,'_',1) AS order_num_groupcode,
+			b.pay_use_point,
+			b.pay_ok_date
+		FROM
+			tb_bill AS b
+		WHERE
+			b.pay_use_point > 0
+   </select>
+   
+</mapper>
