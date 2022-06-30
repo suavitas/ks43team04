@@ -10,19 +10,6 @@ import ks43team04.mapper.LaundryInfoSebuMapper;
 @Service
 public class PayCompleteService {
 
-	private final LaundryInfoSebuMapper laundryInfoSebuMapper;
-
-	public PayCompleteService(LaundryInfoSebuMapper laundryInfoSebuMapper) {
-		this.laundryInfoSebuMapper = laundryInfoSebuMapper;
-	}
-
-	public List<LaundryInfoSebu> laundryInfoSebu() {
-
-		List<LaundryInfoSebu> laundryInfoSebu = laundryInfoSebuMapper.laundryInfoSebu();
-
-		return laundryInfoSebu;
-	}
-
 
 
 }

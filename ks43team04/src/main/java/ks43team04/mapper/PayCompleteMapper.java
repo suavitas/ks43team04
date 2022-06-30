@@ -7,6 +7,5 @@ import ks43team04.dto.LaundryInfoSebu;
 @Mapper
 public interface PayCompleteMapper {
 
-	/*test*/
-	public List<LaundryInfoSebu> laundryInfoSebu();
+
 }
