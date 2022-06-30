@@ -87,6 +87,29 @@ public class HolidayController {
 		System.out.println("________Laundryholiday이겁니다!!!___________"+Laundryholiday);
 		return "redirect:/admin/lundryHoliday";
 	}
+	
+	/* 세탁소별 휴가 추가 */
+	@GetMapping("/addHoliday")
+	public String addHoliday(Model model) {
+		
+		List<LaundryList> addLaundryHoliday = holidayService.addHoliday();
+		model.addAttribute("addLaundryHoliday",addLaundryHoliday);
+		return "admin/addHoliday";
+	}
+	
+	/* 세탁소별 휴가 추가 */
+	@PostMapping("/addHoliday")
+	public String addHoliday(@RequestParam(name = "laundryCode", required=false) String laundryCode,
+			@RequestParam(name = "yearlyHolidayName", required=false) String yearlyHolidayName,
+			@RequestParam(name = "yearlyHolidayDate", required=false) String yearlyHolidayDate, 
+			Model model) {
+		
+			holidayService.addHoliday(laundryCode, yearlyHolidayName, yearlyHolidayDate);
+			System.out.println("______________"+ laundryCode);
+			System.out.println("______________"+ yearlyHolidayName);
+			System.out.println("______________"+ yearlyHolidayDate);
+		return "redirect:/admin/lundryHoliday";
+	}
 
 
 	/* 공휴일 목록 */
