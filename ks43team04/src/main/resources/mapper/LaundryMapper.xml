@@ -83,6 +83,26 @@
       </collection>
    </resultMap>
    
+   <select id="laundryGoodsNameAndPrice" parameterType="String" resultMap="laundryResultMap">
+   			/*일반세탁소별 상품이름으로 사용중인 가격조회*/
+		SELECT
+			l.laundry_name,
+			igp.g_name,
+			igp.g_price
+		FROM
+			tb_ilban_g_price AS igp
+		INNER JOIN
+			tb_laundry AS l
+		ON
+			igp.laundry_code = l.laundry_code
+		WHERE
+			igp.g_name = #{goodsName}
+		AND 
+			l.laundry_name = #{laundryName}
+		AND 
+			igp.g_price_use_state ='use'   			
+   </select>
+   
    <select id="LaundryList" fetchSize="1000" parameterType="String" resultMap="LaundryListResultMap">
    SELECT 
          tl.laundry_name,

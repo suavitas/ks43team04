@@ -1,5 +1,6 @@
 package ks43team04.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -7,8 +8,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ks43team04.dto.Laundry;
 import ks43team04.dto.Member;
 import ks43team04.service.LaundryService;
 import ks43team04.service.MemberService;
@@ -25,15 +28,25 @@ public class PaymentController {
 
 	}
 	
+	@PostMapping("/user/payment")
+	public String payment(@RequestParam(name = "laundryName") String laundryName,
+							@RequestParam(name = "goodsName") String goodsName
+							,Model model) {
+		
+		List<Laundry> laundryGoodsNameAndPrice = laundryService.getLaundryGoodsNameAndPrice(laundryName, goodsName);
+		
+		System.out.println(laundryName+" <----------세탁소이름");
+		System.out.println(goodsName+" <----------상품이름");
+		System.out.println(laundryGoodsNameAndPrice+" <----------laundryGoodsNameAndPrice 리스트값");
+		
+		model.addAttribute("laundryGoodsNameAndPrice", laundryGoodsNameAndPrice);
+		
+		return "user/payment/payment";
+	}
 
 	@GetMapping("/user/payment")
 	public String payment() {
 		return "user/payment/payment";
-	}
-	
-	@GetMapping("/user/paymentComplete")
-	public String paymentComplete() {
-		return "user/payment/paymentComplete";
 	}
 	
 	@GetMapping("/admin/goodsPrice")
