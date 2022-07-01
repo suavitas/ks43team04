@@ -11,12 +11,12 @@ import ks43team04.mapper.HolidayMapper;
 import ks43team04.mapper.LaundryListMapper;
 
 @Service
-public class HolidayService {
+public class MachineService {
 
 	private final HolidayMapper holidayMapper;
 	private final LaundryListMapper laundryListMapper;
 
-	public HolidayService(HolidayMapper holidayMapper, LaundryListMapper laundryListMapper) {
+	public MachineService(HolidayMapper holidayMapper, LaundryListMapper laundryListMapper) {
 		this.holidayMapper = holidayMapper;
 		this.laundryListMapper = laundryListMapper;
 	}
@@ -30,9 +30,9 @@ public class HolidayService {
 
 	/* 세탁소별 휴일 정보 넘기는 메서드 */
 	public HolidayList getHolidayByHolidayCode(String holidayCode) {
-		
-			HolidayList getHolidayByHolidayCode = holidayMapper.getHolidayByHolidayCode(holidayCode);
-			return getHolidayByHolidayCode;
+
+		HolidayList getHolidayByHolidayCode = holidayMapper.getHolidayByHolidayCode(holidayCode);
+		return getHolidayByHolidayCode;
 	}
 
 	/* 세탁소별 휴일 수정 */
@@ -42,30 +42,27 @@ public class HolidayService {
 		return result;
 	}
 	
-	/* 세탁소별 휴일 삭제 */
-	public int removeHoliday(String holidayCode) {
-		int result = holidayMapper.removeHoliday(holidayCode);
-
-		return result;
-	}
-	
-	
-	/* 세탁소별 휴일 추가를 위한 세탁소 이름으로 조회 */
-	public List<LaundryList> addHoliday() {
-		
-		List<LaundryList> addlaundryName = laundryListMapper.addlaundryName();
-
-		return addlaundryName;
-	}
-	
-	/* 세탁소별 휴일 추가할 정보 */
-	public int addHoliday(String laundryCode, String yearlyHolidayName,String yearlyHolidayDate){
-		
-		
-		int result = holidayMapper.addHoliday(laundryCode, yearlyHolidayName, yearlyHolidayDate);
-		
-		return result;
-	}
-	
-
+	/*
+	 * 세탁소별 휴일 삭제 public int removeHoliday(String holidayCode) { int result =
+	 * holidayMapper.removeHoliday(holidayCode);
+	 * 
+	 * return result; }
+	 * 
+	 * 
+	 * 세탁소별 휴일 추가를 위한 세탁소 이름으로 조회 public List<LaundryList> addHoliday() {
+	 * 
+	 * List<LaundryList> addlaundryName = laundryListMapper.addlaundryName();
+	 * 
+	 * return addlaundryName; }
+	 * 
+	 * 세탁소별 휴일 추가할 정보 public int addHoliday(String laundryCode, String
+	 * yearlyHolidayName,String yearlyHolidayDate){
+	 * 
+	 * 
+	 * int result = holidayMapper.addHoliday(laundryCode, yearlyHolidayName,
+	 * yearlyHolidayDate);
+	 * 
+	 * return result; }
+	 * 
+	 */
 }

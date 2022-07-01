@@ -1,14 +1,10 @@
 
 package ks43team04.controller;
 
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import ks43team04.dto.MuinMachienSpec;
 import ks43team04.service.LaundryService;
 
 @Controller
@@ -22,18 +18,6 @@ public class AdminController {
 
 	}
 	
-
-
-
-	// 전 매장 장비 스팩
-
-	@GetMapping("/machineState")
-	public String machineState(Model model) {
-
-		List<MuinMachienSpec> MachineSpecList = laundryService.machineSpecList();
-		model.addAttribute("MachineSpecList", MachineSpecList);
-		return "admin/machineState";
-	}
 
 
 	// 전 매장 월별 환불퍼센트
