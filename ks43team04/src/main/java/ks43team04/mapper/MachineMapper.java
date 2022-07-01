@@ -9,7 +9,7 @@ import ks43team04.dto.LaundryList;
 import ks43team04.dto.YearlyHoliday;
 
 @Mapper
-public interface HolidayMapper {
+public interface MachineMapper {
 
 	/**
 	 * 세탁소 조회

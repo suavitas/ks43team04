@@ -5,7 +5,7 @@
 
 
 <th:block layout:fragment="customContents">
-	<form  th:action="@{/admin/changeHoliday}" method="post"
+	<form  th:action="@{/admin/removeHoliday}" method="post"
 		style="text-align: center;">
 		<table class="table table-striped jambo_table bulk_action"
 			style="width: 50%; margin: 0 auto; margin-top: 80px; border-collapse: separate;">
@@ -17,28 +17,21 @@
 			<tbody>
 				<tr class="even pointer">
 					<td>세탁소 명</td>
-					<td><input th:text="${laundryName}" name="laundryName" th:value="${laundryName}" hidden="true">
-					</td>
+					<td><input th:text="${laundryName}" name="laundryName" th:value="${laundryName}" hidden="true"></td>
 				</tr>
 				<tr class="even pointer">
 					<td>휴일 명</td>
-					<td><input th:text="${yearlyHolidayName}" name="yearlyHolidayName" th:value="${yearlyHolidayName}" hidden="true"></td>
+					<td><input th:text="${yearlyHolidayName}" name="yearlyHolidayName" th:value="${yearlyHolidayName}"  hidden="true"></td>
 				</tr>
 				<tr class="even pointer">
 					<td>휴일 날짜</td>
-					<td><input th:text="${yearlyHolidayDate}" name="yearlyHolidayDate" th:value="${yearlyHolidayDate}"  hidden="true"></td>
+					<td><input th:text="${yearlyHolidayDate}"  name="yearlyHolidayDate" th:value="${yearlyHolidayDate}"  hidden="true"></td>
 					
 				</tr>
-				<tr class="even pointer" id="O">
-					<td>사용 현황</td>
-					<td>O<input type="radio" name="holidayCodeUse" th:value="O">
-					<br>X<input type="radio" name="holidayCodeUse" th:value="X"></td>
-				</tr>
-
-				<tr class="even pointer">
+					<tr class="even pointer">
 					<td colspan="2">
 						<button type="submit" class="btn btn-danger btn-sm"
-							data-toggle="modal" data-target="#deleteModal">휴일 정보 수정</button>
+							data-toggle="modal" data-target="#deleteModal">휴일 정보 삭제</button>
 					</td>
 				</tr>
 			</tbody>

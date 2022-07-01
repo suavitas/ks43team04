@@ -48,7 +48,8 @@
 
 
 	</update>
-	<insert id="addHoliday" parameterType="String"> <!--parameterType-> dto 클래스명-->
+	
+	<insert id="addHoliday" parameterType="String">
  		/* 세탁소별 휴일 추가 */
  		INSERT INTO tb_holiday
 			(holiday_code 
@@ -64,7 +65,14 @@
 			,#{yearlyHolidayName}
 			,'O');
  	</insert>
- 
+ 	
+ 	<delete id="removeHoliday" parameterType="String">
+ 		DELETE 
+        FROM 
+        	tb_holiday
+        WHERE
+       		holiday_code = #{holidayCode}; 
+     </delete>
 	
 	
 	
