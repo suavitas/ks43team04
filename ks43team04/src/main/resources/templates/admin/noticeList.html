@@ -29,10 +29,12 @@
 					<td th:text="${l.boardIdx}"></td>
 					<td><a th:href="@{/admin/noticeDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a></td>
 					<td th:text="${l.boardAddFile}"></td>
-					<td th:text="${l.memeberId}"></td>
+					<td th:text="${l.memberId}"></td>
 					<td th:text="${l.registTime}"></td>
 					<td th:text="${l.boardReadCount}"></td>
-					<td><a href="#">수정</a></td>
+					<td><a>수정</a>
+					</td>
+															
 					<td><a href="#">삭제</a></td>
 				</tr>
 				<tr th:unless="${not #lists.isEmpty(noticeList)}">
