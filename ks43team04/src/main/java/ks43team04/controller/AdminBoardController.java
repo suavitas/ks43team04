@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -36,8 +35,51 @@ public class AdminBoardController {
 		this.boardService = boardService;
 		this.memberService = memberService;
 	}
-
-
+	
+	/*공지사항 삭제*/
+	@PostMapping("/noticeList")
+	public String noticeList(Board board) {
+		boardService.noticeRemove(board);
+		return "redirect:/admin/noticeList";
+	}
+	
+	/*공지사항 수정*/
+	@GetMapping("/noticeModify")
+	public String noticeModify(@RequestParam(name = "boardIdx", required = false) String boardIdx
+								,@RequestParam(name = "memberId", required = false) String memberId
+								,@RequestParam(name = "boardTitle", required = false) String boardTitle
+								,@RequestParam(name = "boardContent", required = false) String boardContent
+								,@RequestParam(name = "boardAddFile", required = false) String boardAddFile
+								,@RequestParam(name = "boardAddFileName", required = false) String boardAddFileName
+								,@RequestParam(name = "boardAddFileVol", required = false) String boardAddFileVol
+								,@RequestParam(name = "updateTime", required = false) String updateTime
+								,Model model) {
+		model.addAttribute("boardIdx", boardIdx);
+		model.addAttribute("memberId", memberId);
+		model.addAttribute("boardTitle", boardTitle);
+		model.addAttribute("boardContent", boardContent);
+		model.addAttribute("boardAddFile", boardAddFile);
+		model.addAttribute("boardAddFileName", boardAddFileName);
+		model.addAttribute("boardAddFileVol", boardAddFileVol);
+		model.addAttribute("updateTime", updateTime);
+		return "/admin/noticeModify";
+	}
+	
+	@PostMapping("/noticeModify")
+	public String noticeModify(@RequestParam(name = "boardIdx", required = false) String boardIdx
+								,@RequestParam(name = "memberId", required = false) String memberId
+								,@RequestParam(name = "boardTitle", required = false) String boardTitle
+								,@RequestParam(name = "boardContent", required = false) String boardContent
+								,@RequestParam(name = "boardAddFile", required = false) String boardAddFile
+								,@RequestParam(name = "boardAddFileName", required = false) String boardAddFileName
+								,@RequestParam(name = "boardAddFileVol", required = false) String boardAddFileVol
+								,@RequestParam(name = "updateTime", required = false) String updateTime
+								,Board board) {
+		boardService.noticeModify(board);
+		System.out.println("noticeModify----------"+board);
+		return "redirect:/admin/noticeList";
+	}
+	
 	
 	/*고장 신고 등록*/
 	@GetMapping("/asForm")
@@ -202,9 +244,16 @@ public class AdminBoardController {
 	
 	/*공지사항 작성*/
 	@GetMapping("/noticeForm")
-	public String noticeForm(Model model) {
+	public String noticeForm(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
+								,@RequestParam(name = "boardIdx", required = false) Integer boardIdx
+								,Model model, HttpSession session) {
+		String sessionId = (String) session.getAttribute("SID");
+		Member member = memberService.getMemberInfoById(sessionId);
+	
 		model.addAttribute("title", "공지등록");
 		model.addAttribute("titleName", "공지등록");
+		model.addAttribute("member", member);
+		System.out.println("noticeForm get====="+member);
 		return "/admin/noticeForm";
 	}
 	
@@ -214,6 +263,7 @@ public class AdminBoardController {
 		boardService.noticeForm(board, sessionId);
 		log.info("공지 등록 data : {}", board);
 		log.info("화면에서 입력받은 data: {}, boardIdx");
+		System.out.println("board+++++" +board);
 		return "redirect:/admin/noticeList";
 	}
 	
@@ -224,6 +274,7 @@ public class AdminBoardController {
 								, Model model) {
 		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
 		model.addAttribute("board", board);
+		System.out.println("board--------------"+board);
 		return "admin/noticeDetail";
 	}
 	

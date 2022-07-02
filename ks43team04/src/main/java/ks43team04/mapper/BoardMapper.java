@@ -24,6 +24,9 @@ public interface BoardMapper {
 	
 	//리뷰 조회
 	public List<Review> getReviewList();
+	
+	//공지사항 글 삭제
+	public int noticeRemove(Board board);
 
 	//공지사항 글 수정
 	public int noticeModify(Board board);

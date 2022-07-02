@@ -3,7 +3,7 @@ package ks43team04.dto;
 public class Board {
 	private String boardMenuCode;
 	private String boardIdx;
-	private String memeberId;
+	private String memberId;
 	private String boardGroupNo;
 	private String boardOrderNo;
 	private String boardReadCount;
@@ -30,11 +30,11 @@ public class Board {
 	public void setBoardIdx(String boardIdx) {
 		this.boardIdx = boardIdx;
 	}
-	public String getMemeberId() {
-		return memeberId;
+	public String getMemberId() {
+		return memberId;
 	}
-	public void setMemeberId(String memeberId) {
-		this.memeberId = memeberId;
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 	public String getBoardGroupNo() {
 		return boardGroupNo;
@@ -122,8 +122,8 @@ public class Board {
 		builder.append(boardMenuCode);
 		builder.append(", boardIdx=");
 		builder.append(boardIdx);
-		builder.append(", memeberId=");
-		builder.append(memeberId);
+		builder.append(", memberId=");
+		builder.append(memberId);
 		builder.append(", boardGroupNo=");
 		builder.append(boardGroupNo);
 		builder.append(", boardOrderNo=");

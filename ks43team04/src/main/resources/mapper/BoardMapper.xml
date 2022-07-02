@@ -8,7 +8,7 @@
 		<id column="board_idx" 								property="boardIdx"/>
 		<result column="board_menu_code" 					property="boardMenuCode"/>
 		<result column="board_idx" 							property="boardIdx"/>
-		<result column="m_id" 								property="memeberId"/>
+		<result column="m_id" 								property="memberId"/>
 		<result column="board_group_no" 					property="boardGroupNo"/>
 		<result column="board_order_no" 					property="boardOrderNo"/>
 		<result column="board_read_count" 					property="boardReadCount"/>
@@ -67,18 +67,42 @@
 		</collection>
 	</resultMap>
 	
+	<delete id="noticeRemove" parameterType="Board">
+	DELETE FROM tb_board 
+		WHERE 
+			board_menu_code = #{boardMenuCode}
+		and	
+			board_idx = #{boardIdx}
+	
+	</delete>
+	
+	
 		<update id="noticeModify" parameterType="Board">
 		/* 공지 글 수정 */
 			UPDATE 
 				tb_board
-			set		
-				board_title = #{boardTitle}
-				,board_content = #{boardContent}
-				,board_add_file = #{boardAddFile}
-				,board_add_file_name = #{boardAddFileName}
-				,board_add_file_vol = #{boardAddFileVol}
-				,update_time = CURDATE()			
-			WHERE board_code = #{boardCode};
+			<trim prefix="SET" prefixOverrides=",">	
+				<if test="boardTitle != null and boardTitle != ''">
+					board_title = #{boardTitle}
+				</if>
+				<if test="boardContent != null and boardContent != ''">
+					,board_content = #{boardContent}
+				</if>
+				<if test="boardAddFile != null and boardAddFile != ''">	
+					,board_add_file = #{boardAddFile}
+				</if>
+				<if test="boardAddFileName != null and boardAddFileName != ''">	
+					,board_add_file_name = #{boardAddFileName}
+				</if>
+				<if test="boardAddFileVol != null and boardAddFileVol != ''">	
+					,board_add_file_vol = #{boardAddFileVol}
+				</if>
+				<if test="updateTime != null and updateTime != ''">	
+					,update_time = CURDATE()
+				</if>	
+			</trim>				
+			WHERE 
+				board_idx = #{boardIdx};
 	</update>
 	
 
@@ -102,7 +126,7 @@
 			(select 
 				CONCAT('event_code','_',max(CAST(substring(event_code,12) AS DECIMAL)+1)) AS event_code 
 			from tb_event AS e)
-		, 'id001'
+		, #{memberId}
 		, (SELECT
 				max(e.event_no)+1
 			FROM
@@ -230,7 +254,7 @@
 			FROM
 				tb_board AS b)
 		, 'notice_menu_code_001'
-		, 'id001'			
+		, #{memberId}			
 		, (SELECT
 				max(b.board_group_no)+1
 			FROM
@@ -272,7 +296,7 @@
 			FROM
 				tb_board AS b)
 		, 'notice_menu_code_001'
-		, 'id001'			
+		, #{memberId}			
 		, (SELECT
 				max(b.board_group_no)+1
 			FROM
@@ -324,7 +348,7 @@
 			FROM
 				tb_board AS b)
 		, #{boardMenuCode}
-		, 'id001'			
+		, #{memberId}			
 		, (SELECT
 				b.board_group_no
 			FROM
@@ -367,7 +391,7 @@
 			FROM
 				tb_board AS b)
 		, #{boardMenuCode}
-		, 'id001'			
+		, #{memberId}			
 		, (SELECT
 				max(b.board_group_no)+1
 			FROM

@@ -8,11 +8,43 @@
 	<!-- 사용자정의 contents -->
 	<th:block layout:fragment="customContents">
  	
+ 	<!-- Modal -->
+		<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+	        		 <h5 class="modal-title" id="staticBackdropLabel">정말로 삭제하시겠습니까?</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      
+		      <form class="noticeRemove" th:action="@{/admin/noticeList}"  method="POST">
+		      
+		      <div class="modal-body">
+		      	  
+		        	<!-- <div style="text-align: center">
+						<h5>비밀번호 확인</h5>
+						<input type="text" placeholder="비밀번호를 입력해주세요">
+					</div>	 -->
+		      		<input type="hidden" name="boardMenuCode" th:value="${board.boardMenuCode}">
+		      		<input type="hidden" name="boardIdx" th:value="${board.boardIdx}">
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+		        <a th:href="@{/admin/noticeList}"><button type="submit" name="submit" value="submit" class="btn btn-primary">삭제</button></a>
+		      </div>
+		      </form>
+		    </div>
+		  </div>
+		</div>
+		 	
+ 	
+ 	
+ 	
  	<div class="admin-board-list" style="margin-top: 100px;">
  		<h4 style="margin-bottom: 50px;">공지사항 상세 조회</h4>
 		
-		
-			
 			
 			<!--상세 글 보기 -->	
 		<div class="x_content">
@@ -21,7 +53,7 @@
 		<tbody>
 			<tr>
 				<th scope="row">작성자</th>
-				<td><span th:text="${board.memeberId}"></span></td>
+				<td><span th:text="${board.memberId}"></span></td>
 				<th scope="row">작성시간</th>
 				<td><span th:text="${board.registTime}"></span></td>
 			</tr>
@@ -42,15 +74,15 @@
 			</tbody>
 		</table>
 		</div>
-			
-			
-			
+			<input type="hidden" name="boardIdx" th:value="${board.boardIdx}">
 			
 			<div class="row">
 				<div class="col-md-9 col-sm-9  offset-md-2" style="margin-left: 0; float:left; padding-top: 50px;">
 				
-				<a href="#"><button type="button" class="btn btn-primary" style="margin:10px 30px 30px 0;">수정</button></a>
-				<a href="#"><button type="submit" class="btn btn-success" style="margin: 10px 0 30px 10px;">삭제</button></a>
+				<a th:href="@{/admin/noticeModify(boardIdx=${board.boardIdx},memberId=${board.memberId}, boardTitle=${board.boardTitle}, boardContent=${board.boardContent},
+									boardAddFile=${board.boardAddFile}, boardAddFileName=${board.boardAddFileName}, boardAddFileVol=${board.boardAddFileVol})}">
+						<button type="button" class="btn btn-primary" style="margin:10px 30px 30px 0;">수정</button></a>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">삭제</button>
 				<a th:href="@{/admin/noticeList}"><button type="button" class="btn btn-secondary" style="margin: 10px; float: right;">목록보기</button></a>
 				</div>
 				

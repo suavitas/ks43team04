@@ -2,7 +2,6 @@ package ks43team04.service;
 
 import java.util.List;
 
-import javax.websocket.Session;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +29,18 @@ public class BoardService {
 		this.asMapper = asMapper;
 		this.laundryMapper = laundryMapper;
 	}
+	/*공지사항 삭제*/
+	public int noticeRemove(Board board) {
+		int result = boardMapper.noticeRemove(board);
+		return result;
+	}
+	
+	/*공지사항 수정*/
+	public int noticeModify(Board board) {
+		int result = boardMapper.noticeModify(board);
+		return result;
+	}
+	
 	/*멤버이름으로 세탁소조회*/
 	public List<LaundryList> getMemberLaundryList(String memberId){
 		List<LaundryList> getMemberLaundryList = laundryMapper.getMemberLaundryList(memberId);
@@ -132,28 +143,28 @@ public class BoardService {
 	
 	/*문의사항 답변 작성*/
 	public int qnaComment(Board board, String sessionId) {
-		board.setMemeberId(sessionId);
+		board.setMemberId(sessionId);
 		int result = boardMapper.qnaComment(board);
 		return result;
 	}
 	
 	/*문의사항 작성*/
 	public int qnaWrite(Board board, String sessionId) {
-		board.setMemeberId(sessionId);
+		board.setMemberId(sessionId);
 		int result = boardMapper.qnaWrite(board);
 		return result;
 	}
 	
 	/*(USER)공지사항 작성*/
 	public int noticeWrite(Board board, String sessionId) {
-		board.setMemeberId(sessionId);
+		board.setMemberId(sessionId);
 		int result = boardMapper.noticeWrite(board);
 		return result;
 	}
 	
 	/*(ADMIN)공지사항 작성*/
 	public int noticeForm(Board board, String sessionId) {
-		board.setMemeberId(sessionId);
+		board.setMemberId(sessionId);
 		int result = boardMapper.noticeForm(board);
 		return result;
 	}
