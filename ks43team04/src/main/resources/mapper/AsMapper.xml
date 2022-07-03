@@ -39,14 +39,54 @@
 	</resultMap>
 	
 
+	<!-- ><delete id="asDel" parameterType="As">
+		/*AS 삭제*/
+		DELETE FROM tb_as
+		WHERE 
+			as_code = #{asCode}
+	</delete> -->
+	
+	<update id="asModify" parameterType="As">
+		/*AS 수정*/
+		UPDATE tb_as AS a
+		<trim prefix="SET" prefixOverrides=",">
+			<if test="asTitle != null and asTitle != ''">		
+			,as_title = #{asTitle}
+			</if>
+			<if test="asContent != null and asContent != ''">				
+			,as_content = #{asContent}
+			</if>
+			<if test="updateTime != null and updateTime != ''">	
+			,update_time = NOW()
+			</if>
+			</trim>
+		WHERE 
+			a.as_code = #{asCode}
+		and
+			a.as_state = '대기'
+	</update>
+	
+	<!-- <update id="asEnd" parameterType="As">
+		/*AS 완료*/
+		UPDATE tb_as AS a
+		SET
+			a.as_state='완료'
+		WHERE 
+			a.as_code = #{asCode}
+		 and
+			a.as_state = '접수'
+	</update>  -->
+
 	<update id="asReceipt" parameterType="As">
 		/*AS 접수*/
 		UPDATE tb_as AS a
 		SET
-			as_state='접수',
-			visit_time=#{visitTime}
+			a.as_state='접수',
+			a.visit_time = #{visitTime}
 		WHERE 
-		a.as_code = #{asCode} 
+			a.as_code = #{asCode}
+		and
+			a.as_state = '대기'
 	</update>
 	
 	<insert id="asForm" parameterType="As">

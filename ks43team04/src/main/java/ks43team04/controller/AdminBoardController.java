@@ -147,10 +147,51 @@ public class AdminBoardController {
 		System.out.println(asList);
 		return "admin/asList";
 	}
-	/*고장 신고 접수*/
+	
+	/*고장 신고 수정*/
+	@GetMapping("/asModify")
+	public String asModify(@RequestParam(name = "asCode", required = false) String asCode
+							,@RequestParam(name = "memberId", required = false) String memberId
+							,@RequestParam(name = "asTitle", required = false) String asTitle
+							,@RequestParam(name = "asContent", required = false) String asContent
+							,@RequestParam(name = "asState", required = false) String asState
+							,@RequestParam(name = "updateTime", required = false) String updateTime
+							,Model model, HttpSession session) {
+		As as = boardService.getAsDetail(asCode);
+		String sessionId = (String) session.getAttribute("SID");
+		Member member = memberService.getMemberInfoById(sessionId);
+		List<LaundryList> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
+		model.addAttribute("member", member);
+		model.addAttribute("getMemberLaundryList", getMemberLaundryList);
+		model.addAttribute("as", as);
+		model.addAttribute("asCode", asCode);
+		model.addAttribute("memberId", memberId);
+		model.addAttribute("asTitle", asTitle);
+		model.addAttribute("asContent", asContent);
+		model.addAttribute("asState", asState);
+		model.addAttribute("updateTime", updateTime);
+		System.out.println("getMemberLaundryList>>>>>>"+getMemberLaundryList);
+		return "/admin/asModify";
+	}
+	@PostMapping("/asModify")
+	public String asModify(@RequestParam(name = "asCode", required = false) String asCode
+							,@RequestParam(name = "memberId", required = false) String memberId
+							,@RequestParam(name = "asTitle", required = false) String asTitle
+							,@RequestParam(name = "asContent", required = false) String asContent
+							,@RequestParam(name = "asState", required = false) String asState
+							,@RequestParam(name = "updateTime", required = false) String updateTime
+							,As as) {
+		boardService.asModify(as);
+		return "redirect:/admin/asListById";
+	}
+	
+	/*고장 신고 접수, 완료, 삭제*/
 	@PostMapping("/asList")
-	public String asList(As as) {
+	public String asList(@RequestParam(name = "asCode", required = false) String asCode
+						,As as) {
 		boardService.asReceipt(as);
+		//boardService.asEnd(as);
+		//boardService.asDel(as);
 		return "redirect:/admin/asList";
 	}
 	
@@ -271,9 +312,13 @@ public class AdminBoardController {
 	@GetMapping("/noticeDetail")
 	public String noticeDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
 								,@RequestParam(name = "boardIdx", required = false) int boardIdx
-								, Model model) {
+								, Model model, HttpSession session) {
 		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
+		String sessionId = (String) session.getAttribute("SID");
+		Member member = memberService.getMemberInfoById(sessionId);
+		model.addAttribute("member", member);
 		model.addAttribute("board", board);
+		System.out.println("member--------noticedetail" + member);
 		System.out.println("board--------------"+board);
 		return "admin/noticeDetail";
 	}
