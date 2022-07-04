@@ -1,6 +1,7 @@
 package ks43team04.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -325,10 +326,17 @@ public class AdminBoardController {
 	
 	/*공지사항 목록 조회*/
 	@GetMapping("/noticeList")
-	public String noticeList(Model model, HttpSession session) {
-		List<Board> noticeList = boardService.getNoticeList();
+	public String noticeList(@RequestParam(name = "currentPage", required = false, defaultValue = "1") int currentPage 
+								,Model model) {
+
+		Map<String, Object> resultMap = boardService.getNoticeList(currentPage);
 		
-		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("getNoticeList", resultMap.get("getNoticeList"));
+		model.addAttribute("resultMap", resultMap);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", resultMap.get("lastPage"));
+		model.addAttribute("startPageNum", resultMap.get("startPageNum"));
+		model.addAttribute("endPageNum", resultMap.get("endPageNum"));
 		return "admin/noticeList";
 	}
 	

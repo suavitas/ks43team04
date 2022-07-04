@@ -98,8 +98,8 @@
 				<if test="boardAddFileVol != null and boardAddFileVol != ''">	
 					,board_add_file_vol = #{boardAddFileVol}
 				</if>
-				<if test="updateTime != null and updateTime != ''">	
-					,update_time = CURDATE()
+				<if test="updateTime = null or updateTime != null">	
+					,update_time = NOW()
 				</if>	
 			</trim>				
 			WHERE 
@@ -530,7 +530,8 @@
 			,b.board_title AS boardTitle
 			,b.board_add_file AS boardAddFile
 			,b.m_id AS memberId
-			,b.regist_time AS registTime
+			,(SELECT 
+				IFNULL(b.update_time, b.regist_time)) AS registTime
 			,b.board_read_count AS boardReadCount
 			,b.comment_state AS commentState
 		FROM
