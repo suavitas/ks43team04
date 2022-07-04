@@ -312,10 +312,10 @@ public class AdminBoardController {
 	@GetMapping("/noticeDetail")
 	public String noticeDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
 								,@RequestParam(name = "boardIdx", required = false) int boardIdx
-								, Model model, HttpSession session) {
+								, Model model) {
 		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
-		String sessionId = (String) session.getAttribute("SID");
-		Member member = memberService.getMemberInfoById(sessionId);
+		String mId = board.getMemberId();
+		Member member = memberService.getMemberInfoById(mId);
 		model.addAttribute("member", member);
 		model.addAttribute("board", board);
 		System.out.println("member--------noticedetail" + member);
@@ -325,8 +325,9 @@ public class AdminBoardController {
 	
 	/*공지사항 목록 조회*/
 	@GetMapping("/noticeList")
-	public String noticeList(Model model) {
+	public String noticeList(Model model, HttpSession session) {
 		List<Board> noticeList = boardService.getNoticeList();
+		
 		model.addAttribute("noticeList", noticeList);
 		return "admin/noticeList";
 	}

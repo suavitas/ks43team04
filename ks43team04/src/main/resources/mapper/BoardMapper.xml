@@ -68,7 +68,8 @@
 	</resultMap>
 	
 	<delete id="noticeRemove" parameterType="Board">
-	DELETE FROM tb_board 
+		/* 공지 글 삭제 */
+		DELETE FROM tb_board 
 		WHERE 
 			board_menu_code = #{boardMenuCode}
 		and	
@@ -77,7 +78,7 @@
 	</delete>
 	
 	
-		<update id="noticeModify" parameterType="Board">
+	<update id="noticeModify" parameterType="Board">
 		/* 공지 글 수정 */
 			UPDATE 
 				tb_board
@@ -108,7 +109,7 @@
 
 	
 	<insert id="eventForm" parameterType="Event">
-		/*이벤트 등록 */
+		/* 이벤트 등록 */
 		INSERT INTO tb_event
 		(event_code
 		, m_id
