@@ -1,7 +1,8 @@
 package ks43team04.service;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -218,6 +219,41 @@ public class BoardService {
 		return qnaServiceList;
 	}
 
+	/* 공지사항 목록 조회(페이징 처리) */
+	public Map<String, Object> getNoticeList(int currentPage){
+		int rowPerPage = 5;
+		int startPageNum = 1;
+		int endPageNum = 3;
+		
+		double rowCount = boardMapper.getNoticeListCount();
+		int lastPage = (int)Math.ceil(rowCount/rowPerPage);
+		int startRow = (currentPage - 1) * rowPerPage;
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("startRow", startRow);
+		paramMap.put("rowPerPage", rowPerPage);
+		
+		List<Map<String, Object>> getNoticeList = boardMapper.getNoticeList(paramMap);
+		
+		if (currentPage > 6) {
+			startPageNum = currentPage - 5;
+			endPageNum = currentPage + 4; // 자신 포함 / last-21페이지 픽스. 21-4 = 17부터는 움직이지않겠다. 17커런트로왔을때
+
+			if (endPageNum >= lastPage) { // 17이상부터 클릭시 숫자가 늘어나지않고 고정되는 모습
+				startPageNum = lastPage - 9; // 라스트페이지해당 21-9 = 12부터 고정시키겠다.
+				endPageNum = lastPage;
+			}
+		}
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("lastPage", lastPage);
+		resultMap.put("getNoticeList", getNoticeList);
+		resultMap.put("startPageNum", startPageNum);
+		resultMap.put("endPageNum", endPageNum);
+		
+		return resultMap;
+	}
+
+	
 	/* 공지사항 목록 조회 */
 	public List<Board> getNoticeList() {
 		List<Board> noticeList = boardMapper.getNoticeList();
