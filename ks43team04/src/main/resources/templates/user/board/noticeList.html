@@ -67,17 +67,17 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="table-body-row" th:if="${not #lists.isEmpty(noticeList)}" th:each="l : ${noticeList}">
-									<td class="product-remove" th:text="${#numbers.formatInteger(l.boardIdx,0)}"></td>
+								<tr class="table-body-row" th:if="${not #lists.isEmpty(getNoticeList)}" th:each="l : ${getNoticeList}">
+									<td class="product-remove" th:text="${#numbers.formatInteger(l.get('boardIdx'),0)}"></td>
 									<td class="product-image">
-									<a th:href="@{/user/board/noticeDetail(boardMenuCode=${l.boardMenuCode}, boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
+									<a th:href="@{/user/board/noticeDetail(boardMenuCode=${l.get('boardMenuCode')}, boardIdx=${l.get('boardIdx')})}" th:text="${l.get('boardTitle')}"></a>
 									</td>
-									<td class="product-image" th:text="${l.boardAddFile}"></td>
-									<td class="product-name" th:text="${l.memberId}"></td>
-									<td class="product-price" th:text="${l.registTime}"></td>
-									<td class="product-quantity" th:text="${l.boardReadCount}"></td>
+									<td class="product-image" th:text="${l.get('boardAddFile')}"></td>
+									<td class="product-name" th:text="${l.get('memberId')}"></td>
+									<td class="product-price" th:text="${l.get('registTime')}"></td>
+									<td class="product-quantity" th:text="${l.get('boardReadCount')}"></td>
 								</tr>
-								<tr th:unless="${not #lists.isEmpty(noticeList)}">
+								<tr th:unless="${not #lists.isEmpty(getNoticeList)}">
    									<td colspan="5">조회된 내용이 없습니다.</td>
    								</tr>
 							</tbody>
@@ -88,11 +88,12 @@
 		</div>
 		
 		
-		<!-- 페이징 -->
+		<!-- 페이징 시작 -->
 		<div class="row">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12 text-center">
+						
 					
 		<!-- 공지사항 등록하기  -->
 		<div id="qna-btn" class="btnArea">
@@ -103,12 +104,23 @@
 			</ul>	
 		</div>	
 						<div class="pagination-wrap">
+							
 							<ul>
-								<li><a href="#">Prev</a></li>
-								<li><a class="active" href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">Next</a></li>
+								<li><a th:href="@{/user/board/noticeList}">Start</a><li>
+								<li><a th:if="${currentPage > 1}" th:href="@{/user/board/noticeList(currentPage=${currentPage -1})}">Prev</a></li>
+								<th:block th:each="num : ${#numbers.sequence(startPageNum, endPageNum)}">
+									<li><label th:if="${currentPage eq num}" th:text="${(num < 5)? '0'+ num: num}"></label></li>
+									<li><a th:unless="${currentPage eq num}" th:href="@{/user/board/noticeList(currentPage=${num})}" th:text="${(num < 5)? '0'+ num: num}"></a></li>
+								</th:block>
+								<li><a th:if="${currentPage < lastPage}" th:href="@{/user/board/noticeList(currentPage=${currentPage +1})}">Next</a></li>
+								<li><a th:href="@{/user/board/noticeList(currentPage=${lastPage})}">Last</a></li>
 							</ul>
+								
+								
+								
+								
+								
+							
 						</div>
 					</div>
 				</div>
