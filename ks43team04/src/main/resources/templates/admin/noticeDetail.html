@@ -21,8 +21,8 @@
 		      	  
 				        	 <div style="text-align: center">
 								<h5>비밀번호 확인</h5>
-								<input type="text" id ="pwDelCheck" name="pwDelCheck" placeholder="비밀번호를 입력해주세요" required="required">
-								<input type="text" id ="pwDelCheck2" name="memberPw2" th:value="${member.memberPw}">
+								<input type="password" id ="pwDelCheck" name="pwDelCheck" placeholder="비밀번호를 입력해주세요" required="required">
+								<input type="hidden" id ="pwDelCheck2" name="memberPw2" th:value="${member.memberPw}">
 							</div>
 		      			<input type="hidden" name="boardMenuCode" th:value="${board.boardMenuCode}">
 		      			<input type="hidden" name="boardIdx" th:value="${board.boardIdx}">
