@@ -22,6 +22,15 @@
 		<result column="admin_level_code" 		property="adminLevelCode"/>
 		<result column="regist_time" 			property="registTime"/>
 	</resultMap>
+	
+	
+	<resultMap type="MemberLevel" id="PayMemberLevel">
+		<id column="l_level_code"				property="levelCode"/>
+		<result column="level_name" 			property="levelName"/>
+		<result column="admin_level_code" 		property="adminLevelCode"/>
+		<result column="regist_time" 			property="registTime"/>
+	</resultMap>
+   
    
    
 <select id="getPayMInfo" parameterType="String" resultMap="payMInfoResultMap">
@@ -43,5 +52,17 @@
 		   tb_member AS m
 		WHERE
 		   m.m_id = #{memberId};
+	</select>
+	<select id="getMemberLevel" parameterType="String" resultMap="PayMemberLevel">
+		/* 회원 권한명 가져오기*/
+		SELECT 
+			 l.level_code
+			,l.level_name
+			,l.admin_level_code
+			,l.regist_time	
+		FROM 
+			tb_member_level as l
+		WHERE			
+			l.level_code = #{levelCode};
 	</select>
 </mapper>

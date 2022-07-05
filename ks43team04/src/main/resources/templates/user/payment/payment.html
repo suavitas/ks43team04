@@ -1,96 +1,83 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/userDefault}">
-
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{layouts/userDefault}">
 <!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
-<th:block th:each="l : ${laundryGoodsNameAndPrice}">
-<th:block th:each="ls : ${l.ilbanGoodsPrice}">
-	<div class="payContainer" style="background-color: #FCFCFC;">
-		<div id="payOrder">
-			<div id="payH3">
-				<div class="payOrder-header">
-					<h3>주문/결제</h3>
-				</div>
-			</div>
-
-			<form id="payForm" name="payForm" method="post">
-
-				<div class="product-area">
-					
-					
+   <div class="payContainer" style="background-color: #FCFCFC;">
+      <div id="payOrder">
+         <div id="payH3">
+            <div class="payOrder-header">
+               <h3>주문/결제</h3>
+            </div>
+         </div>
+         <form id="payForm" name="payForm" method="post">
+            <div class="product-area">
+               
+               
  
-					<table class="tb-products">
-						<colgroup>
-							<col width="160">
-							<col width="160">
-							<col width="160">
-							<col width="160">
-							<col width="160">
-							<col>
-						</colgroup>
-						<thead class="point-plus">
-							<tr style="background-color: #e9e9e9;">
-								<th scope="col" class="product">주문정보</th>
-								<th scope="col">세탁소</th>
-								<th scope="col">세탁물</th>
-								<th scope="col">배송비</th>
-								<th scope="col" class="bg-point">할인</th>
-								<th scope="col" class="col-price">세탁비용(할인, 배달료 포함)</th>
-							</tr>
-						</thead>
-						<tbody>
-
-							
-								<tr>
-									<td><img th:src=@{/user/assets/img/lovetruck.png}></td>
-									<td rowspan="1" th:text="${l.laundryName}">세탁소명</td>
-									<td th:text="${ls.goodsName}"></td>
-	
-									<td rowspan="1">3000원</td>
-									<td>1000원</td>
-									<td th:text="${#numbers.formatInteger(ls.goodsPrice,3,'COMMA')+'원'}">가격</td>
-								</tr>
-							
-						</tbody>
-					</table>
-				</div>
-				<div class="destination-wrap">
-					<div class="deliver-info">
-						<h4>
-							<span class="blind">배송지정보</span>
-						</h4>
-
-
-						<strong class="req" title="필수입력">배송지 선택</strong>
-						<ul class="radio-inline-list">
-							<li class="-baseDeliveryInfo"><input type="radio"
-								name="delivery" id="deliveryTypeOrig" onclick='searchAddr()'
-								checked> <label>기본배송지</label></li>
-							<li class="-newDeliveryInfo"><input type="radio"
-								name="delivery" onclick='searchAddr()' id="deliveryTypeNew">
-								<label>신규배송지</label></li>
-
-						</ul>
-
-						<script type="text/javascript">
-							function searchAddr() {
-
-								var delori = document
-										.getElementById('deliveryTypeOrig');
-								var delnew = document
-										.getElementById('deliveryTypeNew');
-
-								if (delori.checked == true) {
-									document.getElementById('addr-list-byDB').className = ' ';
-									document.getElementById('addr-list-search').className = 'addr-list';
-								} else {
-									document.getElementById('addr-list-search').className = ' ';
-									document.getElementById('addr-list-byDB').className = 'addr-list';
-								}
-							}
-						</script>
+               <table class="tb-products">
+                  <colgroup>
+                     <col width="160">
+                     <col width="160">
+                     <col width="160">
+                     <col width="160">
+                     <col width="160">
+                     <col>
+                  </colgroup>
+                  <thead class="point-plus">
+                     <tr style="background-color: #e9e9e9;">
+                        <th scope="col" class="product">주문정보</th>
+                        <th scope="col">세탁소</th>
+                        <th scope="col">세탁물</th>
+                        <th scope="col">배송비</th>
+                        <th scope="col" class="bg-point">할인</th>
+                        <th scope="col" class="col-price">세탁비용(할인, 배달료 포함)</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td><img th:src=@{/user/assets/img/lovetruck.png}></td>
+                        <td rowspan="1">현우세탁소</td>
+                        <td>&nbsp;&nbsp;&nbsp;2개 &nbsp;&nbsp;&nbsp;|
+                           <button type="button" onclick="location.href='#';">상세</button>
+                        </td>
+                        <td rowspan="1">3000원</td>
+                        <td>1000원</td>
+                        <td>15000원</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <div class="destination-wrap">
+               <div class="deliver-info">
+                  <h4>
+                     <span class="blind">배송지정보</span>
+                  </h4>
+                  <strong class="req" title="필수입력">배송지 선택</strong>
+                  <ul class="radio-inline-list">
+                     <li class="-baseDeliveryInfo"><input type="radio"
+                        name="delivery" id="deliveryTypeOrig" onclick='searchAddr()'
+                        checked> <label>기본배송지</label></li>
+                     <li class="-newDeliveryInfo"><input type="radio"
+                        name="delivery" onclick='searchAddr()' id="deliveryTypeNew">
+                        <label>신규배송지</label></li>
+                  </ul>
+                  <script type="text/javascript">
+                     function searchAddr() {
+                        var delori = document
+                              .getElementById('deliveryTypeOrig');
+                        var delnew = document
+                              .getElementById('deliveryTypeNew');
+                        if (delori.checked == true) {
+                           document.getElementById('addr-list-byDB').className = ' ';
+                           document.getElementById('addr-list-search').className = 'addr-list';
+                        } else {
+                           document.getElementById('addr-list-search').className = ' ';
+                           document.getElementById('addr-list-byDB').className = 'addr-list';
+                        }
+                     }
+                  </script>
 						<ul class=" " id="addr-list-byDB">
 						
 							<li id="memberId" th:text="${paymember.memberName}"></li>
@@ -159,10 +146,10 @@
 					<div class="deliver-userinfo-wrap">
 						<h6>주문자 정보</h6>
 						<ul class="user-info">
-							<li>이현우</li>
-							<li class="-telNoHighlight "><span class="-memberTelNumber">010-2**8-0**5</span>
+							<li th:text="${paymember.memberName}"></li>
+							<li class="-telNoHighlight " th:text="${paymember.memberPhone}">
 								<button type="button">수정</button></li>
-							<li><span class="-memberEmailAddress">vg******@na***com</span>
+							<li th:text="${paymember.memberEmail}">
 								<button type="button">수정</button></li>
 						</ul>
 						<ul class="info-dsc">
@@ -403,8 +390,7 @@
 						</div>
 					</div>
 					<div class="price-detail">
-						<span style="font-size: 13px; float: right;">이현우 님의 등급 :
-							gold</span>
+						<span style="font-size: 13px; float: right;" th:text="${paymember.memberName}+' 님의 등급: '+${memberlevel.levelName}"></span>
 						<h5>결제상세</h5>
 						<div class="sum">
 							<strong class="price-sum-title">주문금액</strong>
@@ -512,7 +498,7 @@
 										data-dismiss="modal"
 										style="margin: 0; border: 0; border-radius: 0; padding: 0; float: left; width: 50%; height: 50px; font-size: 20px;">닫기</button>
 									<button type="button" class="btn btn-primary"
-										style="border: 0; border-radius: 0; margin: 0; padding: 0; float: right; width: 50%; height: 50px; font-size: 20px;">결제하기</button>
+										style="border: 0; border-radius: 0; margin: 0; padding: 0; float: right; width: 50%; height: 50px; font-size: 20px;" onclick = "location.href='/user/paymentComplete';">결제하기</button>
 								</div>
 							</div>
 						</div>
