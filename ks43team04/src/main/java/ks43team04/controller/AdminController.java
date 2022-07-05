@@ -32,13 +32,7 @@ public class AdminController {
 		return "admin/machine";
 	}
 
-	// 세탁소별 월별 수입
-
-	@GetMapping("/lundryIncome")
-	public String lundryIncome() {
-		return "admin/lundryIncome";
-	}
-
+	
 	// 세탁소별 월별 환불 퍼센트
 
 	@GetMapping("/lundryReturn")
