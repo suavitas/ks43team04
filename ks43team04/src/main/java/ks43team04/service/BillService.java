@@ -30,4 +30,8 @@ public class BillService {
 		int getBillCount = billMapper.getBillCount(memberId);
 		return getBillCount;
 	}
+	public List<Bill> laundryIncome(){
+		List<Bill> laundryIncome = billMapper.laundryIncome();
+		return laundryIncome;
+	}
 }
