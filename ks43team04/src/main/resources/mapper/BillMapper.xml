@@ -50,27 +50,27 @@
  	</select>
  
  	<select id="laundryIncome"  resultType="Map">
-	 	SELECT
-			l.laundry_name as laundryName
-			,u.m_id as memberId
-			,m.m_name as memberName
-			,b.total_price as totalPrice
-		FROM
-			tb_bill AS b
-			INNER JOIN
-			tb_laundry AS l
-			on
-			b.order_num_groupcode LIKE CONCAT('%','laundry_code_006','%')
-			INNER join
-			tb_user AS u
-			on
-			b.user_code = u.user_code
-			INNER JOIN
-			tb_member AS m
-			ON
-			u.m_id = m.m_id
-			where
-			b.pay_ok_date BETWEEN '2022-01-01' AND '2022-05-31'
-			ORDER BY l.laundry_name;
+	SELECT
+		l.laundry_name as laundryName,
+		m.m_name as memberName,
+		m.m_id as memberId,
+		b.total_price as totalPrice,
+		b.pay_ok_date as payOkDate	
+	FROM
+		tb_bill AS b
+		INNER JOIN
+		tb_laundry AS l
+		ON
+		b.order_num_groupcode like CONCAT('%','laundry_code_006')
+		INNER JOIN
+		tb_user AS u
+		on
+		b.user_code = u.user_code
+		INNER JOIN
+		tb_member AS m
+		ON
+		u.m_id = m.m_id
+		WHERE 
+		l.laundry_code = 'laundry_code_006';
 	</select>
 </mapper>
