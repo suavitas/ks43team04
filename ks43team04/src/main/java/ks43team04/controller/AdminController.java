@@ -63,13 +63,6 @@ public class AdminController {
 		return "admin/lundryUserQA";
 	}
 
-	//일반 세탁소 주문내역
-
-	@GetMapping("/order")
-	public String Order() {
-		return "admin/order";
-	}
-
 
 	// 일반 세탁소 수거 및 배송 완료 체크
 

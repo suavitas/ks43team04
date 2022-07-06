@@ -5,29 +5,40 @@
 
 
 
-<!-- 사용자정의 contents -->
+<!-- �궗�슜�옄�젙�쓽 contents -->
 <div class="x_panel">
 	<th:block layout:fragment="customContents">
 
 		<div class="admin-board-list" style="margin-top: 100px;">
-			<h4 style="margin-bottom: 50px;">!!!!!오더 목록!!!!!!</h4>
+			<h4 style="margin-bottom: 50px;">:::[[${sessionName}]]님 세탁소 오더 리스트:::</h4>
 
-			<table id="reportList" class="table table-striped table-bordered"
-				style="width: 100%;">
+			<table id="reportList" class="table table-striped table-bordered" style="width: 100%;">
 				<thead>
 					<tr>
-						<th>이이</th>
-						<th>이이</th>
-				
-
+						<th>오더 코드</th>
+						<th>고객 아이디</th>
+						<th>고객 이름</th>
+						<th>고객 주소</th>
+						<th>주문 목록</th>
+						<th>주문 가격</th>
+						<th>배송기사 요청</th>
 					</tr>
 				</thead>
-
-				<tr>
-					<td>조회된 내용이 없습니다.</td>
-					<td><a th:href="@{/admin/pickUpByStore}"><button
-								type="button" class="btn btn-secondary">수거(픽업)로 연결!</button></a></td>
-				</tr>
+				<tbody>
+					<tr th:if="${not #lists.isEmpty(ilbanOrderList)}" th:each="l : ${ilbanOrderList}">
+						<td th:text="${l.orderCode}"></td>
+						<td th:text="${l.mId}"></td>
+						<td th:text="${l.mName}"></td>
+						<td th:text="${l.mAddr}"></td>
+						<td th:text="${l.gName}"></td>
+						<td th:text="${l.gPrice}"></td>
+						<td><a th:href="@{/admin/pickUpByStore}"><button
+									type="button" class="btn btn-secondary">배송기사 요청</button></a></td>
+					</tr>
+					<tr th:unless="${not #lists.isEmpty(ilbanOrderList)}">
+						<td colspan="5">조회된 내역이 없습니다.</td>
+					</tr>
+				</tbody>
 			</table>
 		</div>
 </div>

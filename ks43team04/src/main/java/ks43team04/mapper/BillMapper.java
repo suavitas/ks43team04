@@ -17,4 +17,7 @@ public interface BillMapper {
 	
 	/* 세탁소별 월별 매출 */
 	public List<Bill> laundryIncome();
+	
+	/* 일반세탁소 오더 목록 */
+	public List<Bill> ilbanOrderList(String memberId);
 }
