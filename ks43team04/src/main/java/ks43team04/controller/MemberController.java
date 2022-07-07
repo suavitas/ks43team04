@@ -61,12 +61,6 @@ public class MemberController {
 
 		return "/member/myPageRefund";
 	}
-	/*예약 결제후 myPagePayment2 화면*/
-	@GetMapping("/myPagePayment2")
-	public String myPagePayment2() {
-		return "/member/myPagePayment2";
-	}
-	
 	
 	/*bill 인서트*/
 	@PostMapping("/myPagePayment")
@@ -81,7 +75,7 @@ public class MemberController {
 		billService.addBill(memberId, laundryCode, totalPrice);
 		
 		
-		return "redirect:/user/myPagePayment2";
+		return "redirect:/user/myPagePayment";
 	}	
 	
 	/**
