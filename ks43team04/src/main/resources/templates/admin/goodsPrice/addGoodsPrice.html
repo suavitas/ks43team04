@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/adminDefault}">
+
+
+<th:block layout:fragment="customContents">
+	<form  th:action="@{/admin/addGoodsPrice/addGoodsPrice}" method="post"
+		style="text-align: center;">
+		<table class="table table-striped jambo_table bulk_action"
+			style="width: 60%; margin: 0 auto; margin-top: 80px; border-collapse: separate;">
+			<thead>
+				<tr class="headings">
+					<th class="column-title" colspan="2">가격 정보</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="even pointer">
+				<td>스킬명 </td>
+						<td colspan="2">
+						<select name="laundryCode" style="width: 50%; text-align: center;">
+							<th:block th:if="${not #lists.isEmpty(IlbanSkill)}" th:each="l : ${IlbanSkill}">
+								<option th:text="${l.skillCate}" th:value="${l.skillCate}"></option>
+							</th:block>
+							<th:block th:unless="${not #lists.isEmpty(IlbanSkill)}">
+								<option value="">등록된 세탁기술이 없습니다.</option>
+							</th:block>
+						</select>
+					</td>
+				</tr>
+				<tr class="even pointer">
+					<td>제품 명</td>
+					<td><input type="text" name="gName" th:value="${gName}"></td>
+				</tr>
+				<tr class="even pointer">
+					<td>제품 가격</td>
+					<td><input type="number" name="gPrice" th:value="${gPrice}"></td>
+					
+				</tr>
+					<tr class="even pointer">
+					<td colspan="2">
+						<button type="submit" class="btn btn-danger btn-sm"
+							data-toggle="modal" data-target="#deleteModal">가격 추가</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+	
+</th:block>
+</html>

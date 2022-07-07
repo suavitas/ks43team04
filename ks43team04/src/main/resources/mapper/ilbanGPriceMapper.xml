@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.IlbanGPriceMapper">
+	
+	
+	
+   <select id="IlbanSkill" resultType="Map">
+	/* 일반세탁소별 세탁 가격 추가를 위해서 스킬카테 불러오기 */
+	SELECT 
+		ilban_skill_code as ilbanSkillCode, 
+		skill_cate as skillCate,
+		admin_level_code as adminLevelCode,
+		regist_time as registTime
+	FROM 
+		tb_ilban_skill;
+   </select>
+  
+  <insert id="addGoodsPrice" parameterType="String">
+ 		/* 일반세탁소별 세탁 가격 추가 */
+		INSERT INTO tb_ilban_g_price
+			(ilban_G_price_code, 
+			laundry_code, 
+			ilban_skill_code, 
+			g_name, 
+			g_price, 
+			regist_time, 
+			g_price_use_state)
+		VALUES 
+			(sf_new_g_price(),
+			 'laundry_code_006',
+			 '#{skillCate}',
+			 '#{gName}',
+			 '#{gPrice}',
+			 NOW(),
+			 'use');			 
+ 	</insert>
+  
+   
+
+  
+	
+ 	
+	
+	
+</mapper>
