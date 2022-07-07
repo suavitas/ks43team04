@@ -2,6 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/adminDefault}">
+	  
+
+	
+	  
+	  
 
 <th:block layout:fragment="customScript">
 <script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
@@ -9,11 +14,7 @@
 	</th:block>	
 	<th:block layout:fragment="customJsScript"> 
 		<script type="text/javascript">
-		/* 첨부파일 첨부파일명 보이는기능 */
-		$("#file").on('change',function(){
-		  var fileName = $("#file").val();
-		  $(".upload-name").val(fileName);
-		});
+		
 	
 		/* 유효성검사 */
 		function validCheck(){
@@ -31,36 +32,126 @@
 			};				
 		}
 		
-		/*제이쿼리 파일추가 필드*/
-		$(function(){
-			//추가
-			$('#plus-button').on('click', function() {
-				var fileBox = $('.fileBox');
-				console.log(fileBox.length)
-				if(fileBox.length < 4) {
-					var newLi = $(this).parent().clone(true);
-					newLi.children('.add-photo').val('');
-					$(this).parent().parent().append(newLi);
-				} else {
-					alert("최대 올릴 수 있는 이미지의 개수는 4개입니다.");
-				}
-			});
-			
-			//제거
-			$('#minus-button').on('click', function() {
-				var fileBox = $('.fileBox');
-				console.log(fileBox.length)
-				if(fileBox.length > 1){
-					$(this).parent().remove();
-				}else {
-					alert('ㄴㄴ');
-				}
-			});
-			
-			
-		});
+		/*파일추가 필드*/
+
+		let fileIdx = 0; /*[- 파일 인덱스 처리용 전역 변수 -]*/
+
+function addFile() {
+
+	const fileDivs = $('div[data-name="fileDiv"]');
+	if (fileDivs.length > 3) {
+		alert('파일은 최대 세 개까지 업로드 할 수 있습니다.');
+		return false;
+	}
+
+	fileIdx++;
+
+	const fileHtml = `
+		<div data-name="fileDiv" class="form-group row filebox bs3-primary">
+			<label for="file_${fileIdx}" class="col-md-1 control-label"></label>
+			<div class="col-sm-10">
+				<input type="text" class="upload-name" value="파일 찾기" readonly />
+				<label for="file_${fileIdx}" class="control-label">찾아보기</label>
+				<input type="file" name="boardImgFile" id="file_${fileIdx}" class="upload-hidden" onchange="changeFilename(this)" />
+
+				<button type="button" onclick="removeFile(this)" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+					<i class="fa fa-minus" aria-hidden="true"></i>
+				</button>
+			</div>
+		</div>
+	`;
+
+	$('#btnDiv').before(fileHtml);
+}
+		
+		
+		
+function removeFile(elem) {
+
+	const prevTag = $(elem).prev().prop('tagName');
+	if (prevTag === 'BUTTON') {
+		const file = $(elem).prevAll('input[type="file"]');
+		const filename = $(elem).prevAll('input[type="text"]');
+		file.val('');
+		filename.val('파일 찾기');
+		return false;
+	}
+
+	const target = $(elem).parents('div[data-name="fileDiv"]');
+	target.remove();
+}
+ 
+function changeFilename(file) {
+
+	file = $(file);
+	const filename = file[0].files[0].name;
+	const target = file.prevAll('input');
+	target.val(filename);
+}
+	
 	</script>
+
+	  <style>
+	
+.filebox input[type="file"] {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+.filebox.bs3-primary .col-sm-10>label {
+	color: #fff;
+	background-color: #337ab7;
+	border-color: #2e6da4;
+}
+.filebox .col-sm-10>label {
+	display: inline-block;
+	padding: .5em .75em;
+	color: #999;
+	font-size: inherit;
+	font-weight: 600;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #fdfdfd;
+	cursor: pointer;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+}
+.filebox .upload-name {
+	display: inline-block;
+	width: 350px;
+	padding: .5em .75em;
+	/* label의 패딩값과 일치 */
+	font-size: inherit;
+	font-family: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #f5f5f5;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+	-webkit-appearance: none;
+	/* 네이티브 외형 감추기 */
+	-moz-appearance: none;
+	appearance: none;
+}
+	
+	</style>
+	
+	
+	
 </th:block>	  
+
+
+	  
+	
+
+
 	  
 	<!-- 사용자정의 contents -->
 	<th:block layout:fragment="customContents">
@@ -89,20 +180,33 @@
 							<p><textarea class="form-control" name="boardContent" id="content" placeholder="내용" style="resize: none; height: 350px;" required="required"></textarea></p>
 						</div>
 				</div>
-				<div class="form-group row">					
-					<label class="control-label col-md-1 col-sm-1">파일첨부</label>
-						<div class="fileBox col-md-8 col-sm-8">
-							<input class= "upload-name" value="첨부파일" placeholder="첨부파일" style="display: inline-block; height: 40px; padding: 0 10px; vertical-align: middle; border: 1px solid #dddddd; width: 50%; color: #999999;">
-								<label for="file" style="display: inline-block; padding: 10px 20px; color: #fff; vertical-align: middle; background-color: #999999; cursor: pointer; height: 40px; margin-left: 10px; margin-bottom: 0;">파일찾기</label>
-									<button id="plus-button">플러스</button>
-									<button id="minus-button">마이너스</button>
-							<input type="file" id="file" class="add-photo" name="boardImgFile" style="position: absolute;  width: 0; height: 0; padding: 0; overflow: hidden; border: 0;">
-								<p class="text-guide">파일첨부는 최대 4장까지 가능하며,<br>5MB이하의 GIF, JPG, JPEG, PNG, PDF 형태로 업로드해주세요.</p>
-						</div>
-					</div>	
 				
+				
+				
+				
+				
+		<div data-name="fileDiv" class="form-group row filebox bs3-primary">
+	<label for="file_0" class="col-md-1 control-label">파일첨부</label>
+	<div class="col-sm-10">
+		<input type="text" class="upload-name" value="파일 찾기" readonly />
+		<label for="file_0" class="control-label">찾아보기</label>
+		<input type="file" name="boardImgFile" id="file_0" class="upload-hidden" onchange="changeFilename(this)" />
+	
+		<button type="button" onclick="addFile()" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+			<i class="fa fa-plus" aria-hidden="true"></i>
+		</button>
+		<button type="button" onclick="removeFile(this)" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+			<i class="fa fa-minus" aria-hidden="true"></i>
+		</button>
+	</div>
+</div>
+					
+					
+					
+				
+								<!-- <p class="text-guide">파일첨부는 최대 4장까지 가능하며,<br>5MB이하의 GIF, JPG, JPEG, PNG, PDF 형태로 업로드해주세요.</p> -->
 			
-				<div class="form-group">
+				<div id="btnDiv" class="form-group">
 					<div class="col-md-9 col-sm-9 offset-md-2" style="margin-left: 0; text-align: center; padding-top: 50px;">
 						<a th:href="@{/admin/noticeList}"><button type="button" class="btn btn-primary" style="margin-right: 30px;">취소</button></a>
 						<a th:href="@{/admin/noticeList}"><button type="submit" class="btn btn-success" value="Submit" style="margin-left: 30px;" onclick="validCheck()">등록</button></a>

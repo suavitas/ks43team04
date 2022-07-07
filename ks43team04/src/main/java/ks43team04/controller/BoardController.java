@@ -50,26 +50,6 @@ public class BoardController {
 		return "/user/board/qnaModify";
 	}
 
-	/**
-	 * 공지사항 > 글 삭제하기
-	 */
-	@GetMapping("/noticeRemove")
-	public String noticeRemove() {
-
-		return "/user/board/noticeRemove";
-	}
-
-	/**
-	 * 공지사항 > 글 수정하기
-	 */
-	@GetMapping("/noticeModify")
-	public String noticeModify() {
-
-		return "/user/board/noticeModify";
-	}
-
-	
-
 
 
 	/*Q&A(문의사항) 답글 작성*/
@@ -173,7 +153,7 @@ public class BoardController {
 		return "/user/board/eventList";
 	}
 	
-	/*공지사항 작성*/
+	/*공지사항 작성 ------------------------지울예정
 	@GetMapping("/noticeWrite")
 	public String noticeWrite(Model model) {
 		model.addAttribute("title", "공지등록");
@@ -188,7 +168,7 @@ public class BoardController {
 		log.info("공지 등록 data : {}", board);
 		log.info("화면에서 입력받은 data: {}, boardCode");
 		return "redirect:/user/board/noticeList";
-	}
+	}*/
 	
 	/*공지사항 상세 조회*/
 	@GetMapping("/noticeDetail")
@@ -197,6 +177,8 @@ public class BoardController {
 								,Model model) {
 
 		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
+		int readCount = boardService.readCount(board);
+		model.addAttribute("readCount", readCount);
 		model.addAttribute("board", board);
 		return "/user/board/noticeDetail";
 	}
@@ -207,13 +189,13 @@ public class BoardController {
 								,Model model) {
 		
 		Map<String, Object> resultMap = boardService.getNoticeList(currentPage);
-		
 		model.addAttribute("getNoticeList", resultMap.get("getNoticeList"));
 		model.addAttribute("resultMap", resultMap);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", resultMap.get("lastPage"));
 		model.addAttribute("startPageNum", resultMap.get("startPageNum"));
 		model.addAttribute("endPageNum", resultMap.get("endPageNum"));
+		System.out.println("getNoticeList resultMap-----------"+resultMap);
 		return "/user/board/noticeList";
 	}
 
