@@ -336,6 +336,8 @@ public class AdminBoardController {
 								,@RequestParam(name = "boardIdx", required = false) String boardIdx
 								, Model model) {
 		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
+		int readCount = boardService.readCount(board);
+		model.addAttribute("readCount", readCount);
 		System.out.println("---------board-noticedetail---------"+board);
 		String mId = board.getMemberId();
 		Member member = memberService.getMemberInfoById(mId);

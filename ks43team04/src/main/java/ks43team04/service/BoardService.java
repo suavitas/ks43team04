@@ -36,6 +36,13 @@ public class BoardService {
 		this.laundryMapper = laundryMapper;
 		this.fileMapper = fileMapper;
 	}
+	
+	/*공지사항 조회수*/
+	public int readCount(Board board) {
+		int result = boardMapper.readCount(board);
+		return result;
+	}
+	
 	/*공지사항 삭제*/
 	public int noticeRemove(Board board) {
 		int result = boardMapper.noticeRemove(board);
@@ -270,7 +277,7 @@ public class BoardService {
 
 	/* 공지사항 목록 조회(페이징 처리) */
 	public Map<String, Object> getNoticeList(int currentPage){
-		int rowPerPage = 5;
+		int rowPerPage = 10;
 		int startPageNum = 1;
 		int endPageNum = 3;
 		
@@ -303,10 +310,10 @@ public class BoardService {
 	}
 
 	
-	/* 공지사항 목록 조회 */
+	/* 공지사항 목록 조회 
 	public List<Board> getNoticeList() {
 		List<Board> noticeList = boardMapper.getNoticeList();
 		return noticeList;
 	}
-
+*/
 }
