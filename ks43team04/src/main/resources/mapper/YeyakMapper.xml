@@ -5,7 +5,7 @@
 <mapper namespace="ks43team04.mapper.YeyakMapper">
 
 	<resultMap type="MuinMachine" 					id="MuinMachineResultMap">
-		<id column="muin_Machinecode" 				property="muinMachineCode"/>
+		<id column="muin_Machine_code" 				property="muinMachineCode"/>
 		<result column="laundry_code" 				property="laundryCode"/>
 		<result column="muin_spec_code" 			property="muinSpecCode"/>
 		<result column="machine_number"				property="machineNumber"/>

@@ -24,6 +24,24 @@ public class YeyakService {
 		this.yeyakMapper = yeyakMapper;
 		this.laundryMapper = laundryMapper;
 	}
+	
+	public List<MuinMachine> muinMachineList(){
+		List<MuinMachine> muinMachineList = yeyakMapper.muinMachineList();
+		
+		for(MuinMachine muinMachine : muinMachineList) {
+			String muinSpecCode = muinMachine.getMuinSpecCode();
+			if(muinSpecCode != null) {
+				if("muin_spec_code_001".equals(muinSpecCode) || "muin_spec_code_002".equals(muinSpecCode)) {
+					muinMachine.setMuinSpecCode("세탁기");
+				}else if("muin_spec_code_003".equals(muinSpecCode) || "muin_spec_code_004".equals(muinSpecCode)) {
+					muinMachine.setMuinSpecCode("건조기");
+				}
+			}
+		}
+		
+		return muinMachineList;
+	}
+	
 
 	public List<Laundry> getIlbanGoodsPriceList() {
 		List<Laundry> ilbanGoodsPriceList = laundryMapper.ilbanGoodsPriceList();
