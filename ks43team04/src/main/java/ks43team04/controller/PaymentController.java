@@ -48,6 +48,23 @@ public class PaymentController {
 		
 		return "user/payment/payment";
 	}
+	
+	@PostMapping("/user/yeyakPayment")
+	public String yeyakPayment(@RequestParam(name = "laundryName") String laundryName,
+							@RequestParam(name = "goodsName") String goodsName
+							,Model model) {
+		
+		List<Laundry> laundryGoodsNameAndPrice = laundryService.getLaundryGoodsNameAndPrice(laundryName, goodsName);
+		
+		System.out.println(laundryName+" <----------세탁소이름");
+		System.out.println(goodsName+" <----------상품이름");
+		System.out.println(laundryGoodsNameAndPrice+" <----------laundryGoodsNameAndPrice 리스트값");
+		
+		model.addAttribute("laundryGoodsNameAndPrice", laundryGoodsNameAndPrice);
+		
+		return "user/payment/yeyakPayment";
+	}
+	
 	@GetMapping("/user/paymentComplete")
 	public String paymentComplete() {
 		return "user/payment/paymentComplete";
