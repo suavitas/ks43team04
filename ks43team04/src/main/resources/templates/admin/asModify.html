@@ -3,33 +3,53 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/adminDefault}">
 	  
+	  	
+
 	  
 	  
 	<!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
  	
  	<div class="admin-board-list" style="margin-top: 100px;">
- 		<h4 style="margin-bottom: 50px;">이벤트 작성</h4>
+ 		<h4 style="margin-bottom: 50px;">고장 신고</h4>
 	
 	
 		<div class="x_content">
 
-				<form class="form-horizontal form-label-left">
+				<form class="form-horizontal form-label-left" th:action="@{/admin/asModify}" method="POST">
 				
 				
+				
+	
+				<div class="form-group row">
+				<label class="control-label col-md-1 col-sm-1 ">세탁소명</label>
+				<div class="col-md-4 col-sm-4"  th:each="l : ${getMemberLaundryList}">
+				<input type="text" class="form-control" readonly="readonly" name="laundryCode" th:value="${l.laundryCode}" id="code">
+				</div>
+				</div>
 				
 				<div class="form-group row">
 				<label class="control-label col-md-1 col-sm-1 ">작성자</label>
 				<div class="col-md-4 col-sm-4 ">
-				<input type="text" class="form-control" readonly="readonly" placeholder="관리자">
+				<input type="text" class="form-control" id="memberId" readonly="readonly"  th:value="${memberId}">
 				</div>
+				<div class="checkbox">
+				<label class="smsCheck" style="margin: 10px 0 10px 20px;">
+				<div class="icheckbox_flat-green checked" style="position: relative;">
+				<input type="checkbox" class="flat" checked="checked" style="position: absolute; opacity: 0;">
+				<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+				</div> 
+				<span style="margin-left: 10px;">SMS 알림 수신 동의</span>
+				</label>
+				</div>
+				
 				</div>
 				
 				
 				<div class="form-group row ">
 				<label class="control-label col-md-1 col-sm-1 ">제목</label>
 				<div class="col-md-8 col-sm-8 ">
-				<input type="text" class="form-control" placeholder="제목">
+				<input type="text" class="form-control" name="asTitle" id="title" th:value="${asTitle}">
 				</div>
 				</div>
 				
@@ -42,6 +62,7 @@
 					<ul class="dropdown-menu">
 					</ul>
 					</div>
+					
 					<div class="btn-group">
 					<a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
 					<ul class="dropdown-menu">
@@ -97,14 +118,18 @@
 					<a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
 					</div>
 					</div>
-					<div id="editor-one" class="editor-wrapper placeholderText" contenteditable="true"></div>
-					<textarea name="descr" id="descr" style="display:none;"></textarea>
+					
+					
+					<div id="editor-one" class="editor-wrapper">
+					<textarea id="editor-one" class="editor-wrapper" name="asContent" th:text="${asContent}" style="width: 100%; height: 100px;"></textarea>
 					
 					</div>
 									
+				</div>
 				
-				
-				
+				<input type="hidden" name = "asCode" th:value="${asCode}">
+				<input type="hidden" name = "asState" th:value="${asState}">
+				<input type="hidden" name = "updateTime" th:value="${updateTime}">
 				
 				
 				
@@ -112,31 +137,15 @@
 			
 				<div class="form-group">
 				<div class="col-md-8 col-sm-8  offset-md-2" style="margin-left: 0; text-align: center; padding-top: 50px;">
-				<a th:href="@{/admin/eventList}"><button type="button" class="btn btn-primary" style="margin-right: 30px;">취소</button></a>
-				<a th:href="@{/admin/eventList}"><button type="submit" class="btn btn-success" style="margin-left: 30px;">등록</button></a>
+				
+				<a th:href="@{/admin/asListById}"><button type="button" class="btn btn-primary" style="margin-right: 30px;">취소</button></a>
+				<a th:href="@{/admin/asListById}"><button type="submit"  value="Submit" class="btn btn-success" style="margin-left: 30px;">수정</button></a>
 				</div>
 				</div>
 				</form>
 				</div>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 </div>

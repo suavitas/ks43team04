@@ -17,15 +17,16 @@
 			<tbody>
 				<tr class="even pointer">
 					<td>세탁소 명</td>
-					<td><input type="text" name="laundryName" th:value="${laundryName}" readonly="readonly"></td>
+					<td><input th:text="${laundryName}" name="laundryName" th:value="${laundryName}" hidden="true">
+					</td>
 				</tr>
 				<tr class="even pointer">
 					<td>휴일 명</td>
-					<td><input type="text" name="yearlyHolidayName" th:value="${yearlyHolidayName}" readonly="readonly"></td>
+					<td><input th:text="${yearlyHolidayName}" name="yearlyHolidayName" th:value="${yearlyHolidayName}" hidden="true"></td>
 				</tr>
 				<tr class="even pointer">
 					<td>휴일 날짜</td>
-					<td><input type="text" name="yearlyHolidayDate" th:value="${yearlyHolidayDate}" readonly="readonly"></td>
+					<td><input th:text="${yearlyHolidayDate}" name="yearlyHolidayDate" th:value="${yearlyHolidayDate}"  hidden="true"></td>
 					
 				</tr>
 				<tr class="even pointer" id="O">

@@ -1,6 +1,7 @@
 package ks43team04.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -24,6 +25,9 @@ public interface BoardMapper {
 	
 	//리뷰 조회
 	public List<Review> getReviewList();
+	
+	//공지사항 글 삭제
+	public int noticeRemove(Board board);
 
 	//공지사항 글 수정
 	public int noticeModify(Board board);
@@ -55,7 +59,13 @@ public interface BoardMapper {
 
 	//문의사항(서비스 이용) 목록 조회
 	public List<Board> getQnaServiceList();
-
+	
+	//공지사항 목록 조회(페이징)
+	public List<Map<String, Object>> getNoticeList(Map<String, Object> paramMap);
+	
+	//공지사항 목록 총 row 수
+	public int getNoticeListCount();
+	
 	//공지사항 목록 조회
 	public List<Board> getNoticeList();
 }

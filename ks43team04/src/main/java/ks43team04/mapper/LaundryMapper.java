@@ -15,9 +15,13 @@ public interface LaundryMapper {
 
 	/* 세탁소 조건 조회 */
 	public List<LaundryList> LaundryList(String searchKey, String searchValue);
+	
 	/* 세탁소 전체 조회 */
 	public List<LaundryList> LaundryList();
 
+	/*멤버이름으로 세탁소 조회*/
+	public List<LaundryList> getMemberLaundryList(String memberId);
+		
 	/* 무인 장비 스팩 */
 	public List<MuinMachienSpec> machineSpecList();
 

@@ -3,14 +3,15 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/adminDefault}">
 	 
-	 	  	<th:block layout:fragment="customCss">
+	 <!-- 사용자정의 CSS -->
+	<th:block layout:fragment="customCss">
 		<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css}">
 	</th:block>  
-	
+	<!-- 자바스크립트 플러그인 -->
 	<th:block layout:fragment="customJsPlugin">
 		<script th:src="@{https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js}"></script>
 	</th:block>
-	
+	<!-- 사용자정의 자바스크립트 -->
 	<th:block layout:fragment="customJsScript">
 		<script>
 		/*setTimeout(function(){datatable.columns.adjust().draw();},200);*/
@@ -18,16 +19,13 @@
 				$('.tbqnaList').DataTable({
 					language : {'info':'맘대로'}
 				});
-			});
-		
+			});		
 		</script>
-		
-		
 	</th:block> 
 	  
 	  
 	<!-- 사용자정의 contents -->
-<th:block layout:fragment="customContents">
+	<th:block layout:fragment="customContents">
  	
  	<div class="admin-board-list" style="margin-top: 100px;">
  		<h4 style="margin-bottom: 50px;">문의사항 목록 조회</h4>
@@ -75,7 +73,7 @@
 					<a th:href="@{/admin/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 					</td>
 					<td th:text="${l.boardAddFile}"></td>
-					<td th:text="${l.memeberId}"></td>
+					<td th:text="${l.memberId}"></td>
 					<td th:text="${l.registTime}"></td>
 					<td th:text="${l.boardReadCount}"></td>
 					
@@ -112,7 +110,7 @@
 					<a th:href="@{/admin/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 					</td>
 					<td th:text="${l.boardAddFile}"></td>
-					<td th:text="${l.memeberId}"></td>
+					<td th:text="${l.memberId}"></td>
 					<td th:text="${l.registTime}"></td>
 					<td th:text="${l.boardReadCount}"></td>
 					
@@ -149,7 +147,7 @@
 					<a th:href="@{/admin/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 					</td>
 					<td th:text="${l.boardAddFile}"></td>
-					<td th:text="${l.memeberId}"></td>
+					<td th:text="${l.memberId}"></td>
 					<td th:text="${l.registTime}"></td>
 					<td th:text="${l.boardReadCount}"></td>
 					
@@ -186,7 +184,7 @@
 					<a th:href="@{/admin/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 					</td>
 					<td th:text="${l.boardAddFile}"></td>
-					<td th:text="${l.memeberId}"></td>
+					<td th:text="${l.memberId}"></td>
 					<td th:text="${l.registTime}"></td>
 					<td th:text="${l.boardReadCount}"></td>
 					

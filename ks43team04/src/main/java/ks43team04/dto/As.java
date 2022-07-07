@@ -5,6 +5,7 @@ import java.util.List;
 public class As {
 	private String asCode;
 	private String laundryCode;
+	private String memberId;
 	private String asNumber;
 	private String asState;
 	private String asTitle;
@@ -15,6 +16,7 @@ public class As {
 	private String asAddFileVol;
 	private String registTime;
 	private String updateTime;
+	private String visitTime;
 	
 	private List<LaundryList> LaundryList;
 
@@ -32,6 +34,14 @@ public class As {
 
 	public void setLaundryCode(String laundryCode) {
 		this.laundryCode = laundryCode;
+	}
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 
 	public String getAsNumber() {
@@ -114,6 +124,14 @@ public class As {
 		this.updateTime = updateTime;
 	}
 
+	public String getVisitTime() {
+		return visitTime;
+	}
+
+	public void setVisitTime(String visitTime) {
+		this.visitTime = visitTime;
+	}
+
 	public List<LaundryList> getLaundryList() {
 		return LaundryList;
 	}
@@ -124,36 +142,15 @@ public class As {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("As [asCode=");
-		builder.append(asCode);
-		builder.append(", laundryCode=");
-		builder.append(laundryCode);
-		builder.append(", asNumber=");
-		builder.append(asNumber);
-		builder.append(", asState=");
-		builder.append(asState);
-		builder.append(", asTitle=");
-		builder.append(asTitle);
-		builder.append(", asContent=");
-		builder.append(asContent);
-		builder.append(", asAddFile=");
-		builder.append(asAddFile);
-		builder.append(", asAddFileName=");
-		builder.append(asAddFileName);
-		builder.append(", asAddFileChangeName=");
-		builder.append(asAddFileChangeName);
-		builder.append(", asAddFileVol=");
-		builder.append(asAddFileVol);
-		builder.append(", registTime=");
-		builder.append(registTime);
-		builder.append(", updateTime=");
-		builder.append(updateTime);
-		builder.append(", LaundryList=");
-		builder.append(LaundryList);
-		builder.append("]");
-		return builder.toString();
+		return "As [asCode=" + asCode + ", laundryCode=" + laundryCode + ", memberId=" + memberId + ", asNumber="
+				+ asNumber + ", asState=" + asState + ", asTitle=" + asTitle + ", asContent=" + asContent
+				+ ", asAddFile=" + asAddFile + ", asAddFileName=" + asAddFileName + ", asAddFileChangeName="
+				+ asAddFileChangeName + ", asAddFileVol=" + asAddFileVol + ", registTime=" + registTime
+				+ ", updateTime=" + updateTime + ", visitTime=" + visitTime + ", LaundryList=" + LaundryList + "]";
 	}
+
+	
+	
 	
 
 

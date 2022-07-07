@@ -8,7 +8,7 @@
 		<id column="board_idx" 								property="boardIdx"/>
 		<result column="board_menu_code" 					property="boardMenuCode"/>
 		<result column="board_idx" 							property="boardIdx"/>
-		<result column="m_id" 								property="memeberId"/>
+		<result column="m_id" 								property="memberId"/>
 		<result column="board_group_no" 					property="boardGroupNo"/>
 		<result column="board_order_no" 					property="boardOrderNo"/>
 		<result column="board_read_count" 					property="boardReadCount"/>
@@ -67,24 +67,49 @@
 		</collection>
 	</resultMap>
 	
-		<update id="noticeModify" parameterType="Board">
+	<delete id="noticeRemove" parameterType="Board">
+		/* 공지 글 삭제 */
+		DELETE FROM tb_board 
+		WHERE 
+			board_menu_code = #{boardMenuCode}
+		and	
+			board_idx = #{boardIdx}
+	
+	</delete>
+	
+	
+	<update id="noticeModify" parameterType="Board">
 		/* 공지 글 수정 */
 			UPDATE 
 				tb_board
-			set		
-				board_title = #{boardTitle}
-				,board_content = #{boardContent}
-				,board_add_file = #{boardAddFile}
-				,board_add_file_name = #{boardAddFileName}
-				,board_add_file_vol = #{boardAddFileVol}
-				,update_time = CURDATE()			
-			WHERE board_code = #{boardCode};
+			<trim prefix="SET" prefixOverrides=",">	
+				<if test="boardTitle != null and boardTitle != ''">
+					board_title = #{boardTitle}
+				</if>
+				<if test="boardContent != null and boardContent != ''">
+					,board_content = #{boardContent}
+				</if>
+				<if test="boardAddFile != null and boardAddFile != ''">	
+					,board_add_file = #{boardAddFile}
+				</if>
+				<if test="boardAddFileName != null and boardAddFileName != ''">	
+					,board_add_file_name = #{boardAddFileName}
+				</if>
+				<if test="boardAddFileVol != null and boardAddFileVol != ''">	
+					,board_add_file_vol = #{boardAddFileVol}
+				</if>
+				<if test="updateTime = null or updateTime != null">	
+					,update_time = NOW()
+				</if>	
+			</trim>				
+			WHERE 
+				board_idx = #{boardIdx};
 	</update>
 	
 
 	
 	<insert id="eventForm" parameterType="Event">
-		/*이벤트 등록 */
+		/* 이벤트 등록 */
 		INSERT INTO tb_event
 		(event_code
 		, m_id
@@ -102,7 +127,7 @@
 			(select 
 				CONCAT('event_code','_',max(CAST(substring(event_code,12) AS DECIMAL)+1)) AS event_code 
 			from tb_event AS e)
-		, 'id001'
+		, #{memberId}
 		, (SELECT
 				max(e.event_no)+1
 			FROM
@@ -230,7 +255,7 @@
 			FROM
 				tb_board AS b)
 		, 'notice_menu_code_001'
-		, 'id001'			
+		, #{memberId}			
 		, (SELECT
 				max(b.board_group_no)+1
 			FROM
@@ -272,7 +297,7 @@
 			FROM
 				tb_board AS b)
 		, 'notice_menu_code_001'
-		, 'id001'			
+		, #{memberId}			
 		, (SELECT
 				max(b.board_group_no)+1
 			FROM
@@ -324,7 +349,7 @@
 			FROM
 				tb_board AS b)
 		, #{boardMenuCode}
-		, 'id001'			
+		, #{memberId}			
 		, (SELECT
 				b.board_group_no
 			FROM
@@ -367,7 +392,7 @@
 			FROM
 				tb_board AS b)
 		, #{boardMenuCode}
-		, 'id001'			
+		, #{memberId}			
 		, (SELECT
 				max(b.board_group_no)+1
 			FROM
@@ -486,23 +511,35 @@
 		order by b.board_group_no DESC, b.board_order_no asc;
 	</select>
 	
-	<select id="getNoticeList" resultMap="boardResultMap">
+	<select id="getNoticeListCount" resultType="int">
+		/* 공지사항 목록 총 row 수 */
+		SELECT
+			COUNT(b.board_idx)
+		FROM
+			tb_board AS b
+		WHERE 
+			b.board_menu_code = 'notice_menu_code_001';	
+	</select>
+	
+	<select id="getNoticeList" parameterType="map" resultType="map">
 	  	/* 공지사항 목록 조회 */
 		SELECT
-			b.board_menu_code
-			,b.board_idx
-			,b.board_secret
-			,b.board_title
-			,b.board_add_file
-			,b.m_id
-			,b.regist_time
-			,b.board_read_count
-			,b.comment_state
+			b.board_menu_code AS boardMenuCode
+			,b.board_idx AS boardIdx
+			,b.board_secret AS boardSecret
+			,b.board_title AS boardTitle
+			,b.board_add_file AS boardAddFile
+			,b.m_id AS memberId
+			,(SELECT 
+				IFNULL(b.update_time, b.regist_time)) AS registTime
+			,b.board_read_count AS boardReadCount
+			,b.comment_state AS commentState
 		FROM
 			tb_board AS b
 		WHERE
 			b.board_menu_code= 'notice_menu_code_001'
-		order by b.board_idx DESC;
+		ORDER BY b.board_idx DESC
+		LIMIT #{startRow}, #{rowPerPage};
 	</select>
 
 

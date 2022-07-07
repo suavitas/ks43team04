@@ -7,6 +7,7 @@
 	<resultMap type="As" 								id="asResultMap">
 		<id 	column="as_code" 						property="asCode"/>
 		<result column="laundry_code" 					property="laundryCode"/>
+		 <result column="m_id"                      	property="memberId"/>
 		<result column="as_number" 						property="asNumber"/>
 		<result column="as_state" 						property="asState"/>
 		<result column="as_title" 						property="asTitle"/>
@@ -17,6 +18,7 @@
 		<result column="as_add_file_vol" 				property="asAddFileVol"/>
 		<result column="regist_time" 					property="registTime"/>
 		<result column="update_time" 					property="updateTime"/>
+		<result column="visit_time" 					property="visitTime"/>
 		<collection property="LaundryList"         		ofType="LaundryList">
 	      <id column="laundry_code"                 	property="laundryCode"/>
 	      <result column="m_id"                      	property="memberId"/>
@@ -36,12 +38,63 @@
 		</collection>
 	</resultMap>
 	
+
+	<!-- ><delete id="asDel" parameterType="As">
+		/*AS 삭제*/
+		DELETE FROM tb_as
+		WHERE 
+			as_code = #{asCode}
+	</delete> -->
+	
+	<update id="asModify" parameterType="As">
+		/*AS 수정*/
+		UPDATE tb_as AS a
+		<trim prefix="SET" prefixOverrides=",">
+			<if test="asTitle != null and asTitle != ''">		
+			,as_title = #{asTitle}
+			</if>
+			<if test="asContent != null and asContent != ''">				
+			,as_content = #{asContent}
+			</if>
+			<if test="updateTime != null and updateTime != ''">	
+			,update_time = NOW()
+			</if>
+			</trim>
+		WHERE 
+			a.as_code = #{asCode}
+		and
+			a.as_state = '대기'
+	</update>
+	
+	<!-- <update id="asEnd" parameterType="As">
+		/*AS 완료*/
+		UPDATE tb_as AS a
+		SET
+			a.as_state='완료'
+		WHERE 
+			a.as_code = #{asCode}
+		 and
+			a.as_state = '접수'
+	</update>  -->
+
+	<update id="asReceipt" parameterType="As">
+		/*AS 접수*/
+		UPDATE tb_as AS a
+		SET
+			a.as_state='접수',
+			a.visit_time = #{visitTime}
+		WHERE 
+			a.as_code = #{asCode}
+		and
+			a.as_state = '대기'
+	</update>
 	
 	<insert id="asForm" parameterType="As">
 		/* AS 작성 */
 		INSERT INTO tb_as
 			(as_code
 			,laundry_code
+			,m_id
 			,as_number
 			,as_state
 			,as_title
@@ -54,7 +107,8 @@
 		VALUES (
 			(SELECT
 			CONCAT('as_code','_',max(CAST(substring(as_code,9)+1 AS DECIMAL))) AS as_code from tb_as ALIAS_FOR_SUBQUERY)
-		, 'laundry_code_002'		
+		, #{laundryCode}
+		, #{memberId}		
 		, (SELECT
 			IFNULL(MAX(a.as_number), 0)+1
 			FROM
@@ -75,12 +129,13 @@
 			a.as_code
 			,a.as_state
 			,l.laundry_name
-			,l.m_id
+			,a.m_id
 			,a.as_title
 			,a.as_content
 			,a.as_add_file
 			,a.as_add_file_name			
 			,a.regist_time
+			,a.visit_time
 		FROM
 			tb_as AS a
 		INNER JOIN
@@ -89,6 +144,29 @@
 			a.laundry_code = l.laundry_code
 		where 
 			a.as_code = #{asCode};		
+	</select>
+	
+	<select id="asListById" resultMap="asResultMap">
+		/* AS 목록 조회 */
+		SELECT
+			a.as_code
+			,a.as_number
+			,a.as_state
+			,l.laundry_name
+			,a.as_title
+			,a.as_add_file
+			,a.m_id
+			,a.regist_time
+			,a.visit_time
+		FROM
+			tb_as AS a
+		INNER JOIN
+			tb_laundry AS l
+		ON 
+			a.laundry_code = l.laundry_code
+		WHERE 
+			a.m_id = #{memberId}	
+		order by a.as_number desc;
 	</select>
 	
 	
@@ -101,8 +179,9 @@
 			,l.laundry_name
 			,a.as_title
 			,a.as_add_file
-			,l.m_id
+			,a.m_id
 			,a.regist_time
+			,a.visit_time
 		FROM
 			tb_as AS a
 		INNER JOIN
@@ -121,8 +200,9 @@
 			,l.laundry_name
 			,a.as_title
 			,a.as_add_file
-			,l.m_id
+			,a.m_id
 			,a.regist_time
+			,a.visit_time
 		FROM
 			tb_as AS a
 		INNER JOIN
@@ -142,8 +222,9 @@
 			,l.laundry_name
 			,a.as_title
 			,a.as_add_file
-			,l.m_id
+			,a.m_id
 			,a.regist_time
+			,a.visit_time
 		FROM
 			tb_as AS a
 		INNER JOIN
@@ -163,8 +244,9 @@
 			,l.laundry_name
 			,a.as_title
 			,a.as_add_file
-			,l.m_id
+			,a.m_id
 			,a.regist_time
+			,a.visit_time
 		FROM
 			tb_as AS a
 		INNER JOIN

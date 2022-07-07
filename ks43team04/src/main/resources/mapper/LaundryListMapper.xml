@@ -194,6 +194,14 @@
 			GROUP BY result.laundry_name;
    </select>
    
+   <select id="addlaundryName" resultMap="LaundryListResultMap">
+	   SELECT 
+		laundry_name
+		,laundry_code
+		FROM
+		tb_laundry;
+	</select>
+   
    
    
    

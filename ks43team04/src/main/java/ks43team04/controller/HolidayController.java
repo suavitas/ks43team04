@@ -53,8 +53,39 @@ public class HolidayController {
 
 		return "admin/lundryHoliday";
 	}
+	@GetMapping("/removeHoliday")
+	public String removeHoliday(@RequestParam(name = "laundryName", required=false) String laundryName,
+			@RequestParam(name = "yearlyHolidayName", required=false) String yearlyHolidayName,
+			@RequestParam(name = "yearlyHolidayDate", required=false) String yearlyHolidayDate, 
+			@RequestParam(name = "holidayCodeUse", required=false) String holidayCodeUse,
+			@RequestParam(name = "holidayCode", required=false) String holidayCode,
+			@RequestParam(name = "laundryCode", required=false) String laundryCode,
+			Model model) {
+		
+		System.out.println("_____삭제하기 위해서 정보를 받아왔습니다____");
+		
+		model.addAttribute("laundryName", laundryName);
+		model.addAttribute("holidayCode", holidayCode);
+		model.addAttribute("yearlyHolidayName", yearlyHolidayName);
+		model.addAttribute("yearlyHolidayDate", yearlyHolidayDate);
+		model.addAttribute("holidayCodeUse", holidayCodeUse);
+		model.addAttribute("laundryCode", laundryCode);
+		//model.addAttribute("modifyHoliday", modifyHoliday);
 	
-	/* 세탁소별 휴일 삭제로 이동 */
+		return "admin/removeHoliday";
+	}
+	
+	/* 세탁소별 휴일 수정하기*/
+	@PostMapping("/removeHoliday")
+	public String removeHoliday(String holidayCode) {
+
+		holidayService.removeHoliday(holidayCode);
+		System.out.println("________세탁소별 휴일 정보 삭제를 실행합니다.___________"+holidayCode);
+		return "redirect:/admin/lundryHoliday";
+	}
+	
+	
+	/* 세탁소별 휴일 수정으로 정보 이동 */
 	@GetMapping("/changeHoliday")
 	public String changeHoliday(@RequestParam(name = "laundryName", required=false) String laundryName,
 			@RequestParam(name = "yearlyHolidayName", required=false) String yearlyHolidayName,
@@ -64,9 +95,7 @@ public class HolidayController {
 			@RequestParam(name = "laundryCode", required=false) String laundryCode,
 			Model model) {
 		
-		System.out.println("_____changeHoliday start____");
-		//HolidayList modifyHoliday = holidayService.getRemoveHolidayByHolidayCode(holidayCode);
-		System.out.println("_____changeHoliday End____");
+		System.out.println("_____세탁소별 휴가를 수정하기위해 정보를 불러왔습니다____");
 		
 		model.addAttribute("laundryName", laundryName);
 		model.addAttribute("holidayCode", holidayCode);
@@ -79,14 +108,40 @@ public class HolidayController {
 		return "admin/changeHoliday";
 	}
 
-	/* 세탁소별 휴일 수정*/
+	/* 세탁소별 휴일 수정하기*/
 	@PostMapping("/changeHoliday")
 	public String changeHoliday(HolidayList Laundryholiday) {
 
 		holidayService.modifyHoliday(Laundryholiday);
-		System.out.println("________Laundryholiday이겁니다!!!___________"+Laundryholiday);
+		System.out.println("________세탁소별 휴일 정보를 수정했습니다.___________"+Laundryholiday);
 		return "redirect:/admin/lundryHoliday";
 	}
+	
+	/* 세탁소별 휴가 추가 */
+	@PostMapping("/addHoliday")
+	public String addHoliday(@RequestParam(name = "laundryCode", required=false) String laundryCode,
+			@RequestParam(name = "yearlyHolidayName", required=false) String yearlyHolidayName,
+			@RequestParam(name = "yearlyHolidayDate", required=false) String yearlyHolidayDate, 
+			Model model) {
+		
+			holidayService.addHoliday(laundryCode, yearlyHolidayName, yearlyHolidayDate);
+			System.out.println("______________"+ laundryCode);
+			System.out.println("______________"+ yearlyHolidayName);
+			System.out.println("______________"+ yearlyHolidayDate);
+		return "redirect:/admin/lundryHoliday";
+	}
+	
+	/* 세탁소별 휴가 추가 */
+	@GetMapping("/addHoliday")
+	public String addHoliday(Model model) {
+		
+		List<LaundryList> addLaundryHoliday = holidayService.addHoliday();
+		model.addAttribute("addLaundryHoliday",addLaundryHoliday);
+		System.out.println("______세탁소별 휴일을 추가하기 위해 정보를 불러왔습니다._________"+addLaundryHoliday);
+		return "admin/addHoliday";
+	}
+	
+	
 
 
 	/* 공휴일 목록 */

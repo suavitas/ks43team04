@@ -17,6 +17,9 @@ public interface LaundryListMapper {
 	
 	public List<LaundryList> yearlaundryList();
 	
+	/* 세탁소 이름만 조회 */
+	public List<LaundryList> addlaundryName();
+	
 	
 	
 }

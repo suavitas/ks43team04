@@ -53,8 +53,7 @@
 		<result column="machine_safety" property="MachineSafety" />
 		<result column="machine_control" property="MachineSafety" />
 		<result column="machine_skill" property="MachineSkill" />
-		<result column="machine_management"
-			property="MachineManagement" />
+		<result column="machine_management" property="MachineManagement" />
 		<result column="machine_display" property="MachineDisplay" />
 		<result column="machine_Power" property="MachinePower" />
 		<result column="machine_space" property="MachineSpace" />
@@ -88,6 +87,18 @@
 				property="goodsPriceUseState" />
 		</collection>
 	</resultMap>
+	
+	  <select id="getMemberLaundryList" parameterType="String" resultMap="laundryResultMap">
+   		/*멤버이름으로 세탁소 조회*/
+   		SELECT
+			l.laundry_name
+			,l.laundry_code
+		FROM
+			tb_laundry AS l
+		WHERE 
+			l.m_id = #{memberId};	
+   	</select>
+   
 
 	<select id="laundryGoodsNameAndPrice" parameterType="String"
 		resultMap="laundryResultMap">
@@ -138,28 +149,28 @@
 
 	<select id="machineSpecList" resultMap="MachineSpecResultMap">
 		SELECT
-		muin_spec_code,
-		machine_category,
-		machine_release,
-		machine_limit,
-		machine_motor,
-		machine_energy,
-		machine_course,
-		machine_removal,
-		machine_timer,
-		machine_safety,
-		machine_skill,
-		machine_management,
-		machine_display,
-		machine_control,
-		machine_Power,
-		machine_space,
-		machine_color,
-		machine_size,
-		machine_as,
-		machine_door,
-		admin_level_code,
-		regist_time
+			muin_spec_code,
+			machine_category,
+			machine_release,
+			machine_limit,
+			machine_motor,
+			machine_energy,
+			machine_course,
+			machine_removal,
+			machine_timer,
+			machine_safety,
+			machine_skill,
+			machine_management,
+			machine_display,
+			machine_control,
+			machine_Power,
+			machine_space,
+			machine_color,
+			machine_size,
+			machine_as,
+			machine_door,
+			admin_level_code,
+			regist_time
 		FROM
 		tb_muin_spec
 	</select>

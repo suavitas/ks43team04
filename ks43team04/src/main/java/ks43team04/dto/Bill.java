@@ -14,6 +14,7 @@ public class Bill {
 	private String deliveryPay;
 	private String totalPayGroupcode;
 
+
 	public String getBillCode() {
 		return billCode;
 	}

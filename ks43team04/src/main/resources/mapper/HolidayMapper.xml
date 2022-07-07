@@ -49,6 +49,31 @@
 
 	</update>
 	
+	<insert id="addHoliday" parameterType="String">
+ 		/* 세탁소별 휴일 추가 */
+ 		INSERT INTO tb_holiday
+			(holiday_code 
+			,laundry_code
+			,yearly_holiday_date 
+			,yearly_holiday_name 
+			,holiday_code_use)
+		
+		VALUES(
+			(SELECT MAX(holiday_code)+1 FROM tb_holiday AS L)
+			,#{laundryCode}
+			,#{yearlyHolidayDate}
+			,#{yearlyHolidayName}
+			,'O');
+ 	</insert>
+ 	
+ 	<delete id="removeHoliday" parameterType="String">
+ 		DELETE 
+        FROM 
+        	tb_holiday
+        WHERE
+       		holiday_code = #{holidayCode}; 
+     </delete>
+	
 	
 	
 	<select id="holidayList" parameterType="String" resultMap="HolidayListResultMap">

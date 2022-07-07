@@ -1,6 +1,7 @@
 package ks43team04.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,15 +11,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ks43team04.dto.As;
 import ks43team04.dto.Board;
 import ks43team04.dto.Event;
+import ks43team04.dto.LaundryList;
+import ks43team04.dto.Member;
 import ks43team04.dto.Review;
 import ks43team04.service.BoardService;
+import ks43team04.service.MemberService;
 
 @Controller
 @RequestMapping("/admin")
@@ -26,21 +29,69 @@ public class AdminBoardController {
 	
 	private static final Logger log = LoggerFactory.getLogger(AdminBoardController.class);
 
+	private final MemberService memberService;
 	private final BoardService boardService;
 
-	public AdminBoardController( BoardService boardService) {
+	public AdminBoardController( BoardService boardService, MemberService memberService) {
 		this.boardService = boardService;
-
+		this.memberService = memberService;
 	}
 	
-
-
+	/*공지사항 삭제*/
+	@PostMapping("/noticeList")
+	public String noticeList(Board board) {
+		boardService.noticeRemove(board);
+		return "redirect:/admin/noticeList";
+	}
+	
+	/*공지사항 수정*/
+	@GetMapping("/noticeModify")
+	public String noticeModify(@RequestParam(name = "boardIdx", required = false) String boardIdx
+								,@RequestParam(name = "memberId", required = false) String memberId
+								,@RequestParam(name = "boardTitle", required = false) String boardTitle
+								,@RequestParam(name = "boardContent", required = false) String boardContent
+								,@RequestParam(name = "boardAddFile", required = false) String boardAddFile
+								,@RequestParam(name = "boardAddFileName", required = false) String boardAddFileName
+								,@RequestParam(name = "boardAddFileVol", required = false) String boardAddFileVol
+								,@RequestParam(name = "updateTime", required = false) String updateTime
+								,Model model) {
+		model.addAttribute("boardIdx", boardIdx);
+		model.addAttribute("memberId", memberId);
+		model.addAttribute("boardTitle", boardTitle);
+		model.addAttribute("boardContent", boardContent);
+		model.addAttribute("boardAddFile", boardAddFile);
+		model.addAttribute("boardAddFileName", boardAddFileName);
+		model.addAttribute("boardAddFileVol", boardAddFileVol);
+		model.addAttribute("updateTime", updateTime);
+		return "/admin/noticeModify";
+	}
+	
+	@PostMapping("/noticeModify")
+	public String noticeModify(@RequestParam(name = "boardIdx", required = false) String boardIdx
+								,@RequestParam(name = "memberId", required = false) String memberId
+								,@RequestParam(name = "boardTitle", required = false) String boardTitle
+								,@RequestParam(name = "boardContent", required = false) String boardContent
+								,@RequestParam(name = "boardAddFile", required = false) String boardAddFile
+								,@RequestParam(name = "boardAddFileName", required = false) String boardAddFileName
+								,@RequestParam(name = "boardAddFileVol", required = false) String boardAddFileVol
+								,@RequestParam(name = "updateTime", required = false) String updateTime
+								,Board board) {
+		boardService.noticeModify(board);
+		System.out.println("noticeModify----------"+board);
+		return "redirect:/admin/noticeList";
+	}
+	
 	
 	/*고장 신고 등록*/
 	@GetMapping("/asForm")
-	public String asForm(Model model) {
+	public String asForm(Model model, HttpSession session) {
+		String sessionId = (String) session.getAttribute("SID");
+		Member member = memberService.getMemberInfoById(sessionId);
+		List<LaundryList> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
 		model.addAttribute("title", "AS등록");
 		model.addAttribute("titleName", "AS등록");
+		model.addAttribute("member", member);
+		model.addAttribute("getMemberLaundryList", getMemberLaundryList);
 		return "/admin/asForm";
 	}
 	
@@ -48,14 +99,25 @@ public class AdminBoardController {
 	public String asForm(As as, HttpSession session) {
 		String sessionId = (String) session.getAttribute("SID");
 		boardService.asForm(as, sessionId);
-		log.info("as 등록 data : {}", as);
-		log.info("화면에서 입력받은 data: {}, laundryCode");
+		System.out.println("as입니다"+as);
 		return "redirect:/admin/asListById";
 	}
 	
 	/*나의 고장 신고 내역 확인*/
 	@GetMapping("/asListById")
-	public String asListById() {
+	public String asListById(Model model, HttpSession session) {
+		
+		String sessionId = (String) session.getAttribute("SID");
+		String sessionName = (String) session.getAttribute("SNAME");
+		Member member = memberService.getMemberInfoById(sessionId);
+		
+		List<LaundryList> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
+		List<As> asListById = boardService.asListById(sessionId);
+		
+		model.addAttribute("sessionName", sessionName);
+		model.addAttribute("getMemberLaundryList", getMemberLaundryList);
+		model.addAttribute("asListById", asListById);
+		System.out.println(asListById);
 		return "admin/asListById";
 	}
 	
@@ -64,6 +126,8 @@ public class AdminBoardController {
 	public String asDetail(@RequestParam(name = "asCode", required = false) String asCode
 							,Model model) {
 		As as = boardService.getAsDetail(asCode);
+		
+		
 		model.addAttribute("as", as);
 		log.info("as목록 : {}", as);
 		System.out.println(as);
@@ -83,6 +147,53 @@ public class AdminBoardController {
 		model.addAttribute("endAsList", endAsList);
 		System.out.println(asList);
 		return "admin/asList";
+	}
+	
+	/*고장 신고 수정*/
+	@GetMapping("/asModify")
+	public String asModify(@RequestParam(name = "asCode", required = false) String asCode
+							,@RequestParam(name = "memberId", required = false) String memberId
+							,@RequestParam(name = "asTitle", required = false) String asTitle
+							,@RequestParam(name = "asContent", required = false) String asContent
+							,@RequestParam(name = "asState", required = false) String asState
+							,@RequestParam(name = "updateTime", required = false) String updateTime
+							,Model model, HttpSession session) {
+		As as = boardService.getAsDetail(asCode);
+		String sessionId = (String) session.getAttribute("SID");
+		Member member = memberService.getMemberInfoById(sessionId);
+		List<LaundryList> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
+		model.addAttribute("member", member);
+		model.addAttribute("getMemberLaundryList", getMemberLaundryList);
+		model.addAttribute("as", as);
+		model.addAttribute("asCode", asCode);
+		model.addAttribute("memberId", memberId);
+		model.addAttribute("asTitle", asTitle);
+		model.addAttribute("asContent", asContent);
+		model.addAttribute("asState", asState);
+		model.addAttribute("updateTime", updateTime);
+		System.out.println("getMemberLaundryList>>>>>>"+getMemberLaundryList);
+		return "/admin/asModify";
+	}
+	@PostMapping("/asModify")
+	public String asModify(@RequestParam(name = "asCode", required = false) String asCode
+							,@RequestParam(name = "memberId", required = false) String memberId
+							,@RequestParam(name = "asTitle", required = false) String asTitle
+							,@RequestParam(name = "asContent", required = false) String asContent
+							,@RequestParam(name = "asState", required = false) String asState
+							,@RequestParam(name = "updateTime", required = false) String updateTime
+							,As as) {
+		boardService.asModify(as);
+		return "redirect:/admin/asListById";
+	}
+	
+	/*고장 신고 접수, 완료, 삭제*/
+	@PostMapping("/asList")
+	public String asList(@RequestParam(name = "asCode", required = false) String asCode
+						,As as) {
+		boardService.asReceipt(as);
+		//boardService.asEnd(as);
+		//boardService.asDel(as);
+		return "redirect:/admin/asList";
 	}
 	
 	/*리뷰 목록 조회*/
@@ -175,9 +286,16 @@ public class AdminBoardController {
 	
 	/*공지사항 작성*/
 	@GetMapping("/noticeForm")
-	public String noticeForm(Model model) {
+	public String noticeForm(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
+								,@RequestParam(name = "boardIdx", required = false) Integer boardIdx
+								,Model model, HttpSession session) {
+		String sessionId = (String) session.getAttribute("SID");
+		Member member = memberService.getMemberInfoById(sessionId);
+	
 		model.addAttribute("title", "공지등록");
 		model.addAttribute("titleName", "공지등록");
+		model.addAttribute("member", member);
+		System.out.println("noticeForm get====="+member);
 		return "/admin/noticeForm";
 	}
 	
@@ -187,6 +305,7 @@ public class AdminBoardController {
 		boardService.noticeForm(board, sessionId);
 		log.info("공지 등록 data : {}", board);
 		log.info("화면에서 입력받은 data: {}, boardIdx");
+		System.out.println("board+++++" +board);
 		return "redirect:/admin/noticeList";
 	}
 	
@@ -196,15 +315,28 @@ public class AdminBoardController {
 								,@RequestParam(name = "boardIdx", required = false) int boardIdx
 								, Model model) {
 		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
+		String mId = board.getMemberId();
+		Member member = memberService.getMemberInfoById(mId);
+		model.addAttribute("member", member);
 		model.addAttribute("board", board);
+		System.out.println("member--------noticedetail" + member);
+		System.out.println("board--------------"+board);
 		return "admin/noticeDetail";
 	}
 	
 	/*공지사항 목록 조회*/
 	@GetMapping("/noticeList")
-	public String noticeList(Model model) {
-		List<Board> noticeList = boardService.getNoticeList();
-		model.addAttribute("noticeList", noticeList);
+	public String noticeList(@RequestParam(name = "currentPage", required = false, defaultValue = "1") int currentPage 
+								,Model model) {
+
+		Map<String, Object> resultMap = boardService.getNoticeList(currentPage);
+		
+		model.addAttribute("getNoticeList", resultMap.get("getNoticeList"));
+		model.addAttribute("resultMap", resultMap);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", resultMap.get("lastPage"));
+		model.addAttribute("startPageNum", resultMap.get("startPageNum"));
+		model.addAttribute("endPageNum", resultMap.get("endPageNum"));
 		return "admin/noticeList";
 	}
 	

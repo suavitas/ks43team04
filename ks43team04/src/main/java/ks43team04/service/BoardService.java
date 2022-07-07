@@ -1,8 +1,8 @@
 package ks43team04.service;
 
+import java.util.HashMap;
 import java.util.List;
-
-import javax.websocket.Session;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ks43team04.dto.As;
 import ks43team04.dto.Board;
 import ks43team04.dto.Event;
+import ks43team04.dto.LaundryList;
 import ks43team04.dto.Review;
 import ks43team04.mapper.AsMapper;
 import ks43team04.mapper.BoardMapper;
+import ks43team04.mapper.LaundryMapper;
 
 @Service
 @Transactional
@@ -21,10 +23,29 @@ public class BoardService {
 
 	private final BoardMapper boardMapper;
 	private final AsMapper asMapper;
+	private final LaundryMapper laundryMapper;
 
-	public BoardService(BoardMapper boardMapper, AsMapper asMapper) {
+	public BoardService(BoardMapper boardMapper, AsMapper asMapper,LaundryMapper laundryMapper) {
 		this.boardMapper = boardMapper;
 		this.asMapper = asMapper;
+		this.laundryMapper = laundryMapper;
+	}
+	/*공지사항 삭제*/
+	public int noticeRemove(Board board) {
+		int result = boardMapper.noticeRemove(board);
+		return result;
+	}
+	
+	/*공지사항 수정*/
+	public int noticeModify(Board board) {
+		int result = boardMapper.noticeModify(board);
+		return result;
+	}
+	
+	/*멤버이름으로 세탁소조회*/
+	public List<LaundryList> getMemberLaundryList(String memberId){
+		List<LaundryList> getMemberLaundryList = laundryMapper.getMemberLaundryList(memberId);
+		return getMemberLaundryList;
 	}
 	
 	/*리뷰 목록 조회*/
@@ -33,10 +54,34 @@ public class BoardService {
 		return reviewList;
 	}
 	
+	/*AS 삭제
+	public int asDel(As as) {
+		int result = asMapper.asDel(as);
+		return result;
+	}*/
+	
+	/*AS 수정*/
+	public int asModify(As as) {
+		int result = asMapper.asModify(as);
+		return result;
+	}
+	
+	/*AS 완료
+	public int asEnd(As as) {
+		int result = asMapper.asEnd(as);
+		return result;
+	}*/
+	
 	/*AS 접수*/
+	public int asReceipt(As as) {
+		int result = asMapper.asReceipt(as);
+		return result;
+	}
+	
+	/*AS 신고*/
 	public int asForm(As as, String sessionId) {
 
-		as.setLaundryCode(sessionId);
+		as.setMemberId(sessionId);
 
 		int result = asMapper.asForm(as);
 		return result;
@@ -46,6 +91,12 @@ public class BoardService {
 	public As getAsDetail(String asCode) {
 		As as = asMapper.getAsDetail(asCode);
 		return as;
+	}
+	
+	/*회원별 AS 목록*/
+	public List<As> asListById(String memberId){
+		List<As> asListById = asMapper.asListById(memberId);
+		return asListById;
 	}
 	
 	/*AS 전체 목록*/
@@ -111,28 +162,28 @@ public class BoardService {
 	
 	/*문의사항 답변 작성*/
 	public int qnaComment(Board board, String sessionId) {
-		board.setMemeberId(sessionId);
+		board.setMemberId(sessionId);
 		int result = boardMapper.qnaComment(board);
 		return result;
 	}
 	
 	/*문의사항 작성*/
 	public int qnaWrite(Board board, String sessionId) {
-		board.setMemeberId(sessionId);
+		board.setMemberId(sessionId);
 		int result = boardMapper.qnaWrite(board);
 		return result;
 	}
 	
 	/*(USER)공지사항 작성*/
 	public int noticeWrite(Board board, String sessionId) {
-		board.setMemeberId(sessionId);
+		board.setMemberId(sessionId);
 		int result = boardMapper.noticeWrite(board);
 		return result;
 	}
 	
 	/*(ADMIN)공지사항 작성*/
 	public int noticeForm(Board board, String sessionId) {
-		board.setMemeberId(sessionId);
+		board.setMemberId(sessionId);
 		int result = boardMapper.noticeForm(board);
 		return result;
 	}
@@ -168,6 +219,41 @@ public class BoardService {
 		return qnaServiceList;
 	}
 
+	/* 공지사항 목록 조회(페이징 처리) */
+	public Map<String, Object> getNoticeList(int currentPage){
+		int rowPerPage = 5;
+		int startPageNum = 1;
+		int endPageNum = 3;
+		
+		double rowCount = boardMapper.getNoticeListCount();
+		int lastPage = (int)Math.ceil(rowCount/rowPerPage);
+		int startRow = (currentPage - 1) * rowPerPage;
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("startRow", startRow);
+		paramMap.put("rowPerPage", rowPerPage);
+		
+		List<Map<String, Object>> getNoticeList = boardMapper.getNoticeList(paramMap);
+		
+		if (currentPage > 6) {
+			startPageNum = currentPage - 5;
+			endPageNum = currentPage + 4; // 자신 포함 / last-21페이지 픽스. 21-4 = 17부터는 움직이지않겠다. 17커런트로왔을때
+
+			if (endPageNum >= lastPage) { // 17이상부터 클릭시 숫자가 늘어나지않고 고정되는 모습
+				startPageNum = lastPage - 9; // 라스트페이지해당 21-9 = 12부터 고정시키겠다.
+				endPageNum = lastPage;
+			}
+		}
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("lastPage", lastPage);
+		resultMap.put("getNoticeList", getNoticeList);
+		resultMap.put("startPageNum", startPageNum);
+		resultMap.put("endPageNum", endPageNum);
+		
+		return resultMap;
+	}
+
+	
 	/* 공지사항 목록 조회 */
 	public List<Board> getNoticeList() {
 		List<Board> noticeList = boardMapper.getNoticeList();

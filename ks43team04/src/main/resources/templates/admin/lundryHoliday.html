@@ -19,7 +19,7 @@
 
 		<div class="x_content">
 			<div th:include="search/laundrySearch :: searchLaundryFragment"></div>
-			<br /> ::::세탁소 휴일 추가::::<input type="button" value="추가" href="{#}"><br />
+			<br /> ::::세탁소 휴일 추가::::<a th:href="@{/admin/addHoliday}"><input type="button" value="추가" ></a><br />
 			<br />
 			<div style="overflow: scroll; width: 100%; height: 750px;">
 				<table id="reportList"
@@ -32,6 +32,7 @@
 							<th>휴일 날짜</th>
 							<th>휴일 사용 여부</th>
 							<th>수정</th>
+							<th>삭제</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -47,9 +48,16 @@
 									th:href="@{/admin/changeHoliday(laundryName=${l.laundryName}, 
 											yearlyHolidayName=${sl.yearlyHolidayName},yearlyHolidayDate=${sl.yearlyHolidayDate},
 											holidayCodeUse=${sl.holidayCodeUse},holidayCode=${sl.holidayCode},laundryCode=${sl.laundryCode})}"><button
+											type="button" onclick="changeCheck()"
+											class="btn btn-success btn-sm" data-toggle="modal"
+											data-target="#deleteModal">수정</button> </a></td>
+								<td><a
+									th:href="@{/admin/removeHoliday(laundryName=${l.laundryName}, 
+											yearlyHolidayName=${sl.yearlyHolidayName},yearlyHolidayDate=${sl.yearlyHolidayDate},
+											holidayCodeUse=${sl.holidayCodeUse},holidayCode=${sl.holidayCode},laundryCode=${sl.laundryCode})}"><button
 											type="button" onclick="removeCheck()"
 											class="btn btn-danger btn-sm" data-toggle="modal"
-											data-target="#deleteModal">수정</button> </a></td>
+											data-target="#deleteModal">삭제</button> </a></td>
 							<tr th:unless="${not #lists.isEmpty(l.holidayList)}">
 								<td colspan="8">등록된 휴일이 없습니다.</td>
 							</tr>
@@ -63,16 +71,23 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		function removeCheck() {
+		function changeCheck() {
 
 			if (confirm("수정하시겠습니까??") == true) {
-				
-			
+							
 			} else {
 				return false;
 
 			}
+		}
+		function removeCheck() {
 
+			if (confirm("삭제하시겠습니까??") == true) {
+							
+			} else {
+				return false;
+
+			}
 		}
 	</script>
 </th:block>

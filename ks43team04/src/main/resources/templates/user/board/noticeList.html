@@ -22,92 +22,99 @@
 	</th:block> -->
 
 	  
-<!-- 사용자정의 contents -->
-<th:block layout:fragment="customContents">
-	<!-- 게시판 타이틀 -->
-	<div id="container">
-		<div id="top-loca">
-			<div class="boardPath">
-				<a th:href="@{/}">HOME</a>
-				 > 
-				<a th:href="@{/user/board/noticeList}">공지사항</a>
-			</div>	
-			<h2>공지사항</h2>			
+	<!-- 사용자정의 contents -->
+	<th:block layout:fragment="customContents">
+	
+		<!-- 게시판 타이틀 -->
+		<div id="container">
+			<div id="top-loca">
+				<div class="boardPath">
+					<a th:href="@{/}">HOME</a>
+					 > 
+					<a th:href="@{/user/board/noticeList}">공지사항</a>
+				</div>	
+				<h2>공지사항</h2>			
+			</div>
+		</div>	
+			
+		<!-- 게시판 탭  -->			
+		<div class="list-group list-group-horizontal col-sm-6" style="margin:0 auto; text-align: center;">
+	  		<a th:href="@{/user/board/noticeList}" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">
+	  		공지사항
+	  		</a>
+			<a th:href="@{/user/board/eventList}" class="list-group-item list-group-item-action">이벤트</a>
+			<a th:href="@{/user/board/faqList}" class="list-group-item list-group-item-action">FAQ</a>
+			<a th:href="@{/user/board/qnaList}" class="list-group-item list-group-item-action">문의사항</a>
 		</div>
-	</div>	
-		
-	<!-- 게시판 탭  -->			
-	<div class="list-group list-group-horizontal col-sm-6" style="margin:0 auto; text-align: center;">
-  		<a th:href="@{/user/board/noticeList}" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">
-  		공지사항
-  		</a>
-		<a th:href="@{/user/board/eventList}" class="list-group-item list-group-item-action">이벤트</a>
-		<a th:href="@{/user/board/faqList}" class="list-group-item list-group-item-action">FAQ</a>
-		<a th:href="@{/user/board/qnaList}" class="list-group-item list-group-item-action">문의사항</a>
-	</div>
 	
 	
-	<!-- 공지사항 테이블 -->
-	<div class="cart-section mt-150 mb-150" style="background-color: #f5f6fa; padding: 60px 0 100px; margin: 0; border-top: #e5e5e5 1px solid;">
-		<div class="container">
-			<div class="row" style="float: none; margin: 100 auto;">
-				<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">				
-					
-					<!-- 공지사항 목록 조회 -->
-					<div class="cart-table-wrap">
-						<table class="cart-table tbNoticeList">
-							<thead class="cart-table-head">
-								<tr class="table-head-row">
-									<th class="product-remove">번호</th>
-									<th class="product-image">제목</th>
-									<th class="product-name">첨부</th>
-									<th class="product-price">작성자</th>
-									<th class="product-quantity">작성일</th>
-									<th class="product-total">조회</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="table-body-row" th:if="${not #lists.isEmpty(noticeList)}" th:each="l : ${noticeList}">
-									<td class="product-remove" th:text="${#numbers.formatInteger(l.boardIdx,0)}"></td>
-									<td class="product-image">
-									<a th:href="@{/user/board/noticeDetail(boardMenuCode=${l.boardMenuCode}, boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
-									</td>
-									<td class="product-image" th:text="${l.boardAddFile}"></td>
-									<td class="product-name" th:text="${l.memeberId}"></td>
-									<td class="product-price" th:text="${l.registTime}"></td>
-									<td class="product-quantity" th:text="${l.boardReadCount}"></td>
-								</tr>
-								<tr th:unless="${not #lists.isEmpty(noticeList)}">
-   									<td colspan="5">조회된 내용이 없습니다.</td>
-   								</tr>
-							</tbody>
-						</table>
+		<!-- 공지사항 테이블 -->
+		<div class="cart-section mt-150 mb-150" style="background-color: #f5f6fa; padding: 60px 0 100px; margin: 0; border-top: #e5e5e5 1px solid;">
+			<div class="container">
+				<div class="row" style="float: none; margin: 100 auto;">
+					<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">				
+						
+							<!-- 공지사항 목록 조회 -->
+							<div class="cart-table-wrap">
+								<table class="cart-table tbNoticeList">
+									<thead class="cart-table-head">
+										<tr class="table-head-row">
+											<th class="product-remove">번호</th>
+											<th class="product-image" style="width: 50%">제목</th>
+											<th class="product-name">첨부</th>
+											<th class="product-price">작성자</th>
+											<th class="product-quantity">작성일</th>
+											<th class="product-total">조회</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="table-body-row" th:if="${not #lists.isEmpty(getNoticeList)}" th:each="l : ${getNoticeList}">
+											<td class="product-remove" th:text="${#numbers.formatInteger(l.get('boardIdx'),0)}"></td>
+											<td class="product-image">
+												<a th:href="@{/user/board/noticeDetail(boardMenuCode=${l.get('boardMenuCode')}, boardIdx=${l.get('boardIdx')})}" th:text="${l.get('boardTitle')}"></a>
+											</td>
+											<td class="product-image" th:text="${l.get('boardAddFile')}"></td>
+											<td class="product-name" th:text="${l.get('memberId')}"></td>
+											<td th:text="${#temporals.format(l.get('registTime'),'yyyy-MM-dd HH:mm:ss')}"></td>
+											<td class="product-quantity" th:text="${l.get('boardReadCount')}"></td>
+										</tr>
+										<tr th:unless="${not #lists.isEmpty(getNoticeList)}">
+		   									<td colspan="6">조회된 내용이 없습니다.</td>
+		   								</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			
 		
-		
-		<!-- 페이징 -->
+		<!-- 페이징 시작 -->
 		<div class="row">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-12 text-center">
-					
-		<!-- 공지사항 등록하기  -->
-		<div id="qna-btn" class="btnArea">
-			<ul style="list-style: none;">
-				<li class="qnaWrite">
-					<a th:href="@{/user/board/noticeWrite}" class="boxed-btn" style="font-weight: 700;">등록하기</a>
-				</li>			
-			</ul>	
-		</div>	
-						<div class="pagination-wrap">
+					<div class="col-lg-12 text-center">						
+									
+						<!-- 공지사항 등록하기 버튼  -->
+						<div id="qna-btn" class="btnArea">
+							<ul style="list-style: none;">
+								<li class="qnaWrite">
+									<a th:href="@{/user/board/noticeWrite}" class="boxed-btn" style="font-weight: 700;">등록하기</a>
+								</li>			
+							</ul>	
+						</div>	
+						
+						<!-- 페이징 -->
+						<div class="pagination-wrap">							
 							<ul>
-								<li><a href="#">Prev</a></li>
-								<li><a class="active" href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">Next</a></li>
+								<li><a th:href="@{/user/board/noticeList}">Start</a><li>
+								<li><a th:if="${currentPage > 1}" th:href="@{/user/board/noticeList(currentPage=${currentPage -1})}">Prev</a></li>
+								<th:block th:each="num : ${#numbers.sequence(startPageNum, endPageNum)}">
+									<li><label th:if="${currentPage eq num}" th:text="${(num < 5)? '0'+ num: num}"></label></li>
+									<li><a th:unless="${currentPage eq num}" th:href="@{/user/board/noticeList(currentPage=${num})}" th:text="${(num < 5)? '0'+ num: num}"></a></li>
+								</th:block>
+								<li><a th:if="${currentPage < lastPage}" th:href="@{/user/board/noticeList(currentPage=${currentPage +1})}">Next</a></li>
+								<li><a th:href="@{/user/board/noticeList(currentPage=${lastPage})}">Last</a></li>
 							</ul>
 						</div>
 					</div>
@@ -115,16 +122,6 @@
 			</div>
 		</div>
 			
-		
-			
-		
-		
-		
-		
-		
-		
-		
-		
 		
 	</div>
 		

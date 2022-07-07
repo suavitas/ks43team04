@@ -1,6 +1,7 @@
 package ks43team04.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ks43team04.dto.Board;
 import ks43team04.dto.Event;
-import ks43team04.mapper.BoardMapper;
 import ks43team04.service.BoardService;
 
 @Controller
@@ -25,11 +25,9 @@ public class BoardController {
 	private static final Logger log = LoggerFactory.getLogger(BoardController.class);
 
 	private final BoardService boardService;
-	private final BoardMapper boardMapper;
 
-	public BoardController(BoardService boardService, BoardMapper boardMapper) {
+	public BoardController(BoardService boardService) {
 		this.boardService = boardService;
-		this.boardMapper = boardMapper;
 	}
 
 
@@ -205,10 +203,17 @@ public class BoardController {
 
 	/*공지사항 목록 조회*/
 	@GetMapping("/noticeList")
-	public String noticeList(Model model) {
-		List<Board> noticeList = boardService.getNoticeList();
-		log.info("공지사항 전체 목록: {}", noticeList);
-		model.addAttribute("noticeList", noticeList);
+	public String noticeList(@RequestParam(name = "currentPage", required = false, defaultValue = "1") int currentPage 
+								,Model model) {
+		
+		Map<String, Object> resultMap = boardService.getNoticeList(currentPage);
+		
+		model.addAttribute("getNoticeList", resultMap.get("getNoticeList"));
+		model.addAttribute("resultMap", resultMap);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("lastPage", resultMap.get("lastPage"));
+		model.addAttribute("startPageNum", resultMap.get("startPageNum"));
+		model.addAttribute("endPageNum", resultMap.get("endPageNum"));
 		return "/user/board/noticeList";
 	}
 
