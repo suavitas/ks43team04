@@ -51,16 +51,28 @@ public class PaymentController {
 	
 	@PostMapping("/user/yeyakPayment")
 	public String yeyakPayment(@RequestParam(name = "laundryName") String laundryName,
-							@RequestParam(name = "goodsName") String goodsName
-							,Model model) {
+							@RequestParam(name = "goodsName") String goodsName,
+							@RequestParam(name = "bill") String bill,
+							Model model,
+							HttpSession session) {
 		
 		List<Laundry> laundryGoodsNameAndPrice = laundryService.getLaundryGoodsNameAndPrice(laundryName, goodsName);
 		
-		System.out.println(laundryName+" <----------세탁소이름");
-		System.out.println(goodsName+" <----------상품이름");
-		System.out.println(laundryGoodsNameAndPrice+" <----------laundryGoodsNameAndPrice 리스트값");
+		String sessionId = (String) session.getAttribute("SID");
+		String sessionName = (String) session.getAttribute("SNAME");
+		
+		Member member = memberService.getMemberInfoById(sessionId);
+		String mAddr = member.getMemberAddr();
+		String mPhone = member.getMemberPhone();
+		String mEmail = member.getMemberEmail();
 		
 		model.addAttribute("laundryGoodsNameAndPrice", laundryGoodsNameAndPrice);
+		model.addAttribute("bill", bill);
+		model.addAttribute("sessionName", sessionName);
+		model.addAttribute("mAddr", mAddr);
+		model.addAttribute("mPhone", mPhone);
+		model.addAttribute("mEmail", mEmail);
+		model.addAttribute("sessionId", sessionId);
 		
 		return "user/payment/yeyakPayment";
 	}

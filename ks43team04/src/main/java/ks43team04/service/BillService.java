@@ -18,6 +18,14 @@ public class BillService {
 		this.billMapper = billMapper;
 	}
 
+	
+	public int addBill(String memberId, String laundryCode, String totalPrice) {
+		
+		int addBill = billMapper.addBill(memberId, laundryCode, totalPrice);
+		
+		return addBill;
+	}
+	
 	public List<Bill> getBillList() {
 
 		List<Bill> BillList = billMapper.getBillList();
