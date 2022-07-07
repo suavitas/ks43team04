@@ -13,7 +13,7 @@ public interface IlbanGPriceMapper {
 	public List<IlbanSkill> IlbanSkill();
 
 	/* 세탁소별 매장 가격 추가 */
-	public int addGoodsPrice(String skillCate, String gName,String gPrice);
+	public int addGoodsPrice(String ilbanSkillCode, String gName, String gPrice);
 	
 	
 }
