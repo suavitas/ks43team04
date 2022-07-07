@@ -2,8 +2,65 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/adminDefault}">
-	  
-	  
+
+<th:block layout:fragment="customScript">
+<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+	
+	</th:block>	
+	<th:block layout:fragment="customJsScript"> 
+		<script type="text/javascript">
+		/* 첨부파일 첨부파일명 보이는기능 */
+		$("#file").on('change',function(){
+		  var fileName = $("#file").val();
+		  $(".upload-name").val(fileName);
+		});
+	
+		/* 유효성검사 */
+		function validCheck(){
+			var title = document.getElementById("title");
+			var content = document.getElementById("content");
+			if(title.value == ""){
+				alert("제목을 입력하세요.")
+				title.focus();
+				return false;
+			};
+			if(content.value == ""){
+				alert("내용을 입력하세요.")
+				content.focus();
+				return false;
+			};				
+		}
+		
+		/*제이쿼리 파일추가 필드*/
+		$(function(){
+			//추가
+			$('#plus-button').on('click', function() {
+				var fileBox = $('.fileBox');
+				console.log(fileBox.length)
+				if(fileBox.length < 4) {
+					var newLi = $(this).parent().clone(true);
+					newLi.children('.add-photo').val('');
+					$(this).parent().parent().append(newLi);
+				} else {
+					alert("최대 올릴 수 있는 이미지의 개수는 4개입니다.");
+				}
+			});
+			
+			//제거
+			$('#minus-button').on('click', function() {
+				var fileBox = $('.fileBox');
+				console.log(fileBox.length)
+				if(fileBox.length > 1){
+					$(this).parent().remove();
+				}else {
+					alert('ㄴㄴ');
+				}
+			});
+			
+			
+		});
+	</script>
+</th:block>	  
 	  
 	<!-- 사용자정의 contents -->
 	<th:block layout:fragment="customContents">
@@ -13,7 +70,7 @@
 	
 		<!-- 공지사항 등록 폼 시작 -->
 		<div class="x_content">
-			<form class="form-horizontal form-label-left" th:action="@{/admin/noticeForm}" method="POST">
+			<form class="form-horizontal form-label-left" th:action="@{/admin/noticeForm}" id="noticeForm" method="POST" enctype="multipart/form-data" name="multipart">
 				<div class="form-group row">
 					<label class="control-label col-md-1 col-sm-1">작성자</label>
 						<div class="col-md-4 col-sm-4">
@@ -32,13 +89,18 @@
 							<p><textarea class="form-control" name="boardContent" id="content" placeholder="내용" style="resize: none; height: 350px;" required="required"></textarea></p>
 						</div>
 				</div>
-				<div class="form-group row">
+				<div class="form-group row">					
 					<label class="control-label col-md-1 col-sm-1">파일첨부</label>
-						<div class="col-md-8 col-sm-8">
-							<input type="file" id="photo" class="add-photo" accept="image/*,.pdf">
+						<div class="fileBox col-md-8 col-sm-8">
+							<input class= "upload-name" value="첨부파일" placeholder="첨부파일" style="display: inline-block; height: 40px; padding: 0 10px; vertical-align: middle; border: 1px solid #dddddd; width: 50%; color: #999999;">
+								<label for="file" style="display: inline-block; padding: 10px 20px; color: #fff; vertical-align: middle; background-color: #999999; cursor: pointer; height: 40px; margin-left: 10px; margin-bottom: 0;">파일찾기</label>
+									<button id="plus-button">플러스</button>
+									<button id="minus-button">마이너스</button>
+							<input type="file" id="file" class="add-photo" name="boardImgFile" style="position: absolute;  width: 0; height: 0; padding: 0; overflow: hidden; border: 0;">
 								<p class="text-guide">파일첨부는 최대 4장까지 가능하며,<br>5MB이하의 GIF, JPG, JPEG, PNG, PDF 형태로 업로드해주세요.</p>
 						</div>
-				</div>
+					</div>	
+				
 			
 				<div class="form-group">
 					<div class="col-md-9 col-sm-9 offset-md-2" style="margin-left: 0; text-align: center; padding-top: 50px;">
@@ -51,25 +113,8 @@
 		<!-- 공지사항 등록 폼 끝 -->
 	</div>
 	
-	<!-- 유효성검사(공백) -->
-	<th:block layout:fragment="customJsScript">  
-		<script type="text/javascript">
-			function validCheck(){
-				var title = document.getElementById("title");
-				var content = document.getElementById("content");
-				if(title.value == ""){
-					alert("제목을 입력하세요.")
-					title.focus();
-					return false;
-				};
-				if(content.value == ""){
-					alert("내용을 입력하세요.")
-					content.focus();
-					return false;
-				};				
-			}
-		</script>
-	</th:block>
+	
+
 	
 	
 	</th:block>

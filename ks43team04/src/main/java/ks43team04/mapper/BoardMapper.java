@@ -46,7 +46,7 @@ public interface BoardMapper {
 	public int qnaWrite(Board board);
 
 	//분류별 게시물 조회
-	public Board getBoardDetailByCode(String boardMenuCode, int boardIdx);
+	public Board getBoardDetailByCode(String boardMenuCode, String boardIdx);
 
 	//문의사항(서비스 불만족) 목록 조회
 	public List<Board> getQnaComplainList();

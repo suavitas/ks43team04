@@ -113,7 +113,7 @@ public class BoardController {
 	/*Q&A(문의사항) 상세 조회*/
 	@GetMapping("/qnaDetail")
 	public String qnaDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
-							,@RequestParam(name = "boardIdx", required = false) int boardIdx, Model model) {
+							,@RequestParam(name = "boardIdx", required = false) String boardIdx, Model model) {
 		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
 		model.addAttribute("board", board);
 		return "/user/board/qnaDetail";
@@ -193,7 +193,7 @@ public class BoardController {
 	/*공지사항 상세 조회*/
 	@GetMapping("/noticeDetail")
 	public String noticeDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
-								,@RequestParam(name = "boardIdx", required = false) int boardIdx 
+								,@RequestParam(name = "boardIdx", required = false) String boardIdx 
 								,Model model) {
 
 		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);

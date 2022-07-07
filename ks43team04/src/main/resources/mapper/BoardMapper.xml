@@ -22,6 +22,17 @@
 		<result column="regist_time" 						property="registTime"/>
 		<result column="update_time" 						property="updateTime"/>
 		<result column="comment_state" 						property="commentState"/>
+		<collection property="boardAttach" ofType="BoardAttach">
+			<id		column="file_idx"						property="fileIdx"/>
+			<result	column="origin_file"					property="originFile"/>
+			<result	column="save_file"						property="saveFile"/>
+			<result	column="file_size"						property="fileSize"/>
+			<result	column="file_path"						property="filePath"/>
+			<result	column="represent_img"					property="representImg"/>
+			<result	column="upload_id"						property="uploadId"/>
+			<result	column="upload_time"					property="uploadTime"/>
+			<result	column="delYn"							property="delYn"/>
+		</collection>
 	</resultMap>
 
 	<resultMap type="Event" 								id="eventResultMap">
@@ -271,6 +282,12 @@
 		, '0'
 		, '0'
 		, NOW());
+		<selectKey resultType="String" keyProperty="boardIdx" order="AFTER">
+			SELECT
+				max(b.board_idx)
+			FROM
+				tb_board AS b
+		</selectKey>
 	</insert>
 	
 	
@@ -412,26 +429,57 @@
 	</insert>
 
 	
-	<select id="getBoardDetailByCode" resultMap="boardResultMap">	
+	<select id="getBoardDetailByCode" parameterType="String" resultMap="boardResultMap">	
 	 	/* 게시물 조회 */
-		SELECT
-			b.board_menu_code
-			,b.board_idx
-			,b.board_secret
-			,b.board_title
-			,b.board_content
-			,b.board_add_file
-			,b.board_add_file_name
-			,b.m_id
-			,b.regist_time
-			,b.board_read_count
-			,b.comment_state
-		FROM
+		SELECT 
+			b.board_idx
+			, b.board_menu_code
+			, b.board_secret
+			, b.board_title
+			, b.board_content
+			, b.board_add_file
+			, b.board_add_file_name
+			, b.m_id
+			, b.regist_time
+			, b.board_read_count
+			, b.comment_state
+			, sub.file_idx
+			, sub.origin_file
+			, sub.save_file
+			, sub.file_size
+			, sub.file_path
+			, sub.represent_img
+			, sub.upload_id
+			, sub.upload_time
+			, sub.delYn
+			, sub.board_idx
+		FROM 
 			tb_board AS b
+		LEFT JOIN
+			(select
+				st.file_idx
+				, st.origin_file
+				, st.save_file
+				, st.file_size
+				, st.file_path
+				, st.represent_img
+				, st.upload_id
+				, st.upload_time
+				, st.delYn
+				, sr.board_idx
+			from
+				tb_attach AS st
+			INNER join
+				tb_attach_board AS sr
+			ON
+				st.file_idx = sr.file_idx) AS sub
+		on
+			sub.board_idx = b.board_idx
 		WHERE
 			b.board_menu_code = #{boardMenuCode}
 		and
-			b.board_idx = #{boardIdx};
+			b.board_idx = #{boardIdx};			
+			
 				 		
 	</select>	
 			

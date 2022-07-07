@@ -2,17 +2,22 @@ package ks43team04.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks43team04.dto.As;
 import ks43team04.dto.Board;
@@ -226,7 +231,7 @@ public class AdminBoardController {
 	/*Q&A(문의사항) 상세 조회*/
 	@GetMapping("/qnaDetail")
 	public String qnaDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
-							,@RequestParam(name = "boardIdx", required = false) int boardIdx, Model model) {
+							,@RequestParam(name = "boardIdx", required = false) String boardIdx, Model model) {
 		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
 		model.addAttribute("board", board);
 		return "/admin/qnaDetail";
@@ -300,27 +305,45 @@ public class AdminBoardController {
 	}
 	
 	@PostMapping("/noticeForm")
-	public String noticeForm(Board board, HttpSession session) {
-		String sessionId = (String) session.getAttribute("SID");
-		boardService.noticeForm(board, sessionId);
-		log.info("공지 등록 data : {}", board);
-		log.info("화면에서 입력받은 data: {}, boardIdx");
-		System.out.println("board+++++" +board);
+	public String noticeForm(Board board, HttpSession session 
+							,RedirectAttributes reAttr, @RequestParam MultipartFile[] boardImgFile, HttpServletRequest request) {
+		System.out.println("------------------------게시글 등록 처리-----------------------------");
+		
+		String serverName = request.getServerName();
+		String fileRealPath = "";
+		String sessionId = (String)session.getAttribute("SID");
+		
+		if("localhost".equals(serverName)) {
+			// server 가 localhost 일때 접근
+			fileRealPath = System.getProperty("user.dir") + "/src/main/resources/static/";
+			System.out.println(System.getProperty("user.dir"));
+			//fileRealPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
+		}else {
+			//배포용 주소
+			fileRealPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
+		}
+		
+		String boardIdx = boardService.noticeForm(board, sessionId, boardImgFile, fileRealPath);
+		reAttr.addAttribute("boardIdx", boardIdx);
+		System.out.println("------------------------게시글 등록 처리 끝-----------------------------");
+		
 		return "redirect:/admin/noticeList";
 	}
 	
 	/*공지사항 상세 조회*/
 	@GetMapping("/noticeDetail")
 	public String noticeDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
-								,@RequestParam(name = "boardIdx", required = false) int boardIdx
+								,@RequestParam(name = "boardIdx", required = false) String boardIdx
 								, Model model) {
 		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
+		System.out.println("---------board-noticedetail---------"+board);
 		String mId = board.getMemberId();
 		Member member = memberService.getMemberInfoById(mId);
 		model.addAttribute("member", member);
 		model.addAttribute("board", board);
-		System.out.println("member--------noticedetail" + member);
-		System.out.println("board--------------"+board);
+		System.out.println("--------member-noticedetail--------" + member);
+	
+		
 		return "admin/noticeDetail";
 	}
 	
