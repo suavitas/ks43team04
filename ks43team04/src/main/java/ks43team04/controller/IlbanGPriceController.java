@@ -54,16 +54,16 @@ public class IlbanGPriceController {
 	
 	/* 세탁소별 휴가 추가 */
 	@PostMapping("/goodsPrice/addGoodsPrice")
-	public String addGoodsPrice(@RequestParam(name = "skillCate", required=false) String skillCate,
+	public String addGoodsPrice(@RequestParam(name = "ilbanSkillCode", required=false) String ilbanSkillCode,
 			@RequestParam(name = "gName", required=false) String gName,
 			@RequestParam(name = "gPrice", required=false) String gPrice, 
 			Model model) {
 		
-			ilbanSkillService.addGoodsPrice(skillCate, gName, gPrice);
-			System.out.println("______________"+ skillCate);
+			ilbanSkillService.addGoodsPrice(ilbanSkillCode, gName, gPrice);
+			System.out.println("______________"+ ilbanSkillCode);
 			System.out.println("______________"+ gName);
 			System.out.println("______________"+ gPrice);
-		return "redirect:/admin/goodsPrice/addGoodsPrice";
+		return "redirect:/admin/goodsPrice/goodsPrice";
 	}
 	
 	

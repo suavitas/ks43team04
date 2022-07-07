@@ -27,10 +27,10 @@ public class IlbanSkillService {
 
 	}
 
-	public int addGoodsPrice(String skillCate, String gName, String gPrice) {
+	public int addGoodsPrice(String ilbanSkillCode, String gName, String gPrice) {
 
-		int result = ilbanGPriceMapper.addGoodsPrice(skillCate, gName, gPrice);
-
+		int result = ilbanGPriceMapper.addGoodsPrice(ilbanSkillCode, gName, gPrice);
+		System.out.println("______일반 세탁소 스킬 추가 서비스________"+result);
 		return result;
 	}
 
