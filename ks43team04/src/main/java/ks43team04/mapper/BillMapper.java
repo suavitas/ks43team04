@@ -20,4 +20,6 @@ public interface BillMapper {
 	
 	/* 일반세탁소 오더 목록 */
 	public List<Bill> ilbanOrderList(String memberId);
+	
+	public int addBill(String memberId, String laundryCode, String totalPrice);
 }

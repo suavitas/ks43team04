@@ -20,6 +20,7 @@ import ks43team04.dto.Laundry;
 import ks43team04.dto.Member;
 import ks43team04.mapper.BillMapper;
 import ks43team04.mapper.MemberMapper;
+import ks43team04.service.BillService;
 import ks43team04.service.MemberService;
 import ks43team04.service.UserService;
 
@@ -33,12 +34,15 @@ public class MemberController {
 	private final UserService userService;
 	private final MemberMapper memberMapper;
 	private final BillMapper billMapper;
+	private final BillService billService;
 
-	public MemberController(MemberService memberService, MemberMapper memberMapper,BillMapper billMapper,UserService userService) {
+	
+	public MemberController(MemberService memberService, MemberMapper memberMapper,BillMapper billMapper,UserService userService,BillService billService) {
 		this.memberService = memberService;
 		this.memberMapper = memberMapper;
 		this.billMapper = billMapper;
 		this.userService = userService;
+		this.billService = billService;
 	}
 	/**
 	 * 고객 마이페이지 > 환불내역
@@ -57,6 +61,22 @@ public class MemberController {
 
 		return "/member/myPageRefund";
 	}
+	
+	/*bill 인서트*/
+	@PostMapping("/myPagePayment")
+	public String myPagePayment(@RequestParam(value = "memberId") String memberId,
+								@RequestParam(value = "laundryCode") String laundryCode,
+								@RequestParam(value = "totalPrice") String totalPrice) {
+		
+		System.out.println(memberId+"<--------- memberId ");
+		System.out.println(laundryCode+"<--------- laundryCode ");
+		System.out.println(totalPrice+"<--------- totalPrice ");
+		
+		billService.addBill(memberId, laundryCode, totalPrice);
+		
+		
+		return "redirect:/user/myPagePayment";
+	}	
 	
 	/**
 	 * 고객 마이페이지 > 결제내역

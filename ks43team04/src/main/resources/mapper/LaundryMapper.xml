@@ -104,6 +104,7 @@
 		resultMap="laundryResultMap">
 		/*일반세탁소별 상품이름으로 사용중인 가격조회*/
 		SELECT
+		l.laundry_code,
 		l.laundry_name,
 		igp.g_name,
 		igp.g_price

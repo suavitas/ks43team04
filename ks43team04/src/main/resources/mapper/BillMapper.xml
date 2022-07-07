@@ -19,6 +19,40 @@
 	</resultMap>
 
 	
+ 	<insert id="addBill" parameterType="String">
+ 		INSERT INTO 
+			tb_bill
+			(
+			 bill_code, 
+			 order_num_groupcode, 
+			 total_price, 
+			 user_code, 
+			 pay_use_point, 
+			 pay_method, 
+			 pay_ok_date, 
+			 refund_code, 
+			 after_use_point_pay, 
+			 add_pay, 
+			 delivery_pay, 
+			 total_pay_groupcode
+			 )
+		VALUES 
+			(
+			(SELECT CONCAT('bill_code','_',MAX(CAST(substring(bill_code,11) AS DECIMAL)+1)) AS bill_code from tb_bill AS aaa),
+			(SELECT MAX(CONCAT(#{memberId},'_',#{laundryCode})) AS order_num_groupcode from tb_bill AS bbb),
+			 #{totalPrice},
+			 'user_code_002',
+			 0,
+			 '카드',
+			 NOW(),
+			 'X',
+			 #{totalPrice},
+			 0,
+			 2000,
+			 ''
+			)
+ 	</insert>
+ 	
  	
  	<select id="getBillList" resultMap="BillResultMap">
  		SELECT
