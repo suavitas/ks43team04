@@ -50,7 +50,7 @@
 														<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
 															<div class="card-body">
 																<div class="billing-address-form">
-																	<form th:action="@{/user/payment}" method="post">
+																	<form th:action="@{/user/yeyakPayment}" method="post">
 																	<input type="hidden" name="laundryName" th:value="${l.get('laundryName')}">
 																		<h5>수거일 예약 신청</h5>
 																		<input type="date" class="currentDate">
@@ -128,7 +128,6 @@
 											</div>
 											<!-- 예약사항 폼 끝-->
 										</div>
-										<!-- 보완해야할점 -->
 											<div class="modal-footer">
 												<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 												<button type="submit" class="btn btn-primary">결제하기</button>
