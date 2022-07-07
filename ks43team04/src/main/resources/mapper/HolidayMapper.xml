@@ -22,6 +22,35 @@
 		<result column="regist_time" 				property="registTime"/>
 	</resultMap>
 	
+		<update id="modifyHoliday"  parameterType="HolidayList">
+		/* 세탁소별 휴일 수정 */
+		UPDATE
+		tb_holiday
+		<trim prefix="SET" prefixOverrides=",">
+			<if test="holidayCode != null and holidayCode != ''">
+				holiday_code = #{holidayCode}
+			</if>
+			<if test="laundryCode != null and laundryCode != ''">
+				,laundry_code = #{laundryCode}
+			</if>
+			<if test="yearlyHolidayDate != null and yearlyHolidayDate != ''">
+				,yearly_holiday_date = #{yearlyHolidayDate}
+			</if>
+			<if test="yearlyHolidayName != null and yearlyHolidayName != ''">
+				,yearly_holiday_name = #{yearlyHolidayName}
+			</if>
+			<if test="holidayCodeUse != null and holidayCodeUse != ''">
+				,holiday_code_use = #{holidayCodeUse}
+			</if>
+		</trim>
+		WHERE
+		holiday_code = #{holidayCode};
+
+
+	</update>
+	
+	
+	
 	<select id="holidayList" parameterType="String" resultMap="HolidayListResultMap">
 		SELECT 
 			holiday_code, 
