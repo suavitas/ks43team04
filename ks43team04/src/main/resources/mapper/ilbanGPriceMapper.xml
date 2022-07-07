@@ -25,14 +25,14 @@
 			ilban_skill_code, 
 			g_name, 
 			g_price, 
-			regist_time, 
+			regist_time , 
 			g_price_use_state)
 		VALUES 
 			(sf_new_g_price(),
 			 'laundry_code_006',
-			 '#{skillCate}',
-			 '#{gName}',
-			 '#{gPrice}',
+			 #{ilbanSkillCode},
+			 #{gName},
+			 #{gPrice},
 			 NOW(),
 			 'use');			 
  	</insert>
