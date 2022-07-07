@@ -16,7 +16,7 @@
 				</div>
 			</div>
 
-			<form id="payForm" name="payForm" method="post" th:action="@{/user/myPagePayment}">
+			<form id="payForm" name="payForm" method="post" th:action="@{/user/myPagePayment2}">
 <input name="laundryCode" type="hidden" th:value="${l.laundryCode}">
 	<input name="memberId" type="hidden" th:value="${sessionId}">
 	<input name="totalPrice" type="hidden" th:value="${ls.goodsPrice}">

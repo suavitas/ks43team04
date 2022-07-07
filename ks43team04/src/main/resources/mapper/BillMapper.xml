@@ -41,7 +41,7 @@
 			(SELECT CONCAT('bill_code','_',MAX(CAST(substring(bill_code,11) AS DECIMAL)+1)) AS bill_code from tb_bill AS aaa),
 			(SELECT MAX(CONCAT(#{memberId},'_',#{laundryCode})) AS order_num_groupcode from tb_bill AS bbb),
 			 #{totalPrice},
-			 'user_code_002',
+			 'user_code_001',
 			 0,
 			 '카드',
 			 NOW(),
