@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ks43team04.mapper.FileMapper">
+	<insert id="uploadFile" parameterType="List">
+			INSERT INTO tb_attach
+				(file_idx
+				, origin_file
+				, save_file
+				, file_size
+				, file_path
+				, represent_img
+				, upload_id
+				, upload_time
+				)
+				VALUES 
+				<foreach collection="list" item="item" separator=",">
+				(
+					#{item.fileCd}
+					, #{item.originalFileName}
+					, #{item.reFileName}
+					, #{item.fileSize}
+					, #{item.storedFilePath}
+					, #{item.representImg}
+					, #{item.userId}
+					, NOW()
+				)
+		</foreach>
+	</insert>
+	
+	<insert id="uploadRelationFileWithBoard" parameterType="List">
+		/* 게시판, 파일 릴레이션 테이블 삽입*/
+	
+			INSERT INTO tb_attach_board
+			(
+			 board_idx
+			, file_idx
+			) VALUES
+			<foreach collection="list" item="item" separator=",">
+			(
+				#{item.boardIdx}
+				,#{item.fileCd}
+			)
+			</foreach>
+	</insert>
+
+
+</mapper>

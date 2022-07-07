@@ -1,5 +1,10 @@
 package ks43team04.dto;
 
+import java.util.List;
+import java.util.Map;
+
+
+
 public class Board {
 	private String boardMenuCode;
 	private String boardIdx;
@@ -17,6 +22,9 @@ public class Board {
 	private String registTime;
 	private String updateTime;
 	private String commentState;
+	
+	private List<Map<String, String>> 	relFileWithBoard;
+	private List<BoardAttach> 				boardAttach;
 	
 	public String getBoardMenuCode() {
 		return boardMenuCode;
@@ -114,44 +122,29 @@ public class Board {
 	public void setCommentState(String commentState) {
 		this.commentState = commentState;
 	}
+	
+	
+	public List<Map<String, String>> getRelFileWithBoard() {
+		return relFileWithBoard;
+	}
+	public void setRelFileWithBoard(List<Map<String, String>> relFileWithBoard) {
+		this.relFileWithBoard = relFileWithBoard;
+	}
+	public List<BoardAttach> getBoardAttach() {
+		return boardAttach;
+	}
+	public void setBoardAttach(List<BoardAttach> boardAttach) {
+		this.boardAttach = boardAttach;
+	}
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-	
-		builder.append(", boardMenuCode=");
-		builder.append(boardMenuCode);
-		builder.append(", boardIdx=");
-		builder.append(boardIdx);
-		builder.append(", memberId=");
-		builder.append(memberId);
-		builder.append(", boardGroupNo=");
-		builder.append(boardGroupNo);
-		builder.append(", boardOrderNo=");
-		builder.append(boardOrderNo);
-		builder.append(", boardReadCount=");
-		builder.append(boardReadCount);
-		builder.append(", boardTitle=");
-		builder.append(boardTitle);
-		builder.append(", boardContent=");
-		builder.append(boardContent);
-		builder.append(", boardSecret=");
-		builder.append(boardSecret);
-		builder.append(", boardAddFile=");
-		builder.append(boardAddFile);
-		builder.append(", boardAddFileName=");
-		builder.append(boardAddFileName);
-		builder.append(", boardAddFileChangeName=");
-		builder.append(boardAddFileChangeName);
-		builder.append(", boardAddFileVol=");
-		builder.append(boardAddFileVol);
-		builder.append(", registTime=");
-		builder.append(registTime);
-		builder.append(", updateTime=");
-		builder.append(updateTime);
-		builder.append(", commentState=");
-		builder.append(commentState);
-		builder.append("]");
-		return builder.toString();
+		return "Board [boardMenuCode=" + boardMenuCode + ", boardIdx=" + boardIdx + ", memberId=" + memberId
+				+ ", boardGroupNo=" + boardGroupNo + ", boardOrderNo=" + boardOrderNo + ", boardReadCount="
+				+ boardReadCount + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent + ", boardSecret="
+				+ boardSecret + ", boardAddFile=" + boardAddFile + ", boardAddFileName=" + boardAddFileName
+				+ ", boardAddFileChangeName=" + boardAddFileChangeName + ", boardAddFileVol=" + boardAddFileVol
+				+ ", registTime=" + registTime + ", updateTime=" + updateTime + ", commentState=" + commentState
+				+ ", relFileWithBoard=" + relFileWithBoard + ", boardAttach=" + boardAttach + "]";
 	}
 
 	

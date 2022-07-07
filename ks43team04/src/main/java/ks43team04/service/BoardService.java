@@ -1,12 +1,15 @@
 package ks43team04.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import ks43team04.common.FileUtils;
 import ks43team04.dto.As;
 import ks43team04.dto.Board;
 import ks43team04.dto.Event;
@@ -15,6 +18,7 @@ import ks43team04.dto.Review;
 import ks43team04.mapper.AsMapper;
 import ks43team04.mapper.BoardMapper;
 import ks43team04.mapper.LaundryMapper;
+import ks43team04.mapper.FileMapper;
 
 @Service
 @Transactional
@@ -24,11 +28,13 @@ public class BoardService {
 	private final BoardMapper boardMapper;
 	private final AsMapper asMapper;
 	private final LaundryMapper laundryMapper;
+	private final FileMapper fileMapper;
 
-	public BoardService(BoardMapper boardMapper, AsMapper asMapper,LaundryMapper laundryMapper) {
+	public BoardService(BoardMapper boardMapper, AsMapper asMapper,LaundryMapper laundryMapper, FileMapper fileMapper) {
 		this.boardMapper = boardMapper;
 		this.asMapper = asMapper;
 		this.laundryMapper = laundryMapper;
+		this.fileMapper = fileMapper;
 	}
 	/*공지사항 삭제*/
 	public int noticeRemove(Board board) {
@@ -182,15 +188,58 @@ public class BoardService {
 	}
 	
 	/*(ADMIN)공지사항 작성*/
-	public int noticeForm(Board board, String sessionId) {
+	public String noticeForm(Board board, String sessionId, MultipartFile[] boardImgFile, String fileRealPath) {
+		System.out.println("------------------------공지사항 등록 서비스-----------------------------");
+		/*  1. 파일 업로드
+		 	2. 파일 업로드 성공시 파일 DB 인서트
+		 	3. 게시글 인서트
+ 			4. 결과값 리턴	*/
+		
 		board.setMemberId(sessionId);
-		int result = boardMapper.noticeForm(board);
-		return result;
-	}
-	
+		
+		/*여기부터*/
+		boolean fileCheck = true;
+		
+		for (MultipartFile multipartFile : boardImgFile){
+			if(!multipartFile.isEmpty()) {
+				fileCheck = false;
+			}
+		}
+		
+		if (!fileCheck) {
+			
+		
+		//파일 업로드 위한 객체 생성 
+		FileUtils fu = new FileUtils(boardImgFile, board.getMemberId(), fileRealPath);
+		List<Map<String, String>> dtoFileList = fu.parseFileInfo();
+				
+		// t_file 테이블에 삽입
+		System.out.println(dtoFileList + "<<<dtoFileList입니다.");
+		fileMapper.uploadFile(dtoFileList);
+				
+		boardMapper.noticeForm(board);
+		String boardIdx = board.getBoardIdx();
+		
+		// 릴레이션 테이블에 삽입
+		 List<Map<String, String>> relationFileList = new ArrayList<>();
+		 for(Map<String, String> m : dtoFileList) {
+		 m.put("boardIdx", boardIdx);
+		 relationFileList.add(m);
+		 		}
+		 System.out.println(relationFileList + "<<<relationFileList입니다.");
+	 		fileMapper.uploadRelationFileWithBoard(relationFileList);
+	     	
+			System.out.println("-----------------------게시글 등록 서비스 끝------------------------------");
+			return boardIdx;
+		}else {
+			
+			int result = boardMapper.noticeForm(board);
+			return Integer.toString(result);
+		}
+	}	
 
 	/*분류별 게시물 내용 조회*/
-	public Board getBoardDetailByCode(String boardMenuCode, int boardIdx) {
+	public Board getBoardDetailByCode(String boardMenuCode, String boardIdx) {
 		Board board = boardMapper.getBoardDetailByCode(boardMenuCode, boardIdx);
 		return board;
 	}
