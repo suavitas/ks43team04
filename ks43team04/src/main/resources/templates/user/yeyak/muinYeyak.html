@@ -13,7 +13,7 @@
 					<div class="col-lg-4 col-md-6 text-center" >
 						<div class="single-product-item">
 							<div class="product-image">
-								<img th:src="@{/user/assets/img/products/laundry.png}" alt="세탁소">
+								<img th:src="@{/user/assets/img/products/laundry.png}" alt="세탁소이미지">
 							</div>
 							<h5 th:text="${l.get('laundryName')}"></h5>
 							<h5 class="product-price" th:text="${l.laundryAddr}"></h5>
@@ -35,7 +35,7 @@
 										<!-- 예약사항 폼 시작-->
 											<div th:each="ls : ${muinMachineList}" class="laundry-machine-form">	
 												<div th:if="${l.get('laundryCode')} eq ${ls.laundryCode}">
-													<img th:src="@{/user/assets/img/products/laundry.png} " style="width: 100px; height: 100px; cursor: pointer;" alt="세탁소">
+													<img th:src="@{/user/assets/img/products/laundry.png} " style="width: 100px; height: 100px; cursor: pointer;" alt="세탁기이미지">
 													<h4 th:text="${ls.machineState}"></h4>
 												</div>			
 											</div>
