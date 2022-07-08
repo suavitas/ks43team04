@@ -78,6 +78,20 @@
 		</collection>
 	</resultMap>
 	
+	<update id="readCount" parameterType="Board">
+		/* 조회수 올리기 */
+		update 
+			tb_board AS b
+		<trim prefix="SET" prefixOverrides=",">
+		<if test="boardReadCount != null and boardReadCount != ''">
+			b.board_read_count = b.board_read_count + 1
+		</if>
+		</trim>	
+		WHERE 
+			b.board_idx = #{boardIdx};
+	
+	</update>
+	
 	<delete id="noticeRemove" parameterType="Board">
 		/* 공지 글 삭제 */
 		DELETE FROM tb_board 
@@ -291,46 +305,7 @@
 	</insert>
 	
 	
-	<insert id="noticeWrite" parameterType="Board">
-		/* (USER)공지사항 작성 */
-	 INSERT INTO tb_board
-			(board_idx
-			,board_menu_code
-			,m_id
-			,board_group_no
-			,board_order_no
-			,board_read_count
-			,board_title
-			,board_content
-			,board_secret
-			,board_add_file
-			,board_add_file_name
-			,board_add_file_change_name
-			,board_add_file_vol
-			,regist_time)
-		VALUES (
-			(SELECT
-				max(b.board_idx)+1
-			FROM
-				tb_board AS b)
-		, 'notice_menu_code_001'
-		, #{memberId}			
-		, (SELECT
-				max(b.board_group_no)+1
-			FROM
-				tb_board AS b
-			WHERE b.board_menu_code = 'notice_menu_code_001')
-		, 0	
-		, 0		
-		, #{boardTitle}
-		, #{boardContent}
-		, '0'
-		, '0'
-		, '0'
-		, '0'
-		, '0'
-		, NOW());
-	</insert>
+
 	
 	<update id="commentComplete" parameterType="Board">
 		UPDATE 
@@ -397,10 +372,6 @@
 			,board_title
 			,board_content
 			,board_secret
-			,board_add_file
-			,board_add_file_name
-			,board_add_file_change_name
-			,board_add_file_vol
 			,regist_time
 			,comment_state)
 		VALUES (
@@ -419,10 +390,6 @@
 		, 0		
 		, #{boardTitle}
 		, #{boardContent}
-		, '0'
-		, '0'
-		, '0'
-		, '0'
 		, '0'
 		, NOW()
 		, '답변대기');
@@ -571,12 +538,13 @@
 	
 	<select id="getNoticeList" parameterType="map" resultType="map">
 	  	/* 공지사항 목록 조회 */
-		SELECT
+			SELECT
 			b.board_menu_code AS boardMenuCode
 			,b.board_idx AS boardIdx
 			,b.board_secret AS boardSecret
 			,b.board_title AS boardTitle
-			,b.board_add_file AS boardAddFile
+			,(select
+				IF(a.file_idx is null, false, true)) AS boardAddFile
 			,b.m_id AS memberId
 			,(SELECT 
 				IFNULL(b.update_time, b.regist_time)) AS registTime
@@ -584,6 +552,10 @@
 			,b.comment_state AS commentState
 		FROM
 			tb_board AS b
+		left join
+			tb_attach_board as a
+		on
+			b.board_idx = a.board_idx		
 		WHERE
 			b.board_menu_code= 'notice_menu_code_001'
 		ORDER BY b.board_idx DESC

@@ -52,7 +52,7 @@ public class IlbanGPriceController {
 		return "admin/goodsPrice/goodsPrice";
 	}
 	
-	/* 세탁소별 휴가 추가 */
+	/* 세탁소별 세탁물 가격하기 위해 정보를 가저오는 컨트롤러 */
 	@PostMapping("/goodsPrice/addGoodsPrice")
 	public String addGoodsPrice(@RequestParam(name = "ilbanSkillCode", required=false) String ilbanSkillCode,
 			@RequestParam(name = "gName", required=false) String gName,
@@ -67,7 +67,7 @@ public class IlbanGPriceController {
 	}
 	
 	
-	/* 세탁소별 휴가 추가 */
+	/* 세탁소별 세탁물 가격 추가 메서드 실행 */
 	@GetMapping("/goodsPrice/addGoodsPrice")
 	public String addHoliday(Model model) {
 		
@@ -76,6 +76,19 @@ public class IlbanGPriceController {
 		System.out.println("______세탁소별 가격을 추가하기 위해 정보를 불러왔습니다._________"+IlbanSkill);
 		return "admin/goodsPrice/addGoodsPrice";
 	}
+	
+	/* 세탁소별 세탁물 가격 삭제 */
+	@GetMapping("/goodsPrice/removeGoodsPrice")
+	public String removeHoliday(@RequestParam(name = "ilbanGPriceCode", required=false) String ilbanGPriceCode,
+			Model model) {
+		
+		System.out.println("_____세탁물 가격을 삭제하기 위해서 정보를 받아왔습니다____"+ilbanGPriceCode);
+		
+		model.addAttribute("ilbanGPriceCode", ilbanGPriceCode);
+	
+		return "admin/goodsPrice/removeGoodsPrice";
+	}
+	
 	
 	
 	

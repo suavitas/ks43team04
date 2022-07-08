@@ -12,6 +12,9 @@ import ks43team04.dto.Review;
 @Mapper
 public interface BoardMapper {
 	
+	//조회수 올리기
+	public int readCount(Board board);
+	
 	//이벤트 등록
 	public int eventForm(Event event);
 	

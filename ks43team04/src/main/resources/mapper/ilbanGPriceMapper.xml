@@ -36,6 +36,14 @@
 			 NOW(),
 			 'use');			 
  	</insert>
+ 	
+ 	<delete id="removeGoodsPrice" parameterType="String">
+ 		DELETE 
+	        FROM 
+	        tb_ilban_g_price
+	        WHERE
+	       		ilban_G_price_code = #{ilbanGPriceCode}; 
+     </delete>
   
    
 
