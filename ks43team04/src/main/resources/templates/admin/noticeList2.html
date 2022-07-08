@@ -14,14 +14,14 @@
 	 			
 	 			<div class="x_title">
 	 			
-		 			<a th:href="@{/admin/noticeForm}"><button type="button" class="btn btn-secondary" style="margin: 50px 150px 0 0; float: right;">등록하기</button></a>
+		 			<a th:href="@{/admin/noticeForm}"><button type="button" class="btn btn-secondary" style="margin: 50px 140px 0 0; float: right;">등록하기</button></a>
 				
 			<!-- 공지사항 테이블 -->
 			<div class="x_content">
 			<div class = "table-responsive">
 			<table id="reportList" class="table table-striped table-bordered" style="width: 80%; margin: 20px auto;">
 				<thead>
-					<tr style="text-align: center;">
+					<tr>
 						<th style="width: 7%;">번호</th>
 						<th style="width: 44%;">제목</th>
 						<th style="width: 7%;">첨부</th>
@@ -32,27 +32,27 @@
 				</thead>
 				<tbody>
 					<tr th:if="${not #lists.isEmpty(getNoticeList)}" th:each="l : ${getNoticeList}">
-						<td th:text="${l.boardIdx}" style="text-align: center;"></td>
+						<td th:text="${#numbers.formatInteger(l.get('boardIdx'),0)}"></td>
 						<td>
-							<a th:href="@{/admin/noticeDetail(boardMenuCode=${l.boardMenuCode}, boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
+							<a th:href="@{/admin/noticeDetail(boardMenuCode=${l.get('boardMenuCode')}, boardIdx=${l.get('boardIdx')})}" th:text="${l.get('boardTitle')}"></a>
 						</td>
-						<td  style="text-align: center;">
-							<th:block th:if="${l.boardAddFile=='1'}">
+						<td>
+							<th:block th:if="${l.get('boardAddFile')==1}">
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
 									  <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
 									</svg>
 							</th:block>
-							<th:block th:unless="${l.boardAddFile=='1'}">
+							<th:block th:unless="${l.get('boardAddFile')==1}">
 							</th:block>
 						</td>
-						<td  style="text-align: center;">
-							<th:block th:if="${l.memberId=='id001'}">
-								<span style="text-align: center; color: #212529;">관리자</span>
-							</th:block>
+						<td class="product-name">
+							<th:block th:if="${l.get('memberId').equals('id001')}">
+								<span style="color: #212529">관리자</span>
+							</th:block>									
 						</td>
 						<!-- <td th:text="${l.get('registTime')}"></td> -->
-						<td th:text="${l.registTime}"  style="text-align: center;"></td>
-						<td th:text="${l.boardReadCount}" style="text-align: center;"></td>
+						<td th:text="${#temporals.format(l.get('registTime'),'yyyy-MM-dd HH:mm:ss')}"></td>
+						<td th:text="${l.get('boardReadCount')}"></td>
 					</tr>
 					<tr th:unless="${not #lists.isEmpty(getNoticeList)}">
 						<td colspan="6">조회된 내용이 없습니다.</td>

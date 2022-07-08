@@ -356,12 +356,14 @@ public class AdminBoardController {
 
 		Map<String, Object> resultMap = boardService.getNoticeList(currentPage);
 		
-		model.addAttribute("getNoticeList", resultMap.get("getNoticeList"));
+		model.addAttribute("getNoticeList", resultMap.get("getNoticeList"));		
 		model.addAttribute("resultMap", resultMap);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("lastPage", resultMap.get("lastPage"));
 		model.addAttribute("startPageNum", resultMap.get("startPageNum"));
 		model.addAttribute("endPageNum", resultMap.get("endPageNum"));
+		
+		log.info("getNoticeList : {}", resultMap.get("getNoticeList"));
 		return "admin/noticeList";
 	}
 	
