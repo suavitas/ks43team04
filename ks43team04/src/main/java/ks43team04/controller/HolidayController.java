@@ -53,6 +53,8 @@ public class HolidayController {
 
 		return "admin/lundryHoliday";
 	}
+
+	/* 세탁소별 휴일 삭제 */
 	@GetMapping("/removeHoliday")
 	public String removeHoliday(@RequestParam(name = "laundryName", required=false) String laundryName,
 			@RequestParam(name = "yearlyHolidayName", required=false) String yearlyHolidayName,
