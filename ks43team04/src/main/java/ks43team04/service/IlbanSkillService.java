@@ -33,5 +33,12 @@ public class IlbanSkillService {
 		System.out.println("______일반 세탁소 스킬 추가 서비스________"+result);
 		return result;
 	}
+	
+	/* 세탁소별 휴일 삭제 */
+	public int GoodsPrice(String ilbanGPriceCode) {
+		int result = ilbanGPriceMapper.removeGoodsPrice(ilbanGPriceCode);
+
+		return result;
+	}
 
 }
