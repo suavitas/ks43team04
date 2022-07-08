@@ -87,7 +87,7 @@
 						</div>							
 					</div>
 					<!-- 내용 시작-->
-					<th:block>
+					<th:block th:if="${not #lists.isEmpty(billPage)}" th:each="l , status : ${billPage}">
 						<div class="cart-table-wrap">
 							<div class="point-summary" style="border: 1px solid #dadddf; padding: 30px 0 30px;">
 								<ul class="point-zone" style=" display: table; width: 100%; table-layout: fixed; list-style: none; padding-left: 0px; margin-bottom: 0px;">
@@ -97,26 +97,52 @@
 												<span style="display: block; font-size: 50px;">
 													<strong><i class="bi bi-cart-check"></i></strong>
 												</span>
-												<span></span>
+												<span th:text="${l.get('registTime')}"></span>
 											</div>
 										</div>
 									</li>
 									<li class="point-total" style="display: table-cell; text-align: center; border-left: 1px solid #d9dadd; width: 650px;">
 										<div class="point-content" style="display: inline-block; position: relative; margin: 0 auto;">
 											<div class="point-area-title">
-												<span ></span>
+												<span th:text="${l.get('laundryName')}"></span>
 											</div>
 											<div class="point-amount">
 												<div>
 												<span>상품명 : </span>
-												<strong></strong>
+												<strong th:text="${l.get('goodsName')}"></strong>
 												</div>
 												<div style="padding-left: 20px; padding-right: 20px; font-size: 30px;">
-													<span ></span>
+													<span th:text="${#numbers.arrayFormatInteger(l.get('totalPrice'),3,'COMMA') + '원'}"></span>
 												</div>
 												<div>
-												<span></span>
+												<span>카드 결제완료</span>
 												</div>
+												<div>
+													<span th:text="${#numbers.arrayFormatInteger(l.get('addPoint'),3,'COMMA') + '포인트 적립'}"></span>
+												</div>
+												<!-- 모달창 시작 -->
+												<div>
+													<button type="button" class="btn btn-info btn-xs" data-toggle="modal" th:data-target="${'#myModal' + status.count}">요청사항</button>
+												</div>
+												<!-- Modal -->
+												<div class="modal fade" th:id="${'myModal' + status.count}" tabindex="-1" role="dialog" th:aria-labelledby="${'myModal' + status.count + 'Label'}">
+												  <div class="modal-dialog">
+												    <!-- Modal content-->
+												    <div class="modal-content">
+												      <div class="modal-header">
+												        <button type="button" class="close" data-dismiss="modal">&times;</button>
+												        <h4 class="modal-title">요청사항</h4>
+												      </div>
+												      <div class="modal-body">
+												        <p th:text="${l.get('request')}"></p>
+												      </div>
+												      <div class="modal-footer">
+												        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+												      </div>
+												    </div>
+												  </div>
+												</div>
+												<!-- 모달창 끝 -->
 											</div>
 										</div>
 									</li>
@@ -125,7 +151,7 @@
 						</div>
 					</th:block>
 					<!-- 내용 끝 -->
-					<th:block>
+					<th:block th:unless="${not #lists.isEmpty(billPage)}">
 						<div class="cart-table-wrap">
 							<div class="point-summary" style="border: 1px solid #dadddf; padding: 30px 0 30px;">
 								<ul class="point-zone" style=" display: table; width: 100%; table-layout: fixed; list-style: none; padding-left: 0px; margin-bottom: 0px;">
@@ -167,7 +193,24 @@
 			</div>
 		</div>
 		<!-- 페이징처리 시작 -->
-		
+		<th:block>
+			<div class="row" style="margin-bottom: 100px;">
+				<div class="col-lg-12 text-center">
+					<div class="pagination-wrap">
+						<ul>
+							<li><a th:href="@{/user/myPagePayment2}">처음</a><li>
+							<li><a th:if="${currentPage > 1}" th:href="@{/user/myPagePayment2(currentPage=${currentPage -1})}">이전</a></li>
+							<th:block th:each="num : ${#numbers.sequence(startPageNum, endPageNum)}">
+								<li><label th:if="${currentPage eq num}" th:text="${(num < 5)? '0'+ num: num}"></label></li>
+								<li><a th:unless="${currentPage eq num}" th:href="@{/user/myPagePayment2(currentPage=${num})}" th:text="${(num < 5)? '0'+ num: num}"></a></li>
+							</th:block>
+							<li><a th:if="${currentPage < lastPage}" th:href="@{/user/myPagePayment2(currentPage=${currentPage +1})}">다음</a></li>
+							<li><a th:href="@{/user/myPagePayment2(currentPage=${lastPage})}">마지막</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</th:block>
 		<!-- 페이징처리 끝 -->
 	</div>
 </th:block>

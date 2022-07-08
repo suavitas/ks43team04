@@ -17,32 +17,66 @@
 		<result column="delivery_pay" 				property="deliveryPay"/>
 		<result column="total_pay_groupcode" 		property="totalPayGroupcode"/>
 	</resultMap>
+	
+	<select id="billPage" parameterType="map" resultType="map">
+		SELECT 
+			bill_code		AS billCode, 
+			m_id			AS memberId, 
+			goods_name		AS goodsName, 
+			total_price		AS totalPrice, 
+			laundry_name	AS laundryName, 
+			request			AS request, 
+			add_point		AS addPoint, 
+			refund			AS refund, 
+			regist_time		AS registTime		
+		FROM 
+			tb_bill2 AS b
+		WHERE
+			b.m_id = #{memberId}
+		AND 
+			b.refund = 'X'
+		ORDER BY b.regist_time DESC
+		LIMIT #{startRow}, #{rowPerPage}
+	</select>
+	
+	<select id="getBillCount2" parameterType="String" resultType="int">
+		/*예약 -> 결제 -> 결제건수 조회*/
+		SELECT
+			COUNT(bill_code)
+		FROM
+			tb_bill2 AS b
+		WHERE
+			b.m_id = #{memberId}
+		and
+			b.refund = 'X';
+	</select>
 
 	<insert id="addBill2" parameterType="Bill2">
-	INSERT INTO tb_bill2
-		(
-		bill_code, 
-		m_id, 
-		goods_name, 
-		total_price, 
-		laundry_name, 
-		request,
-		refund, 
-		add_point,
-		regist_time
-		)
-	VALUES
-		(
-		(SELECT CONCAT('bill_code','_',MAX(CAST(substring(bill_code,11) AS DECIMAL)+1)) AS bill_code from tb_bill2 AS aaa), 
-		#{memberId}, 
-		#{goodsName},
-		#{totalPrice},
-		#{laundryName},
-		#{request},
-		'X', 
-		#{addPoint},
-		NOW()
-		)
+		/* 예약 -> 결제 -> 인서트작업 */
+		INSERT INTO tb_bill2
+			(
+			bill_code, 
+			m_id, 
+			goods_name, 
+			total_price, 
+			laundry_name, 
+			request,
+			refund, 
+			add_point,
+			regist_time
+			)
+		VALUES
+			(
+			(SELECT CONCAT('bill_code','_',MAX(CAST(substring(bill_code,11) AS DECIMAL)+1)) AS bill_code from tb_bill2 AS aaa), 
+			#{memberId}, 
+			#{goodsName},
+			#{totalPrice},
+			#{laundryName},
+			#{request},
+			'X', 
+			#{addPoint},
+			NOW()
+			)
 	
 	</insert>
 	
