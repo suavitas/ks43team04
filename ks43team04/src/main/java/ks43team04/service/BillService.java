@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ks43team04.dto.Bill;
+import ks43team04.dto.Bill2;
 import ks43team04.mapper.BillMapper;
 
 @Service
@@ -17,7 +18,12 @@ public class BillService {
 	public BillService(BillMapper billMapper) {
 		this.billMapper = billMapper;
 	}
-
+	
+	/*결제내역 insert*/
+	public int addBill2(Bill2 bill) {
+		int result = billMapper.addBill2(bill);
+		return result;
+	}
 	
 	public int addBill(String memberId, String laundryCode, String totalPrice) {
 		

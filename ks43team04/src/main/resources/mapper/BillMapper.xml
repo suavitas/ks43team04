@@ -18,6 +18,33 @@
 		<result column="total_pay_groupcode" 		property="totalPayGroupcode"/>
 	</resultMap>
 
+	<insert id="addBill2" parameterType="Bill2">
+	INSERT INTO tb_bill2
+		(
+		bill_code, 
+		m_id, 
+		goods_name, 
+		total_price, 
+		laundry_name, 
+		request,
+		refund, 
+		add_point,
+		regist_time
+		)
+	VALUES
+		(
+		(SELECT CONCAT('bill_code','_',MAX(CAST(substring(bill_code,11) AS DECIMAL)+1)) AS bill_code from tb_bill2 AS aaa), 
+		#{memberId}, 
+		#{goodsName},
+		#{totalPrice},
+		#{laundryName},
+		#{request},
+		'X', 
+		#{addPoint},
+		NOW()
+		)
+	
+	</insert>
 	
  	<insert id="addBill" parameterType="String">
  		INSERT INTO 
@@ -41,7 +68,7 @@
 			(SELECT CONCAT('bill_code','_',MAX(CAST(substring(bill_code,11) AS DECIMAL)+1)) AS bill_code from tb_bill AS aaa),
 			(SELECT MAX(CONCAT(#{memberId},'_',#{laundryCode})) AS order_num_groupcode from tb_bill AS bbb),
 			 #{totalPrice},
-			 'user_code_002',
+			 'user_code_001',
 			 0,
 			 '카드',
 			 NOW(),
