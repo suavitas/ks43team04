@@ -1,6 +1,7 @@
 package ks43team04.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -24,5 +25,12 @@ public interface BillMapper {
 	
 	public int addBill(String memberId, String laundryCode, String totalPrice);
 	
+	/*예약 -> 결제 -> 인서트작업*/
 	public int addBill2(Bill2 bill);
+	
+	/*예약 -> 결제 -> 결제건수 조회*/
+	public int getBillCount2(String memberId);
+	
+	/*예약 -> 결제 -> 페이징처리*/
+	public List<Map<String, Object>> billPage(Map<String, Object> paramMap);
 }
