@@ -3,15 +3,20 @@ package ks43team04.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ks43team04.dto.Bill2;
 import ks43team04.dto.IlbanSkill;
 import ks43team04.dto.Laundry;
 import ks43team04.dto.MuinMachine;
+import ks43team04.service.BillService;
 import ks43team04.service.YeyakService;
 
 @RequestMapping("/user")
@@ -19,11 +24,30 @@ import ks43team04.service.YeyakService;
 public class YeyakController {
 
 	private final YeyakService yeyakService;
+	private final BillService billService;
 
-	public YeyakController(YeyakService yeyakService) {
+	
+	public YeyakController(YeyakService yeyakService,BillService billService) {
 		this.yeyakService = yeyakService;
+		this.billService = billService;
 	}
-
+	
+	@GetMapping("myPagePayment2")
+	public String myPagePayment2(Model model) {
+		
+		return "/user/myPagePayment2";
+	}
+	
+	@PostMapping("/myPagePayment2")
+	public String myPagePayment2(Bill2 bill) {
+		
+		System.out.println(bill);
+		
+		billService.addBill2(bill);
+		
+		return "/member/myPagePayment2";
+	}
+	
 	@GetMapping("/muinYeyak")
 	public String muinYeyak(@RequestParam(name = "currentPage", required = false, defaultValue = "1") int currentPage,
 			Model model) {

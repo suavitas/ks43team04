@@ -16,10 +16,14 @@
 				</div>
 			</div>
 
-			<form id="payForm" name="payForm" method="post" th:action="@{/user/myPagePayment}">
-<input name="laundryCode" type="hidden" th:value="${l.laundryCode}">
+			<form id="payForm" name="payForm" method="post" th:action="@{/user/myPagePayment2}">
+	<input name="laundryCode" type="hidden" th:value="${l.laundryCode}">
 	<input name="memberId" type="hidden" th:value="${sessionId}">
+	<input name="goodsName" type="hidden" th:value="${ls.goodsName}">
 	<input name="totalPrice" type="hidden" th:value="${ls.goodsPrice}">
+	<input name="laundryName" type="hidden" th:value="${l.laundryName}">
+	<input name="request" type="hidden" th:value="${bill}">
+	<input name="addPoint" class="add-point2" type="text">
 				<div class="product-area">
 					
 					
@@ -461,6 +465,7 @@
 								style="display: list-item;"><strong class="price-sum-title"
 								id="price-yejung">적립 예정 포인트 </strong>
 								<p class="price-sum-detail">
+									
 									<em class="-useNaverMileagePrice add-point">0</em>원
 								</p></li>
 						</ul>
@@ -548,11 +553,13 @@
 	<script>
 		var addPrice = document.querySelector('.add-price');
 		var addPoint = document.querySelector('.add-point');
+		var addPoint2 = document.querySelector('.add-point2');
 		
 		var mm = addPrice.innerText.split('원', 1);
 	 	var number = Number(mm[0].replace(",", ""));
 		
 	 	addPoint.innerText = number/50;
+	 	addPoint2.value = number/50;
 	 	
 	 	
 		//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.

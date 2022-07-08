@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import ks43team04.dto.Bill;
+import ks43team04.dto.Bill2;
 
 @Mapper
 public interface BillMapper {
@@ -22,4 +23,6 @@ public interface BillMapper {
 	public List<Bill> ilbanOrderList(String memberId);
 	
 	public int addBill(String memberId, String laundryCode, String totalPrice);
+	
+	public int addBill2(Bill2 bill);
 }
