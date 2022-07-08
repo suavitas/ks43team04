@@ -536,26 +536,34 @@
 			b.board_menu_code = 'notice_menu_code_001';	
 	</select>
 	
-	<select id="getNoticeList" parameterType="map" resultType="map">
+	<select id="getNoticeList" parameterType="map" resultMap="boardResultMap">
 	  	/* 공지사항 목록 조회 */
-			SELECT
-			b.board_menu_code AS boardMenuCode
-			,b.board_idx AS boardIdx
-			,b.board_secret AS boardSecret
-			,b.board_title AS boardTitle
+SELECT
+			b.board_menu_code
+			,b.board_idx
+			,b.board_secret
+			,b.m_id
+			,b.board_title
 			,(select
-				IF(a.file_idx is null, false, true)) AS boardAddFile
+				IF(a.file_idx is null, false, true)) AS board_add_file
 			,b.m_id AS memberId
 			,(SELECT 
-				IFNULL(b.update_time, b.regist_time)) AS registTime
-			,b.board_read_count AS boardReadCount
-			,b.comment_state AS commentState
+				IFNULL(b.update_time, b.regist_time)) AS regist_time
+			,b.board_read_count
+			,b.comment_state
+			,ta.save_file
+			,ta.file_path
+			,ta.represent_img
 		FROM
 			tb_board AS b
 		left join
 			tb_attach_board as a
 		on
-			b.board_idx = a.board_idx		
+			b.board_idx = a.board_idx
+		left JOIN
+			tb_attach AS ta
+		on
+			ta.file_idx = a.file_idx	
 		WHERE
 			b.board_menu_code= 'notice_menu_code_001'
 		ORDER BY b.board_idx DESC

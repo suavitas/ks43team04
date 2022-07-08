@@ -64,7 +64,7 @@ public interface BoardMapper {
 	public List<Board> getQnaServiceList();
 	
 	//공지사항 목록 조회(페이징)
-	public List<Map<String, Object>> getNoticeList(Map<String, Object> paramMap);
+	public List<Board> getNoticeList(Map<String, Object> paramMap);
 	
 	//공지사항 목록 총 row 수
 	public int getNoticeListCount();

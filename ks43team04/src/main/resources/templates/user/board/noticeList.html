@@ -69,24 +69,24 @@
 									</thead>
 									<tbody>
 										<tr class="table-body-row" th:if="${not #lists.isEmpty(getNoticeList)}" th:each="l : ${getNoticeList}">
-											<td class="product-remove" th:text="${#numbers.formatInteger(l.get('boardIdx'),0)}"></td>
+											<td class="product-remove" th:text="${l.boardIdx}"></td>
 											<td class="product-image" style="text-align: left; padding-left: 20px;">
-												<a th:href="@{/user/board/noticeDetail(boardMenuCode=${l.get('boardMenuCode')}, boardIdx=${l.get('boardIdx')})}" th:text="${l.get('boardTitle')}"></a>
+												<a th:href="@{/user/board/noticeDetail(boardMenuCode=${l.boardMenuCode}, boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 											</td>
 											<td class="product-image">
-												<th:block th:if="${l.get('boardAddFile')==1}">
+												<th:block th:if="${l.boardAddFile=='1'}">
 														<i class="bi bi-paperclip"></i>
 												</th:block>
-												<th:block th:unless="${l.get('boardAddFile')==1}">
+												<th:block th:unless="${l.boardAddFile=='1'}">
 												</th:block>
 											</td>
 											<td class="product-name">
-												<th:block th:if="${l.get('memberId').equals('id001')}">
+												<th:block th:if="${l.memberId=='id001'}">
 													<span>관리자</span>
-												</th:block>									
+												</th:block>
 											</td>
-											<td th:text="${#temporals.format(l.get('registTime'),'yyyy-MM-dd HH:mm:ss')}"></td>
-											<td class="product-quantity" th:text="${l.get('boardReadCount')}"></td>
+											<td th:text="${l.registTime}"></td>
+											<td th:text="${l.boardReadCount}"></td>
 										</tr>
 										<tr th:unless="${not #lists.isEmpty(getNoticeList)}">
 		   									<td colspan="6">조회된 내용이 없습니다.</td>

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +31,8 @@ public class BoardService {
 	private final AsMapper asMapper;
 	private final LaundryMapper laundryMapper;
 	private final FileMapper fileMapper;
+	
+	private static final Logger log = LoggerFactory.getLogger(BoardService.class);
 
 	public BoardService(BoardMapper boardMapper, AsMapper asMapper,LaundryMapper laundryMapper, FileMapper fileMapper) {
 		this.boardMapper = boardMapper;
@@ -289,7 +293,9 @@ public class BoardService {
 		paramMap.put("startRow", startRow);
 		paramMap.put("rowPerPage", rowPerPage);
 		
-		List<Map<String, Object>> getNoticeList = boardMapper.getNoticeList(paramMap);
+		List<Board> getNoticeList = boardMapper.getNoticeList(paramMap);
+		
+		System.out.println("getNoticeList : {}" + getNoticeList);
 		
 		if (currentPage > 6) {
 			startPageNum = currentPage - 5;
