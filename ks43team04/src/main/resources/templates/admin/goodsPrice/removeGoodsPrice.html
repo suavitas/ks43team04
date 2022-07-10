@@ -5,7 +5,7 @@
 
 
 <th:block layout:fragment="customContents">
-	<form  th:action="@{/admin/removeHoliday}" method="post"
+	<form  th:action="@{/admin/goodsPrice/removeGoodsPrice}" method="post"
 		style="text-align: center;">
 		<table class="table table-striped jambo_table bulk_action"
 			style="width: 50%; margin: 0 auto; margin-top: 80px; border-collapse: separate;">
@@ -36,7 +36,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<input type="hidden" name="holidayCode" th:value="${holidayCode}">
+		<input type="hidden" name="ilbanGPriceCode" th:value="${ilbanGPriceCode}">
 	</form>
 	
 </th:block>

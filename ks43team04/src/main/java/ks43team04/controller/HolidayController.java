@@ -48,13 +48,13 @@ public class HolidayController {
 		List<LaundryList> getLaundryList = laundryService.LaundryList(searchKey, searchValue);
 		if (getLaundryList != null)
 			model.addAttribute("getLaundryList", getLaundryList);
-
+		System.out.println("_______________세탁소별 휴일 목록을 불러옵니다_______________");
 		System.out.println(getLaundryList);
 
 		return "admin/lundryHoliday";
 	}
 
-	/* 세탁소별 휴일 삭제 */
+	/* 세탁소별 휴일 삭제페이지로 정보 전달*/
 	@GetMapping("/removeHoliday")
 	public String removeHoliday(@RequestParam(name = "laundryName", required=false) String laundryName,
 			@RequestParam(name = "yearlyHolidayName", required=false) String yearlyHolidayName,
@@ -77,7 +77,7 @@ public class HolidayController {
 		return "admin/removeHoliday";
 	}
 	
-	/* 세탁소별 휴일 수정하기*/
+	/* 세탁소별 휴일 삭제쿼리 실행하기*/
 	@PostMapping("/removeHoliday")
 	public String removeHoliday(String holidayCode) {
 

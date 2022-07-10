@@ -34,10 +34,10 @@ public class IlbanSkillService {
 		return result;
 	}
 	
-	/* 세탁소별 휴일 삭제 */
-	public int GoodsPrice(String ilbanGPriceCode) {
+	/* 일반세탁소 가격 삭제 */
+	public int removeGoodsPrice(String ilbanGPriceCode) {
 		int result = ilbanGPriceMapper.removeGoodsPrice(ilbanGPriceCode);
-
+		System.out.println("______일반세탁소 가격을 삭제하기 위한 서비스_____"+ilbanGPriceCode);
 		return result;
 	}
 
