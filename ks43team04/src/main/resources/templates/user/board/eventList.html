@@ -56,43 +56,81 @@
 	<!-- latest news -->
 	<div class="latest-news mt-150 mb-150">
 		<div class="container">
+		
+		
 			<div class="row">
-				<th:block  th:if="${not #lists.isEmpty(eventList)}" th:each="l : ${eventList}"></th:block>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-latest-news">
-						<a th:href="@{/user/board/eventDetail(eventCode=event_code_6)}"><div class="latest-news-bg news-bg-11" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
+			
+			
+				<th:block  th:if="${not #lists.isEmpty(eventList)}" th:each="l, status : ${eventList}">			
+				<div class="col-lg-4 col-md-6 text-center">
+					<div class="single-product-item">
+						
+						<th:block  th:if="${not #lists.isEmpty(l.boardAttach)}" th:each="b : ${l.boardAttach}">
+					
+							<div class="product-image" th:if="${b.representImg == 'Y'}">
+									<div th:data-img="${b.saveFile}">
+									<a th:href="@{/user/board/eventDetail(eventCode=${l.eventCode})}"><img th:src="@{'/' + ${#strings.replace(b.filePath,'\','/')}}"></a>
+									
+									<!-- th:data-setbg="@{'/' + ${#strings.replace(b.filePath,'\','/')}}"> -->
+						
+							</div>
+							</div>
+					
+							<!-- <div class="product-image">
+								<a th:href="@{/user/board/eventDetail(eventCode=${l.eventCode})}"><img th:src="@{/user/assets/img/products/laundry.png}" alt="세탁소"></a>
+							</div> -->
+						</th:block>
+						<th:block th:unless="${not #lists.isEmpty(boardAttach)}">
+							<!-- <div class="product-image">
+								<a th:href="@{/user/board/eventDetail(eventCode=${l.eventCode})}"><img th:src="@{/user/assets/img/products/laundry.png}" alt="세탁소"></a>
+							</div>
+						</th:block>	 -->
+							<h5 th:text="${l.eventState}"></h5>
+							<h5 th:text="${l.eventTitle}"></h5>
+					</div>
+				</div>
+				
+				</th:block>
+				
+					<th:block th:unless="${not #lists.isEmpty(eventList)}">
+						<div class="col-lg-4 col-md-6">
+								<div style="text-align: center;">등록된 게시물이 없습니다.</div>
+							</div>
+					</th:block>
+					
+						<!-- <a th:href="@{/user/board/eventDetail(eventCode=6)}"><div class="latest-news-bg news-bg-11" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
 						
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<div class="single-latest-news">
-						<a th:href="@{/user/board/eventDetail(eventCode=event_code_5)}"><div class="latest-news-bg1 news-bg-22" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
+						<a th:href="@{/user/board/eventDetail(eventCode=5)}"><div class="latest-news-bg1 news-bg-22" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
 						
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<div class="single-latest-news">
-						<a th:href="@{/user/board/eventDetail(eventCode=event_code_4)}"><div class="latest-news-bg1 news-bg-33" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
+						<a th:href="@{/user/board/eventDetail(eventCode=4)}"><div class="latest-news-bg1 news-bg-33" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
 						
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<div class="single-latest-news">
-						<a th:href="@{/user/board/eventDetail(eventCode=event_code_3)}"><div class="latest-news-bg1 news-bg-44" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
+						<a th:href="@{/user/board/eventDetail(eventCode=3)}"><div class="latest-news-bg1 news-bg-44" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
 					
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<div class="single-latest-news">
-						<a th:href="@{/user/board/eventDetail(eventCode=event_code_2)}"><div class="latest-news-bg1 news-bg-55" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
+						<a th:href="@{/user/board/eventDetail(eventCode=2)}"><div class="latest-news-bg1 news-bg-55" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
 					
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6">
 					<div class="single-latest-news">
-						<a th:href="@{/user/board/eventDetail(eventCode=event_code_1)}"><div class="latest-news-bg1 news-bg-66" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
+						<a th:href="@{/user/board/eventDetail(eventCode=1)}"><div class="latest-news-bg1 news-bg-66" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
 					
-					</div>
+					</div> -->
 				</div>
 			</div>
 
@@ -103,14 +141,7 @@
 					<div class="col-lg-12 text-center">
 					
 					<!-- 이벤트 등록하기  -->
-		<div id="qna-btn" class="btnArea">
-			<ul style="list-style: none;">
-				<li class="qnaWrite">
-					<a th:href="@{/user/board/eventWrite}" class="boxed-btn" style="font-weight: 700;">등록하기</a>
-				</li>			
-			</ul>	
-		</div>	
-					
+
 						<div class="pagination-wrap">
 							<ul>
 								<li><a href="#">Prev</a></li>
@@ -137,10 +168,8 @@
 		
 		
 		
-		
 		</div>
 		</div>
-</div>
-	</div>	
+</div>	
 </th:block>
 </html>

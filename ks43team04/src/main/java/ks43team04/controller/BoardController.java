@@ -122,19 +122,6 @@ public class BoardController {
 		return "/user/board/faqList";
 	}
 
-	/*이벤트 작성*/
-	@GetMapping("/eventWrite")
-	public String eventWrite(Model model) {
-		model.addAttribute("title", "이벤트 등록");
-		model.addAttribute("titleName", "이벤트 등록");
-		return "/user/board/eventWrite";
-	}
-	@PostMapping("/eventWrite")
-	public String eventWrite(Event event, HttpSession session) {
-		String sessionId = (String) session.getAttribute("SID");
-		boardService.eventForm(event, sessionId);
-		return "redirect:/user/board/eventList";
-	}
 	
 	/*이벤트 상세 조회*/
 	@GetMapping("/eventDetail")
@@ -148,8 +135,9 @@ public class BoardController {
 	/*이벤트 목록 조회*/
 	@GetMapping("/eventList")
 	public String eventList(Model model) {
-		List<Event> eventList = boardService.getEventList();
+		List<Event> eventList = boardService.getEventListForUser();
 		model.addAttribute("eventList", eventList);
+		System.out.println("eventList-----"+eventList);
 		return "/user/board/eventList";
 	}
 	
@@ -195,6 +183,7 @@ public class BoardController {
 		model.addAttribute("lastPage", resultMap.get("lastPage"));
 		model.addAttribute("startPageNum", resultMap.get("startPageNum"));
 		model.addAttribute("endPageNum", resultMap.get("endPageNum"));
+		model.addAttribute("rowCount", resultMap.get("rowCount"));
 		System.out.println("getNoticeList resultMap-----------"+resultMap);
 		return "/user/board/noticeList";
 	}

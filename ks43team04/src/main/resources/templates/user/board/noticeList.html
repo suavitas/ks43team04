@@ -68,8 +68,10 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr class="table-body-row" th:if="${not #lists.isEmpty(getNoticeList)}" th:each="l : ${getNoticeList}">
-											<td class="product-remove" th:text="${l.boardIdx}"></td>
+										<tr class="table-body-row" th:if="${not #lists.isEmpty(getNoticeList)}" th:each="l, status : ${getNoticeList}" >
+													
+											 <td th:text="${#numbers.formatInteger((rowCount - status.index) - ((currentPage - 1)*7),0)}"></td>
+											<!-- <td th:text="${l.boardIdx}"></td> -->
 											<td class="product-image" style="text-align: left; padding-left: 20px;">
 												<a th:href="@{/user/board/noticeDetail(boardMenuCode=${l.boardMenuCode}, boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 											</td>

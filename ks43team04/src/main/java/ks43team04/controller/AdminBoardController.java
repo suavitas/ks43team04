@@ -42,6 +42,43 @@ public class AdminBoardController {
 		this.memberService = memberService;
 	}
 	
+	/*이벤트 삭제*/
+	@PostMapping("/eventList")
+	public String eventList(Event event) {
+		boardService.eventRemove(event);
+		return "redirect:/admin/eventList";
+	}
+	
+	/*이벤트 수정*/
+	@GetMapping("/eventModify")
+	public String eventModify(@RequestParam(name = "eventCode", required = false) String eventCode
+								,@RequestParam(name = "memberId", required = false) String memberId
+								,@RequestParam(name = "eventTitle", required = false) String eventTitle
+								,@RequestParam(name = "eventContent", required = false) String eventContent
+								,@RequestParam(name = "updateTime", required = false) String updateTime
+								,Model model) {
+		model.addAttribute("eventCode", eventCode);
+		model.addAttribute("memberId", memberId);
+		model.addAttribute("eventTitle", eventTitle);
+		model.addAttribute("eventContent", eventContent);
+		model.addAttribute("updateTime", updateTime);
+		return "/admin/eventModify";
+	}
+	
+	@PostMapping("/eventModify")
+	public String eventModify(@RequestParam(name = "eventCode", required = false) String eventCode
+								,@RequestParam(name = "memberId", required = false) String memberId
+								,@RequestParam(name = "eventTitle", required = false) String eventTitle
+								,@RequestParam(name = "eventContent", required = false) String eventContent
+								,@RequestParam(name = "updateTime", required = false) String updateTime
+								,Event event) {
+		boardService.eventModify(event);
+		System.out.println("eventModify----------"+event);
+		return "redirect:/admin/eventList";
+	}
+	
+	
+	
 	/*공지사항 삭제*/
 	@PostMapping("/noticeList")
 	public String noticeList(Board board) {
@@ -256,15 +293,38 @@ public class AdminBoardController {
 	
 	/*이벤트 등록*/
 	@GetMapping("/eventForm")
-	public String eventForm(Model model) {
+	public String eventForm(@RequestParam(name = "eventCode", required = false) String eventCode
+							,Model model, HttpSession session) {
+		String sessionId = (String) session.getAttribute("SID");
+		Member member = memberService.getMemberInfoById(sessionId);
 		model.addAttribute("title", "이벤트 등록");
 		model.addAttribute("titleName", "이벤트 등록");
+		model.addAttribute("member", member);
 		return "admin/eventForm";
 	}	
 	@PostMapping("/eventForm")
-	public String eventForm(Event event, HttpSession session) {
-		String sessionId = (String) session.getAttribute("SID");
-		boardService.eventForm(event, sessionId);
+	public String eventForm(Event event, HttpSession session
+							,RedirectAttributes reAttr, @RequestParam MultipartFile[] boardImgFile, HttpServletRequest request) {
+		System.out.println("------------------------이벤트 등록 처리-----------------------------");
+		
+		String serverName = request.getServerName();
+		String fileRealPath = "";
+		String sessionId = (String)session.getAttribute("SID");
+		
+		if("localhost".equals(serverName)) {
+			// server 가 localhost 일때 접근
+			fileRealPath = System.getProperty("user.dir") + "/src/main/resources/static/";
+			System.out.println(System.getProperty("user.dir"));
+			//fileRealPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
+		}else {
+			//배포용 주소
+			fileRealPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
+		}
+		
+		String eventCode = boardService.eventForm(event, sessionId, boardImgFile, fileRealPath);
+		reAttr.addAttribute("eventCode", eventCode);
+		System.out.println("------------------------이벤트 등록 처리 끝-----------------------------");
+		
 		return "redirect:/admin/eventList";
 	}
 	
@@ -274,6 +334,10 @@ public class AdminBoardController {
 								, Model model) {
 		Event event = boardService.eventDetail(eventCode);
 		model.addAttribute("event", event);
+		String mId = event.getMemberId();
+		Member member = memberService.getMemberInfoById(mId);
+		model.addAttribute("member", member);
+		System.out.println("event MODEL"+event);
 		return "admin/eventDetail";
 		}		
 
@@ -362,6 +426,7 @@ public class AdminBoardController {
 		model.addAttribute("lastPage", resultMap.get("lastPage"));
 		model.addAttribute("startPageNum", resultMap.get("startPageNum"));
 		model.addAttribute("endPageNum", resultMap.get("endPageNum"));
+		model.addAttribute("rowCount", resultMap.get("rowCount"));
 		
 		log.info("getNoticeList : {}", resultMap.get("getNoticeList"));
 		return "admin/noticeList";
