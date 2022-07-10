@@ -40,6 +40,17 @@ public class BoardService {
 		this.laundryMapper = laundryMapper;
 		this.fileMapper = fileMapper;
 	}
+	/*이벤트 삭제*/
+	public int eventRemove(Event event) {
+		int result = boardMapper.eventRemove(event);
+		return result;
+	}
+	
+	/*이벤트 수정*/
+	public int eventModify(Event event) {
+		int result = boardMapper.eventModify(event);
+		return result;
+	}
 	
 	/*공지사항 조회수*/
 	public int readCount(Board board) {
@@ -141,11 +152,57 @@ public class BoardService {
 	}
 	
 	/*이벤트 등록*/
-	public int eventForm(Event event, String sessionId) {
+	public String eventForm(Event event, String sessionId, MultipartFile[] boardImgFile, String fileRealPath) {
+		System.out.println("------------------------이벤트 등록 서비스-----------------------------");
+		/*  1. 파일 업로드
+		 	2. 파일 업로드 성공시 파일 DB 인서트
+		 	3. 게시글 인서트
+ 			4. 결과값 리턴	*/
+		
 		event.setMemberId(sessionId);
-		int result = boardMapper.eventForm(event);
-		return result;
-	}
+		
+		/*여기부터*/
+		boolean fileCheck = true;
+		
+		for (MultipartFile multipartFile : boardImgFile){
+			if(!multipartFile.isEmpty()) {
+				fileCheck = false;
+			}
+		}
+		
+		if (!fileCheck) {
+			
+		
+		//파일 업로드 위한 객체 생성 
+		FileUtils fu = new FileUtils(boardImgFile, event.getMemberId(), fileRealPath);
+		List<Map<String, String>> dtoFileList = fu.parseFileInfo();
+				
+		// t_file 테이블에 삽입
+		System.out.println(dtoFileList + "<<<dtoFileList입니다.");
+		fileMapper.uploadFile(dtoFileList);
+				
+		boardMapper.eventForm(event);
+		String eventCode = event.getEventCode();
+		
+		// 릴레이션 테이블에 삽입
+		 List<Map<String, String>> relationFileList = new ArrayList<>();
+		 for(Map<String, String> m : dtoFileList) {
+		 m.put("eventCode", eventCode);
+		 relationFileList.add(m);
+		 		}
+		 System.out.println(relationFileList + "<<<relationFileList(Event)입니다.");
+	 		fileMapper.uploadRelationFileWithEvent(relationFileList);
+	     	
+			System.out.println("-----------------------이벤트 등록 서비스 끝------------------------------");
+			return eventCode;
+		}else {
+			
+			int result = boardMapper.eventForm(event);
+			return Integer.toString(result);
+		}
+	}	
+
+		
 	
 	/*이벤트 상세 조회*/
 	public Event eventDetail(String eventCode) {
@@ -156,6 +213,12 @@ public class BoardService {
 	/*전체 이벤트 목록 조회*/
 	public List<Event> getEventList(){
 		List<Event> eventList = boardMapper.getEventList();
+		return eventList;
+	}
+	
+	/*(USER)전체 이벤트 목록 조회*/
+	public List<Event> getEventListForUser(){
+		List<Event> eventList = boardMapper.getEventListForUser();
 		return eventList;
 	}
 	
@@ -191,12 +254,12 @@ public class BoardService {
 		return result;
 	}
 	
-	/*(USER)공지사항 작성*/
+	/*(USER)공지사항 작성
 	public int noticeWrite(Board board, String sessionId) {
 		board.setMemberId(sessionId);
 		int result = boardMapper.noticeWrite(board);
 		return result;
-	}
+	}*/
 	
 	/*(ADMIN)공지사항 작성*/
 	public String noticeForm(Board board, String sessionId, MultipartFile[] boardImgFile, String fileRealPath) {
@@ -306,11 +369,13 @@ public class BoardService {
 				endPageNum = lastPage;
 			}
 		}
+		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("lastPage", lastPage);
 		resultMap.put("getNoticeList", getNoticeList);
 		resultMap.put("startPageNum", startPageNum);
 		resultMap.put("endPageNum", endPageNum);
+		resultMap.put("rowCount", rowCount);
 		
 		return resultMap;
 	}

@@ -15,6 +15,15 @@ public interface BoardMapper {
 	//조회수 올리기
 	public int readCount(Board board);
 	
+	//이벤트(목록)상태변경 - 종료
+	//public int eventEnd(Event event);
+	
+	//이벤트 글 삭제
+	public int eventRemove(Event event);
+	
+	//이벤트 글 수정
+	public int eventModify(Event event);
+	
 	//이벤트 등록
 	public int eventForm(Event event);
 	
@@ -23,6 +32,7 @@ public interface BoardMapper {
 	
 	//이벤트 목록 조회
 	public List<Event> getEventList();
+	public List<Event> getEventListForUser();
 	public List<Event> runEventList();
 	public List<Event> endEventList();
 	
@@ -36,7 +46,7 @@ public interface BoardMapper {
 	public int noticeModify(Board board);
 
 	//공지사항 작성
-	public int noticeWrite(Board board);
+	//public int noticeWrite(Board board);
 	public int noticeForm(Board board);
 	
 	//문의사항 답변 작성 시 상태변경

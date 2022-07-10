@@ -1,5 +1,8 @@
 package ks43team04.dto;
 
+import java.util.List;
+import java.util.Map;
+
 public class Event {
 
 	private String eventCode;
@@ -15,6 +18,22 @@ public class Event {
 	private String registTime;
 	private String updateTime;
 	private String eventReadCount;
+	
+	private List<Map<String, String>> 	relFileWithEvent;
+	private List<BoardAttach> 				boardAttach;
+	
+	public List<Map<String, String>> getRelFileWithEvent() {
+		return relFileWithEvent;
+	}
+	public void setRelFileWithEvent(List<Map<String, String>> relFileWithEvent) {
+		this.relFileWithEvent = relFileWithEvent;
+	}
+	public List<BoardAttach> getBoardAttach() {
+		return boardAttach;
+	}
+	public void setBoardAttach(List<BoardAttach> boardAttach) {
+		this.boardAttach = boardAttach;
+	}
 	public String getEventCode() {
 		return eventCode;
 	}
@@ -122,6 +141,10 @@ public class Event {
 		builder.append(updateTime);
 		builder.append(", eventReadCount=");
 		builder.append(eventReadCount);
+		builder.append(", relFileWithEvent=");
+		builder.append(relFileWithEvent);
+		builder.append(", boardAttach=");
+		builder.append(boardAttach);
 		builder.append("]");
 		return builder.toString();
 	}
