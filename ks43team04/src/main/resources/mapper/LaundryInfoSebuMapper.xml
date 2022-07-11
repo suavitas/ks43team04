@@ -21,44 +21,61 @@
       <result column="business_number"             property="businessNumber"/>
       <result column="admin_level_code"             property="adminLevelCode"/>
       <result column="regist_time"               property="registTime"/>
+      
+      
+      <collection property="ilbanGpriceList"             ofType="IlbanGprice"> 
+         <id    column="ilban_G_price_code"             property="ilbanGoodsPriceCode"/>
+         <result column="laundry_code"        		    property="laundryCode"/>
+         <result column="ilban_skill_code"       		property="ilbanSkillCode"/>
+         <result column="g_name"       					property="goodsName"/>
+         <result column="g_price"          				property="goodsPrice"/>
+         <result column="regist_time"          			property="registTime"/>
+         <result column="g_price_use_state"          	property="goodsPriceUseState"/>
+      </collection>
    </resultMap>
    
    <select id="laundryInfoSebu" parameterType="String" resultMap="LaundryInfoResultMap">
-	   SELECT 
-			  laundry_name
-			, laundry_state
-			, laundry_addr
-			, laundry_tel
-			, level_code
-		FROM 
-			tb_laundry
+      SELECT 
+           laundry_name
+         , laundry_state
+         , laundry_addr
+         , laundry_tel
+         , level_code
+      FROM 
+         tb_laundry
    </select>
    <select id="getLaundryInfoSebu"  parameterType="HashMap" resultMap="LaundryInfoResultMap">
-	  SELECT 
-		 	 l.laundry_code
-			,l.m_id
-			,l.level_code
-			,l.laundry_name
-			,l.laundry_state
-			,l.laundry_post_num
-			,l.laundry_addr
-			,l.laundry_detail_addr
-			,l.laundry_tel
-			,l.laundry_license_img
-			,l.laundry_img
-			,l.skill_licence
-			,l.business_number
-			,l.admin_level_code
-			,l.regist_time
-		FROM 
-			tb_laundry AS l
-		<trim prefix="WHERE" prefixOverrides="AND |OR ">
-		<if test="searchValue != null and searchValue != ''">
-			${searchKey} LIKE CONCAT('%',#{searchValue}, '%');
-					<!-- 퍼센테이지 있으면 가운데 문자열이 포함된 어떠한 내용이든 ~ -->	
-
-		</if>
-		</trim>
+     SELECT 
+		  l.laundry_code
+         ,l.m_id
+         ,l.level_code
+         ,l.laundry_name
+         ,l.laundry_state
+         ,l.laundry_post_num
+         ,l.laundry_addr
+         ,l.laundry_detail_addr
+         ,l.laundry_tel
+         ,l.laundry_license_img
+         ,l.laundry_img
+         ,l.skill_licence
+         ,l.business_number
+         ,l.admin_level_code
+         ,l.regist_time	
+         ,g.ilban_G_price_code
+		 ,g.ilban_skill_code
+		 ,g.g_name
+		 ,g.g_price
+		 ,g.g_price_use_state
+      FROM 
+         tb_laundry AS l
+         INNER JOIN 
+			tb_ilban_g_price AS g
+			ON 
+			l.laundry_code = g.laundry_code
+      where
+	      ${searchKey}=#{searchValue};
+	   
+	   	  
    </select>
    
 
