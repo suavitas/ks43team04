@@ -18,10 +18,26 @@ public class LaundryInfoSebu {
 	private String businessNumber;
 	private String adminLevelCode;
 	private String registTime;
+	private String reviewCode;
+	private String reviewContent;
+	private String reveiwNum;
+	private String countingStar;
 	private List<IlbanGprice> ilbanGpriceList;
 	
 	
 
+	public String getReviewCode() {
+		return reviewCode;
+	}
+	public void setReviewCode(String reviewCode) {
+		this.reviewCode = reviewCode;
+	}
+	public String getReviewContent() {
+		return reviewContent;
+	}
+	public void setReviewContent(String reviewContent) {
+		this.reviewContent = reviewContent;
+	}
 	public List<IlbanGprice> getIlbanGpriceList() {
 		return ilbanGpriceList;
 	}
@@ -118,6 +134,12 @@ public class LaundryInfoSebu {
 	public void setRegistTime(String registTime) {
 		this.registTime = registTime;
 	}
+	public String getReveiwNum() {
+		return reveiwNum;
+	}
+	public void setReveiwNum(String reveiwNum) {
+		this.reveiwNum = reveiwNum;
+	}	
 	@Override
 	public String toString() {
 		return "LaundryInfoSebu [laundryCode=" + laundryCode + ", memberId=" + memberId + ", levelCode=" + levelCode
@@ -125,8 +147,15 @@ public class LaundryInfoSebu {
 				+ laundryPostNum + ", laundryAddr=" + laundryAddr + ", laundryDetailAddr=" + laundryDetailAddr
 				+ ", laundryTel=" + laundryTel + ", laundryLicenseImg=" + laundryLicenseImg + ", laundryImg="
 				+ laundryImg + ", skillLicence=" + skillLicence + ", businessNumber=" + businessNumber
-				+ ", adminLevelCode=" + adminLevelCode + ", registTime=" + registTime + ", ilbanGpriceList="
-				+ ilbanGpriceList + "]";
-	}	
+				+ ", adminLevelCode=" + adminLevelCode + ", registTime=" + registTime + ", reviewCode=" + reviewCode
+				+ ", reviewContent=" + reviewContent + ", reveiwNum=" + reveiwNum + ", countingStar=" + countingStar
+				+ ", ilbanGpriceList=" + ilbanGpriceList + "]";
+	}
+	public String getCountingStar() {
+		return countingStar;
+	}
+	public void setCountingStar(String countingStar) {
+		this.countingStar = countingStar;
+	}
 	
 }

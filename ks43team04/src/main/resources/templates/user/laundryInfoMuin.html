@@ -135,15 +135,18 @@
 					<form onsubmit="searchPlaces(); return false;">
 						<div id="laundryValueDiv">
 
-							<input type="radio" id="ilbanMapCheck" name="laundryMapRadio"
-								value="기능세탁" checked><label for="ilbanMapCheck">기능</label>
 							<input type="radio" id="muinMapCheck" name="laundryMapRadio"
-								value="무인세탁"><label for="muinMapCheck">무인</label> 
+								value="무인세탁" checked><label for="muinMapCheck">무인</label> <input
+								type="radio" id="ilbanMapCheck" name="laundryMapRadio"
+								value="기능세탁"><label for="ilbanMapCheck">기능</label>
 						</div>
-							<input type="text" value="전주" id="keyword" name="hiddenKeyword" style="width: 132px;" size="15" placeholder="예) 전주"> 
-							<input type="hidden" value="크린토피아 " id="keywordaa" name="hiddenKeyword" size="15"> 
-							<input type="hidden" value=" 효자동" id="keywordbb" name="hiddenKeyword" size="15"> 
-							<input type="hidden" value=" 드라이크리닝" id="keywordcc" name="hiddenKeyword" size="15">
+						<input type="text" value="전주" id="keyword" name="hiddenKeyword"
+							style="width: 132px;" size="15" placeholder="예) 전주"> <input
+							type="hidden" value="크린토피아 " id="keywordaa" name="hiddenKeyword"
+							size="15"> <input type="hidden" value=" 효자동"
+							id="keywordbb" name="hiddenKeyword" size="15"> <input
+							type="hidden" value=" 드라이크리닝" id="keywordcc" name="hiddenKeyword"
+							size="15">
 						<button type="submit" id="search-map-btn">
 
 							<p style="color: #fff">.</p>
@@ -212,7 +215,7 @@
 
 					</div>
 					<nav>
-					  <div class="nav nav-tabs" id="nav-tab" role="tablist" style="margin-top: 25px;">
+					  <div class="nav nav-tabs" id="nav-tab" role="tablist" style="border-bottom: 0;">
 					    <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">기본정보</a>
 					    <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">기능별 가격</a>
 					    <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">리뷰</a>
@@ -224,32 +227,23 @@
 						  <!-- 기본정보 탭 -->
 						  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" style="border-bottom: 1px solid #f2f2f2; border-right: 1px solid #f2f2f2;">
 						  <th:block th:if="${not #lists.isEmpty(laundryInfo)}">
-								<table id= "LaundryInfoSebu" class="table table-striped table-bordered">
-										
+								<table id= "LaundryInfoSebu" class="table table-striped table-bordered" style="width: 100%;">
+										<thead>
+											<tr>
+												<th>세탁소명</th>				
+												<th>영업상태</th>
+												<th>주소</th>	
+												<th>번호</th>	
+												<th>예약</th>	
+											</tr>
+										</thead>
 										<tbody>
 											
-												<tr>
-													<td>세탁소 명</td>
+												<tr >
 													<td th:text="${laundryInfo.laundryName}"></td>
-												</tr>
-												
-												<tr>
-													<td>영업상태</td>
 													<td th:text="${laundryInfo.laundryState}"></td>
-												</tr>
-												
-												<tr>
-													<td>주소</td>
 													<td th:text="${laundryInfo.laundryAddr}"></td>
-												</tr>
-												
-												<tr>
-													<td>전화번호</td>
 													<td th:text="${laundryInfo.laundryTel}"></td>
-												</tr>
-												
-												<tr>
-													<td>예약하기</td>
 													<td><button type="button" data-toggle="modal" data-target="#modalFragment" data-id="`${ldryName}`" class="map-yayak-btn bookBtn">예약하기 </button></td>
 												</tr>
 											
@@ -259,7 +253,24 @@
 											</tr>
 										</tbody>
 									</table>
-								
+									<table class="table table-striped table-bordered" style="width: 100%;">
+										<thead>
+											<tr>
+												<th>상품</th>	
+												<th>가격</th>	
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:if="${not #lists.isEmpty(laundryInfo.ilbanGpriceList)}" th:each="l : ${laundryInfo.ilbanGpriceList}">
+												<td th:text="${l.goodsName}"></td>
+												<td th:text="${l.goodsPrice}"></td>
+											</tr>
+										
+											<tr th:unless="${not #lists.isEmpty(laundryInfo.ilbanGpriceList)}">
+												<td colspan="2">조회된 내용이 없습니다.</td>
+											</tr>
+										</tbody>
+									</table>
 						  	</th:block>
 						  </div>
 						  
@@ -267,26 +278,112 @@
 						  
 						  <!-- 기능별 가격 탭 -->
 						  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" style="border-bottom: 1px solid #f2f2f2; border-right: 1px solid #f2f2f2;">
-							<th:block th:if="${not #lists.isEmpty(laundryInfo)}">
-								<table class="table table-striped table-bordered" style="margin-top: 75px;">
-									<thead>
-										<tr>
-											<th>상품</th>	
-											<th>가격</th>	
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:if="${not #lists.isEmpty(laundryInfo.ilbanGpriceList)}" th:each="l : ${laundryInfo.ilbanGpriceList}">
-											<td th:text="${l.goodsName}"></td>
-											<td th:text="${l.goodsPrice}"></td>
-										</tr>
+
+							<th:block layout:fragment="customJsScript">   
+								<script type="text/javascript">
+								
+									var laundryMachine = document.querySelectorAll('.laundry-machine-form');
+									console.log('laundryMachine');
 									
-										<tr th:unless="${not #lists.isEmpty(laundryInfo.ilbanGpriceList)}">
-											<td colspan="2">조회된 내용이 없습니다.</td>
-										</tr>
-									</tbody>
-								</table>
+									for(var i=0; i<laundryMachine.length; i++){
+										laundryMachine[i].addEventListener('click',function(){
+											var h4 = this.querySelector('h4');
+											var text = h4.innerText;
+											if(text == '고장'){
+												alert('고장난 세탁기는 예약할 수 없습니다.');
+											}else if(text == '정상'){
+												if(confirm('예약하시겠습니까? 예약한 세탁기를 5분안에 사용하지 않을시 자동으로 예약이 취소됩니다.')){
+													alert('예약되었습니다.');
+													h4.innerText = '예약';
+												}else {
+													alert('예약이 되지 않았습니다.');
+												}
+											}else if(text == '예약'){
+												if(confirm('예약을 취소 하시겠습니까?')){
+													alert('예약이 취소되었습니다.');
+													h4.innerText = '정상';
+												}else {
+													alert('예약이 취소되지 않았습니다.');
+												}
+											}
+										});
+									}
+									
+								</script>
 							</th:block>
+							<div class="product-section mt-150 mb-150">
+									<div class="container">
+										<div class="row product-lists" style="margin: 0 auto; margin-top: 100px;" >
+											<!-- DB 에서 무인세탁소 리스트를 꺼내와 반복문을 돌린다. 값이 null이 아닐때 -->
+											<th:block th:if="${not #lists.isEmpty(muinLaundryList)}" th:each="l, status : ${muinLaundryList}">
+												<div class="col-lg-4 col-md-6 text-center" >
+													<div class="single-product-item">
+														<div class="product-image">
+															<img th:src="@{/user/assets/img/products/laundry.png}" alt="세탁소이미지">
+														</div>
+														<h5 th:text="${l.get('laundryName')}"></h5>
+														<h5 class="product-price" th:text="${l.laundryAddr}"></h5>
+														<p>영업상태</p>							
+														<h3 th:text="${l.get('laundryState')}"></h3>
+														<p th:text="${l.get('laundryTel')}"></p>
+														<!-- 모달 예약하기 버튼 시작-->
+														<!-- Button trigger modal -->
+														<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" th:data-target="${'#myModal' + status.count}">예약하기</button>
+														<!-- Modal -->
+														<div class="modal fade" th:id="${'myModal'+ status.count}" tabindex="-1" role="dialog" aria-labelledby="${'myModalLabel'+ status.count}">
+															<div class="modal-dialog" role="document">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+																		<h4 class="modal-title" id="${'myModalLabel'+ status.count}" th:text="${l.get('laundryName')}"></h4>
+																	</div>
+																	<div class="modal-body">
+																	<!-- 예약사항 폼 시작-->
+																		<div th:each="ls : ${muinMachineList}" class="laundry-machine-form">	
+																			<div th:if="${l.get('laundryCode')} eq ${ls.laundryCode}">
+																				<img th:src="@{/user/assets/img/products/laundry.png} " style="width: 100px; height: 100px; cursor: pointer;" alt="세탁기이미지">
+																				<h4 th:text="${ls.machineState}"></h4>
+																			</div>			
+																		</div>
+																	<!-- 예약사항 폼 끝-->
+																	</div>
+																	<div class="modal-footer">
+																		<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+																		<button type="button" class="btn btn-primary">예약하기</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<!-- 모달 예약하기 버튼 끝 -->
+													</div>
+												</div>
+											</div>
+											<th:block th:unless="${not #lists.isEmpty(muinLaundryList)}">
+												<table class="cart-table tbServiceList">
+													<thead class="cart-table-head" style="font-size: 30px;">
+														<tr class="table-head-row" >
+															<th class="product-quantity">무인 세탁소의 관련된 문의는 063-717-1008</th>
+														</tr>
+													</thead>
+													<tbody style="text-align: center; font-size: 30px;" >	
+														<tr>
+															<td>잠깐 !</td>
+														</tr>
+														<tr>
+															<td>오류가 아닙니다.. 단지 !</td>
+														</tr>
+														<tr>
+															<td>조회된 무인 세탁소 목록이 없는거에요 !</td>
+														</tr>
+													</tbody>
+												</table>
+											</th:block>
+									</div>
+
+
+
+
+
 					      </div>
 						
 						
@@ -294,26 +391,8 @@
 						  <!-- 리뷰 탭 -->
 						  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" style="border-bottom: 1px solid #f2f2f2; border-right: 1px solid #f2f2f2;">
 						  
-							 <th:block th:if="${not #lists.isEmpty(laundryInfo)}">
-									<table id= "LaundryInfoSebu" class="table table-striped table-bordered">
-											
-											<tbody>
-													<tr>
-														<td>리뷰코드</td>
-														<td th:text="${laundryInfo.reviewContent}"></td>
-													</tr>
-													
-													<tr>
-														<td>리뷰쓴사람</td>
-														<td th:text="${laundryInfo.memberId}"></td>
-													</tr>
-												<tr th:unless="${not #lists.isEmpty(laundryInfo)}">
-													<td colspan="7">조회된 내용이 없습니다.</td>
-												</tr>
-											</tbody>
-										</table>
-									
-							  	</th:block>
+						  1212121
+						  
 						  </div>
 						  
 						  

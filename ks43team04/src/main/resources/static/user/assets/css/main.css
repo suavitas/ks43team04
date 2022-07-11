@@ -3139,6 +3139,8 @@ input::placeholder {
 	z-index: 1;
 	font-size: 12px;
 	border-radius: 10px;
+	height: 700px;
+	width: 30%;
 }
 
 .bg_white {
@@ -4484,7 +4486,7 @@ refs /heads/develop
 /*매장정보 css 시작*/
 .ldry-info-right-area {
 	float: right;
-	width: 75%;
+	width: 35%;
 	padding: 40px 15px 0 15px;
 	text-align: center;
 	height: 1200px;
@@ -4515,7 +4517,7 @@ refs /heads/develop
 	border-bottom: 1px solid #f2f2f2;
 	border-right: 1px solid #f2f2f2;
 	background-color: #f9f9f9;
-	width: 25%;
+	width: 65%;
 	padding: 40px 15px 0;
 	height: 1200px;
 	float: left;
@@ -4546,3 +4548,8 @@ refs /heads/develop
     color: #a4a6ad;
     text-align: left;
 }
+#LaundryInfoSebu{
+	margin-top: 75px;
+	
+}
+

@@ -5,22 +5,30 @@
 <mapper namespace="ks43team04.mapper.LaundryInfoSebuMapper">
 
    
-   <resultMap type="laundryInfoSebu"               id="LaundryInfoResultMap">
-      <id column="laundry_code"                   property="laundryCode"/>
-      <result column="m_id"                      property="memberId"/>
-      <result column="level_code"                property="levelCode"/>
-      <result column="laundry_name"                property="laundryName"/>
-      <result column="laundry_state"                property="laundryState"/>
-      <result column="laundry_post_num"             property="laundryPostNum"/>
-      <result column="laundry_addr"                property="laundryAddr"/>
-      <result column="laundry_detail_addr"          property="laundryDetailAddr"/>
-      <result column="laundry_tel"                property="laundryTel"/>
-      <result column="laundry_license_img"          property="laundryLicenseImg"/>
-      <result column="laundry_img"                property="laundryImg"/>
-      <result column="skill_licence"                property="skillLicence"/>
-      <result column="business_number"             property="businessNumber"/>
-      <result column="admin_level_code"             property="adminLevelCode"/>
-      <result column="regist_time"               property="registTime"/>
+   <resultMap type="laundryInfoSebu"               		id="LaundryInfoResultMap">
+      <id column="laundry_code"                   		property="laundryCode"/>
+      <result column="m_id"                       		property="memberId"/>
+      <result column="level_code"                 		property="levelCode"/>
+      <result column="laundry_name"               		property="laundryName"/>
+      <result column="laundry_state"              		property="laundryState"/>
+      <result column="laundry_post_num"           		property="laundryPostNum"/>
+      <result column="laundry_addr"               		property="laundryAddr"/>
+      <result column="laundry_detail_addr"        		property="laundryDetailAddr"/>
+      <result column="laundry_tel"                		property="laundryTel"/>
+      <result column="laundry_license_img"       		property="laundryLicenseImg"/>
+      <result column="laundry_img"               		property="laundryImg"/>
+      <result column="skill_licence"              		property="skillLicence"/>
+      <result column="business_number"            		property="businessNumber"/>
+      <result column="admin_level_code"           		property="adminLevelCode"/>
+      
+      
+      <result column="regist_time"                		property="registTime"/>
+      <result column="review_code"                		property="reviewCode"/>
+      <result column="reveiw_num"                		property="reveiwNum"/>
+      <result column="review_content"                	property="reviewContent"/>
+      <result column="counting_star"                	property="countingStar"/>
+      
+      
       
       
       <collection property="ilbanGpriceList"             ofType="IlbanGprice"> 
@@ -45,33 +53,40 @@
          tb_laundry
    </select>
    <select id="getLaundryInfoSebu"  parameterType="HashMap" resultMap="LaundryInfoResultMap">
-     SELECT 
-		  l.laundry_code
-         ,l.m_id
-         ,l.level_code
-         ,l.laundry_name
-         ,l.laundry_state
-         ,l.laundry_post_num
-         ,l.laundry_addr
-         ,l.laundry_detail_addr
-         ,l.laundry_tel
-         ,l.laundry_license_img
-         ,l.laundry_img
-         ,l.skill_licence
-         ,l.business_number
-         ,l.admin_level_code
-         ,l.regist_time	
-         ,g.ilban_G_price_code
-		 ,g.ilban_skill_code
-		 ,g.g_name
-		 ,g.g_price
-		 ,g.g_price_use_state
-      FROM 
-         tb_laundry AS l
-         INNER JOIN 
-			tb_ilban_g_price AS g
-			ON 
-			l.laundry_code = g.laundry_code
+      SELECT 
+	    l.laundry_code
+      ,l.m_id
+      ,l.level_code
+      ,l.laundry_name
+      ,l.laundry_state
+      ,l.laundry_post_num
+      ,l.laundry_addr
+      ,l.laundry_detail_addr
+      ,l.laundry_tel
+      ,l.laundry_license_img
+      ,l.laundry_img
+      ,l.skill_licence
+      ,l.business_number
+      ,l.admin_level_code
+      ,l.regist_time	
+      ,g.ilban_G_price_code
+	   ,g.ilban_skill_code
+	   ,g.g_name
+	   ,g.g_price
+	   ,g.g_price_use_state
+	   ,r.review_code
+	   ,r.reveiw_num
+ 	   ,r.laundry_code
+ 	   ,r.m_id
+	   ,r.review_content
+	   ,r.counting_star
+	   ,r.regist_time
+    FROM 
+       	tb_laundry AS l
+       	join
+		tb_ilban_g_price AS g
+		join
+		tb_review AS r
       where
 	      ${searchKey}=#{searchValue};
 	   
