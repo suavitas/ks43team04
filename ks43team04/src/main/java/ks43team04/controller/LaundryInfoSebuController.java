@@ -26,6 +26,40 @@ public class LaundryInfoSebuController {
    public LaundryInfoSebuController(LaundryInfoSebuService laundryInfoSebuService) {
       this.laundryInfoSebuService = laundryInfoSebuService;
    }
+   /* 무인세탁소 test */
+   @GetMapping("/laundryInfoMuin")
+   public String LaundryInfoMuin(Model model) {
+      List<LaundryInfoSebu> LaundryInfoSebu = laundryInfoSebuService.laundryInfoSebu();
+      System.out.println("model : {}" + model);
+      model.addAttribute("LaundryInfoSebu", LaundryInfoSebu);
+      return "user/laundryInfoMuin";
+   }
+   
+   @PostMapping("/laundryInfoMuin")
+   public String getLaundryInfoMuin(@RequestParam(name = "searchKey") String searchKey,
+         @RequestParam(name = "searchValue", required = false) String searchValue, Model model) {
+      
+      HashMap<String, String> search = new HashMap<>();
+      
+      log.info("searchKey : {}", searchKey);
+      log.info("searchValue : {}", searchValue);
+      
+      System.out.println(searchKey);
+      System.out.println(searchValue);
+      
+      if ("laundryName".equals(searchKey)) {
+         search.put("searchKey", "l.laundry_name");
+      }else if("laundryName"!=searchKey) {
+         System.out.println("없는 세탁소입니다.");
+      }
+      search.put("searchValue", searchValue);
+      LaundryInfoSebu laundryInfo = laundryInfoSebuService.getLaundryInfoSebu(search);
+      if (laundryInfo != null) {
+         model.addAttribute("laundryInfo", laundryInfo);
+      }
+      System.out.println(laundryInfo);
+      return "user/laundryInfoMuin";
+   }
    
    /*test*/
    @GetMapping("/laundryInfo")
