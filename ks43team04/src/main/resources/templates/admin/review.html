@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/adminDefault}">
+	  
+	  
+	  
+	<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+ 	
+ 	<div class="admin-board-list" style="margin-top: 100px;">
+ 		<h4 style="margin-bottom: 50px;">리뷰 목록 조회</h4>
+		<table id="reportList" class="table table-striped table-bordered" style="width: 100%;">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>세탁소명</th>
+					<th>별점 </th>
+					<th>내용</th>
+					<th>작성자</th>
+					<th>작성일</th>
+					<th>삭제</th>	
+				</tr>
+			</thead>
+			<tbody>
+			<th:block th:if="${not #lists.isEmpty(reviewList)}" th:each="l : ${reviewList}">
+				<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl, status :${l.LaundryList}">
+					<td th:text="${l.reveiwNum}"></td>
+					<td th:text="${sl.laundryName}"></td>
+					<td th:text="${l.countingStar}"></td>
+					<td th:text="${l.reviewContent}"></td>
+					<td th:text="${l.memberId}"></td>
+					<td th:text="${l.registTime}"></td>
+					<td><a href="#">삭제</a></td>
+				</tr>
+				<tr th:unless="${not #lists.isEmpty(reviewList)}">
+					<td colspan="7">조회된 내용이 없습니다.</td>
+				</tr>
+				</th:block>
+				</tbody>
+		</table>
+</div>
+</th:block>
+
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/userDefault}">
+	  
+	  
+<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+
+	<!-- 게시판 타이틀 -->
+	<div id="container">
+		<div id="top-loca">
+			<div class="boardPath">
+				<a th:href="@{/}">HOME</a>
+				 > 
+				<a th:href="@{/user/board/faqList}">FAQ</a>
+			</div>	
+			<h2>FAQ</h2>			
+		</div>
+	</div>	
+		
+	<!-- 게시판 탭  -->			
+	<div class="list-group list-group-horizontal col-sm-6" style="margin:0 auto; text-align: center;">
+		<a th:href="@{/user/board/noticeList}" class="list-group-item list-group-item-action">공지사항	</a>
+		<a th:href="@{/user/board/eventList}" class="list-group-item list-group-item-action">이벤트</a>
+		<a th:href="@{/user/board/faqList}" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">FAQ</a>
+		<a th:href="@{/user/board/qnaList}" class="list-group-item list-group-item-action">문의사항</a>
+	</div>
+	
+	
+	<!-- FAQ category -->
+	<div class="cart-section mt-150 mb-150" style="background-color: #f5f6fa; padding: 60px 0 100px; margin: 0; border-top: #e5e5e5 1px solid;">
+		<div class="container">	
+			<!-- FAQ category tab -->
+			<nav>
+				<div class="nav nav-tabs" id="nav-tab" role="tablist">
+					<a class="nav-link active" id="nav-washService-tab" data-toggle="tab" href="#nav-washService" role="tab" aria-controls="nav-washService" aria-selected="true" style="color: #495057">서비스 이용</a>
+					<a class="nav-link" id="nav-washPickup-tab" data-toggle="tab" href="#nav-washPickup" role="tab" aria-controls="nav-washPickup" aria-selected="false" style="color: #495057">수거/배송</a>
+					<a class="nav-link" id="nav-washPay-tab" data-toggle="tab" href="#nav-washPay" role="tab" aria-controls="nav-washPay" aria-selected="false" style="color: #495057">결제/포인트</a>
+					<a class="nav-link" id="nav-washComplain-tab" data-toggle="tab" href="#nav-washComplain" role="tab" aria-controls="nav-washComplain" aria-selected="false" style="color: #495057">서비스 불만족</a>
+				</div>
+			</nav>
+			<!-- question list (1) 서비스 이용 -->
+			<div class="tab-content" id="nav-tabContent">
+				<div class="tab-pane fade show active" id="nav-washService" role="tabpanel" aria-labelledby="nav-washService-tab">
+					<div class="checkout-accordion-wrap">
+						<div class="accordion" id="accordionExample1">
+							<div class="card single-accordion">
+								<div class="card-header" id="headingOne">
+									<h5 class="mb-0">
+										<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+											무인 세탁소는 어떻게 이용하나요?
+										</button>
+									</h5>
+								</div>
+								<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample1">
+									<div class="card-body">
+										<div class="service-answer1">
+											<p>무인 세탁소는 홈페이지 상단의 '예약하기 > 무인세탁소 예약' 메뉴를 이용하시면 됩니다.</p> 											
+											<p>원하는 지점의 예약하기 버튼을 누르시면 예약 가능한 세탁기/건조기를 선택할 수 있습니다.	</p>
+											<p>또한 주변 세탁소를 찾고 싶다면 '매장찾기' 메뉴에서 검색 후 예약까지 하실 수 있습니다.</p>
+											<p>&nbsp</p>
+											<p>단, 예약 후 5분 이내로 세탁기/건조기를 이용하지 않을 시 자동으로 취소됩니다.
+											</p>
+										</div>
+									</div>
+							    </div>
+							</div>
+							
+							<div class="card single-accordion">
+								<div class="card-header" id="headingTwo">
+									<h5 class="mb-0">
+										<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+										일반 세탁소는 어떻게 이용하나요?
+										</button>
+									</h5>
+								</div>
+								<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample1">
+									<div class="card-body">
+										<div class="service-answer2">
+											<p>일반 세탁소는 홈페이지 상단의 '예약하기 > 일반세탁소 예약' 메뉴를 통해 예약/수거/배송 서비스를 이용하실 수 있습니다.</p>
+											<p>원하는 세탁소, 옵션, 수거일을 선택하고 주소지를 입력한 후 결제를 진행하시면 예약이 완료됩니다.</p>
+											<p>세탁(수선)이 완료되면 입력하신 주소지로 세탁물을 받아보실 수 있으며 상황에 따라 추가금이 발생할 수 있습니다.</p>
+											<p style="font-size: 12px; color: gray;">(추가금이 발생할 경우 추가금 결제를 완료하셔야 배송이 시작됩니다.)</p>
+										</div>
+									</div>
+								</div>
+							</div>	
+							
+							<div class="card single-accordion">
+								<div class="card-header" id="headingThree">
+									<h5 class="mb-0">
+										<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+										매장 영업시간은 몇 시부터 몇 시인가요?
+										</button>
+									</h5>
+								</div>
+								<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample1">
+									<div class="card-body">
+										<div class="service-answer3">
+											<p>매장에 따라 영업시간이 상이합니다.</p>
+											<p>이용하실 매장에 문의하시기 바랍니다.</p>
+										</div>
+									</div>
+								</div>
+							</div>	
+							
+							<div class="card single-accordion">
+								<div class="card-header" id="headingFour">
+									<h5 class="mb-0">
+										<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+										의류 수선도 하나요?
+										</button>
+									</h5>
+								</div>
+								<div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample1">
+									<div class="card-body">
+										<div class="service-answer4">
+											<p>일반 세탁소에서 의류 수선 서비스를 제공하고 있습니다.</p>
+											<p>매장에 따라 가능한 서비스와 품목이 상이하오니 확인하시기 바랍니다.</p>
+										
+										</div>
+									</div>
+								</div>
+							</div>	
+							
+									<div class="card single-accordion">
+								<div class="card-header" id="headingFive">
+									<h5 class="mb-0">
+										<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFour">
+										예약할 때 드라이클리닝과 수선을 함께 예약할 수 있나요?
+										</button>
+									</h5>
+								</div>
+								<div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample1">
+									<div class="card-body">
+										<div class="service-answer5">
+											<p>가능합니다. 예약 시 원하는 서비스(드라이클리닝,수선 등)와 품목을 추가하여 한 번에 결제가 가능하며 수거와 배송도 함께 진행됩니다.</p>
+										
+										</div>
+									</div>
+								</div>
+							</div>	
+							
+													
+						</div> <!-- 59번 -->
+					</div> <!-- 58번 -->					
+				</div><!-- 55번 -->				
+
+				<!-- question list (2) 수거/배송 -->				
+				<div class="tab-pane fade" id="nav-washPickup" role="tabpanel" aria-labelledby="nav-washPickup-tab">
+					<div class="checkout-accordion-wrap">
+						<div class="accordion" id="accordionExample2">
+							<div class="card single-accordion">
+								<div class="card-header" id="headingOne">
+									<h5 class="mb-0">
+										<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+										수거 서비스는 어떻게 이용하나요?
+										</button>
+									</h5>
+								</div>
+								<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample2">
+									<div class="card-body">
+										<div class="washPickup-answer1">
+											<p>일반 세탁소 예약 시 수거 희망일을 선택할 수 있습니다. 결제까지 완료하시면 수거일이 확정되며, 24시간 내 라이더가 방문하여 세탁물을 수거합니다.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						<div class="card single-accordion">
+							<div class="card-header" id="headingTwo">
+								<h5 class="mb-0">
+									<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+									일반 세탁소 예약을 취소하였는데 수거도 취소되나요?
+									</button>
+								</h5>
+							</div>
+							<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample2">
+								<div class="card-body">
+									<div class="washPickup-answer2">
+										<p>예약 취소 시 자동으로 수거도 취소됩니다.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+							<div class="card single-accordion">
+								<div class="card-header" id="headingThree">
+									<h5 class="mb-0">
+										<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+										배송까지 얼마나 소요되나요?
+										</button>
+									</h5>
+								</div>
+								<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample2">
+									<div class="card-body">
+										<div class="service-answer3">
+											<p>영업일 기준 예약 후 2~3일 소요됩니다.</p>
+											<p>단, 세탁물이 한꺼번에 몰릴 시 더 소요될 수 있으며, 제품 종류나 서비스 종류에 따라 더 오래 걸릴 수 있습니다.</p>
+										</div>
+									</div>
+								</div>
+							</div>	
+							
+							<div class="card single-accordion">
+								<div class="card-header" id="headingFour">
+									<h5 class="mb-0">
+										<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+										주소지 변경도 가능한가요?
+										</button>
+									</h5>
+								</div>
+								<div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample2">
+									<div class="card-body">
+										<div class="service-answer4">
+											<p>가능합니다.</p>
+											<p>예약할 때 변경된 주소지를 작성해주시기 바랍니다.</p>
+										
+										</div>
+									</div>
+								</div>
+							</div>
+						
+						
+						
+					</div> 
+				</div> 
+			</div>
+			 
+			<!-- question list (3) 결제/할인/마일리지 -->
+			<div class="tab-pane fade" id="nav-washPay" role="tabpanel" aria-labelledby="nav-washPay-tab">
+				<div class="checkout-accordion-wrap">
+					<div class="accordion" id="accordionExample3">
+						<div class="card single-accordion">
+							<div class="card-header" id="headingOne">
+								<h5 class="mb-0">
+									<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+									같은 품목도 매장에 따라 세탁 요금이 다를 수 있나요?
+									</button>
+								</h5>
+							</div>
+							<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample3">
+								<div class="card-body">
+									<div class="washPay-answer1">
+										<p>동일 품목이라도 매장에 따라 금액이 상이할 수 있으므로 매장에 문의하시기 바랍니다.</p>
+										<p>또한 품목의 상태에 따라 추가금이 발생할 수 있습니다.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card single-accordion">
+							<div class="card-header" id="headingTwo">
+								<h5 class="mb-0">
+									<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+									결제는 선불인가요?
+									</button>
+								</h5>
+							</div>
+							<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample3">
+								<div class="card-body">
+									<div class="washPay-answer2">
+										<p>그렇습니다. 결제는 선불이 원칙이며 결제 수단은 카드입니다.</p> 
+										<p>예약 시 결제까지 완료되어야 주문이 확정됩니다.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+							<div class="card single-accordion">
+								<div class="card-header" id="headingThree">
+									<h5 class="mb-0">
+										<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+										포인트 혜택은 무엇인가요?
+										</button>
+									</h5>
+								</div>
+								<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample3">
+									<div class="card-body">
+										<div class="service-answer3">
+											<p>적립된 포인트를 사용하면 차감된 금액으로 결제하실 수 있습니다.</p>
+											<p>포인트 적립기준은 등급에 따라 다르며, 등급은 월 결제 금액에 따라 매월 갱신됩니다.</p>
+											<p>포인트 사용으로 차감된 금액은 등급 산정 시 포함되지 않습니다.</p>
+											<p>포인트 적립 또한 포인트 사용 금액을 제외한 나머지 실 결제 금액만 적립됩니다.</p> 
+										</div>
+									</div>
+								</div>
+							</div>	
+							
+							<div class="card single-accordion">
+								<div class="card-header" id="headingFour">
+									<h5 class="mb-0">
+										<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+										환불도 가능한가요?
+										</button>
+									</h5>
+								</div>
+								<div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample3">
+									<div class="card-body">
+										<div class="service-answer4">
+											<p>가능합니다만 매장의 환불 승인이 있어야 가능하기 때문에 매장에 문의를 하시기 바랍니다.</p>
+										
+										</div>
+									</div>
+								</div>
+							</div>
+						
+					</div> 
+				</div> 
+			</div>
+
+			
+			<!-- question list (4) 서비스 불만족 -->				
+			<div class="tab-pane fade" id="nav-washComplain" role="tabpanel" aria-labelledby="nav-washComplain-tab">
+				<div class="checkout-accordion-wrap">
+					<div class="accordion" id="accordionExample5">
+						<div class="card single-accordion">
+							<div class="card-header" id="headingOne">
+								<h5 class="mb-0">
+									<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+									서비스 이용 후 세탁물에 문제가 있을 경우에는 어떻게 해야 하나요?
+									</button>
+								</h5>
+							</div>
+							<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample5">
+								<div class="card-body">
+									<div class="washComplain-answer1">
+										<p>이용하신 매장에 문의를 하시면 재처리 혹은 환불처리가 가능합니다.</p>
+										<p>만약 세탁물의 재처리에 대해 만족하지 못하실 경우에는 소비자단체에 심의를 의뢰하여 좀 더 객관적인 원인을 파악하여 세탁상의 과실로 인한 세탁사고일 경우에는 “소비자분쟁해결기준”에 따른 보상처리를 받으실 수 있습니다. 매장의 과실일 경우에는 심의 결과를 가지고 매장에 환불을 요구하실 수 있고, 고객님의 사용상 과실(노후, 보관 부주의)일 경우에는 보상처리가 되지 않습니다.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card single-accordion">
+							<div class="card-header" id="headingTwo">
+								<h5 class="mb-0">
+									<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+									세탁물에 문제가 있다는 것을 나중에 알게되었는데 보상 가능할까요?
+									</button>
+								</h5>
+							</div>
+							<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample5">
+								<div class="card-body">
+									<div class="washComplain-answer2">
+										<p>“소비자분쟁해결기준”에 의거하여 완성된 세탁물을 인도 받은 후 6개월이 경과되면 사고보상이 불가능합니다. 세탁물 인도 시 반드시 확인하시고 보관해 주십시오.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> 
+				</div> 
+			</div>
+			
+
+			
+			
+			
+			
+			
+			
+		</div>					
+					
+		</div>					
+			  
+
+	</div> <!-- 36번  -->
+
+</th:block>		
+
+</html>

@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.AdminMemberMapper">
+
+	<resultMap type="Member" 					id="memberResultMap">
+		<id column="m_id" 						property="memberId"/>
+		<result column="level_code" 			property="levelCode"/>
+		<result column="m_pw" 					property="memberPw"/>
+		<result column="m_pw_QnA_code" 			property="memberPwQnACode"/>
+		<result column="m_name" 				property="memberName"/>
+		<result column="m_birth" 				property="memberBirth"/>
+		<result column="m_post_num" 			property="memberPostNum"/>
+		<result column="m_addr" 				property="memberAddr"/>
+		<result column="m_detail_addr" 			property="memberDetailAddr"/>
+		<result column="m_phone" 				property="memberPhone"/>
+		<result column="m_gender" 				property="memberGender"/>
+		<result column="m_out_code" 			property="memberOutCode"/>
+		<result column="m_email" 				property="memberEmail"/>
+		<result column="m_reg_date" 			property="memberRegDate"/>
+		<result column="admin_level_code" 		property="adminLevelCode"/>
+		<result column="regist_time" 			property="registTime"/>
+	</resultMap>	
+	
+	<resultMap type="Laundry" 							id="laundryResultMap">
+		<id column="laundry_code" 						property="laundryCode"/>
+		<result column="m_id" 							property="memberId"/>
+		<result column="level_code" 					property="levelCode"/>
+		<result column="laundry_name" 					property="laundryName"/>
+		<result column="laundry_state" 					property="laundryState"/>
+		<result column="laundry_post_num" 				property="laundryPostNum"/>
+		<result column="laundry_addr" 					property="laundryAddr"/>
+		<result column="laundry_detail_addr" 			property="laundryDetailAddr"/>
+		<result column="laundry_tel" 					property="laundryTel"/>
+		<result column="laundry_license_img" 			property="laundryLicenseImg"/>
+		<result column="laundry_img" 					property="laundryImg"/>
+		<result column="skill_licence" 					property="skillLicence"/>
+		<result column="business_number" 				property="businessNumber"/>
+		<result column="admin_level_code" 				property="adminLevelCode"/>
+		<result column="regist_time" 					property="registTime"/>
+	</resultMap>
+	
+				<!-- <collection property="member" javaType="Member">
+				<result column="m_id" 					property="memberId"/>
+				<result column="level_code" 			property="levelCode"/>
+				<result column="m_pw" 					property="memberPw"/>
+				<result column="m_pw_QnA_code" 			property="memberPwQnACode"/>
+				<result column="m_name" 				property="memberName"/>
+				<result column="m_birth" 				property="memberBirth"/>
+				<result column="m_post_num" 			property="memberPostNum"/>
+				<result column="m_addr" 				property="memberAddr"/>
+				<result column="m_detail_addr" 			property="memberDetailAddr"/>
+				<result column="m_phone" 				property="memberPhone"/>
+				<result column="m_gender" 				property="memberGender"/>
+				<result column="m_out_code" 			property="memberOutCode"/>
+				<result column="m_email" 				property="memberEmail"/>
+				<result column="m_reg_date" 			property="memberRegDate"/>
+				<result column="admin_level_code" 		property="adminLevelCode"/>
+				<result column="regist_time" 			property="registTime"/>
+			</collection> -->
+
+		<resultMap type="UserLevel" 				id="userLevelResultMap">
+			<result column="user_level_cal_code" 	property="userLevelCalCode"/>
+			<result column="level_code" 			property="levelCode"/>
+			<result column="range_start" 			property="rangeStart"/>
+			<result column="range_end" 				property="rangeEnd"/>
+			<result column="save_point_percent" 	property="savePointPercent"/>
+			<result column="admin_level_code" 		property="adminLevelCode"/>
+			<result column="regist_time" 			property="registTime"/>
+			<result column="update_time" 			property="updateTime"/>
+		</resultMap>
+		
+		<resultMap type="MemberOut" 				id="memberOutResultMap">
+			<id column="m_out_code" 				property="memberOutCode"/>
+			<result column="m_id" 					property="memberId"/>
+			<result column="m_out_reason" 			property="memberOutReason"/>
+			<result column="m_out_request_time" 	property="memberOutRequestTime"/>
+			<result column="m_out_okay_time" 		property="memberOutOkayTime"/>
+			<result column="m_out_okay_state" 		property="memberOutOkayState"/>
+			<result column="m_not_okay_reason" 		property="memberNotOkayReason"/>
+			<result column="admin_level_code" 		property="adminLevelCode"/>
+			<result column="regist_time" 			property="registTime"/>
+			<result column="change_round" 			property="changeRound"/>
+			<result column="final_state" 			property="finalState"/>
+		</resultMap>
+		
+		<resultMap type="LoginHistory" 				id="loginHistoryResultMap">
+			<id column="m_login_code" 				property="memberLoginCode"/>
+			<result column="m_id" 					property="memberId"/>
+			<result column="m_login_time" 			property="memberLoginTime"/>
+			<result column="m_logout_time" 			property="memberLogoutTime"/>
+			<result column="IP_Address" 			property="ipAddress"/>
+			<result column="OS" 					property="os"/>
+			<result column="browser" 				property="browser"/>
+			<result column="admin_level_code" 		property="adminLevelCode"/>
+		</resultMap>	
+		
+		<update id="modifyLaundry" parameterType="Laundry">
+			/* 세탁소점주 상세보기 수정 */
+			UPDATE tb_laundry
+			<trim prefix="SET" prefixOverrides=",">
+				<if test="laundryName != null and laundryName != ''">	
+					,laundry_name = #{laundryName}
+				</if>
+				<if test="laundryPostNum != null and laundryPostNum != ''">	
+					,laundry_post_num = #{laundryPostNum}
+				</if>
+				<if test="laundryAddr != null and laundryAddr != ''">	
+					,laundry_addr = #{laundryAddr}
+				</if>	
+				<if test="laundryDetailAddr != null and laundryDetailAddr != ''">	
+					,laundry_detail_addr = #{laundryDetailAddr}
+				</if>
+				<if test="laundryTel != null and laundryTel != ''">		
+					,laundry_tel = #{laundryTel}
+				</if>
+				<if test="businessNumber != null and businessNumber != ''">		
+					,business_number = #{businessNumber}
+				</if>		
+				<if test="registTime != null and registTime != ''">		
+					,regist_time = #{registTime}
+				</if>		
+				WHERE 
+					laundry_code = #{laundryCode};
+			</trim>		
+		</update>
+
+		<update id="modifyMember" parameterType="Member">
+			/* 회원 상세보기 수정 */
+			UPDATE tb_member
+			<trim prefix="SET" prefixOverrides=",">
+				<if test="memberName != null and memberName != ''">	
+					,m_name = #{memberName}
+				</if>
+				<if test="memberBirth != null and memberBirth != ''">		
+					,m_birth = #{memberBirth}
+				</if>	
+				<if test="memberPostNum != null and memberPostNum != ''">	
+					,m_post_num = #{memberPostNum}
+				</if>
+				<if test="memberAddr != null and memberAddr != ''">	
+					,m_addr = #{memberAddr}
+				</if>	
+				<if test="memberDetailAddr != null and memberDetailAddr != ''">	
+					,m_detail_addr = #{memberDetailAddr}
+				</if>
+				<if test="memberPhone != null and memberPhone != ''">		
+					,m_phone = #{memberPhone}
+				</if>	
+				<if test="memberEmail != null and memberEmail != ''">		
+					,m_email = #{memberEmail}
+				</if>		
+				WHERE 
+					m_id = #{memberId};
+			</trim>		
+		</update>
+	
+		<select id="getLaundryInfoByCode" parameterType="String" resultMap="laundryResultMap">
+			/* 세탁소 점주 상세정보 조회*/
+			SELECT
+				l.laundry_code
+			    ,l.m_id
+			    ,l.level_code
+				,l.laundry_name
+				,l.laundry_state
+				,l.laundry_post_num
+				,l.laundry_addr
+				,l.laundry_detail_addr 	
+				,l.laundry_tel
+				,l.laundry_license_img
+				,l.laundry_img 
+				,l.skill_licence
+				,l.business_number
+				,l.admin_level_code
+				,l.regist_time				
+			FROM
+			   tb_laundry AS l
+			WHERE
+			   l.laundry_code = #{laundryCode};
+		</select>
+
+		<select id="getMemberInfoById" parameterType="String" resultMap="memberResultMap">
+			/* 회원 상세정보 조회*/
+			SELECT
+			     m.m_id
+			    ,m.level_code
+				,m.m_pw
+				,m.m_pw_QnA_code
+				,m.m_name
+				,m.m_birth
+				,m.m_post_num
+				,m.m_addr
+				,m.m_detail_addr
+				,m.m_phone
+				,m.m_gender
+				,m.m_out_code
+				,m.m_email
+				,m.m_reg_date   
+				,m.admin_level_code   
+				,m.regist_time   
+			FROM
+			   tb_member AS m
+			WHERE
+			   m.m_id = #{memberId};
+		</select>
+		
+		<select id="getLoginHistory" parameterType="String" resultMap="loginHistoryResultMap">
+			/* 회원접속내역 조회 */
+			SELECT
+				m.m_login_code
+				,m.m_id
+				,m.m_login_time
+				,m.m_logout_time
+				,m.IP_Address
+				,m.OS
+				,m.browser
+				,m.admin_level_code
+			FROM
+				tb_member_login AS m
+		</select>
+		
+		<select id="getMemberOut" parameterType="String" resultMap="memberOutResultMap">
+			/* 탈퇴회원 조회 */
+			SELECT
+				m.m_out_code
+				,m.m_id
+				,m.m_out_reason
+				,m.m_out_request_time
+				,m.m_out_okay_time
+				,m.m_out_okay_state
+				,m.m_not_okay_reason
+				,m.admin_level_code
+				,m.regist_time
+				,m.change_round
+				,m.final_state
+			FROM
+				tb_member_out AS m
+		</select>
+	
+		<select id="getUserLevel" parameterType="String" resultMap="userLevelResultMap">
+			/*회원 등급 기준 및 혜택 */
+			SELECT
+				u.user_level_cal_code
+				,u.level_code
+				,u.range_start
+				,u.range_end
+				,u.save_point_percent
+				,u.admin_level_code
+				,u.regist_time
+				,u.update_time
+			FROM
+				tb_user_level_cal AS u
+		</select>
+
+		<select id="getLaundryList" resultMap="laundryResultMap"> 
+			/*세탁소 전체회원 조회 */
+			SELECT
+				laundry_code 
+				,m_id						
+				,level_code 				
+				,laundry_name					
+				,laundry_state 					
+				,laundry_post_num 			
+				,laundry_addr 					
+				,laundry_detail_addr 		
+				,laundry_tel			
+				,laundry_license_img		
+				,laundry_img 				
+				,skill_licence 				
+				,business_number 				
+				,admin_level_code				
+				,regist_time
+			FROM 
+				tb_laundry
+		</select>
+	
+		<select id="getAdminMemberList" resultMap="memberResultMap">
+			/*관리자페이지 회원 목록 조회*/
+			SELECT 
+				 m_id
+				,level_code 
+				,m_pw 
+				,m_pw_QnA_code 
+				,m_name
+				,m_birth
+				,m_post_num
+				,m_addr 
+				,m_detail_addr
+				,m_phone
+				,m_gender 
+				,m_out_code 
+				,m_email 
+				,m_reg_date 
+				,admin_level_code 
+				,regist_time
+			FROM 
+				tb_member
+		</select>
+		
+		<insert id="addMemberAdmin" parameterType="Member">
+ 		/* 관리자 등록 회원가입 */
+ 		INSERT INTO tb_member
+			(m_id
+			,m_pw
+			,m_name
+			,m_birth
+			,m_post_num
+			,m_addr
+			,m_detail_addr
+			,m_phone
+			,m_gender
+			,m_email
+			,m_reg_date
+		)VALUES( 
+			#{memberId}
+			,#{memberPw}
+			,#{memberName}
+			,#{memberBirth}
+			,#{memberPostNum}
+			,#{memberAddr}
+			,#{memberDetailAddr}
+			,#{memberPhone}
+			,#{memberGender}
+			,#{memberEmail}
+			,CURDATE() 
+		);	
+ 	</insert>
+	
+	
+</mapper>

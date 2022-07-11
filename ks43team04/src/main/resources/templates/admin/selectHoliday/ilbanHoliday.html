@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/adminDefault}">
+	  
+	<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">		
+	<th:block class="fc-form">
+		<div class="col-lg-9 mb-5 mb-lg-0">
+			<div class="blog_left_sidebar">
+				<div id='calendar'></div>
+					<div style='clear:both'></div>
+			</div>
+		</div>
+		<div class="col-lg-3" id="eventform">
+			<div class="blog_right_sidebar">
+				<aside class="single_sidebar_widget search_widget">
+					<div id='external-events'>
+						<h4>세탁소 휴일</h4>
+						<div>세탁소 여러 휴일을 지정할 수 있습니다.</div>
+						<div id='external-events-list'>
+							<div class='fc-event'>[[${title}]]</div>
+							<div class='fc-event' data-code="123">정기 휴일</div>
+							<div class='fc-event'>휴가</div>
+							<div class='fc-event'>대체 공휴일</div>
+							<div class='fc-event'>개인사정 휴일</div>													
+						</div>
+						<div>날짜를 클릭하면 내용을 추가할 수 있습니다.</div>
+							<p>
+								<input type='checkbox' id='drop-remove' />
+								<label for='drop-remove'>remove after drop</label>
+							</p>
+					</div>
+				</aside>
+			</div>
+		</div>   
+	</th:block>      	
+</th:block>
+
+
+<th:block layout:fragment="customJsScript">
+		<link th:href="@{/admin/fullcalendar/packages/core/main.css}" rel='stylesheet' />
+		<link th:href="@{/admin//fullcalendar/packages/daygrid/main.css}" rel='stylesheet' />
+		<link th:href="@{/admin//fullcalendar/packages/timegrid/main.css}" rel='stylesheet' />
+		<link th:href="@{/admin//fullcalendar/packages/list/main.css}" rel='stylesheet' />
+		
+		<script th:src="@{/admin//fullcalendar/packages/core/main.js}"></script>
+		<script th:src="@{/admin//fullcalendar/packages/interaction/main.js}"></script>
+		<script th:src="@{/admin//fullcalendar/packages/daygrid/main.js}"></script>
+		<script th:src="@{/admin//fullcalendar/packages/timegrid/main.js}"></script>
+		<script th:src="@{/admin//fullcalendar/packages/list/main.js}"></script>
+		
+		<script type="text/javascript">
+		  document.addEventListener('DOMContentLoaded', function() {
+			  var Calendar = FullCalendar.Calendar;
+			    var Draggable = FullCalendarInteraction.Draggable
+
+			    /* initialize the external events
+			    -----------------------------------------------------------------*/
+
+			    var containerEl = document.getElementById('external-events-list');
+			    new Draggable(containerEl, {
+			      itemSelector: '.fc-event',
+			      eventData: function(eventEl) {
+			        return {
+			          title: eventEl.innerText.trim()
+			        }
+			      }
+			    });
+
+			     /* // the individual way to do it
+	             var containerEl = document.getElementById('external-events-list');
+	             var eventEls = Array.prototype.slice.call(
+	               containerEl.querySelectorAll('.fc-event')
+	             );
+	             eventEls.forEach(function(eventEl) {
+	               new Draggable(eventEl, {
+	                 eventData: {
+	                   title: eventEl.innerText.trim(),
+	                 }
+	               });
+	             }); */
+	             
+
+	            /* initialize the calendar
+			    -----------------------------------------------------------------*/
+		    var calendarEl = document.getElementById('calendar');
+		
+		    var calendar = new FullCalendar.Calendar(calendarEl, {
+		      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+		      header: {
+		        left: 'prevYear,prev,next,nextYear today',
+		        center: 'title',
+		        right: 'dayGridMonth,dayGridWeek,timeGridDay,listWeek'
+		      },
+		      views: {
+		          listDay: { buttonText: 'list day' },
+		          listWeek: { buttonText: 'list week' }
+		      },
+
+		      defaultView: 'dayGridMonth',
+		      defaultDate: '2022-06-22',
+		      navLinks: true, // can click day/week names to navigate views
+		      businessHours: true, // display business hours
+		      selectable: true,
+		      selectMirror: true,
+		      select: function(arg) {
+		        var title = prompt('Event Title:');
+		        if (title) {
+		           calendar.addEvent({
+		            title: title,
+		            start: arg.start,
+		            end: arg.end,
+		            allDay: arg.allDay
+		          })
+		        }
+		        calendar.unselect()
+		      },
+		      editable: true,
+		      droppable: true, // this allows things to be dropped onto the calendar
+		      drop: function(arg) {
+		        // is the "remove after drop" checkbox checked?
+		        if (document.getElementById('drop-remove').checked) {
+		          // if so, remove the element from the "Draggable Events" list
+		          arg.draggedEl.parentNode.removeChild(arg.draggedEl);
+		        }
+		        console.table(arg.draggedEl.getAttribute('data-code'));		//이벤트 드래그 클릭 시 Ajax로 보내기
+		        console.table(arg.draggedEl.innerText);
+		      },
+		      eventLimit: true, // allow "more" link when too many events
+		      events: '/workoutLog/workoutLogUser/calendarEvents'
+		     
+		    })
+		  
+		    calendar.render();
+		  });
+		 		
+		</script>
+</th:block>
+</html>
