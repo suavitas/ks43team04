@@ -12,6 +12,12 @@ import ks43team04.dto.Review;
 @Mapper
 public interface BoardMapper {
 	
+	//문의사항 글 삭제
+	public int qnaRemove(Board board);
+	
+	//문의사항 글 수정
+	public int qnaModify(Board board);
+	
 	//조회수 올리기
 	public int readCount(Board board);
 	

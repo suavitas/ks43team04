@@ -75,7 +75,7 @@
 												<th class="product-remove">번호</th>
 												<th class="product-remove">답변상태</th>
 												<th class="product-remove">비밀글</th>
-												<th class="product-image">제목</th>
+												<th class="product-image" style="width: 40%">제목</th>
 												<th class="product-name">첨부</th>
 												<th class="product-price">작성자</th>
 												<th class="product-quantity">작성일</th>
@@ -86,11 +86,29 @@
 											<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaServiceList)}" th:each="l : ${qnaServiceList}">
 												<td class="product-remove" th:text="${l.boardIdx}"></td>
 												<td class="product-remove" th:text="${l.commentState}"></td>
-												<td class="product-remove" th:text="${l.boardSecret}"></td>
-												<td class="product-image">
-												<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
+												<td class="product-remove">
+													<th:block th:if="${l.boardSecret=='Y'}">
+														<i class="bi bi-key-fill"></i>
+													</th:block>
+													<th:block th:unless="${l.boardSecret=='N'}">
+													</th:block>
 												</td>
-												<td class="product-name" th:text="${l.boardAddFile}"></td>
+												<td class="product-image" style="text-align: left; padding-left: 20px;">
+												<th:block th:if="${l.boardOrderNo=='1'}">
+														<i class="bi bi-arrow-return-right"></i>
+													</th:block>
+													<th:block th:unless="${l.boardOrderNo=='1'}">
+													</th:block>
+												
+													<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
+												</td>
+												<td class="product-name">
+													<th:block th:if="${l.boardAddFile=='1'}">
+														<i class="bi bi-paperclip"></i>
+													</th:block>
+													<th:block th:unless="${l.boardAddFile=='1'}">
+													</th:block>
+												</td>
 												<td class="product-price" th:text="${l.memberId}"></td>
 												<td class="product-quantity" th:text="${l.registTime}"></td>
 												<td class="product-total" th:text="${l.boardReadCount}"></td>
@@ -117,7 +135,7 @@
 												<th class="product-remove">번호</th>
 												<th class="product-remove">답변상태</th>
 												<th class="product-remove">비밀글</th>
-												<th class="product-image">제목</th>
+												<th class="product-image" style="width: 40%">제목</th>
 												<th class="product-name">첨부</th>
 												<th class="product-price">작성자</th>
 												<th class="product-quantity">작성일</th>
@@ -128,11 +146,29 @@
 											<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaPickupList)}" th:each="l : ${qnaPickupList}">
 												<td class="product-remove" th:text="${l.boardIdx}"></td>
 												<td class="product-remove" th:text="${l.commentState}"></td>
-												<td class="product-remove" th:text="${l.boardSecret}"></td>
-												<td class="product-image">
+												<td class="product-remove">
+													<th:block th:if="${l.boardSecret=='Y'}">
+														<i class="bi bi-key-fill"></i>
+													</th:block>
+													<th:block th:unless="${l.boardSecret=='N'}">
+													</th:block>
+												</td>
+												<td class="product-image" style="text-align: left; padding-left: 20px;">
+													<th:block th:if="${l.boardOrderNo=='1'}">
+														<i class="bi bi-arrow-return-right"></i>
+													</th:block>
+													<th:block th:unless="${l.boardOrderNo=='1'}">
+													</th:block>
+												
 												<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 												</td>
-												<td class="product-name" th:text="${l.boardAddFile}"></td>
+												<td class="product-name">
+													<th:block th:if="${l.boardAddFile=='1'}">
+														<i class="bi bi-paperclip"></i>
+													</th:block>
+													<th:block th:unless="${l.boardAddFile=='1'}">
+													</th:block>
+												</td>
 												<td class="product-price" th:text="${l.memberId}"></td>
 												<td class="product-quantity" th:text="${l.registTime}"></td>
 												<td class="product-total" th:text="${l.boardReadCount}"></td>
@@ -158,7 +194,7 @@
 												<th class="product-remove">번호</th>										
 												<th class="product-remove">답변상태</th>										
 												<th class="product-remove">비밀글</th>
-												<th class="product-image">제목</th>
+												<th class="product-image" style="width: 40%">제목</th>
 												<th class="product-name">첨부</th>
 												<th class="product-price">작성자</th>
 												<th class="product-quantity">작성일</th>
@@ -169,11 +205,28 @@
 											<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaPayList)}" th:each="l : ${qnaPayList}">
 												<td class="product-remove" th:text="${l.boardIdx}"></td>
 												<td class="product-remove" th:text="${l.commentState}"></td>
-												<td class="product-remove" th:text="${l.boardSecret}"></td>
-												<td class="product-image">
+												<td class="product-remove">
+													<th:block th:if="${l.boardSecret=='Y'}">
+														<i class="bi bi-key-fill"></i>
+													</th:block>
+													<th:block th:unless="${l.boardSecret=='N'}">
+													</th:block>
+												</td>
+												<td class="product-image" style="text-align: left; padding-left: 20px;">
+												<th:block th:if="${l.boardOrderNo=='1'}">
+														<i class="bi bi-arrow-return-right"></i>
+													</th:block>
+													<th:block th:unless="${l.boardOrderNo=='1'}">
+													</th:block>
 												<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 												</td>
-												<td class="product-name" th:text="${l.boardAddFile}"></td>
+												<td class="product-name">
+													<th:block th:if="${l.boardAddFile=='1'}">
+														<i class="bi bi-paperclip"></i>
+													</th:block>
+													<th:block th:unless="${l.boardAddFile=='1'}">
+													</th:block>
+												</td>
 												<td class="product-price" th:text="${l.memberId}"></td>
 												<td class="product-quantity" th:text="${l.registTime}"></td>
 												<td class="product-total" th:text="${l.boardReadCount}"></td>
@@ -202,7 +255,7 @@
 												<th class="product-remove">번호</th>
 												<th class="product-remove">답변상태</th>
 												<th class="product-remove">비밀글</th>
-												<th class="product-image">제목</th>
+												<th class="product-image" style="width: 40%">제목</th>
 												<th class="product-name">첨부</th>
 												<th class="product-price">작성자</th>
 												<th class="product-quantity">작성일</th>
@@ -213,11 +266,28 @@
 											<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaComplainList)}" th:each="l : ${qnaComplainList}">
 												<td class="product-remove" th:text="${l.boardIdx}"></td>
 												<td class="product-remove" th:text="${l.commentState}"></td>
-												<td class="product-remove" th:text="${l.boardSecret}"></td>
-												<td class="product-image">
+												<td class="product-remove">
+													<th:block th:if="${l.boardSecret=='Y'}">
+														<i class="bi bi-key-fill"></i>
+													</th:block>
+													<th:block th:unless="${l.boardSecret=='N'}">
+													</th:block>
+												</td>
+												<td class="product-image" style="text-align: left; padding-left: 20px;">
+												<th:block th:if="${l.boardOrderNo=='1'}">
+														<i class="bi bi-arrow-return-right"></i>
+													</th:block>
+													<th:block th:unless="${l.boardOrderNo=='1'}">
+													</th:block>
 												<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 												</td>
-												<td class="product-name" th:text="${l.boardAddFile}"></td>
+												<td class="product-name">
+													<th:block th:if="${l.boardAddFile=='1'}">
+														<i class="bi bi-paperclip"></i>
+													</th:block>
+													<th:block th:unless="${l.boardAddFile=='1'}">
+													</th:block>
+												</td>
 												<td class="product-price" th:text="${l.memberId}"></td>
 												<td class="product-quantity" th:text="${l.registTime}"></td>
 												<td class="product-total" th:text="${l.boardReadCount}"></td>

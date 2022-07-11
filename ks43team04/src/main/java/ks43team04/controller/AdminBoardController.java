@@ -270,6 +270,8 @@ public class AdminBoardController {
 	public String qnaDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
 							,@RequestParam(name = "boardIdx", required = false) String boardIdx, Model model) {
 		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
+		int readCount = boardService.readCount(board);
+		model.addAttribute("readCount", readCount);
 		model.addAttribute("board", board);
 		return "/admin/qnaDetail";
 	}
@@ -333,9 +335,9 @@ public class AdminBoardController {
 		public String eventDetail(@RequestParam(name = "eventCode", required = false) String eventCode
 								, Model model) {
 		Event event = boardService.eventDetail(eventCode);
-		model.addAttribute("event", event);
 		String mId = event.getMemberId();
 		Member member = memberService.getMemberInfoById(mId);
+		model.addAttribute("event", event);
 		model.addAttribute("member", member);
 		System.out.println("event MODEL"+event);
 		return "admin/eventDetail";
