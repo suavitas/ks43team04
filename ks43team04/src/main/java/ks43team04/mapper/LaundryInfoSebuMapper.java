@@ -13,6 +13,6 @@ public interface LaundryInfoSebuMapper {
 	/*test*/
 	public List<LaundryInfoSebu> laundryInfoSebu();
 	
-	public List<LaundryInfoSebu> getLaundryInfoSebu(HashMap<String, String> search);
+	public LaundryInfoSebu getLaundryInfoSebu(HashMap<String, String> search);
 
 }

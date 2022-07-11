@@ -1,5 +1,6 @@
 package ks43team04.dto;
 
+import java.util.List;
 
 public class LaundryInfoSebu {
 	private String laundryCode;
@@ -17,6 +18,16 @@ public class LaundryInfoSebu {
 	private String businessNumber;
 	private String adminLevelCode;
 	private String registTime;
+	private List<IlbanGprice> ilbanGpriceList;
+	
+	
+
+	public List<IlbanGprice> getIlbanGpriceList() {
+		return ilbanGpriceList;
+	}
+	public void setIlbanGpriceList(List<IlbanGprice> ilbanGpriceList) {
+		this.ilbanGpriceList = ilbanGpriceList;
+	}
 	public String getLaundryCode() {
 		return laundryCode;
 	}
@@ -114,7 +125,8 @@ public class LaundryInfoSebu {
 				+ laundryPostNum + ", laundryAddr=" + laundryAddr + ", laundryDetailAddr=" + laundryDetailAddr
 				+ ", laundryTel=" + laundryTel + ", laundryLicenseImg=" + laundryLicenseImg + ", laundryImg="
 				+ laundryImg + ", skillLicence=" + skillLicence + ", businessNumber=" + businessNumber
-				+ ", adminLevelCode=" + adminLevelCode + ", registTime=" + registTime + "]";
+				+ ", adminLevelCode=" + adminLevelCode + ", registTime=" + registTime + ", ilbanGpriceList="
+				+ ilbanGpriceList + "]";
 	}	
 	
 }

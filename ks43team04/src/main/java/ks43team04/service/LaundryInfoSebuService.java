@@ -22,8 +22,8 @@ public class LaundryInfoSebuService {
 		List<LaundryInfoSebu> laundryInfoSebu = laundryInfoSebuMapper.laundryInfoSebu();
 		return laundryInfoSebu;
 	}
-	public List<LaundryInfoSebu> getLaundryInfoSebu(HashMap<String, String> search) {
-		List<LaundryInfoSebu> laundryInfo = laundryInfoSebuMapper.getLaundryInfoSebu(search);
+	public LaundryInfoSebu getLaundryInfoSebu(HashMap<String, String> search) {
+		LaundryInfoSebu laundryInfo = laundryInfoSebuMapper.getLaundryInfoSebu(search);
 		return laundryInfo;
 	}
 
