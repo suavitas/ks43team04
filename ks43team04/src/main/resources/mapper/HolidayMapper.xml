@@ -22,6 +22,14 @@
 		<result column="regist_time" 				property="registTime"/>
 	</resultMap>
 	
+		<update id="allModifyHolyday" parameterType="String">
+			UPDATE tb_yearly_holiday
+			SET
+				holiday_code_use= #{holidayCodeUse},
+				regist_time=NOW()
+			WHERE yearly_holiday_code= #{yearlyHolidayCode}		
+		</update>
+	
 		<update id="modifyHoliday"  parameterType="HolidayList">
 		/* 세탁소별 휴일 수정 */
 		UPDATE

@@ -21,6 +21,11 @@ public class HolidayService {
 		this.laundryListMapper = laundryListMapper;
 	}
 
+	public int allModifyHolyday(String yearlyHolidayCode,String holidayCodeUse) {
+		int allModifyHolyday = holidayMapper.allModifyHolyday(yearlyHolidayCode,holidayCodeUse);
+		return allModifyHolyday;
+	}
+	
 	public List<YearlyHoliday> yearlyHolidayList() {
 
 		List<YearlyHoliday> yearlyHolidayList = holidayMapper.yearlyHolidayList();
