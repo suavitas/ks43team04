@@ -35,5 +35,7 @@ public interface HolidayMapper {
 	/* 세탁소별 휴일 삭제 쿼리 실행 메서드 */
 	public int removeHoliday(String holidayCode);
 	
+	/* 전체 공휴일 수정 */
+	public int allModifyHolyday(String yearlyHolidayCode,String holidayCodeUse);
 
 }
