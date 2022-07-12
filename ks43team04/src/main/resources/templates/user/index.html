@@ -1,77 +1,89 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/userDefault}">
-	  
-	  
-	<!-- 사용자정의 contents -->
-	<th:block layout:fragment="customContents">
-	
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/userDefault}">
+
+
+<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+
 	<!-- testimonail-section -->
-	
+
 	<div class="testimonail-section mb-50 " style="margin: 0 auto;">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-10 offset-lg-1 text-center">
 					<h3 class="title-name">무인 세탁 프렌차이즈 및 일반 세탁소 연계 플랫폼</h3>
-          			<h4 class="title-name2">project : 2022.2.21 ~ 2022.8.3 </h4>
+					<h4 class="title-name2">project : 2022.2.21 ~ 2022.8.3</h4>
 					<div class="testimonial-sliders">
 						<div class="single-testimonial-slider">
 							<div class="client-avater">
 								<img src="/user/testimonail/승현.png" alt="">
 							</div>
 							<div class="client-meta">
-								<h3> 정 승 현 <span> 한국 스마트 정보교육원 4팀 </span></h3>							
+								<h3>
+									정 승 현 <span> 한국 스마트 정보교육원 4팀 </span>
+								</h3>
 							</div>
 						</div>
 						<div class="single-testimonial-slider">
 							<div class="client-avater">
-								<a th:href="@{/project}">
-								<img src="/user/testimonail/용민.png" alt="">
+								<a th:href="@{/project}"> <img
+									src="/user/testimonail/용민.png" alt="">
 								</a>
 							</div>
 							<div class="client-meta">
-								<h3> 이 용 민 <span> 한국 스마트 정보교육원 4팀 </span></h3>								
+								<h3>
+									이 용 민 <span> 한국 스마트 정보교육원 4팀 </span>
+								</h3>
 							</div>
 						</div>
 						<div class="single-testimonial-slider">
 							<div class="client-avater">
-								<a th:href="@{/user/board/noticeList}">
-								<img src="/user/testimonail/수빈.png" alt="">
+								<a th:href="@{/user/board/noticeList}"> <img
+									src="/user/testimonail/수빈.png" alt="">
 								</a>
 							</div>
 							<div class="client-meta">
-								<h3> 안 수 빈 <span> 한국 스마트 정보교육원 4팀 </span></h3>								
+								<h3>
+									안 수 빈 <span> 한국 스마트 정보교육원 4팀 </span>
+								</h3>
 							</div>
 						</div>
 						<div class="single-testimonial-slider">
 							<div class="client-avater">
-								<a th:href="@{/user/searchmap}">
-								<img src="/user/testimonail/현우.png" alt="">
+								<a th:href="@{/user/searchmap}"> <img
+									src="/user/testimonail/현우.png" alt="">
 								</a>
 							</div>
 							<div class="client-meta">
-								<h3> 이 현 우  <span> 한국 스마트 정보교육원 4팀 </span></h3>								
+								<h3>
+									이 현 우 <span> 한국 스마트 정보교육원 4팀 </span>
+								</h3>
 							</div>
 						</div>
 						<div class="single-testimonial-slider">
 							<div class="client-avater">
-								<a th:href="@{/user/ilbanYeyak}">
-								<img src="/user/testimonail/우영.png" alt="">
+								<a th:href="@{/user/ilbanYeyak}"> <img
+									src="/user/testimonail/우영.png" alt="">
 								</a>
 							</div>
 							<div class="client-meta">
-								<h3> 최 우 영 <span> 한국 스마트 정보교육원 4팀 </span></h3>								
+								<h3>
+									최 우 영 <span> 한국 스마트 정보교육원 4팀 </span>
+								</h3>
 							</div>
 						</div>
 						<div class="single-testimonial-slider">
 							<div class="client-avater">
-								<a th:href="@{/user/login}">
-								<img src="/user/testimonail/휘연.png" alt="">
+								<a th:href="@{/user/login}"> <img
+									src="/user/testimonail/휘연.png" alt="">
 								</a>
 							</div>
 							<div class="client-meta">
-								<h3> 홍 휘 연 <span> 한국 스마트 정보교육원 4팀 </span></h3>								
+								<h3>
+									홍 휘 연 <span> 한국 스마트 정보교육원 4팀 </span>
+								</h3>
 							</div>
 						</div>
 					</div>
@@ -80,7 +92,7 @@
 		</div>
 	</div>
 	<!-- end testimonail-section -->
-	
+
 	<!-- advertisement section -->
 	<!-- <div class="abt-section mb-150">
 		<div class="container">
@@ -103,15 +115,17 @@
 		</div>
 	</div> -->
 	<!-- end advertisement section -->
-	
+
 	<!-- latest news -->
 	<div class="latest-news pt-150 pb-150">
 		<div class="container">
 
 			<div class="row">
 				<div class="col-lg-8 offset-lg-2 text-center">
-					<div class="section-title">	
-						<h3><span class="orange-text">팀원</span> 소개</h3>
+					<div class="section-title">
+						<h3>
+							<span class="orange-text">팀원</span> 소개
+						</h3>
 					</div>
 				</div>
 			</div>
@@ -121,8 +135,10 @@
 					<div class="single-latest-news">
 						<div class="latest-news-bg news-bg-1"></div>
 						<div class="news-text-box">
-							<h3 id="memberName">정 승 현</h3>							
-							<p class="excerpt"> - 메인<br> - 관리자 메인 <br> - 전체 공휴일 <br> - 세탁소별 휴일 지정<br></p>							
+							<h3 id="memberName">정 승 현</h3>
+							<p class="excerpt">
+								- 메인<br> - 관리자 메인 <br> - 전체 공휴일 <br> - 세탁소별 휴일 지정<br>
+							</p>
 						</div>
 					</div>
 				</div>
@@ -130,8 +146,11 @@
 					<div class="single-latest-news">
 						<div class="latest-news-bg news-bg-2"></div>
 						<div class="news-text-box">
-							<h3 id="memberName">이 용 민 </h3>							
-							<p class="excerpt"> - 프로젝트 소개 <br> - 매장 월별 매출 <br> - 세탁물 종류 및 가격 <br> - 매장별 회원목록 <br></p>							
+							<h3 id="memberName">이 용 민</h3>
+							<p class="excerpt">
+								- 프로젝트 소개 <br> - 매장 월별 매출 <br> - 세탁물 종류 및 가격 <br>
+								- 매장별 회원목록 <br>
+							</p>
 						</div>
 					</div>
 				</div>
@@ -139,8 +158,11 @@
 					<div class="single-latest-news">
 						<div class="latest-news-bg news-bg-3"></div>
 						<div class="news-text-box">
-							<h3 id="memberName">안 수 빈</h3>						
-							<p class="excerpt"> - 고객센터 <br> - 매장별 고장신고접수 <br> - 수거배송현황 <br> - 고객센터 관리 <br></p>							
+							<h3 id="memberName">안 수 빈</h3>
+							<p class="excerpt">
+								- 고객센터 <br> - 매장별 고장신고접수 <br> - 수거배송현황 <br> -
+								고객센터 관리 <br>
+							</p>
 						</div>
 					</div>
 				</div>
@@ -148,8 +170,11 @@
 					<div class="single-latest-news">
 						<div class="latest-news-bg news-bg-4"></div>
 						<div class="news-text-box">
-							<h3 id="memberName">이 현 우</h3>						
-							<p class="excerpt"> - 매장 검색 <br> - 매장별 상세정보 <br> - 매장 별점 리뷰<br> - 결제진행 및 내역확인<br></p>							
+							<h3 id="memberName">이 현 우</h3>
+							<p class="excerpt">
+								- 매장 검색 <br> - 매장별 상세정보 <br> - 매장 별점 리뷰<br> -
+								결제진행 및 내역확인<br>
+							</p>
 						</div>
 					</div>
 				</div>
@@ -157,8 +182,11 @@
 					<div class="single-latest-news">
 						<div class="latest-news-bg news-bg-5"></div>
 						<div class="news-text-box">
-							<h3 id="memberName">최 우 영</h3>						
-							<p class="excerpt"> - 무인 세탁기 예약 <br> - 일반세탁소 예약 <br> - 일반세탁소 매출 <br> - 일반세탁소 수거신청 <br></p>							
+							<h3 id="memberName">최 우 영</h3>
+							<p class="excerpt">
+								- 무인 세탁기 예약 <br> - 일반세탁소 예약 <br> - 일반세탁소 매출 <br>
+								- 일반세탁소 수거신청 <br>
+							</p>
 						</div>
 					</div>
 				</div>
@@ -166,231 +194,137 @@
 					<div class="single-latest-news">
 						<div class="latest-news-bg news-bg-6"></div>
 						<div class="news-text-box">
-							<h3 id="memberName">홍 휘 연</h3>						
-							<p class="excerpt"> - 로그인 <br> - 회원관리 <br> - 회원가입 <br> - 월별 환불요청 <br></p>							
+							<h3 id="memberName">홍 휘 연</h3>
+							<p class="excerpt">
+								- 로그인 <br> - 회원관리 <br> - 회원가입 <br> - 월별 환불요청 <br>
+							</p>
 						</div>
 					</div>
 				</div>
-				
-				
-				
-				
-				</div>
-			</div>			
+
+
+
+
+			</div>
 		</div>
-	
+	</div>
+
 	<!-- end latest news -->
 
-	
-<!-- 모달 팝업 fragment 연결문 -->
-<div class="modal fade" id="modalFragment" tabindex="-1" role="dialog"
-      aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-         <div class="modal-content">
-            <div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal"
-                  aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-               </button>
-               <h4 class="modal-title" id="myModalLabel">예약사항</h4>
-            </div>
-            <div class="modal-body">
-               <!-- 예약사항 폼 시작-->
-               <div class="checkout-accordion-wrap">
-                  <div class="accordion" id="accordionExample">
-                     <div class="card single-accordion">
-                        <div class="card-header" id="headingOne">
-                           <h5 class="mb-0">
-                              <button class="btn btn-link" type="button"
-                                 data-toggle="collapse" data-target="#collapseOne"
-                                 aria-expanded="true" aria-controls="collapseOne">수거
-                                 및 배송신청</button>
-                           </h5>
-                        </div>
 
-                        <div id="collapseOne" class="collapse show"
-                           aria-labelledby="headingOne" data-parent="#accordionExample">
-                           <div class="card-body">
-                              <div class="billing-address-form">
-                                 <form action="index.html">
-                                    
-                                    매장이름 : <input type="text" id="ldryName" value="" style="width: 250px;"> <br>
-                                    
-                                    매장주소 : <input type="text" id="ldryAddr" value="" style="width: 250px;"> <br>
-                                    
-                                    매장번호 : <input type="text" id="ldryNum" value="" style="width: 250px;">
-                                    
-                                    
-                                    
-                                       <textarea name="bill" id="bill" cols="30" rows="10"
-                                          placeholder="배송시 요청사항"></textarea>
-                                    </p>
-                                    
-                                 </form>
-                              </div>
-                           </div>
-                        </div>
-                        
-                        
-                     </div>
-                     <div class="card single-accordion">
-                        <div class="card-header" id="headingTwo">
-                           <h5 class="mb-0">
-                              <button class="btn btn-link collapsed" type="button"
-                                 data-toggle="collapse" data-target="#collapseTwo"
-                                 aria-expanded="false" aria-controls="collapseTwo">
-                                 할부</button>
-                           </h5>
-                        </div>
-                        <div id="collapseTwo" class="collapse"
-                           aria-labelledby="headingTwo" data-parent="#accordionExample">
-                           <div class="card-body">
-                              <div class="shipping-address-form">
-                                 <p>구현중</p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="card single-accordion">
-                        <div class="card-header" id="headingThree">
-                           <h5 class="mb-0">
-                              <button class="btn btn-link collapsed" type="button"
-                                 data-toggle="collapse" data-target="#collapseThree"
-                                 aria-expanded="false" aria-controls="collapseThree">
-                                 만나서결제</button>
-                           </h5>
-                        </div>
-                        <div id="collapseThree" class="collapse"
-                           aria-labelledby="headingThree" data-parent="#accordionExample">
-                           <div class="card-body">
-                              <div class="card-details">
-                                 <p>구현중</p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
+	<div id="container" style="height: 1200px;">
 
-               </div>
-               <!-- 예약사항 폼 끝-->
-            </div>
-            <div class="modal-footer">
-               <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-               <button type="button" class="btn btn-primary" onclick = "location.href='/user/payment';">결제하기</button>
-            </div>
-         </div>
-      </div>
-   </div>
+		<div class="tit-area" style="border-top: 3px solid #f2f2f2; padding: 50px 15px 0 0;">
+			<h3>매장찾기</h3>
+			<p class="sub-tx">
+				원하시는 <span style="font-weight: bolder;">지역</span>을 검색해 주세요.
+			</p>
+		</div>
 
-   <script type="text/javascript">
-      var laundryBox = document.querySelectorAll('.laundry-box');
-      var laundryState = document.querySelectorAll('.laundry-state');
-      var yeyakBtn = document.querySelectorAll('.yeyak-btn');
-      
-      for(var i=0; i<laundryState.length; i++){
-         var lState = laundryState[i].innerText;
-         if(lState == 'close'){
-            yeyakBtn[i].innerText ='폐업';
-            yeyakBtn[i].removeAttribute('data-target');
-            yeyakBtn[i].addEventListener('click',function(){
-               alert('하지마셈 망한곳임');
-            });
-         }
-      }
-      </script>
-   <div id="container" style="height: 1200px;">
+		<div class="search-map">
+			<form onsubmit="searchPlaces(); return false;">
+				<div id="laundryValueDiv">
 
-      <div class="tit-area" style="border-top: 3px solid #f2f2f2;">
-         <h3>매장찾기</h3>
-         <p class="sub-tx">
-            원하시는 <span style="font-weight: bolder;">지역</span>을 검색해 주세요.
-         </p>
-      </div>
+					<input type="radio" id="ilbanMapCheck" name="laundryMapRadio"
+						value="기능세탁" checked><label for="ilbanMapCheck">기능</label>
+					<input type="radio" id="muinMapCheck" name="laundryMapRadio"
+						value="무인세탁"><label for="muinMapCheck">무인</label>
+				</div>
+				<input type="text" value="전주" id="keyword" name="hiddenKeyword"
+					style="width: 132px;" size="15" placeholder="예) 전주"> <input
+					type="hidden" value="크린토피아 " id="keywordaa" name="hiddenKeyword"
+					size="15"> <input type="hidden" value=" 효자동" id="keywordbb"
+					name="hiddenKeyword" size="15"> <input type="hidden"
+					value=" 드라이크리닝" id="keywordcc" name="hiddenKeyword" size="15">
+				<button type="submit" id="search-map-btn">
 
-      <div class="search-map">
-         <form onsubmit="searchPlaces(); return false;">
-         <div id = "laundryValueDiv">
-            
-            <input type="radio" id="muinMapCheck" name="laundryMapRadio" value="무인세탁" checked><label for="muinMapCheck" >무인</label>
-            
-            <input type="radio" id="ilbanMapCheck" name="laundryMapRadio" value="기능세탁"><label for="ilbanMapCheck">기능</label>
-         </div>   
-            <input type="text" value="전주" id="keyword" name="hiddenKeyword" size="15"  placeholder="예) 전주"> 
-               <input type="hidden" value="크린토피아 " id="keywordaa" name="hiddenKeyword" size="15">
-               <input type="hidden" value=" 효자동" id="keywordbb" name="hiddenKeyword" size="15">
-               <input type="hidden" value=" 드라이크리닝" id="keywordcc" name="hiddenKeyword" size="15">
-            <button type="submit" id="search-map-btn">
-            
-               <p style="color: #fff">.</p>
-            </button>
-         </form>
+					<p style="color: #fff">.</p>
+				</button>
 
-      </div>
+			</form>
+			<p style="display: inline; margin: auto;">지도만 보기</p>
+			<input type="checkbox" id="mapCheck" onclick="mapChecked()"
+				style="margin-top: 30px;">
+		</div>
 
-      <script type="text/javascript">
-      	
-      </script>
+		<div class="tab-content">
 
-      <div class="tab-content" style="height: 700px;">
 
-         <div class="tab-pane active" id="home" role="tabpanel"
-            aria-labelledby="home-tab">
-            <div class="map_wrap">
-               <div id="map" style="width: 80%; height: 700px; overflow: hidden;  box-shadow: 3px 3px 3px 3px gray;">
-                  <div class="hAddr">
-                     <span class="title">지도중심기준 행정동 주소정보</span> <span id="centerAddr"></span>
-                  </div>
-               </div>
+			<div class="tab-pane active" id="home" role="tabpanel"
+				aria-labelledby="home-tab">
+				<div class="map_wrap" style="margin-left: 0; margin-top: -30px;">
+					<div id="map"
+						style="width: 80%; height: 700px; overflow: hidden; box-shadow: 3px 3px 3px 3px gray;">
+						<div class="hAddr">
+							<span class="title">지도중심기준 행정동 주소정보</span> <span id="centerAddr"></span>
+						</div>
+					</div>
 
-               <div id="menu_wrap" class="bg_white">
-                  <div class="option">
-                     <div></div>
-                  </div>
-                  <hr>
-                  <ul id="placesList"></ul>
-                  <div id="pagination"></div>
-               </div>
-            </div>
+					<div id="menu_wrap" class="bg_white"
+						style="margin-left: 10%; width: 20%;">
+						<div class="option">
+							<div></div>
+						</div>
+						<hr>
+						<ul id="placesList"></ul>
+						<div id="pagination"></div>
+					</div>
+				</div>
+				<script type="text/javascript">
+							function mapChecked() {
 
-         </div>
-         <div class="tab-pane" id="profile" role="tabpanel"
-            aria-labelledby="profile-tab"></div>
-      </div>
+								var menuWrap = document
+										.getElementById('menu_wrap');
+								var mapCheck = document
+										.getElementById('mapCheck');
 
-   
-   </div>
-         <!--매장정보 모달 -->
-         <div class="modal fade" id="exampleModal" tabindex="-1"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <h5 class="modal-title" id="exampleModalLabel">매장정보</h5>
-                     <button type="button" class="close" data-dismiss="modal"
-                        aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                     </button>
-                  </div>
-                  <div class="modal-body" style="padding: 30px;">
-                     <h5>매장 정보를 확인하시겠습니까?</h5>
-                     <p>세세한 매장 정보들을 한눈에 볼 수 있습니다!</p>
-                  </div>
-                  <div class="modal-footer" style="padding: 0;">
-                     <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal"
-                        style="margin: 0; border: 0; border-radius: 0; padding: 0; float: left; width: 50%; height: 50px; font-size: 20px;">닫기</button>
-                     <button type="button" class="btn btn-primary" onClick="location.href='/user/laundryInfo'"
-                        style="border: 0; border-radius: 0; margin: 0; padding: 0; float: right; width: 50%; height: 50px; font-size: 20px;">확인</button>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <!-- 매장정보 모달 끝 -->
-   <!--자바스크립트-->
+								if (mapCheck.checked == true) {
+									menuWrap.style.display = "none";
+								} else {
+									menuWrap.style.display = "block";
+								}
+							}
+						</script>
+			</div>
+			<div class="tab-pane" id="profile" role="tabpanel"
+				aria-labelledby="profile-tab"></div>
+		</div>
 
-   <script type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9783b710943997b9c55ffc0990321485&libraries=services"></script>
-   <script>
+
+	</div>
+	<!--매장정보 모달 -->
+	<div class="modal fade" id="exampleModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">매장정보</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" style="padding: 30px;">
+					<h5>매장 정보를 확인하시겠습니까?</h5>
+					<p>세세한 매장 정보들을 한눈에 볼 수 있습니다!</p>
+				</div>
+				<div class="modal-footer" style="padding: 0;">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal"
+						style="margin: 0; border: 0; border-radius: 0; padding: 0; float: left; width: 50%; height: 50px; font-size: 20px;">닫기</button>
+					<button type="button" class="btn btn-primary"
+						onClick="location.href='/user/laundryInfo'"
+						style="border: 0; border-radius: 0; margin: 0; padding: 0; float: right; width: 50%; height: 50px; font-size: 20px;">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 매장정보 모달 끝 -->
+	<!--자바스크립트-->
+
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9783b710943997b9c55ffc0990321485&libraries=services"></script>
+	<script>
       var markers = [];
 
       var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -537,12 +471,7 @@
 
          itemStr += '  <span class="tel">' + places.phone + '</span>'
                + '</div>' +
-               '<button type="button" class="map-yayak-btn" data-toggle="modal" data-target="#exampleModal">' +'매장정보' + '</button>'
-            
-               +
-               '<button type="button" data-toggle="modal" data-target="#modalFragment" data-id="`${ldryName}`" class="map-yayak-btn bookBtn">' + '바로예약' 
-               +'</button>';
-
+               '<button type="button" class="map-yayak-btn" data-toggle="modal" data-target="#exampleModal">' +'매장정보' + '</button>';
          el.innerHTML = itemStr;
          el.className = 'item';
 
@@ -629,8 +558,8 @@
 
 </th:block>
 
-   <th:block layout:fragment="customJsScript">
-      <script>
+<th:block layout:fragment="customJsScript">
+	<script>
          $(function(){
             $(document).on('click', '.bookBtn', function(){
                var storeInfoObj = $(this).parent().find('div').children();
@@ -669,5 +598,5 @@
 
 
 
-	</th:block>
+</th:block>
 </html>

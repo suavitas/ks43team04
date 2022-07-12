@@ -4,128 +4,28 @@
 	layout:decorate="~{layouts/userDefault}">
 <!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
-	<!-- 모달 팝업 fragment 연결문 -->
-<div class="modal fade" id="modalFragment" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">예약사항</h4>
-				</div>
-				<div class="modal-body">
-					<!--예약사항 폼 시작 -->
-					<div class="checkout-accordion-wrap">
-						<div class="accordion" id="accordionExample">
-							<div class="card single-accordion">
-								<div class="card-header" id="headingOne">
-									<h5 class="mb-0">
-										<button class="btn btn-link" type="button"
-											data-toggle="collapse" data-target="#collapseOne"
-											aria-expanded="true" aria-controls="collapseOne">수거
-											및 배송신청</button>
-									</h5>
-								</div>
 
-								<div id="collapseOne" class="collapse show"
-									aria-labelledby="headingOne" data-parent="#accordionExample">
-									<div class="card-body">
-										<div class="billing-address-form">
-											<form action="index.html">
-												
-												매장이름 : <input type="text" id="ldryName" value=""  style="width: 250px;"> <br>
-												
-												매장주소 : <input type="text" id="ldryAddr" value="" style="width: 250px;"> <br>
-												
-												매장번호 : <input type="text" id="ldryNum" value="" style="width: 250px;">
-												
-										
-												
-													<textarea name="bill" id="bill" cols="30" rows="10"
-														placeholder="배송시 요청사항"></textarea>
-												
-											</form>
-										</div>
-									</div>
-								</div>
-								
-								
-							</div>
-							<div class="card single-accordion">
-								<div class="card-header" id="headingTwo">
-									<h5 class="mb-0">
-										<button class="btn btn-link collapsed" type="button"
-											data-toggle="collapse" data-target="#collapseTwo"
-											aria-expanded="false" aria-controls="collapseTwo">
-											할부</button>
-									</h5>
-								</div>
-								<div id="collapseTwo" class="collapse"
-									aria-labelledby="headingTwo" data-parent="#accordionExample">
-									<div class="card-body">
-										<div class="shipping-address-form">
-											<p>구현중</p>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="card single-accordion">
-								<div class="card-header" id="headingThree">
-									<h5 class="mb-0">
-										<button class="btn btn-link collapsed" type="button"
-											data-toggle="collapse" data-target="#collapseThree"
-											aria-expanded="false" aria-controls="collapseThree">
-											만나서결제</button>
-									</h5>
-								</div>
-								<div id="collapseThree" class="collapse"
-									aria-labelledby="headingThree" data-parent="#accordionExample">
-									<div class="card-body">
-										<div class="card-details">
-											<p>구현중</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-					<!-- 예약사항 폼 끝-->
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" onclick = "location.href='/user/payment';">결제하기</button>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<script type="text/javascript">
 		var laundryBox = document.querySelectorAll('.laundry-box');
 		var laundryState = document.querySelectorAll('.laundry-state');
 		var yeyakBtn = document.querySelectorAll('.yeyak-btn');
-		
-		for(var i=0; i<laundryState.length; i++){
+
+		for (var i = 0; i < laundryState.length; i++) {
 			var lState = laundryState[i].innerText;
-			if(lState == 'close'){
-				yeyakBtn[i].innerText ='폐업';
+			if (lState == 'close') {
+				yeyakBtn[i].innerText = '폐업';
 				yeyakBtn[i].removeAttribute('data-target');
-				yeyakBtn[i].addEventListener('click',function(){
+				yeyakBtn[i].addEventListener('click', function() {
 					alert('하지마셈 망한곳임');
 				});
 			}
 		}
-      </script>
-      <!-- 바로예약 모달 끝 -->
-      
+	</script>
 	<div id="container" style="width: 100%; height: 1200px;">
-
-			<div class="left-tit-area">
-		<div class="tit-area"
-			style=" margin: 0; border-right: 1px solid #f2f2f2; background-color: #fff; padding: 30px 0px; height: 1000px;" >
+		<div class="left-tit-area">
+			<div class="tit-area"
+				style="margin: 0; border-right: 1px solid #f2f2f2; background-color: #fff; padding: 30px 0px; height: 1000px;">
 				<h4>매장찾기</h4>
 				<p class="sub-tx" style="margin: 0;">
 					원하시는 <span style="font-weight: bolder;">지역</span>을 검색해 주세요.
@@ -138,21 +38,23 @@
 							<input type="radio" id="ilbanMapCheck" name="laundryMapRadio"
 								value="기능세탁" checked><label for="ilbanMapCheck">기능</label>
 							<input type="radio" id="muinMapCheck" name="laundryMapRadio"
-								value="무인세탁"><label for="muinMapCheck">무인</label> 
+								value="무인세탁"><label for="muinMapCheck">무인</label>
 						</div>
-							<input type="text" value="전주" id="keyword" name="hiddenKeyword" style="width: 132px;" size="15" placeholder="예) 전주"> 
-							<input type="hidden" value="크린토피아 " id="keywordaa" name="hiddenKeyword" size="15"> 
-							<input type="hidden" value=" 효자동" id="keywordbb" name="hiddenKeyword" size="15"> 
-							<input type="hidden" value=" 드라이크리닝" id="keywordcc" name="hiddenKeyword" size="15">
+						<input type="text" value="전주" id="keyword" name="hiddenKeyword"
+							style="width: 132px;" size="15" placeholder="예) 전주"> <input
+							type="hidden" value="크린토피아 " id="keywordaa" name="hiddenKeyword"
+							size="15"> <input type="hidden" value=" 효자동"
+							id="keywordbb" name="hiddenKeyword" size="15"> <input
+							type="hidden" value=" 드라이크리닝" id="keywordcc" name="hiddenKeyword"
+							size="15">
 						<button type="submit" id="search-map-btn">
-
 							<p style="color: #fff">.</p>
 						</button>
 					</form>
 
 				</div>
 				<div class="tab-content">
-					<p style="display: inline; margin-right: 10px;">지도만 보기</p>
+					<p style="display: inline; margin-right: 10xp;">지도만 보기</p>
 					<input type="checkbox" id="mapCheck" onclick="mapChecked()"
 						style="margin-top: 30px;">
 
@@ -196,119 +98,269 @@
 						aria-labelledby="profile-tab"></div>
 				</div>
 			</div>
-			</div>
-			<div class="ldry-info-right-area">
-				<div class="ldry-info-right-wrap">
-					<div class="ldry-info-right-head">
-					 <th:block th:if="${not #lists.isEmpty(laundryInfo)}">
-							<h4 th:text="${laundryInfo.laundryName}"></h4>
+		</div>
+		<div class="ldry-info-right-area">
+			<div class="ldry-info-right-wrap">
+				<div class="ldry-info-right-head">
+					<th:block th:if="${not #lists.isEmpty(laundryInfo)}">
+						<h4 th:text="${laundryInfo.laundryName}"></h4>
 					</th:block>
-						<div class="review-star-img">
-							<img alt="star"
-								src="https://jpassets.jobplanet.co.kr/production/uploads/material/media/99/ic_star_green500_sm.svg">
-							<span>4.0</span> <span class="gray-span">일반세탁소</span>
-							
-						</div>
+					<div class="review-star-img">
+						<img alt="star"
+							src="https://jpassets.jobplanet.co.kr/production/uploads/material/media/99/ic_star_green500_sm.svg">
+						<span>4.0</span> <span class="gray-span">일반세탁소</span>
 
 					</div>
-					<nav>
-					  <div class="nav nav-tabs" id="nav-tab" role="tablist" style="margin-top: 25px;">
-					    <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">기본정보</a>
-					    <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">기능별 가격</a>
-					    <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">리뷰</a>
-					  </div>
-					</nav>
+
+				</div>
+				<nav>
+					<div class="nav nav-tabs" id="nav-tab" role="tablist"
+						style="margin-top: 25px;">
+						<a class="nav-link active" id="nav-home-tab" data-toggle="tab"
+							href="#nav-home" role="tab" aria-controls="nav-home"
+							aria-selected="true">기본정보</a> <a class="nav-link"
+							id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+							role="tab" aria-controls="nav-profile" aria-selected="false">기능별
+							가격</a> <a class="nav-link" id="nav-contact-tab" data-toggle="tab"
+							href="#nav-contact" role="tab" aria-controls="nav-contact"
+							aria-selected="false">리뷰</a>
+					</div>
+				</nav>
+
+				<div class="tab-content" id="nav-tabContent">
+					<!-- 기본정보 탭 -->
+					<div class="tab-pane fade show active" id="nav-home"
+						role="tabpanel" aria-labelledby="nav-home-tab"
+						style="border-bottom: 1px solid #f2f2f2; border-right: 1px solid #f2f2f2;">
+						<th:block th:if="${not #lists.isEmpty(laundryInfo)}">
+							<table id="LaundryInfoSebu"
+								class="table table-striped table-bordered">
+
+								<tbody>
+
+									<tr>
+										<td>세탁소 명</td>
+										<td th:text="${laundryInfo.laundryName}"></td>
+									</tr>
+
+									<tr>
+										<td>영업상태</td>
+										<td th:text="${laundryInfo.laundryState}"></td>
+									</tr>
+
+									<tr>
+										<td>주소</td>
+										<td th:text="${laundryInfo.laundryAddr}"></td>
+									</tr>
+
+									<tr>
+										<td>전화번호</td>
+										<td th:text="${laundryInfo.laundryTel}"></td>
+									</tr>
+
+									<tr>
+										<td>영업시간</td>
+										<td>09 : 00 ~ 18 : 00</td>
+									</tr>
+									<tr>
+										<td>세탁자격증 보유 여부</td>
+										<td th:text="${laundryInfo.skillLicence}"></td>
+									</tr>
+
+									<tr th:unless="${not #lists.isEmpty(laundryInfo)}">
+										<td colspan="7">조회된 내용이 없습니다.</td>
+									</tr>
+								</tbody>
+							</table>
+
+						</th:block>
+					</div>
+
+					<!-- 기능별 가격 탭 -->
+					<div class="tab-pane fade" id="nav-profile" role="tabpanel"
+						aria-labelledby="nav-profile-tab"
+						style="border-bottom: 1px solid #f2f2f2; border-right: 1px solid #f2f2f2;">
+						<th:block th:if="${not #lists.isEmpty(laundryInfo)}">
+							<table class="table table-striped table-bordered"
+								style="margin-top: 75px;">
+								<thead>
+									<tr>
+										<th>상품</th>
+										<th>가격</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:if="${not #lists.isEmpty(laundryInfo.ilbanGpriceList)}"
+										th:each="l : ${laundryInfo.ilbanGpriceList}">
+										<td th:text="${l.goodsName}"></td>
+										<td th:text="${l.goodsPrice}"></td>
+									</tr>
+
+									<tr
+										th:unless="${not #lists.isEmpty(laundryInfo.ilbanGpriceList)}">
+										<td colspan="2">조회된 내용이 없습니다.</td>
+									</tr>
+								</tbody>
+							</table>
+						</th:block>
+					</div>
 					
-					
-						<div class="tab-content" id="nav-tabContent">
-						  <!-- 기본정보 탭 -->
-						  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" style="border-bottom: 1px solid #f2f2f2; border-right: 1px solid #f2f2f2;">
-						  <th:block th:if="${not #lists.isEmpty(laundryInfo)}">
-								<table id= "LaundryInfoSebu" class="table table-striped table-bordered">
-										
-										<tbody>
-											
-												<tr>
-													<td>세탁소 명</td>
-													<td th:text="${laundryInfo.laundryName}"></td>
-												</tr>
-												
-												<tr>
-													<td>영업상태</td>
-													<td th:text="${laundryInfo.laundryState}"></td>
-												</tr>
-												
-												<tr>
-													<td>주소</td>
-													<td th:text="${laundryInfo.laundryAddr}"></td>
-												</tr>
-												
-												<tr>
-													<td>전화번호</td>
-													<td th:text="${laundryInfo.laundryTel}"></td>
-												</tr>
-												
-												<tr>
-													<td>예약하기</td>
-													<td><button type="button" data-toggle="modal" data-target="#modalFragment" data-id="`${ldryName}`" class="map-yayak-btn bookBtn">예약하기 </button></td>
-												</tr>
-											
-										
-											<tr th:unless="${not #lists.isEmpty(laundryInfo)}">
-												<td colspan="7">조회된 내용이 없습니다.</td>
-											</tr>
-										</tbody>
-									</table>
-								
-						  	</th:block>
-						  </div>
-						  
-						
-						  
-						  <!-- 기능별 가격 탭 -->
-						  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" style="border-bottom: 1px solid #f2f2f2; border-right: 1px solid #f2f2f2;">
-							<th:block th:if="${not #lists.isEmpty(laundryInfo)}">
-								<table class="table table-striped table-bordered" style="margin-top: 75px;">
-									<thead>
-										<tr>
-											<th>상품</th>	
-											<th>가격</th>	
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:if="${not #lists.isEmpty(laundryInfo.ilbanGpriceList)}" th:each="l : ${laundryInfo.ilbanGpriceList}">
-											<td th:text="${l.goodsName}"></td>
-											<td th:text="${l.goodsPrice}"></td>
-										</tr>
-									
-										<tr th:unless="${not #lists.isEmpty(laundryInfo.ilbanGpriceList)}">
-											<td colspan="2">조회된 내용이 없습니다.</td>
-										</tr>
-									</tbody>
-								</table>
-							</th:block>
-					      </div>
-						
-						
-						
-						  <!-- 리뷰 탭 -->
-						  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" style="border-bottom: 1px solid #f2f2f2; border-right: 1px solid #f2f2f2;">
-						  
-							 	리뷰..
-									
-						  </div>
-						  
-						  
-						  </div>
-					
+					<!-- 리뷰 탭 -->
+					<div class="tab-pane fade" id="nav-contact" role="tabpanel"
+						aria-labelledby="nav-contact-tab"
+						style="border-bottom: 1px solid #f2f2f2; border-right: 1px solid #f2f2f2;">
+						<th:block th:if="${not #lists.isEmpty(laundryInfo)}"
+							th:each="l : ${laundryInfo}">
+							<button type="button" class="btn btn-primary btn-lg yeyak-btn"
+								data-toggle="modal" data-target="#ilbanYeyak">예약하기</button>
+							<!-- Modal -->
+							<div class="modal fade" id="ilbanYeyak" tabindex="-1"
+								role="dialog" th:aria-labelledby="${'myModal' + 'Label'}">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal"
+												aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+											<h4 class="modal-title" th:id="${'myModal'+'Label'}"
+												th:text="${l.laundryName}">예약사항</h4>
+
+										</div>
+										<div class="modal-body">
+											<!-- 예약사항 폼 시작-->
+											<div class="checkout-accordion-wrap">
+												<div class="accordion" id="accordionExample">
+													<div class="card single-accordion">
+														<div class="card-header" id="headingOne">
+															<h5 class="mb-0">
+																<button class="btn btn-link" type="button"
+																	data-toggle="collapse" data-target="#collapseOne"
+																	aria-expanded="true" aria-controls="collapseOne">수거
+																	및 배송신청</button>
+															</h5>
+														</div>
+														<div id="collapseOne" class="collapse show"
+															aria-labelledby="headingOne"
+															data-parent="#accordionExample">
+															<div class="card-body">
+																<div class="billing-address-form">
+																	<form th:action="@{/user/yeyakPayment}" method="post">
+																		<input type="hidden" name="laundryName"
+																			th:value="${l.laundryName}">
+																		<h5>수거일 예약 신청</h5>
+																		<input type="date" class="currentDate"> <input
+																			type="time" class="currentDateTime"
+																			style="margin-bottom: 20px;">
+																		<p>
+																			수거는 예약날짜 및 시간 으로 부터 <br />최대 24시간의 시간이 소요 됩니다.
+																		</p>
+																		<div th:class="${'append-info'}">
+																			<div class="boxbox">
+																				<h5>세탁기능 선택</h5>
+																				<select>
+																					<th:block th:each="ls : ${ilbanSkillList}">
+																						<option th:text="${ls.skillCate}"
+																							th:value="${ls.skillCate}"></option>
+																					</th:block>
+																				</select> <br />
+																				<h5 style="margin-top: 20px;">세탁물 선택</h5>
+																				<select class="igp" name="goodsName">
+																					<th:block
+																						th:each="ls , st : ${ilbanGoodsPriceList}">
+																						<th:block th:each="lss : ${ls.ilbanGoodsPrice}">
+																							<option
+																								th:if="${ls.laundryName} eq ${l.laundryName}"
+																								th:text="${lss.goodsName}"
+																								th:value="${lss.goodsName}"></option>
+																						</th:block>
+																					</th:block>
+																				</select>
+																			</div>
+																		</div>
+																		<br />
+																		<div class="strBox"></div>
+																		<div style="margin-bottom: 20px">
+																			<button type="button" class="btn btn-info append-btn">추가하기</button>
+																			<button type="button" class="btn btn-info remove-btn">제거하기</button>
+																		</div>
+																		<p>
+																			<input type="text" placeholder="상세주소">
+																		</p>
+																		<p>
+																			<input type="tel" placeholder="연락받을 연락처">
+																		</p>
+																		<p>
+																			<textarea name="bill" id="bill" cols="30" rows="10"
+																				placeholder="배송시 요청사항"></textarea>
+																		</p>
+																	</form>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="card single-accordion">
+														<div class="card-header" id="headingTwo">
+															<h5 class="mb-0">
+																<button class="btn btn-link collapsed" type="button"
+																	data-toggle="collapse" data-target="#collapseTwo"
+																	aria-expanded="false" aria-controls="collapseTwo">가격표</button>
+															</h5>
+														</div>
+														<div id="collapseTwo" class="collapse"
+															aria-labelledby="headingTwo"
+															data-parent="#accordionExample">
+															<div class="card-body">
+																<div class="shipping-address-form">
+																	<th:block>
+																		<div class="cart-table-wrap">
+																			<table class="cart-table tbServiceList">
+																				<thead class="cart-table-head">
+																					<tr class="table-head-row">
+																						<th class="product-quantity">상품명</th>
+																						<th class="product-total">가격</th>
+																					</tr>
+																				</thead>
+																				<tbody>
+																					<th:block
+																						th:each="ls , st : ${ilbanGoodsPriceList}">
+																						<tr class="table-body-row"
+																							th:each="lss : ${ls.ilbanGoodsPrice}">
+																							<td class="product-quantity"
+																								th:if="${ls.laundryName} eq ${l.laundryName}"
+																								th:text="${lss.goodsName}"></td>
+																							<td class="product-total"
+																								th:if="${ls.laundryName} eq ${l.laundryName}"
+																								th:text="${lss.goodsPrice}"></td>
+																						</tr>
+																					</th:block>
+																				</tbody>
+																			</table>
+																		</div>
+																	</th:block>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<!-- 예약사항 폼 끝-->
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default"
+												data-dismiss="modal">취소</button>
+											<button type="submit" class="btn btn-primary">결제하기</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 모달 예약하기 버튼 끝 -->
+						</th:block>
+					</div>
+				</div>
 			</div>
-
-
-
-
 		</div>
 	</div>
-
 
 	<!--매장정보 모달 -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -325,8 +377,8 @@
 					</div>
 					<div class="modal-body" style="padding: 30px;">
 						<h5>매장 정보를 확인하시겠습니까?</h5>
-						<input type="hidden" name="searchKey" value="laundryName"/>
-						<input type="hidden" name="searchValue" id="ldryNameInput" value=" "/>
+						<input type="hidden" name="searchKey" value="laundryName" /> <input
+							type="hidden" name="searchValue" id="ldryNameInput" value=" " />
 						<p>세세한 매장 정보들을 한눈에 볼 수 있습니다!</p>
 					</div>
 					<div class="modal-footer" style="padding: 0;">
@@ -489,19 +541,13 @@
 			} else {
 				itemStr += '    <span>' + places.address_name + '</span>';
 			}
-	
+
 			itemStr += '  <span class="tel">'
 					+ places.phone
 					+ '</span>'
 					+ '</div>'
 					+ '<button type="button" class="map-yayak-btn bookBtn" data-toggle="modal" data-target="#exampleModal" data-id="`${ldryName}`">'
-					+ '매장정보'
-					+ '</button>'
-
-					+
-					'<button type="button" data-toggle="modal" data-target="#modalFragment" data-id="`${ldryName}`" class="map-yayak-btn bookBtn">' + '바로예약' 
-		               +'</button>';
-
+					+ '매장정보' + '</button>';
 			el.innerHTML = itemStr;
 			el.className = 'item';
 
@@ -589,34 +635,96 @@
 
 
 </th:block>
- <th:block layout:fragment="customJsScript">
-      <script>
-         $(function(){
-            $(document).on('click', '.bookBtn', function(){
-               var storeInfoObj = $(this).parent().find('div').children();
-               var ldryName = $(storeInfoObj).eq(0).text();
-               var ldryAddr = $(storeInfoObj).eq(1).text();
-               var ldryNum = $(storeInfoObj).eq(3).text();
-                $("#ldryName").val(ldryName);
-                $("#ldryAddr").val(ldryAddr);
-                $("#ldryNum").val(ldryNum);
-                $("#ldryNameInput").val(ldryName);
-               
-               console.log($(this).parent().find('div').children());
-               
-               console.log($(storeInfoObj).eq(0).text());
-               console.log($(storeInfoObj).eq(1).text());
-               console.log($(storeInfoObj).eq(2).text());
-               console.log($(storeInfoObj).eq(3).text());
-               
-                              
-               
-            });
-         });
-         
-         
-      </script>
-   </th:block>
+<th:block layout:fragment="customJsScript">
+	<script>
+		$(function() {
+			$(document).on('click', '.bookBtn', function() {
+				var storeInfoObj = $(this).parent().find('div').children();
+				var ldryName = $(storeInfoObj).eq(0).text();
+				var ldryAddr = $(storeInfoObj).eq(1).text();
+				var ldryNum = $(storeInfoObj).eq(3).text();
+				$("#ldryName").val(ldryName);
+				$("#ldryAddr").val(ldryAddr);
+				$("#ldryNum").val(ldryNum);
+				$("#ldryNameInput").val(ldryName);
+
+				console.log($(this).parent().find('div').children());
+
+				console.log($(storeInfoObj).eq(0).text());
+				console.log($(storeInfoObj).eq(1).text());
+				console.log($(storeInfoObj).eq(2).text());
+				console.log($(storeInfoObj).eq(3).text());
+
+			});
+		});
+
+		/*close 상태 세탁소 폐업으로 글자 변경 + 클릭 안되게 하는 기능*/
+		var laundryBox = document.querySelectorAll('.laundry-box');
+		var laundryState = document.querySelectorAll('.laundry-state');
+		var yeyakBtn = document.querySelectorAll('.yeyak-btn');
+
+		for (var i = 0; i < laundryState.length; i++) {
+			var lState = laundryState[i].innerText;
+			if (lState == 'close') {
+				yeyakBtn[i].innerText = '폐업';
+				yeyakBtn[i].removeAttribute('data-target');
+				yeyakBtn[i].addEventListener('click', function() {
+					alert('이미 폐업한 곳 입니다.');
+				});
+			}
+		}
+
+		/*추가하기 클릭시 세탁기능, 추가*/
+		var appendBtn = document.querySelectorAll('.append-btn');
+		var removeBtn = document.querySelectorAll('.remove-btn');
+
+		for (var i = 0; i < appendBtn.length; i++) {
+			appendBtn[i].addEventListener('click',
+					function(e) {
+						var box = e.target.parentElement.parentElement
+								.querySelector('.boxbox')
+						var strGp = box.querySelector('.igp').value;
+
+						e.target.parentElement.parentElement
+								.querySelector('.strBox').innerHTML += '<p>'
+								+ strGp + '</p>';
+
+					});
+		}
+
+		/*제거하기 클릭시 세탁기능, 세탁물 선택창 제거*/
+		for (var i = 0; i < removeBtn.length; i++) {
+			removeBtn[i].addEventListener('click', function(e) {
+				var strBox = e.target.parentElement.parentElement
+						.querySelector('.strBox')
+				var ps = strBox.querySelectorAll('p');
+				var l = ps.length;
+
+				if (l <= 0) {
+					alert('더이상 제거 할 수 없습니다.');
+				} else {
+					ps[l - 1].remove();
+				}
+
+			});
+		}
+
+		/*수거배송 신청예약 폼 내일날짜로 셋팅*/
+		var currentDates = document.querySelectorAll('.currentDate');
+		var currentDateTimes = document.querySelectorAll('.currentDateTime');
+
+		var tomorrowDate = new Date
+
+		tomorrowDate.setHours(tomorrowDate.getHours() + 9)
+		tomorrowDate.setDate(tomorrowDate.getDate() + 1)
+
+		for (var i = 0; i < currentDates.length; i++) {
+			currentDates[i].value = tomorrowDate.toISOString().substring(0, 10);
+			currentDateTimes[i].value = tomorrowDate.toISOString()
+					.slice(11, 16);
+		}
+	</script>
+</th:block>
 
 
 </html>
