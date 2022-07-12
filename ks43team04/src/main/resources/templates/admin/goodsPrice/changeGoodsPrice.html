@@ -5,7 +5,7 @@
 
 
 <th:block layout:fragment="customContents">
-	<form  th:action="@{/admin/goodsPrice/changeGoodsPrice}" method="post"
+	<form th:action="@{/admin/goodsPrice/changeGoodsPrice}" method="post"
 		style="text-align: center;">
 		<table class="table table-striped jambo_table bulk_action"
 			style="width: 60%; margin: 0 auto; margin-top: 80px; border-collapse: separate;">
@@ -16,36 +16,29 @@
 			</thead>
 			<tbody>
 				<tr class="even pointer">
-				<td>스킬명 </td>
-						<td colspan="2">
-						<select name="ilbanSkillCode" style="width: 50%; text-align: center;">
-							<th:block th:if="${not #lists.isEmpty(IlbanSkill)}" th:each="l : ${IlbanSkill}">
-								<option th:text="${l.skillCate}" th:value="${l.ilbanSkillCode}"></option>
-							</th:block>
-							<th:block th:unless="${not #lists.isEmpty(IlbanSkill)}">
-								<option value="">등록된 세탁기술이 없습니다.</option>
-							</th:block>
-						</select>
-					</td>
+					<td>스킬 명</td>
+					<td><input name="skillCate" th:value="${skillCate}"></td>
 				</tr>
 				<tr class="even pointer">
 					<td>제품 명</td>
-					<td><input type="text" name="gName" th:value="${gName}"></td>
+					<td><input name="gName" th:value="${gName}"></td>
 				</tr>
 				<tr class="even pointer">
 					<td>제품 가격</td>
-					<td><input type="number" name="gPrice" th:value="${gPrice}"></td>
-					
+					<td><input name="gPrice" th:value="${gPrice}"></td>
+
 				</tr>
-					<tr class="even pointer">
+				<tr class="even pointer">
 					<td colspan="2">
 						<button type="submit" class="btn btn-danger btn-sm"
-							data-toggle="modal" data-target="#deleteModal">가격 수정</button>
+							data-toggle="modal" data-target="#deleteModal">가격 정보 수정</button>
 					</td>
 				</tr>
 			</tbody>
 		</table>
+		<input type="hidden" name="ilbanGPriceCode"
+			th:value="${ilbanGPriceCode}">
 	</form>
-	
+
 </th:block>
 </html>
