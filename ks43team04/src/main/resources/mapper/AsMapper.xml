@@ -36,6 +36,17 @@
 	      <result column="admin_level_code"             property="adminLevelCode"/>
 	      <result column="regist_time"               	property="registTime"/>
 		</collection>
+		<collection property="boardAttach" ofType="BoardAttach">
+			<id		column="file_idx"						property="fileIdx"/>
+			<result	column="origin_file"					property="originFile"/>
+			<result	column="save_file"						property="saveFile"/>
+			<result	column="file_size"						property="fileSize"/>
+			<result	column="file_path"						property="filePath"/>
+			<result	column="represent_img"					property="representImg"/>
+			<result	column="upload_id"						property="uploadId"/>
+			<result	column="upload_time"					property="uploadTime"/>
+			<result	column="delYn"							property="delYn"/>
+		</collection>
 	</resultMap>
 	
 
@@ -56,7 +67,7 @@
 			<if test="asContent != null and asContent != ''">				
 			,as_content = #{asContent}
 			</if>
-			<if test="updateTime != null and updateTime != ''">	
+			<if test="updateTime = null or updateTime != null">
 			,update_time = NOW()
 			</if>
 			</trim>
@@ -121,9 +132,14 @@
 		, '0'
 		, '0'
 		, NOW());
+		<selectKey resultType="String" keyProperty="asCode" order="AFTER">
+			SELECT
+				CONCAT('as_code','_',max(CAST(substring(as_code,9) AS DECIMAL))) AS as_code 
+			from tb_as ALIAS_FOR_SUBQUERY
+		</selectKey>
 	</insert>
 	
-	<select id="getAsDetail" resultMap="asResultMap">
+	<select id="getAsDetail" parameterType="String" resultMap="asResultMap">
 		/*AS 상세 조회*/
 		SELECT
 			a.as_code
@@ -134,14 +150,45 @@
 			,a.as_content
 			,a.as_add_file
 			,a.as_add_file_name			
-			,a.regist_time
+			,(SELECT 
+				IFNULL(a.update_time, a.regist_time)) AS regist_time
 			,a.visit_time
+			, sub.file_idx
+			, sub.origin_file
+			, sub.save_file
+			, sub.file_size
+			, sub.file_path
+			, sub.represent_img
+			, sub.upload_id
+			, sub.upload_time
+			, sub.delYn
+			, sub.as_code
 		FROM
 			tb_as AS a
 		INNER JOIN
 			tb_laundry AS l
 		ON 
 			a.laundry_code = l.laundry_code
+		LEFT JOIN
+			(select
+				st.file_idx
+				, st.origin_file
+				, st.save_file
+				, st.file_size
+				, st.file_path
+				, st.represent_img
+				, st.upload_id
+				, st.upload_time
+				, st.delYn
+				, sr.as_code
+			from
+				tb_attach AS st
+			INNER join
+				tb_attach_as AS sr
+			ON
+				st.file_idx = sr.file_idx) AS sub
+		on
+			sub.as_code = a.as_code	
 		where 
 			a.as_code = #{asCode};		
 	</select>
@@ -154,9 +201,11 @@
 			,a.as_state
 			,l.laundry_name
 			,a.as_title
-			,a.as_add_file
+			,(select
+				IF(ta.file_idx is null, false, true)) AS as_add_file
 			,a.m_id
-			,a.regist_time
+			,(SELECT 
+				IFNULL(a.update_time, a.regist_time)) AS regist_time
 			,a.visit_time
 		FROM
 			tb_as AS a
@@ -164,8 +213,11 @@
 			tb_laundry AS l
 		ON 
 			a.laundry_code = l.laundry_code
+		LEFT join
+			tb_attach_as AS ta
+		ON a.as_code = ta.as_code	
 		WHERE 
-			a.m_id = #{memberId}	
+			a.m_id = #{memberId}
 		order by a.as_number desc;
 	</select>
 	
@@ -178,9 +230,11 @@
 			,a.as_state
 			,l.laundry_name
 			,a.as_title
-			,a.as_add_file
+			,(select
+				IF(ta.file_idx is null, false, true)) AS as_add_file
 			,a.m_id
-			,a.regist_time
+			,(SELECT 
+				IFNULL(a.update_time, a.regist_time)) AS regist_time
 			,a.visit_time
 		FROM
 			tb_as AS a
@@ -188,6 +242,9 @@
 			tb_laundry AS l
 		ON 
 			a.laundry_code = l.laundry_code
+		LEFT join
+			tb_attach_as AS ta
+		ON a.as_code = ta.as_code	
 		order by a.as_number desc;
 	</select>
 	
@@ -199,9 +256,11 @@
 			,a.as_state
 			,l.laundry_name
 			,a.as_title
-			,a.as_add_file
+			,(select
+				IF(ta.file_idx is null, false, true)) AS event_add_file
 			,a.m_id
-			,a.regist_time
+			,(SELECT 
+				IFNULL(a.update_time, a.regist_time)) AS regist_time
 			,a.visit_time
 		FROM
 			tb_as AS a
@@ -209,7 +268,10 @@
 			tb_laundry AS l
 		ON 
 			a.laundry_code = l.laundry_code
-		AND a.as_state = '대기'		
+		AND a.as_state = '대기'
+		LEFT join
+			tb_attach_as AS ta
+		ON a.as_code = ta.as_code			
 		order by a.as_number desc;
 	</select>
 	
@@ -221,9 +283,11 @@
 			,a.as_state
 			,l.laundry_name
 			,a.as_title
-			,a.as_add_file
+			,(select
+				IF(ta.file_idx is null, false, true)) AS event_add_file
 			,a.m_id
-			,a.regist_time
+			,(SELECT 
+				IFNULL(a.update_time, a.regist_time)) AS regist_time
 			,a.visit_time
 		FROM
 			tb_as AS a
@@ -231,7 +295,10 @@
 			tb_laundry AS l
 		ON 
 			a.laundry_code = l.laundry_code
-		AND a.as_state = '접수'				
+		AND a.as_state = '접수'	
+		LEFT join
+			tb_attach_as AS ta
+		ON a.as_code = ta.as_code					
 		order by a.as_number desc;
 	</select>
 	
@@ -243,9 +310,11 @@
 			,a.as_state
 			,l.laundry_name
 			,a.as_title
-			,a.as_add_file
+			,(select
+				IF(ta.file_idx is null, false, true)) AS event_add_file
 			,a.m_id
-			,a.regist_time
+			,(SELECT 
+				IFNULL(a.update_time, a.regist_time)) AS regist_time
 			,a.visit_time
 		FROM
 			tb_as AS a
@@ -254,6 +323,9 @@
 		ON 
 			a.laundry_code = l.laundry_code
 		AND a.as_state = '완료'	
+		LEFT join
+			tb_attach_as AS ta
+		ON a.as_code = ta.as_code	
 		order by a.as_number desc;
 	</select>
 	

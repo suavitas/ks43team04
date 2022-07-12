@@ -3,10 +3,31 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/adminDefault}">
 	  
-	  
+	<th:block layout:fragment="customScript">
+		<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+	</th:block>	
+		
+	<th:block layout:fragment="customJsScript"> 
+		<script type="text/javascript">
+		
+		<!-- 새로고침 후 탭 유지 -->
+		$(document).ready(function() {
+		    if (location.hash) {
+		        $("a[href='" + location.hash + "']").tab("show");
+		    }
+		    $(document.body).on("click", "a[data-toggle='tab']", function(event) {
+		        location.hash = this.getAttribute("href");
+		    });
+		});
+		$(window).on("popstate", function() {
+		    var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
+		    $("a[href='" + anchor + "']").tab("show");
+		});
+		</script>
+	</th:block>		
 	  
 	<!-- 사용자정의 contents -->
-<th:block layout:fragment="customContents">
+	<th:block layout:fragment="customContents">
 
 
  	

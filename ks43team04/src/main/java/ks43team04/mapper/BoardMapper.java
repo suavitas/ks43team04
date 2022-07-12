@@ -23,6 +23,7 @@ public interface BoardMapper {
 	
 	//조회수 올리기
 	public int readCount(Board board);
+	public int eventreadCount(Event event);
 	
 	//이벤트(목록)상태변경 - 종료
 	//public int eventEnd(Event event);

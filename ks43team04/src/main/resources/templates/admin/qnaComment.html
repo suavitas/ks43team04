@@ -165,8 +165,8 @@
 						<div class="col-md-4 col-sm-4">
 							<input type="text" class="form-control" name="memeberId" id="name" readonly="readonly" th:value="${member.memberId}">
 						</div>
-										<label style="padding-left: 10px; margin-left: 10px;">
-										  <input type="checkbox" name="boardSecret" value='Y' id="boardSecret" onclick="clickSecret()">  비밀글
+										<label style="padding-left: 10px; padding-top:10px; margin-left: 10px;">
+										  <input type="checkbox" name="boardSecret" value='Y' id="boardSecret" th:checked="${boardSecret eq 'Y'}" onclick="clickSecret()">  비밀글
 										  <input type="hidden" name="boardSecret" value='N' id="boardSecret_hidden">
 										</label>						
 				</div>
