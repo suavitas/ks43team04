@@ -3020,12 +3020,13 @@ table.order-details tbody td {
 /*----------------------------------------------------------------------------------	# 매장찾기 css*/
 ----------------------------------------------------------------------------------
 #container .tab-content {
-	
+	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	text-align: center;
 	width: 100%;
+	height: 2000px;
 }
 
 
@@ -3034,7 +3035,7 @@ table.order-details tbody td {
 	width: 40px;
 	height: 40px;
 	border-radius: 23px;
-	background: #f28123 url(../img/icon_search_w.png) 50% 50% no-repeat;
+	background: #f28123 url(../img/searchIcon.png) 50% 50% no-repeat;
 	margin-left: -15px;
 	outline: none;
 }
@@ -3327,16 +3328,6 @@ input::placeholder {
 	white-space: nowrap;
 }
 
-.map-yayak-btn {
-	border: none;
-	background-color: #F28123;
-	padding: 5px 15px;
-	margin-bottom: 10px;
-	cursor: pointer;
-	display: inline-block;
-	border-radius: 50px;
-	font-weight: 700;
-}
 
 ===========================================================================================
 =======
@@ -3376,15 +3367,6 @@ input::placeholder {
 
 */
 ----------------------------------------------------------------------------------
-#container .tab-content {
-	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	width: 100%;
-	height: 2000px;
-}
 
 #container .tit-area h2 {
 	padding: 0 0 25px;
