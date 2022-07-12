@@ -38,7 +38,6 @@
 								<th>작성자</th>
 								<th>작성일</th>
 								<th>조회</th>
-								<th>상태변경</th>
 							</tr>
 						</thead>
 							<tr th:if="${not #lists.isEmpty(eventList)}" th:each="l : ${eventList}">
@@ -61,10 +60,9 @@
 						</td>
 								<td th:text="${l.registTime}"></td>
 								<td th:text="${l.eventReadCount}"></td>
-								<td><a href="#"><button type="button" class="btn btn-warning">종료</button></a></td>
 							</tr>
 							<tr th:unless="${not #lists.isEmpty(eventList)}">
-								<td colspan="8">조회된 내용이 없습니다.</td>
+								<td colspan="7">조회된 내용이 없습니다.</td>
 							</tr>
 					</table>
 			
@@ -81,8 +79,7 @@
 								<th>첨부</th>
 								<th>작성자</th>
 								<th>작성일</th>
-								<th>조회</th>
-								<th>상태변경</th>		
+								<th>조회</th>	
 							</tr>
 						</thead>
 							<tr th:if="${not #lists.isEmpty(runEventList)}" th:each="l : ${runEventList}">
@@ -105,10 +102,9 @@
 						</td>
 								<td th:text="${l.registTime}"></td>
 								<td th:text="${l.eventReadCount}"></td>
-								<td><a href="#">종료</a></td>
 							</tr>
 							<tr th:unless="${not #lists.isEmpty(runEventList)}">
-								<td colspan="8">조회된 내용이 없습니다.</td>
+								<td colspan="7">조회된 내용이 없습니다.</td>
 							</tr>
 					</table>
 			

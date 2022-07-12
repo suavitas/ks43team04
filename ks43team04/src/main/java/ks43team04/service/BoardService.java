@@ -41,6 +41,12 @@ public class BoardService {
 		this.fileMapper = fileMapper;
 	}
 	
+	/*문의사항 답변 수정*/
+	public int qnaCommentModify(Board board) {
+		int result = boardMapper.qnaCommentModify(board);
+		return result;
+	}
+	
 	/*문의사항 삭제*/
 	public int qnaRemove(Board board) {
 		int result = boardMapper.qnaRemove(board);
@@ -254,11 +260,55 @@ public class BoardService {
 	}
 	
 	/*문의사항 답변 작성*/
-	public int qnaComment(Board board, String sessionId) {
+	public String qnaComment(Board board, String sessionId, MultipartFile[] boardImgFile, String fileRealPath) {
+		System.out.println("------------------------문의사항 등록 서비스-----------------------------");
+		/*  1. 파일 업로드
+		 	2. 파일 업로드 성공시 파일 DB 인서트
+		 	3. 게시글 인서트
+ 			4. 결과값 리턴	*/
+		
 		board.setMemberId(sessionId);
-		int result = boardMapper.qnaComment(board);
-		return result;
-	}
+		
+		/*여기부터*/
+		boolean fileCheck = true;
+		
+		for (MultipartFile multipartFile : boardImgFile){
+			if(!multipartFile.isEmpty()) {
+				fileCheck = false;
+			}
+		}
+		
+		if (!fileCheck) {
+			
+		
+		//파일 업로드 위한 객체 생성 
+		FileUtils fu = new FileUtils(boardImgFile, board.getMemberId(), fileRealPath);
+		List<Map<String, String>> dtoFileList = fu.parseFileInfo();
+				
+		// t_file 테이블에 삽입
+		System.out.println(dtoFileList + "<<<dtoFileList입니다.");
+		fileMapper.uploadFile(dtoFileList);
+				
+		boardMapper.qnaComment(board);
+		String boardIdx = board.getBoardIdx();
+		
+		// 릴레이션 테이블에 삽입
+		 List<Map<String, String>> relationFileList = new ArrayList<>();
+		 for(Map<String, String> m : dtoFileList) {
+		 m.put("boardIdx", boardIdx);
+		 relationFileList.add(m);
+		 		}
+		 System.out.println(relationFileList + "<<<relationFileList입니다.");
+	 		fileMapper.uploadRelationFileWithBoard(relationFileList);
+	     	
+			System.out.println("-----------------------게시글 등록 서비스 끝------------------------------");
+			return boardIdx;
+		}else {
+			
+			int result = boardMapper.qnaComment(board);
+			return Integer.toString(result);
+		}
+	}	
 	
 	/*문의사항 작성*/
 	public String qnaWrite(Board board, String sessionId, MultipartFile[] boardImgFile, String fileRealPath) {

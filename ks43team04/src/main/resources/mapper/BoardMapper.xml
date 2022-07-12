@@ -90,6 +90,28 @@
 		</collection>
 	</resultMap>
 	
+	<update id="qnaCommentModify" parameterType="Board">
+		/* 문의사항 답변 글 수정 */
+			UPDATE 
+				tb_board
+			<trim prefix="SET" prefixOverrides=",">
+				<if test="boardTitle != null and boardTitle != ''">
+					board_title = #{boardTitle}
+				</if>
+				<if test="boardContent != null and boardContent != ''">
+					,board_content = #{boardContent}
+				</if>
+				<if test="boardSecret != null and boardSecret != ''">	
+					,board_secret = #{boardSecret}
+				</if>
+				<if test="updateTime = null or updateTime != null">	
+					,update_time = NOW()
+				</if>	
+			</trim>				
+			WHERE 
+				board_idx = #{boardIdx};
+
+	</update>
 	
 	<delete id="qnaRemove" parameterType="Board">
 		/* 문의사항 글 삭제 */
@@ -194,8 +216,9 @@
 			UPDATE 
 				tb_event
 			<trim prefix="SET" prefixOverrides=",">	
+					event_state = #{eventState}
 				<if test="eventTitle != null and eventTitle != ''">
-					event_title = #{eventTitle}
+					,event_title = #{eventTitle}
 				</if>
 				<if test="eventContent != null and eventContent != ''">
 					,event_content = #{eventContent}
@@ -480,18 +503,23 @@
 
 	
 	<update id="commentComplete" parameterType="Board">
+		/*답변완료 시 원글 상태변경*/
 		UPDATE 
-			tb_board AS b
-		SET
-			b.comment_state='답변완료'
+			tb_board
+		set
+					comment_state = '답변완료'
+
 		WHERE 
-			b.board_menu_code=#{boardMenuCode}
-		and
-			b.board_idx = #{boardIdx};	
+			board_menu_code = #{boardMenuCode}
+		AND
+			board_group_no = #{boardGroupNo}
+		AND 
+			board_order_no = 0;	
 	</update>
 	
-	<insert id="qnaComment"	parameterType="Board">
-		/* 문의사항 답변 작성 */
+	
+		<insert id="qnaComment" parameterType="Board">
+		/*문의사항 답변 작성 */
 		  INSERT INTO tb_board
 			(board_idx
 			,board_menu_code
@@ -502,10 +530,6 @@
 			,board_title
 			,board_content
 			,board_secret
-			,board_add_file
-			,board_add_file_name
-			,board_add_file_change_name
-			,board_add_file_vol
 			,regist_time)
 		VALUES (
 			(SELECT
@@ -521,15 +545,17 @@
 			WHERE
 				b.board_idx = #{boardIdx})
 		, 1	
-		, 0		
+		, 0	
 		, #{boardTitle}
 		, #{boardContent}
-		, '0'
-		, '0'
-		, '0'
-		, '0'
-		, '0'
+		, #{boardSecret}
 		, NOW());
+		<selectKey resultType="String" keyProperty="boardIdx" order="AFTER">
+			SELECT
+				max(b.board_idx)
+			FROM
+				tb_board AS b
+		</selectKey>
 	</insert>
 	
 	<insert id="qnaWrite" parameterType="Board">
@@ -559,7 +585,7 @@
 				tb_board AS b
 			WHERE b.board_menu_code = #{boardMenuCode})
 		, 0	
-		, #{boardReadCount}	
+		, 0	
 		, #{boardTitle}
 		, #{boardContent}
 		, #{boardSecret}
@@ -580,6 +606,7 @@
 			b.board_idx
 			, b.board_menu_code
 			, b.board_secret
+			, b.board_group_no
 			, b.board_title
 			, b.board_content
 			, b.board_add_file

@@ -52,21 +52,26 @@ public class AdminBoardController {
 	/*이벤트 수정*/
 	@GetMapping("/eventModify")
 	public String eventModify(@RequestParam(name = "eventCode", required = false) String eventCode
+								,@RequestParam(name = "eventState", required = false) String eventState
 								,@RequestParam(name = "memberId", required = false) String memberId
 								,@RequestParam(name = "eventTitle", required = false) String eventTitle
 								,@RequestParam(name = "eventContent", required = false) String eventContent
 								,@RequestParam(name = "updateTime", required = false) String updateTime
 								,Model model) {
-		model.addAttribute("eventCode", eventCode);
+		Event event = boardService.eventDetail(eventCode);
+		model.addAttribute("event", event);
+		/*model.addAttribute("eventCode", eventCode);
+		model.addAttribute("eventState", eventState);
 		model.addAttribute("memberId", memberId);
 		model.addAttribute("eventTitle", eventTitle);
 		model.addAttribute("eventContent", eventContent);
-		model.addAttribute("updateTime", updateTime);
+		model.addAttribute("updateTime", updateTime);*/
 		return "/admin/eventModify";
 	}
 	
 	@PostMapping("/eventModify")
 	public String eventModify(@RequestParam(name = "eventCode", required = false) String eventCode
+								,@RequestParam(name = "eventState", required = false) String eventState
 								,@RequestParam(name = "memberId", required = false) String memberId
 								,@RequestParam(name = "eventTitle", required = false) String eventTitle
 								,@RequestParam(name = "eventContent", required = false) String eventContent
@@ -245,34 +250,99 @@ public class AdminBoardController {
 		model.addAttribute("reviewList", reviewList);
 		return "admin/review";
 	}
+	
+	/*Q&A(문의사항)답글 삭제*/
+	@PostMapping("/qnaList")
+	public String qnaList(Board board) {
+		boardService.qnaRemove(board);
+		return "redirect:/admin/qnaList";
+	}
+	
+	
+	/*Q&A(문의사항)답글 수정*/
+	@GetMapping("/qnaCommentModify")
+	public String qnaCommentModify(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
+									,@RequestParam(name = "boardIdx", required = false) String boardIdx
+									,@RequestParam(name = "boardSecret", required = false) String boardSecret
+									,@RequestParam(name = "memberId", required = false) String memberId
+									,@RequestParam(name = "boardTitle", required = false) String boardTitle
+									,@RequestParam(name = "boardContent", required = false) String boardContent							
+									, Model model) {
+		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
+		model.addAttribute("board", board);
+		System.out.println("board 코멘트 수정"+board);
+		return "/admin/qnaCommentModify";
+	}
+	@PostMapping("qnaCommentModify")
+	public String qnaCommentModify(@RequestParam(name = "boardIdx", required = false) String boardIdx
+									,@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
+									,@RequestParam(name = "boardSecret", required = false) String boardSecret
+									,@RequestParam(name = "memberId", required = false) String memberId
+									,@RequestParam(name = "boardTitle", required = false) String boardTitle
+									,@RequestParam(name = "boardContent", required = false) String boardContent
+									,@RequestParam(name = "updateTime", required = false) String updateTime
+									,Board board) {
+		boardService.qnaCommentModify(board);
+		return "redirect:/admin/qnaList";
+	}
+
 	/*Q&A(문의사항)답글 작성*/
 	@GetMapping("/qnaComment")
 	public String qnaComment(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
-							,@RequestParam(name = "boardIdx", required = false) int boardIdx
-							, Model model) {
+							,@RequestParam(name = "boardIdx", required = false) String boardIdx
+							, Model model, HttpSession session) {
+		String sessionId = (String) session.getAttribute("SID");
+		Member member = memberService.getMemberInfoById(sessionId);		
+		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
 		model.addAttribute("title", "답변등록");
 		model.addAttribute("titleName", "답변등록");
+		model.addAttribute("member", member);
 		model.addAttribute("boardMenuCode", boardMenuCode);
 		model.addAttribute("boardIdx", boardIdx);
-		return "admin/qnaComment";
+		model.addAttribute("boardGroupNo", board.getBoardGroupNo());
+		return "/admin/qnaComment";
 	}
 	
 	@PostMapping("/qnaComment")
-	public String qnaComment(Board board, HttpSession session) {
+	public String qnaComment(Board board, HttpSession session
+							,RedirectAttributes reAttr, @RequestParam MultipartFile[] boardImgFile, HttpServletRequest request) {
+		System.out.println("------------------------게시글 등록 처리-----------------------------");
+		String serverName = request.getServerName();
+		String fileRealPath = "";
 		String sessionId = (String) session.getAttribute("SID");
-		boardService.qnaComment(board, sessionId);
+		
+		if("localhost".equals(serverName)) {
+			// server 가 localhost 일때 접근
+			fileRealPath = System.getProperty("user.dir") + "/src/main/resources/static/";
+			System.out.println(System.getProperty("user.dir"));
+			//fileRealPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
+		}else {
+			//배포용 주소
+			fileRealPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
+		}
+		
+		String boardIdx = boardService.qnaComment(board, sessionId, boardImgFile, fileRealPath);
 		boardService.commentComplete(board);
+		reAttr.addAttribute("boardIdx", boardIdx);
+		System.out.println("------------------------게시글 등록 처리 끝-----------------------------");
+		
 		return "redirect:/admin/qnaList";
 	}
+	
 	
 	/*Q&A(문의사항) 상세 조회*/
 	@GetMapping("/qnaDetail")
 	public String qnaDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
-							,@RequestParam(name = "boardIdx", required = false) String boardIdx, Model model) {
+							,@RequestParam(name = "boardIdx", required = false) String boardIdx
+							, Model model) {
 		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
 		int readCount = boardService.readCount(board);
+		String mId = board.getMemberId();
+		Member member = memberService.getMemberInfoById(mId);
 		model.addAttribute("readCount", readCount);
 		model.addAttribute("board", board);
+		model.addAttribute("member", member);
+		System.out.println("board상세조회"+board);
 		return "/admin/qnaDetail";
 	}
 	

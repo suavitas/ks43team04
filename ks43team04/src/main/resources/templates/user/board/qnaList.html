@@ -109,7 +109,10 @@
 													<th:block th:unless="${l.boardAddFile=='1'}">
 													</th:block>
 												</td>
-												<td class="product-price" th:text="${l.memberId}"></td>
+												<td class="product-price">
+													<th:block th:if="${l.memberId=='id001'}" th:text="관리자"></th:block>
+													<th:block th:unless="${l.memberId=='id001'}" th:text="${l.memberId}"></th:block>
+												</td>
 												<td class="product-quantity" th:text="${l.registTime}"></td>
 												<td class="product-total" th:text="${l.boardReadCount}"></td>
 											</tr>
@@ -169,7 +172,10 @@
 													<th:block th:unless="${l.boardAddFile=='1'}">
 													</th:block>
 												</td>
-												<td class="product-price" th:text="${l.memberId}"></td>
+												<td class="product-price">
+													<th:block th:if="${l.memberId=='id001'}" th:text="관리자"></th:block>
+													<th:block th:unless="${l.memberId=='id001'}" th:text="${l.memberId}"></th:block>
+												</td>
 												<td class="product-quantity" th:text="${l.registTime}"></td>
 												<td class="product-total" th:text="${l.boardReadCount}"></td>
 											</tr>
@@ -227,7 +233,10 @@
 													<th:block th:unless="${l.boardAddFile=='1'}">
 													</th:block>
 												</td>
-												<td class="product-price" th:text="${l.memberId}"></td>
+												<td class="product-price">
+													<th:block th:if="${l.memberId=='id001'}" th:text="관리자"></th:block>
+													<th:block th:unless="${l.memberId=='id001'}" th:text="${l.memberId}"></th:block>
+												</td>
 												<td class="product-quantity" th:text="${l.registTime}"></td>
 												<td class="product-total" th:text="${l.boardReadCount}"></td>
 											</tr>
@@ -288,7 +297,10 @@
 													<th:block th:unless="${l.boardAddFile=='1'}">
 													</th:block>
 												</td>
-												<td class="product-price" th:text="${l.memberId}"></td>
+												<td class="product-price">
+													<th:block th:if="${l.memberId=='id001'}" th:text="관리자"></th:block>
+													<th:block th:unless="${l.memberId=='id001'}" th:text="${l.memberId}"></th:block>
+												</td>
 												<td class="product-quantity" th:text="${l.registTime}"></td>
 												<td class="product-total" th:text="${l.boardReadCount}"></td>
 											</tr>
