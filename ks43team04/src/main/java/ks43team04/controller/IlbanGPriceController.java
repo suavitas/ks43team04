@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ks43team04.dto.IlbanGprice;
 import ks43team04.dto.IlbanSkill;
-import ks43team04.mapper.IlbanGPriceMapper;
+import ks43team04.service.IlbanGPriceService;
 import ks43team04.service.IlbanSkillService;
 import ks43team04.service.LaundryService;
 
@@ -23,10 +24,12 @@ public class IlbanGPriceController {
 
 	private final LaundryService laundryService;
 	private final IlbanSkillService ilbanSkillService;
+	private final IlbanGPriceService ilbanGPriceService;
 	
-	public IlbanGPriceController(LaundryService laundryService,IlbanSkillService ilbanSkillService){
+	public IlbanGPriceController(LaundryService laundryService,IlbanSkillService ilbanSkillService,IlbanGPriceService ilbanGPriceService){
 	this.laundryService = laundryService;
 	this.ilbanSkillService = ilbanSkillService;
+	this.ilbanGPriceService = ilbanGPriceService;
 	}
 	
 	@GetMapping("/goodsPrice/goodsPrice")
@@ -54,7 +57,7 @@ public class IlbanGPriceController {
 		return "admin/goodsPrice/goodsPrice";
 	}
 	
-	/* 세탁소별 세탁물 가격하기 위해 정보를 가저오는 컨트롤러 */
+	/* 세탁소별 세탁물 가격 추가하기 위해 정보를 가저오는 컨트롤러 */
 	@PostMapping("/goodsPrice/addGoodsPrice")
 	public String addGoodsPrice(@RequestParam(name = "ilbanSkillCode", required=false) String ilbanSkillCode,
 			@RequestParam(name = "gName", required=false) String gName,
@@ -83,13 +86,15 @@ public class IlbanGPriceController {
 	@GetMapping("/goodsPrice/removeGoodsPrice")
 	public String removeGoodsPrice(@RequestParam(name = "ilbanGPriceCode", required=false) String ilbanGPriceCode,
 								@RequestParam(name = "laundryName", required=false) String laundryName,
+								@RequestParam(name = "skillCate", required=false) String skillCate,
 								@RequestParam(name = "gName", required=false) String gName,
 								@RequestParam(name = "gPrice", required=false) String gPrice,
 								Model model) {
 			
-		System.out.println("_____세탁물 가격을 삭제하기 위해서 정보를 받아왔습니다____"+ilbanGPriceCode);
+		System.out.println("_____세탁물 가격을 삭제하기 위해서 정보를 받아왔습니다____");
 		
 		model.addAttribute("ilbanGPriceCode", ilbanGPriceCode);
+		model.addAttribute("skillCate", skillCate);
 		model.addAttribute("laundryName", laundryName);
 		model.addAttribute("gName", gName);
 		model.addAttribute("gPrice", gPrice);
@@ -104,6 +109,42 @@ public class IlbanGPriceController {
 		System.out.println("________일반세탁소 가격 삭제를 실행합니다._________"+ilbanGPriceCode);
 		return "redirect:/admin/goodsPrice/goodsPrice";
 	}	
+	
+	/* 세탁소별 세탁물 가격 수정페이지에 정보 불러오기*/
+	@GetMapping("/goodsPrice/changeGoodsPrice")
+	public String changeGoodsPrice(@RequestParam(name = "ilbanGPriceCode", required=false) String ilbanGPriceCode,
+								@RequestParam(name = "skillCate", required=false) String skillCate,
+								@RequestParam(name = "gName", required=false) String gName,
+								@RequestParam(name = "gPrice", required=false) String gPrice,
+								@RequestParam(name = "gPriceUseState", required=false) String gPriceUseState,
+								Model model) {
+			
+		System.out.println("_____세탁물 가격을 수정하기 위해서 정보를 받아왔습니다____");
+		System.out.println("________ilbanGPriceCode______"+ilbanGPriceCode);
+		System.out.println("________skillCate______"+skillCate);
+		System.out.println("________gName______"+gName);
+		System.out.println("________gPrice______"+gPrice);
+		System.out.println("________gPriceUseState______"+gPriceUseState);
+		
+		model.addAttribute("ilbanGPriceCode",ilbanGPriceCode);
+		model.addAttribute("skillCate", skillCate);
+		model.addAttribute("gName", gName);
+		model.addAttribute("gPrice", gPrice);
+		model.addAttribute("gPriceUseState", gPriceUseState);
+	
+		return "admin/goodsPrice/changeGoodsPrice";
+	}
+	
+	/* 세탁소별 세탁물 가격 수정쿼리 실행*/
+	@PostMapping("/goodsPrice/changeGoodsPrice")
+	public String changeGoodsPrice(IlbanGprice ilbanGPriceCode) {
+		
+		ilbanGPriceService.modifyGoodsPrice(ilbanGPriceCode);
+		System.out.println("________일반세탁소 가격 수정를 실행합니다._________"+ilbanGPriceCode);
+		return "redirect:/admin/goodsPrice/goodsPrice";
+	}	
+	
+	
 	
 
 }

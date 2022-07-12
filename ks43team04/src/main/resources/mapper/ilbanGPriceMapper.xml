@@ -45,8 +45,37 @@
 	       		ilban_G_price_code = #{ilbanGPriceCode}; 
      </delete>
   
+  <update id="modifyGoodsPrice"  parameterType="IlbanGprice">
+		/* 세탁소별 세탁 가격 수정 */
+		UPDATE
+		tb_ilban_g_price
+		<trim prefix="SET" prefixOverrides=",">
+			<if test="ilbanGPriceCode != null and ilbanGPriceCode != ''">
+				ilban_G_price_code = #{ilbanGPriceCode}
+			</if>
+			<if test="laundryCode != null and laundryCode != ''">
+				,laundry_code = 'laundry_code_006'
+			</if>
+			<if test="ilbanSkillCode != null and ilbanSkillCode != ''">
+				,ilban_skill_code = #{ilbanSkillCode}
+			</if>
+			<if test="gName != null and gName != ''">
+				,g_name = #{gName}
+			</if>
+			<if test="gPrice != null and gPrice != ''">
+				,g_price = #{gPrice}
+			</if>
+			<if test="registTime != null and registTime != ''">
+				,regist_time = Now()
+			</if>
+			<if test="gPriceUseState != null and gPriceUseState != ''">
+				,g_price_use_state = #{gPriceUseState}
+			</if>
+		</trim>
+		WHERE
+		ilban_G_price_code = #{ilbanGPriceCode};
    
-
+</update>
   
 	
  	
