@@ -25,13 +25,6 @@ public class AdminController {
 	public String retrun() {
 		return "admin/retrun";
 	}
-
-	// 전 매장 장비 현황
-	@GetMapping("/machine")
-	public String machine() {
-		return "admin/machine";
-	}
-
 	
 	// 세탁소별 월별 환불 퍼센트
 
