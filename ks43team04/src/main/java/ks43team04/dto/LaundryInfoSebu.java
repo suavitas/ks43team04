@@ -23,6 +23,8 @@ public class LaundryInfoSebu {
 	private String reveiwNum;
 	private String countingStar;
 	private List<IlbanGprice> ilbanGpriceList;
+	private List<Review> reviewList;
+	private List<Member> memberList;
 	
 	
 
@@ -149,13 +151,26 @@ public class LaundryInfoSebu {
 				+ laundryImg + ", skillLicence=" + skillLicence + ", businessNumber=" + businessNumber
 				+ ", adminLevelCode=" + adminLevelCode + ", registTime=" + registTime + ", reviewCode=" + reviewCode
 				+ ", reviewContent=" + reviewContent + ", reveiwNum=" + reveiwNum + ", countingStar=" + countingStar
-				+ ", ilbanGpriceList=" + ilbanGpriceList + "]";
+				+ ", ilbanGpriceList=" + ilbanGpriceList + ", reviewList=" + reviewList + ", memberList=" + memberList
+				+ "]";
 	}
 	public String getCountingStar() {
 		return countingStar;
 	}
 	public void setCountingStar(String countingStar) {
 		this.countingStar = countingStar;
+	}
+	public List<Review> getReviewList() {
+		return reviewList;
+	}
+	public void setReviewList(List<Review> reviewList) {
+		this.reviewList = reviewList;
+	}
+	public List<Member> getMemberList() {
+		return memberList;
+	}
+	public void setMemberList(List<Member> memberList) {
+		this.memberList = memberList;
 	}
 	
 }
