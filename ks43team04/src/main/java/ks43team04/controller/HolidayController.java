@@ -140,7 +140,7 @@ public class HolidayController {
 		List<LaundryList> addLaundryHoliday = holidayService.addHoliday();
 		model.addAttribute("addLaundryHoliday",addLaundryHoliday);
 		System.out.println("______세탁소별 휴일을 추가하기 위해 정보를 불러왔습니다._________"+addLaundryHoliday);
-		return "admin/addHoliday";
+		return "/admin/addHoliday";
 	}
 	
 	@PostMapping("/allModifyHoliday")
@@ -154,7 +154,7 @@ public class HolidayController {
 	}
 	
 	
-	/* 공휴일 수정*/
+	/* 전체 공휴일 수정*/
 	@GetMapping("/allModifyHoliday")
 	public String allModifyHoliday(@RequestParam(name="yearlyHolidayCode") String yearlyHolidayCode,
 									@RequestParam(name="yearlyHolidayDate") String yearlyHolidayDate,
@@ -167,11 +167,24 @@ public class HolidayController {
 		model.addAttribute("yearlyHolidayName", yearlyHolidayName);
 		model.addAttribute("holidayCodeUse", holidayCodeUse);
 		
-		return "admin/allModifyHoliday";
+		return "/admin/allModifyHoliday";
 	}
 
+	/* 전체 공휴일 추가*/
+	@GetMapping("/addYearlyHoliday")
+	public String addYearlyHoliday() {
+		
+		return "/admin/addYearlyHoliday";
+	}
+	
+	@PostMapping("/addYearlyHoliday")
+	public String addYearlyHoliday(YearlyHoliday yearlyHoliday) {
+		holidayService.addYearlyHoliday(yearlyHoliday);
+		System.out.println(yearlyHoliday+"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+		return "redirect:/admin/holiday";
+	}
 
-	/* 공휴일 목록 */
+	/* 전체 공휴일 목록 */
 	@GetMapping("/holiday")
 	public String holiday(Model model) {
 		List<YearlyHoliday> YearlyHolidayList = holidayService.yearlyHolidayList();
