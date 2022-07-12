@@ -96,7 +96,11 @@
 						<th:block th:unless="${l.boardAddFile=='1'}">
 						</th:block>
 					</td>
-					<td th:text="${l.memberId}"></td>
+					<td>
+						<th:block th:if="${l.memberId=='id001'}" th:text="관리자">
+						</th:block>
+						<th:block th:unless="${l.memberId=='id001'}" th:text="${l.memberId}"></th:block>
+					</td>
 					<td th:text="${l.registTime}"></td>
 					<td th:text="${l.boardReadCount}"></td>
 					
@@ -156,7 +160,11 @@
 						<th:block th:unless="${l.boardAddFile=='1'}">
 						</th:block>
 					</td>
-					<td th:text="${l.memberId}"></td>
+					<td>
+						<th:block th:if="${l.memberId=='id001'}" th:text="관리자">
+						</th:block>
+						<th:block th:unless="${l.memberId=='id001'}" th:text="${l.memberId}"></th:block>
+					</td>
 					<td th:text="${l.registTime}"></td>
 					<td th:text="${l.boardReadCount}"></td>
 				</tr>
@@ -215,7 +223,11 @@
 						<th:block th:unless="${l.boardAddFile=='1'}">
 						</th:block>
 					</td>
-					<td th:text="${l.memberId}"></td>
+					<td>
+						<th:block th:if="${l.memberId=='id001'}" th:text="관리자">
+						</th:block>
+						<th:block th:unless="${l.memberId=='id001'}" th:text="${l.memberId}"></th:block>
+					</td>
 					<td th:text="${l.registTime}"></td>
 					<td th:text="${l.boardReadCount}"></td>
 				</tr>
@@ -274,7 +286,11 @@
 						<th:block th:unless="${l.boardAddFile=='1'}">
 						</th:block>
 					</td>
-					<td th:text="${l.memberId}"></td>
+					<td>
+						<th:block th:if="${l.memberId=='id001'}" th:text="관리자">
+						</th:block>
+						<th:block th:unless="${l.memberId=='id001'}" th:text="${l.memberId}"></th:block>
+					</td>
 					<td th:text="${l.registTime}"></td>
 					<td th:text="${l.boardReadCount}"></td>
 				</tr>

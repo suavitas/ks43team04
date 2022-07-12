@@ -12,8 +12,14 @@
 		
 		/* 유효성검사 */
 		function validCheck(){
+			var eventState = document.getElementById("eventState");
 			var title = document.getElementById("title");
 			var content = document.getElementById("content");
+			if(eventState.value == ""){
+				alert("진행상태를 선택하세요.")
+				eventState.focus();
+				return false;
+			};
 			if(title.value == ""){
 				alert("제목을 입력하세요.")
 				title.focus();
@@ -152,23 +158,33 @@
 		<!-- 이벤트 등록 폼 시작 -->
 		<div class="x_content" style="margin-top: 80px;">
 			<form class="form-horizontal form-label-left" th:action="@{/admin/eventModify}" method="POST" enctype="multipart/form-data" name="multipart" style="width: 80%; margin: 20px auto;">
+				<div class="form-group row" style="margin-bottom: 0;">
+					<label class="control-label col-md-1 col-sm-1">상태</label>
+						<div class="col-md-4 col-sm-4">
+							<select name="eventState" id="eventState" th:value="${event.eventState}" required="required" style="padding: 5px 15px 5px 5px;">
+								<option value="">진행상태</option>
+								<option th:selected="${event.eventState} == '진행중'" th:value="진행중">진행중</option>
+								<option th:selected="${event.eventState} == '종료'" th:value="종료">종료</option>
+							</select>
+						</div>
+				</div>
 				<div class="form-group row">
 					<label class="control-label col-md-1 col-sm-1">작성자</label>
 						<div class="col-md-4 col-sm-4">
-							<input type="text" class="form-control" name="memeberId" id="name" readonly="readonly" th:value="${memberId}">
-							<input type="hidden" class="form-control" readonly="readonly" name="eventCode" id="eventCode" th:value="${eventCode}">
+							<input type="text" class="form-control" name="memeberId" id="name" readonly="readonly" th:value="${event.memberId}">
+							<input type="hidden" class="form-control" readonly="readonly" name="eventCode" id="eventCode" th:value="${event.eventCode}">
 						</div>
 				</div>
 				<div class="form-group row">
 					<label class="control-label col-md-1 col-sm-1">제목</label>
 						<div class="col-md-8 col-sm-8">
-							<input type="text" class="form-control" name="eventTitle" id="title" th:value="${eventTitle}" required="required">
+							<input type="text" class="form-control" name="eventTitle" id="title" th:value="${event.eventTitle}" required="required">
 						</div>
 				</div>
 				<div class="form-group row">
 					<label class="control-label col-md-1 col-sm-1">내용</label>
 						<div class="col-md-8 col-sm-8">
-							<p><textarea class="form-control" name="eventContent" id="content" th:text="${eventContent}" style="resize: none; height: 350px;" required="required"></textarea></p>
+							<p><textarea class="form-control" name="eventContent" id="content" th:text="${event.eventContent}" style="resize: none; height: 350px;" required="required"></textarea></p>
 						</div>
 				</div>
 
@@ -188,7 +204,7 @@
 						</div>
 				</div>				
 				
-				<input type="hidden" name = "updateTime" th:value="${updateTime}">
+				<input type="hidden" name = "updateTime" th:value="${event.updateTime}">
 				<!-- 버튼 -->
 				<div id="btnDiv" class="form-group">
 					<div class="col-md-9 col-sm-9 offset-md-2" style="margin-left: 0; text-align: center; padding-top: 50px;">

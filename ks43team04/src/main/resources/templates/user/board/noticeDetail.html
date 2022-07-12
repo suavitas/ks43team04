@@ -43,13 +43,13 @@
 		<div class="info">
 			<div class="xleft" style="text-align: right; padding: 10px 0 10px 0; font-size: 13px;">
 					<span class="addFile">
-	                    <a href="#" title="#">
-	                       <i class="bi bi-download" title="첨부파일"></i>
 	                       <th:block th:if="${not #lists.isEmpty(board.boardAttach)}" th:each="b : ${board.boardAttach}">
-	                        	    <th:block th:text="${b.saveFile}"></th:block>         
-	                      </a>
+		                      <a href="#"> 
+		                       <i class="bi bi-download" title="첨부파일"></i>
+	                        	    <th:block th:text="${b.saveFile}"></th:block>
+	                        	  </a>         
+			                    <span class="split">|</span>                 
                     </span> 
-                    <span class="split">|</span> 
                     	<th:block th:if="${board.memberId.equals('id001')}">
 									<span>관리자</span>
 						</th:block>	                
