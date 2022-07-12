@@ -37,5 +37,8 @@ public interface HolidayMapper {
 	
 	/* 전체 공휴일 수정 */
 	public int allModifyHolyday(String yearlyHolidayCode,String holidayCodeUse);
+	
+	/* 전체 공휴일 추가*/
+	public int addYearlyHoliday(YearlyHoliday yearlyHoliday);
 
 }

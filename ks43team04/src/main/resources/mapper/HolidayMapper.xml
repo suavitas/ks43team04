@@ -22,13 +22,36 @@
 		<result column="regist_time" 				property="registTime"/>
 	</resultMap>
 	
+	
 		<update id="allModifyHolyday" parameterType="String">
+		/* 전체 공휴일 수정*/
 			UPDATE tb_yearly_holiday
 			SET
 				holiday_code_use= #{holidayCodeUse},
 				regist_time=NOW()
 			WHERE yearly_holiday_code= #{yearlyHolidayCode}		
 		</update>
+	
+	
+	<insert id="addYearlyHoliday" parameterType="YearlyHoliday">
+	INSERT INTO tb_yearly_holiday
+			(yearly_holiday_code 
+			,yearly_holiday_date 
+			,yearly_holiday_name 
+			,holiday_code_use
+			,admin_level_code
+			,regist_time)
+		
+		VALUES(
+			(SELECT CONCAT('yearly_holiday_code','_',max(CAST(substring(yearly_holiday_code,21)+1 AS DECIMAL))) AS yearly_holiday_code FROM tb_yearly_holiday AS aa)
+			,#{yearlyHolidayDate}
+			,#{yearlyHolidayName}
+			,'O'
+			,'admin_level_code_002' 
+			,NOW());
+	</insert>
+	
+	
 	
 		<update id="modifyHoliday"  parameterType="HolidayList">
 		/* 세탁소별 휴일 수정 */
@@ -102,7 +125,9 @@
 			,h.yearly_holiday_name 
 			,h.holiday_code_use
 		FROM
-			tb_yearly_holiday AS h;
+			tb_yearly_holiday AS h
+		where
+			h.holiday_code_use = 'O';
 	</select>
 	
 </mapper>

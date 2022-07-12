@@ -8,7 +8,8 @@
 	<!-- 사용자정의 contents -->
 	<th:block layout:fragment="customContents">
 	
-	<h4>2022년 전체  공휴일 조회</h4>
+	<h4>2022년 전체  공휴일</h4>
+	<a th:href=@{/admin/addYearlyHoliday}><button type="button">추가</button></a>
 	
 	<table id= "holidayList" class="table table-striped table-bordered" style="width: 100%;">
 		<thead>
