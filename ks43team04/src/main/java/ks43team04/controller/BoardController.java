@@ -163,6 +163,8 @@ public class BoardController {
 	public String eventDetail(@RequestParam(name = "eventCode", required = false) String eventCode,
 								Model model) {
 		Event event = boardService.eventDetail(eventCode);
+		int readCount = boardService.eventreadCount(event);
+		model.addAttribute("readCount", readCount);
 		model.addAttribute("event", event);
 		return "/user/board/eventDetail";
 	}

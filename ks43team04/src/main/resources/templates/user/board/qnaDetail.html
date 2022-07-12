@@ -95,7 +95,12 @@
 	<!--상세 글 보기 -->
 		<div class="subject" style="border-bottom: 1px solid #d8d8d8">
 			<div class="row">
-			<h3 style="padding: 11px 20px 12px 20px; margin: 0; font-size: 20px; font-weight: bold;" th:text="[+${board.commentState}+]"></h3>	
+			<th:block th:if="${board.commentState != null}">
+				<h3 style="padding: 11px 20px 12px 20px; margin: 0; font-size: 20px; font-weight: bold;" th:text="[+${board.commentState}+]"></h3>	
+			</th:block>
+			<th:block th:unless="${board.commentState != null}">
+				<h3 style="padding: 11px 20px 12px 20px; margin: 0; font-size: 20px; font-weight: bold;" th:text="[답변]"></h3>
+			</th:block>
 				<th:block th:if="${board.boardSecret=='Y'}">
 					<i class="bi bi-key-fill" style="padding-right: 10px; margin: 18px 10px 10px 10px;"></i>
 				</th:block>

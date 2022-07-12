@@ -2,7 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/userDefault}">
-	  
+
+	<th:block layout:fragment="customScript">
+		<script type="text/javascript" th:src="@{/user/assets/js/jquery-1.11.3.min.js}"></script>
+	</th:block>	
+	
+	<!-- 새로고침 후 탭 유지 -->
+	<th:block layout:fragment="customJsScript"> 
+		<script type="text/javascript">
+		$(document).ready(function() {
+		    if (location.hash) {
+		        $("a[href='" + location.hash + "']").tab("show");
+		    }
+		    $(document.body).on("click", "a[data-toggle='tab']", function(event) {
+		        location.hash = this.getAttribute("href");
+		    });
+		});
+		$(window).on("popstate", function() {
+		    var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
+		    $("a[href='" + anchor + "']").tab("show");
+		});
+		</script>
+	</th:block>		  
 	  
 <!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">

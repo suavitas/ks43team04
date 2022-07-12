@@ -17,5 +17,8 @@ public interface FileMapper {
 	
 	// 이벤트, 파일 릴레이션 테이블 삽입
 	public void uploadRelationFileWithEvent(List<Map<String, String>> relationFileList);
+	
+	// AS, 파일 릴레이션 테이블 삽입
+	public void uploadRelationFileWithAs(List<Map<String, String>> relationFileList);
 
 }

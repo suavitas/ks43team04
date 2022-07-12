@@ -1,6 +1,7 @@
 package ks43team04.dto;
 
 import java.util.List;
+import java.util.Map;
 
 public class As {
 	private String asCode;
@@ -17,6 +18,9 @@ public class As {
 	private String registTime;
 	private String updateTime;
 	private String visitTime;
+	
+	private List<Map<String, String>> 		relFileWithAs;
+	private List<BoardAttach> 				boardAttach;
 	
 	private List<LaundryList> LaundryList;
 
@@ -140,13 +144,61 @@ public class As {
 		LaundryList = laundryList;
 	}
 
+	public List<Map<String, String>> getRelFileWithAs() {
+		return relFileWithAs;
+	}
+
+	public void setRelFileWithAs(List<Map<String, String>> relFileWithAs) {
+		this.relFileWithAs = relFileWithAs;
+	}
+
+	public List<BoardAttach> getBoardAttach() {
+		return boardAttach;
+	}
+
+	public void setBoardAttach(List<BoardAttach> boardAttach) {
+		this.boardAttach = boardAttach;
+	}
+
 	@Override
 	public String toString() {
-		return "As [asCode=" + asCode + ", laundryCode=" + laundryCode + ", memberId=" + memberId + ", asNumber="
-				+ asNumber + ", asState=" + asState + ", asTitle=" + asTitle + ", asContent=" + asContent
-				+ ", asAddFile=" + asAddFile + ", asAddFileName=" + asAddFileName + ", asAddFileChangeName="
-				+ asAddFileChangeName + ", asAddFileVol=" + asAddFileVol + ", registTime=" + registTime
-				+ ", updateTime=" + updateTime + ", visitTime=" + visitTime + ", LaundryList=" + LaundryList + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("As [asCode=");
+		builder.append(asCode);
+		builder.append(", laundryCode=");
+		builder.append(laundryCode);
+		builder.append(", memberId=");
+		builder.append(memberId);
+		builder.append(", asNumber=");
+		builder.append(asNumber);
+		builder.append(", asState=");
+		builder.append(asState);
+		builder.append(", asTitle=");
+		builder.append(asTitle);
+		builder.append(", asContent=");
+		builder.append(asContent);
+		builder.append(", asAddFile=");
+		builder.append(asAddFile);
+		builder.append(", asAddFileName=");
+		builder.append(asAddFileName);
+		builder.append(", asAddFileChangeName=");
+		builder.append(asAddFileChangeName);
+		builder.append(", asAddFileVol=");
+		builder.append(asAddFileVol);
+		builder.append(", registTime=");
+		builder.append(registTime);
+		builder.append(", updateTime=");
+		builder.append(updateTime);
+		builder.append(", visitTime=");
+		builder.append(visitTime);
+		builder.append(", relFileWithAs=");
+		builder.append(relFileWithAs);
+		builder.append(", boardAttach=");
+		builder.append(boardAttach);
+		builder.append(", LaundryList=");
+		builder.append(LaundryList);
+		builder.append("]");
+		return builder.toString();
 	}
 
 	

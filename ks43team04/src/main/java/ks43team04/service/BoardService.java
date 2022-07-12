@@ -71,6 +71,12 @@ public class BoardService {
 		return result;
 	}
 	
+	/*게시판(이벤트) 조회수*/
+	public int eventreadCount(Event event) {
+		int result = boardMapper.eventreadCount(event);
+		return result;
+	}
+	
 	/*게시판 조회수*/
 	public int readCount(Board board) {
 		int result = boardMapper.readCount(board);
@@ -126,14 +132,59 @@ public class BoardService {
 	}
 	
 	/*AS 신고*/
-	public int asForm(As as, String sessionId) {
-
-		as.setMemberId(sessionId);
-
-		int result = asMapper.asForm(as);
-		return result;
-	}
+	public String asForm(As as, String sessionId, MultipartFile[] boardImgFile, String fileRealPath) {
+		System.out.println("------------------------as 등록 서비스-----------------------------");
+		/*  1. 파일 업로드
+		 	2. 파일 업로드 성공시 파일 DB 인서트
+		 	3. 게시글 인서트
+ 			4. 결과값 리턴	*/
 		
+		as.setMemberId(sessionId);
+		
+		/*여기부터*/
+		boolean fileCheck = true;
+		
+		for (MultipartFile multipartFile : boardImgFile){
+			if(!multipartFile.isEmpty()) {
+				fileCheck = false;
+			}
+		}
+		
+		if (!fileCheck) {
+			
+		
+		//파일 업로드 위한 객체 생성 
+		FileUtils fu = new FileUtils(boardImgFile, as.getMemberId(), fileRealPath);
+		List<Map<String, String>> dtoFileList = fu.parseFileInfo();
+				
+		// t_file 테이블에 삽입
+		System.out.println(dtoFileList + "<<<dtoFileList입니다.");
+		fileMapper.uploadFile(dtoFileList);
+				
+		asMapper.asForm(as);
+		String asCode = as.getAsCode();
+		
+		// 릴레이션 테이블에 삽입
+		 List<Map<String, String>> relationFileList = new ArrayList<>();
+		 for(Map<String, String> m : dtoFileList) {
+		 m.put("asCode", asCode);
+		 relationFileList.add(m);
+		 		}
+		 System.out.println(relationFileList + "<<<relationFileList(as)입니다.");
+	 		fileMapper.uploadRelationFileWithAs(relationFileList);
+	     	
+			System.out.println("-----------------------as 접수 서비스 끝------------------------------");
+			return asCode;
+		}else {
+			
+			int result = asMapper.asForm(as);
+			return Integer.toString(result);
+		}
+	}	
+	
+	
+	
+	
 	/*AS 상세 조회*/
 	public As getAsDetail(String asCode) {
 		As as = asMapper.getAsDetail(asCode);

@@ -131,7 +131,8 @@ public class AdminBoardController {
 	
 	/*고장 신고 등록*/
 	@GetMapping("/asForm")
-	public String asForm(Model model, HttpSession session) {
+	public String asForm(@RequestParam(name = "asCode", required = false) String asCode
+							,Model model, HttpSession session) {
 		String sessionId = (String) session.getAttribute("SID");
 		Member member = memberService.getMemberInfoById(sessionId);
 		List<LaundryList> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
@@ -143,12 +144,31 @@ public class AdminBoardController {
 	}
 	
 	@PostMapping("/asForm")
-	public String asForm(As as, HttpSession session) {
-		String sessionId = (String) session.getAttribute("SID");
-		boardService.asForm(as, sessionId);
-		System.out.println("as입니다"+as);
+	public String asForm(As as, HttpSession session
+							,RedirectAttributes reAttr, @RequestParam MultipartFile[] boardImgFile, HttpServletRequest request) {
+		System.out.println("------------------------AS 등록 처리-----------------------------");
+		
+		String serverName = request.getServerName();
+		String fileRealPath = "";
+		String sessionId = (String)session.getAttribute("SID");
+		
+		if("localhost".equals(serverName)) {
+			// server 가 localhost 일때 접근
+			fileRealPath = System.getProperty("user.dir") + "/src/main/resources/static/";
+			System.out.println(System.getProperty("user.dir"));
+			//fileRealPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
+		}else {
+			//배포용 주소
+			fileRealPath = request.getSession().getServletContext().getRealPath("/WEB-INF/classes/static/");
+		}
+		
+		String asCode = boardService.asForm(as, sessionId, boardImgFile, fileRealPath);
+		reAttr.addAttribute("asCode", asCode);
+		System.out.println("------------------------AS 등록 처리 끝-----------------------------");
+		
 		return "redirect:/admin/asListById";
 	}
+		
 	
 	/*나의 고장 신고 내역 확인*/
 	@GetMapping("/asListById")
@@ -164,6 +184,7 @@ public class AdminBoardController {
 		model.addAttribute("sessionName", sessionName);
 		model.addAttribute("getMemberLaundryList", getMemberLaundryList);
 		model.addAttribute("asListById", asListById);
+		//model.addAttribute("member", member);
 		System.out.println(asListById);
 		return "admin/asListById";
 	}
@@ -300,6 +321,7 @@ public class AdminBoardController {
 		model.addAttribute("boardMenuCode", boardMenuCode);
 		model.addAttribute("boardIdx", boardIdx);
 		model.addAttribute("boardGroupNo", board.getBoardGroupNo());
+		model.addAttribute("boardSecret", board.getBoardSecret());
 		return "/admin/qnaComment";
 	}
 	
@@ -405,8 +427,10 @@ public class AdminBoardController {
 		public String eventDetail(@RequestParam(name = "eventCode", required = false) String eventCode
 								, Model model) {
 		Event event = boardService.eventDetail(eventCode);
+		int readCount = boardService.eventreadCount(event);
 		String mId = event.getMemberId();
 		Member member = memberService.getMemberInfoById(mId);
+		model.addAttribute("readCount", readCount);
 		model.addAttribute("event", event);
 		model.addAttribute("member", member);
 		System.out.println("event MODEL"+event);

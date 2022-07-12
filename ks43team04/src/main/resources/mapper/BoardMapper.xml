@@ -149,6 +149,20 @@
 
 	</update>
 	
+	<update id="eventreadCount" parameterType="Event">
+		/* (이벤트)조회수 올리기 */
+		update 
+			tb_event AS e
+		<trim prefix="SET" prefixOverrides=",">
+		<if test="eventReadCount != null and eventReadCount != ''">
+			e.event_read_count = e.event_read_count + 1
+		</if>
+		</trim>	
+		WHERE 
+			e.event_code = #{eventCode};
+	
+	</update>
+	
 	<update id="readCount" parameterType="Board">
 		/* 조회수 올리기 */
 		update 
@@ -439,7 +453,8 @@
 			,(select
 				IF(te.file_idx is null, false, true)) AS event_add_file
 			,e.m_id
-			,e.regist_time
+			,(SELECT 
+				IFNULL(e.update_time, e.regist_time)) AS regist_time
 			,e.event_read_count
 		FROM
 			tb_event AS e
@@ -507,7 +522,7 @@
 		UPDATE 
 			tb_board
 		set
-					comment_state = '답변완료'
+			comment_state = '답변완료'
 
 		WHERE 
 			board_menu_code = #{boardMenuCode}
@@ -612,7 +627,8 @@
 			, b.board_add_file
 			, b.board_add_file_name
 			, b.m_id
-			, b.regist_time
+			, (SELECT 
+				IFNULL(b.update_time, b.regist_time)) AS regist_time
 			, b.board_read_count
 			, b.comment_state
 			, sub.file_idx
