@@ -1,6 +1,7 @@
 package ks43team04.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -40,5 +41,11 @@ public interface HolidayMapper {
 	
 	/* 전체 공휴일 추가*/
 	public int addYearlyHoliday(YearlyHoliday yearlyHoliday);
+	
+		/* 세탁소 매장별 휴일 페이지 튜플수 */
+	public int LaundryHolidayLookUpCount();
+	
+	/* 세탁소 매장별 휴일 페이징 처리 */
+	public List<Map<String, Object>> eachLaundryHoliday(Map<String, Object> paramMap);
 
 }

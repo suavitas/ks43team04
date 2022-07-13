@@ -32,11 +32,6 @@ public class LaundryService {
 		List<Laundry> getLaundryGoodsNameAndPrice = laundryMapper.laundryGoodsNameAndPrice(goodsName, laundryName);
 		return getLaundryGoodsNameAndPrice;
 	}
-	
-	public List<LaundryList> LaundryList(String searchKey, String searchValue) {
-		List<LaundryList> getLaundryList = laundryMapper.LaundryList(searchKey, searchValue);
-		return getLaundryList;
-	}
 
 	public List<MuinMachienSpec> machineSpecList() {
 

@@ -14,8 +14,9 @@
 
 		<div class="x_content">
 			<div th:include="search/laundrySearch :: searchLaundryFragment"></div>
-			<br /><a th:href="@{/admin/addHoliday}"><input type="button" class="btn btn-info" value="세탁소 휴일 추가" ></a><br />
 			<br />
+			<a th:href="@{/admin/addHoliday}"><input type="button"
+				class="btn btn-info" value="세탁소 휴일 추가"></a><br /> <br />
 			<div style="width: 100%;">
 				<table class="table table-striped jambo_table bulk_action">
 					<thead>
@@ -29,45 +30,58 @@
 						</tr>
 					</thead>
 					<tbody>
-						<th:block th:if="${not #lists.isEmpty(getLaundryList)}"
-							th:each="l : ${getLaundryList}">
-							<tr th:if="${not #lists.isEmpty(l.holidayList)}" th:each="sl, status : ${l.holidayList}">
-								<td th:text="${l.laundryName}"></td>
-								<td th:text="${sl.yearlyHolidayName}"></td>
-								<td th:text="${sl.yearlyHolidayDate}"></td>
-								<td th:text="${sl.holidayCodeUse}"></td>
-								<td th:text="${sl.holidayCode}" hidden="true"></td>								
+						<th:block th:if="${not #lists.isEmpty(eachLaundryHoliday)}"
+							th:each="l : ${eachLaundryHoliday}">
+							<tr>
+								<td th:text="${l.get('laundryName')}"></td>
+								<td th:text="${l.get('yearlyHolidayName')}"></td>
+								<td th:text="${l.get('yearlyHolidayDate')}"></td>
+								<td th:text="${l.get('holidayCodeUse')}"></td>
+								<td th:text="${l.get('holidayCode')}" hidden="true"></td>
 								<td><a
-									th:href="@{/admin/changeHoliday(laundryName=${l.laundryName}, 
-											yearlyHolidayName=${sl.yearlyHolidayName},yearlyHolidayDate=${sl.yearlyHolidayDate},
-											holidayCodeUse=${sl.holidayCodeUse},holidayCode=${sl.holidayCode},laundryCode=${sl.laundryCode})}"><button
+									th:href="@{/admin/changeHoliday(laundryName=${l.get('laundryName')}, 
+											yearlyHolidayName=${l.get('yearlyHolidayName')},yearlyHolidayDate=${l.get('yearlyHolidayDate')},
+											holidayCodeUse=${l.get('holidayCodeUse')},holidayCode=${l.get('holidayCode')},laundryCode=${l.get('laundryCode')})}"><button
 											type="button" onclick="changeCheck()"
 											class="btn btn-success btn-sm" data-toggle="modal"
 											data-target="#deleteModal">수정</button> </a></td>
 								<td><a
-									th:href="@{/admin/removeHoliday(laundryName=${l.laundryName}, 
-											yearlyHolidayName=${sl.yearlyHolidayName},yearlyHolidayDate=${sl.yearlyHolidayDate},
-											holidayCodeUse=${sl.holidayCodeUse},holidayCode=${sl.holidayCode},laundryCode=${sl.laundryCode})}"><button
+									th:href="@{/admin/removeHoliday(laundryName=${l.get('laundryName')}, 
+											yearlyHolidayName=${l.get('yearlyHolidayName')},yearlyHolidayDate=${l.get('yearlyHolidayDate')},
+											holidayCodeUse=${l.get('holidayCodeUse')},holidayCode=${l.get('holidayCode')},laundryCode=${l.get('laundryCode')})}"><button
 											type="button" onclick="removeCheck()"
 											class="btn btn-danger btn-sm" data-toggle="modal"
 											data-target="#deleteModal">삭제</button> </a></td>
-							<tr th:unless="${not #lists.isEmpty(l.holidayList)}">
-								<td colspan="8">등록된 휴일이 없습니다.</td>
-							</tr>
 						</th:block>
-						<tr th:unless="${not #lists.isEmpty(getLaundryList)}">
+						<tr th:unless="${not #lists.isEmpty(eachLaundryHoliday)}">
 							<td colspan="8">조회된 내용이 없습니다.</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
+			<nav id="GPNum">
+				<ul class="pagination justify-content-center">
+					<li class="page-item"><a class="page-link"
+						th:href="@{/admin/lundryHoliday}" tabindex="-1">처음</a></li>
+					<th:block
+						th:each="num : ${#numbers.sequence(startPageNum, endPageNum)}">
+						<li class="page-item"></li>
+						<li><a class="page-link" th:unless="${currentPage eq num}"
+							th:href="@{/admin/lundryHoliday(currentPage=${num})}"
+							th:text="${(num < 5)? '0'+ num: num}"></a></li>
+					</th:block>
+					<li class="page-item">
+					<li class="page-item"><a class="page-link"
+						th:href="@{/admin/lundryHoliday(currentPage=${lastPage})}">마지막</a></li>
+				</ul>
+			</nav>
 		</div>
 	</div>
 	<script type="text/javascript">
 		function changeCheck() {
 
 			if (confirm("수정하시겠습니까??") == true) {
-							
+
 			} else {
 				return false;
 
@@ -76,7 +90,7 @@
 		function removeCheck() {
 
 			if (confirm("삭제하시겠습니까??") == true) {
-							
+
 			} else {
 				return false;
 
