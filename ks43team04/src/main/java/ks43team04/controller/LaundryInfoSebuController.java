@@ -111,7 +111,7 @@ public class LaundryInfoSebuController {
 	      model.addAttribute("ilbanGoodsPriceList",ilbanGoodsPriceList);
 	      
 	      
-	      System.out.println(ilbanSkillList+"ddd");
+	      System.out.println(ilbanSkillList+"일반스킬리스트");
 	      System.out.println(laundryInfo);
       return "user/laundryInfo";
    }

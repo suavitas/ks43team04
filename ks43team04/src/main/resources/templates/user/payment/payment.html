@@ -1,94 +1,128 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-   layout:decorate="~{layouts/userDefault}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/userDefault}">
+
 <!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
-   <div class="payContainer" style="background-color: #FCFCFC;">
-      <div id="payOrder">
-         <div id="payH3">
-            <div class="payOrder-header">
-               <h3>주문/결제</h3>
-            </div>
-         </div>
-         <form id="payForm" name="payForm" method="post">
-            <div class="product-area">
-               
-               
+<th:block th:each="l : ${laundryGoodsNameAndPrice}">
+<th:block th:each="ls : ${l.ilbanGoodsPrice}">
+	
+	<div class="payContainer" style="background-color: #FCFCFC;">
+		<div id="payOrder">
+			<div id="payH3">
+				<div class="payOrder-header">
+					<h3>주문/결제</h3>
+				</div>
+			</div>
+
+			<form id="payForm" name="payForm" method="post" th:action="@{/user/paymentComplete}">
+	<input name="laundryCode" type="hidden" th:value="${l.laundryCode}">
+	<input name="memberId" type="hidden" th:value="${sessionId}">
+	<input name="goodsName" type="hidden" th:value="${ls.goodsName}">
+	<input name="totalPrice" type="hidden" th:value="${ls.goodsPrice}">
+	<input name="laundryName" type="hidden" th:value="${l.laundryName}">
+	<input name="request" type="hidden" th:value="${bill}">
+	<input name="addPoint" class="add-point2" type="hidden">
+				<div class="product-area">
+					
+					
  
-               <table class="tb-products">
-                  <colgroup>
-                     <col width="160">
-                     <col width="160">
-                     <col width="160">
-                     <col width="160">
-                     <col width="160">
-                     <col>
-                  </colgroup>
-                  <thead class="point-plus">
-                     <tr style="background-color: #e9e9e9;">
-                        <th scope="col" class="product">주문정보</th>
-                        <th scope="col">세탁소</th>
-                        <th scope="col">세탁물</th>
-                        <th scope="col">배송비</th>
-                        <th scope="col" class="bg-point">할인</th>
-                        <th scope="col" class="col-price">세탁비용(할인, 배달료 포함)</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     <tr>
-                        <td><img th:src=@{/user/assets/img/lovetruck.png}></td>
-                        <td rowspan="1">현우세탁소</td>
-                        <td>&nbsp;&nbsp;&nbsp;2개 &nbsp;&nbsp;&nbsp;|
-                           <button type="button" onclick="location.href='#';">상세</button>
-                        </td>
-                        <td rowspan="1">3000원</td>
-                        <td>1000원</td>
-                        <td>15000원</td>
-                     </tr>
-                  </tbody>
-               </table>
-            </div>
-            <div class="destination-wrap">
-               <div class="deliver-info">
-                  <h4>
-                     <span class="blind">배송지정보</span>
-                  </h4>
-                  <strong class="req" title="필수입력">배송지 선택</strong>
-                  <ul class="radio-inline-list">
-                     <li class="-baseDeliveryInfo"><input type="radio"
-                        name="delivery" id="deliveryTypeOrig" onclick='searchAddr()'
-                        checked> <label>기본배송지</label></li>
-                     <li class="-newDeliveryInfo"><input type="radio"
-                        name="delivery" onclick='searchAddr()' id="deliveryTypeNew">
-                        <label>신규배송지</label></li>
-                  </ul>
-                  <script type="text/javascript">
-                     function searchAddr() {
-                        var delori = document
-                              .getElementById('deliveryTypeOrig');
-                        var delnew = document
-                              .getElementById('deliveryTypeNew');
-                        if (delori.checked == true) {
-                           document.getElementById('addr-list-byDB').className = ' ';
-                           document.getElementById('addr-list-search').className = 'addr-list';
-                        } else {
-                           document.getElementById('addr-list-search').className = ' ';
-                           document.getElementById('addr-list-byDB').className = 'addr-list';
-                        }
-                     }
-                  </script>
-						<ul class=" " id="addr-list-byDB">
-						
-							<li id="memberId" th:text="${paymember.memberName}"></li>
-							<li th:text="${paymember.memberPhone}"></li>
-							<li id="memberTotalAddr" th:text="'('+${paymember.memberPostNum}+')'+' '+${paymember.memberAddr}+' '+${paymember.memberDetailAddr}">
+					<table class="tb-products">
+						<colgroup>
+							<col width="160">
+							<col width="160">
+							<col width="160">
+							<col width="160">
+							<col width="160">
+							<col>
+						</colgroup>
+						<thead class="point-plus">
+							<tr style="background-color: #e9e9e9;">
+								<th scope="col" class="product">주문정보</th>
+								<th scope="col">세탁소</th>
+								<th scope="col">세탁물</th>
+								<th scope="col">배송비</th>
+								<th scope="col" class="bg-point">할인</th>
+								<th scope="col" class="col-price">세탁비용(할인, 배달료 포함)</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+								<tr>
+									<td><img th:src=@{/user/assets/img/lovetruck.png}></td>
+									<td rowspan="1" th:text="${l.laundryName}">세탁소명</td>
+									<td th:text="${ls.goodsName}"></td>
+									
+									<td rowspan="1">3,000원</td>
+									<td>1,000원</td>
+									<td th:text="${#numbers.formatInteger(ls.goodsPrice,3,'COMMA')+'원'}">가격</td>
+								</tr>
+							
+						</tbody>
+					</table>
+				</div>
+				<div class="destination-wrap">
+					<div class="deliver-info">
+						<h4>
+							<span class="blind">배송지정보</span>
+						</h4>
+
+
+						<strong class="req" title="필수입력">배송지 선택</strong>
+						<ul class="radio-inline-list">
+							<li class="-baseDeliveryInfo"><input type="radio"
+								name="delivery" id="deliveryTypeOrig" onclick='searchAddr()'
+								checked> <label>기본배송지</label></li>
+							<li class="-newDeliveryInfo"><input type="radio"
+								name="delivery" onclick='searchAddr()' id="deliveryTypeNew">
+								<label>신규배송지</label></li>
+
 						</ul>
-						
+
+						<script type="text/javascript">
+							function searchAddr() {
+
+								var delori = document
+										.getElementById('deliveryTypeOrig');
+								var delnew = document
+										.getElementById('deliveryTypeNew');
+
+								if (delori.checked == true) {
+									document.getElementById('addr-list-byDB').className = ' ';
+									document.getElementById('addr-list-search').className = 'addr-list';
+								} else {
+									document.getElementById('addr-list-search').className = ' ';
+									document.getElementById('addr-list-byDB').className = 'addr-list';
+								}
+							}
+						</script>
+						<ul class=" " id="addr-list-byDB">
+							<li>[[${sessionName}]] <em>[[${mAddr}]]</em></li>
+							<li>[[${mPhone}]]
+								<div class="safe-number">
+									<input type="checkbox" id="reliefPhoneNumber-1"
+										class="-click(nmp.front.order.order-sheet.checkFirstNumber(1)) -reliefPhoneNumberCheckbox-1">
+									<label for="reliefPhoneNumber-1">안심번호 서비스 사용</label>
+								</div>
+							</li>
+							<li>[[${mAddr}]]
+								<button type="button" id="infoUpdateBtn"
+									onclick="searchAddrBtn()">정보수정</button>
+
+							</li>
+						</ul>
+
 						<div class="addr-list" id="addr-list-search">
 							<ul id="addr-list-byDB2">
-								<li th:text="${paymember.memberName}"></li>
-								<li th:text="${paymember.memberPhone}"></li>
+								<li>[[${sessionName}]]</li>
+								<li>[[${mPhone}]]
+									<div class="safe-number">
+										<input type="checkbox"
+											class="-click(nmp.front.order.order-sheet.checkFirstNumber(1)) -reliefPhoneNumberCheckbox-1">
+										<label for="reliefPhoneNumber-1">안심번호 서비스 사용</label>
+									</div>
+								</li>
 							</ul>
 							<input type="text" id="sample4_postcode" placeholder="우편번호">
 							<input type="button" onclick="sample4_execDaumPostcode()"
@@ -112,10 +146,10 @@
 
 									<div class="dropdown-wrap">
 										<input type="text" placeholder="요청사항을 직접 입력합니다" title="배송 메세지"
-											name="deliveryMemo"
+											name="deliveryMemo" th:value="${bill}"
 											class="deli-msg placeholder -deliveryForm deliverySingleMemo -click(nmp.front.order.order-sheet.showLatestDeliveryMemo()) -stopDefault">
 										<input type="text" placeholder="요청사항을 직접 입력합니다" title="배송 메세지"
-											name="deliveryMemos.2022062084358289"
+											name="deliveryMemos.2022062084358289" th:value="${bill}"
 											class="deli-msg placeholder -deliveryForm particularDeliveryMemo deliveryProductMemo -click(nmp.front.order.order-sheet.showLatestDeliveryMemo(2022062084358289)) -stopDefault"
 											style="display: none;"> <a href="#" title="배송메세지 선택"
 											class="dropdown deliverySingleMemo -click(nmp.front.order.order-sheet.showLatestDeliveryMemo(,deliverySingleMemo)) -stopDefault"><span
@@ -146,10 +180,10 @@
 					<div class="deliver-userinfo-wrap">
 						<h6>주문자 정보</h6>
 						<ul class="user-info">
-							<li th:text="${paymember.memberName}"></li>
-							<li class="-telNoHighlight " th:text="${paymember.memberPhone}">
+							<li>[[${sessionName}]]</li>
+							<li class="-telNoHighlight "><span class="-memberTelNumber">[[${mPhone}]]</span>
 								<button type="button">수정</button></li>
-							<li th:text="${paymember.memberEmail}">
+							<li><span class="-memberEmailAddress">[[${mEmail}]]</span>
 								<button type="button">수정</button></li>
 						</ul>
 						<ul class="info-dsc">
@@ -164,9 +198,9 @@
 									정보로 결제관련 정보가 제공됩니다.<br>정확한 정보로 등록되어있는지 확인해주세요.
 							</span></li>
 						</ul>
-						<input type="hidden" name="order.memberName" value="이현우">
+						<input type="hidden" name="order.memberName" value="[[${sessionName}]]">
 						<input type="hidden" name="order.memberCellPhoneNo"
-							value="010-2**8-0**5">
+							th:value="${mPhone}">
 					</div>
 
 					<div class="payment-banner"
@@ -249,8 +283,6 @@
 							</div>
 							<!-- 모달끝 -->
 						</div>
-
-
 						<div class="area-point-title">
 							<strong class="req"><span class="sp-order ico-npaypoint"></span>포인트</strong>
 						</div>
@@ -268,13 +300,12 @@
 								<div class="area-item point-balance">
 									<div>
 										<div class="input-area" style="width: 145px;">
-											<span class="value -pointBalance">8,076</span> <span
+											<span class="value -pointBalance">0</span> <span
 												class="measure">원</span>
 										</div>
 									</div>
 								</div>
 							</li>
-
 							<li class="item-discount">
 								<div class="area-label">
 									<strong>사용</strong>
@@ -282,7 +313,7 @@
 								<div class="area-item">
 									<div class="input-area" style="width: 145px;">
 										<input type="text" id="mileage" name="payAmounts.NAVER-CASH"
-											value="5000" maxlength="7"
+											value="0" maxlength="7"
 											class="-onlyPriceTarget -calculationDiscountTarget -mileageUseAmount -subPayMeans -blur(nmp.front.order.order-sheet.calculateTotalPriceOnBlurForNaverCash()) -focus(nmp.front.order.order-sheet.checkUseWithPayLater()) -payForm">
 										<span class="measure">원</span>
 										<button type="button"
@@ -303,15 +334,8 @@
 									</div>
 								</div>
 							</li>
-
-
 						</ul>
-
-
-
-
 					</div>
-
 				</div>
 
 				<div class="payment-wrap">
@@ -319,8 +343,6 @@
 						<h5>결제수단</h5>
 						<div class="payment-how">
 							<div class="paymethod-list" style="display: block;">
-
-
 								<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 									<li class="nav-item" role="presentation"><a
 										class="nav-link active" id="pills-home-tab" data-toggle="pill"
@@ -356,8 +378,8 @@
 														<th scope="row">입금자명</th>
 														<td><input id="pname" name="pname" fw-filter=""
 															fw-label="무통장 입금자명" fw-msg="" class="inputTypeText"
-															placeholder="" size="15" maxlength="20" value="이현우"
-															type="text"></td>
+															placeholder="" size="15" maxlength="20" th:value="${sessionName}"
+															type="text" readonly="readonly"></td>
 													</tr>
 													<tr>
 														<th scope="row">입금은행</th>
@@ -365,8 +387,8 @@
 															fw-filter="" fw-label="무통장 입금은행" fw-msg="">
 																<option value="-1">::: 선택해 주세요. :::</option>
 																<option
-																	value="bank-03:3333058679301:이현우:카카오뱅크:www.kakaobank.com">카카오뱅크:3333058679301
-																	이현우</option>
+																	value="bank-03:3333058679301:[[${sessionName}]]:카카오뱅크:www.kakaobank.com">카카오뱅크:3333058679301
+																	[[${sessionName}]]</option>
 														</select>
 															<p class="gBlank5 ">
 																<a href="#none" id="btn-bank-go"><img
@@ -390,19 +412,20 @@
 						</div>
 					</div>
 					<div class="price-detail">
-						<span style="font-size: 13px; float: right;" th:text="${paymember.memberName}+' 님의 등급: '+${memberlevel.levelName}"></span>
+						<span style="font-size: 13px; float: right;">[[${sessionName}]] 님의 등급 :
+							gold</span>
 						<h5>결제상세</h5>
 						<div class="sum">
 							<strong class="price-sum-title">주문금액</strong>
 							<p class="price-sum-detail">
-								<em class="-totalPayPrice">179,000</em>원
+								<em class="-totalPayPrice" th:text="${#numbers.formatInteger(ls.goodsPrice,3,'COMMA')+'원'}"></em>
 							</p>
 						</div>
 						<ul class="calc-list">
 							<li><strong>배송비</strong>
 								<p>
 									<dummy class="-totalDeliveryFeeSign"></dummy>
-									<em class="-totalDeliveryFee">2000</em>원
+									<em class="-totalDeliveryFee">3,000</em>원
 
 								</p></li>
 
@@ -410,7 +433,7 @@
 							<li><strong>포인트사용</strong>
 								<p>
 									<dummy class="-totalDiscountPriceSign"></dummy>
-									<em class="-totalDiscountPrice">5000</em>원
+									<em class="-totalDiscountPrice">0</em>원
 								</p></li>
 							<li><strong>보너스포인트</strong>
 								<p style="font-size: 12px; margin-top: 3px;">결제금액의 5%</p></li>
@@ -420,7 +443,7 @@
 								style="display: list-item;"><strong class="price-sum-title"
 								id="price-yejung">결제 예정 금액 </strong>
 								<p class="price-sum-detail">
-									<em class="-useNaverMileagePrice">172,000</em> 원
+									<em class="-useNaverMileagePrice add-price" th:text="${#numbers.formatInteger(ls.goodsPrice,3,'COMMA')+'원'}"></em>
 								</p></li>
 						</ul>
 
@@ -430,7 +453,8 @@
 								style="display: list-item;"><strong class="price-sum-title"
 								id="price-yejung">적립 예정 포인트 </strong>
 								<p class="price-sum-detail">
-									<em class="-useNaverMileagePrice">8600</em> 원
+									
+									<em class="-useNaverMileagePrice add-point">0</em>원
 								</p></li>
 						</ul>
 
@@ -439,7 +463,7 @@
 				<div class="agree-wrap">
 					<div class="agree-section">
 						<div class="agreement">
-							개인정보 제공 동의 : <em class="store"> Joliema </em>
+							개인정보 제공 동의 : <em class="store"> 4team </em>
 							<div class="area-detail">
 								<button type="button"
 									class="button-detail -click(nmp.front.order.order-sheet.showLayerCommon(commonOrderAgreeLayer,false,false,left)) -stopDefault">상세보기</button>
@@ -497,8 +521,8 @@
 									<button type="button" class="btn btn-secondary"
 										data-dismiss="modal"
 										style="margin: 0; border: 0; border-radius: 0; padding: 0; float: left; width: 50%; height: 50px; font-size: 20px;">닫기</button>
-									<button type="button" class="btn btn-primary"
-										style="border: 0; border-radius: 0; margin: 0; padding: 0; float: right; width: 50%; height: 50px; font-size: 20px;" onclick = "location.href='/user/paymentComplete';">결제하기</button>
+									<button type="submit" class="btn btn-primary"
+										style="border: 0; border-radius: 0; margin: 0; padding: 0; float: right; width: 50%; height: 50px; font-size: 20px;">결제하기</button>
 								</div>
 							</div>
 						</div>
@@ -515,6 +539,17 @@
 	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
+		var addPrice = document.querySelector('.add-price');
+		var addPoint = document.querySelector('.add-point');
+		var addPoint2 = document.querySelector('.add-point2');
+		
+		var mm = addPrice.innerText.split('원', 1);
+	 	var number = Number(mm[0].replace(",", ""));
+		
+	 	addPoint.innerText = number/50;
+	 	addPoint2.value = number/50;
+	 	
+	 	
 		//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
 		function sample4_execDaumPostcode() {
 			new daum.Postcode(

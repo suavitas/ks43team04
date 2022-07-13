@@ -26,61 +26,16 @@ import ks43team04.service.YeyakService;
 public class YeyakController {
 
 	private final YeyakService yeyakService;
-	private final BillService billService;
+	
 	private final MemberService memberService;
 
 	
-	public YeyakController(YeyakService yeyakService,BillService billService,MemberService memberService) {
+	public YeyakController(YeyakService yeyakService,MemberService memberService) {
 		this.yeyakService = yeyakService;
-		this.billService = billService;
 		this.memberService = memberService;
 	}
 	
-	@GetMapping("/myPagePayment2")
-	public String myPagePayment2(@RequestParam(name = "currentPage", required = false, defaultValue = "1") int currentPage
-								,Model model,HttpSession session) {
-		
-		String sessionId = (String) session.getAttribute("SID");
-		String sessionName = (String) session.getAttribute("SNAME");
-		
-		Member member = memberService.getMemberInfoById(sessionId);
-		//세션 이름 저장
-		model.addAttribute("sessionName", sessionName);
-		
-		String memberId = sessionId;
-		//rowCount > id 결제건수
-		int rowCount = billService.getBillCount2(memberId);
-		
-		model.addAttribute("rowCount", rowCount);
 	
-		System.out.println(sessionId+"<------- sessionId");
-		System.out.println(sessionName+"<------- sessionName");
-		System.out.println(memberId+"<------- memberId");
-		System.out.println(rowCount+"<------- rowCount");
-		//페이징처리시작
-		Map<String, Object> resultMap = billService.billPage(currentPage, session);
-		
-		System.out.println(resultMap.get("billPage"));
-		
-		model.addAttribute("resultMap", resultMap);
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("billPage", resultMap.get("billPage"));
-		model.addAttribute("lastPage", resultMap.get("lastPage"));
-		model.addAttribute("startPageNum", resultMap.get("startPageNum"));
-		model.addAttribute("endPageNum", resultMap.get("endPageNum"));
-		
-		return "/member/myPagePayment2";
-	}
-	
-	@PostMapping("/myPagePayment2")
-	public String myPagePayment2(Bill2 bill) {
-		
-		System.out.println(bill);
-		
-		billService.addBill2(bill);
-		
-		return "redirect:/user/myPagePayment2";
-	}
 	
 	@GetMapping("/muinYeyak")
 	public String muinYeyak(@RequestParam(name = "currentPage", required = false, defaultValue = "1") int currentPage,
