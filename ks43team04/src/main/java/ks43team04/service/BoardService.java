@@ -119,6 +119,12 @@ public class BoardService {
 		return result;
 	}
 	
+	/*AS 방문(예정)일 변경*/
+	public int asVisitChange(As as) {
+		int result = asMapper.asVisitChange(as);
+		return result;
+	}
+	
 	/*AS 완료*/
 	public int asEnd(As as) {
 		int result = asMapper.asEnd(as);

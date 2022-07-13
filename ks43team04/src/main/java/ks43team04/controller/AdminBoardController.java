@@ -255,13 +255,14 @@ public class AdminBoardController {
 		return "redirect:/admin/asListById";
 	}
 	
-	/*고장 신고 접수, 완료, 삭제*/
+	/*고장 신고 접수, 완료, 방문(예정일)변경, 삭제*/
 	@PostMapping("/asList")
 	public String asList(@RequestParam(name = "asCode", required = false) String asCode
 						,As as) {
 		boardService.asReceipt(as);
 		boardService.asEnd(as);
 		boardService.asDel(as);
+		boardService.asVisitChange(as);
 		return "redirect:/admin/asList";
 	}
 	
