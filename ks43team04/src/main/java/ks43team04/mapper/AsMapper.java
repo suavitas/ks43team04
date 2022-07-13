@@ -10,13 +10,13 @@ import ks43team04.dto.As;
 public interface AsMapper {
 
 	//AS 삭제
-	//public int asDel(As as);
+	public int asDel(As as);
 	
 	//AS 수정
 	public int asModify(As as);
 	
 	//AS 완료(상태변경)
-	//public int asEnd(As as);
+	public int asEnd(As as);
 	
 	//AS 접수(상태변경)
 	public int asReceipt(As as);

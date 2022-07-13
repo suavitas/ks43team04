@@ -107,11 +107,11 @@ public class BoardService {
 		return reviewList;
 	}
 	
-	/*AS 삭제
+	/*AS 삭제*/
 	public int asDel(As as) {
 		int result = asMapper.asDel(as);
 		return result;
-	}*/
+	}
 	
 	/*AS 수정*/
 	public int asModify(As as) {
@@ -119,11 +119,11 @@ public class BoardService {
 		return result;
 	}
 	
-	/*AS 완료
+	/*AS 완료*/
 	public int asEnd(As as) {
 		int result = asMapper.asEnd(as);
 		return result;
-	}*/
+	}
 	
 	/*AS 접수*/
 	public int asReceipt(As as) {

@@ -2,8 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/adminDefault}">
-	 
-	 	  	
+
+	
+		
+
 	  
 	<!-- 사용자정의 contents -->
 	<th:block layout:fragment="customContents">
@@ -28,7 +30,7 @@
 		        <table class="table table col-md-12">
 				<tbody>
 					<tr th:each="l : ${as.LaundryList}">
-						<input type="hidden" name="asCode" th:value="${as.asCode}">
+						
 						<th scope="row">세탁소명</th>
 						<td th:text="${l.laundryName}"></td>
 						<th scope="row">작성자</th>
@@ -48,12 +50,13 @@
 				</table>
 					<div style="text-align: center">
 					<h5>방문 예정일</h5>
-					<input type="datetime-local" class="goDateTime" name="visitTime" th:value="${as.visitTime}">
+					<input type="datetime-local" id="DateLocal" class="goDateTime" min="today" name="visitTime" th:value="${as.visitTime}" onchange="setMinValue()">
 					<p style="padding-top: 30px;">
 					<textarea name="asmessage" id="asmessage" placeholder="Message" style="width:400px"></textarea>
 					</p>
 					</div>
 		      </div>
+		    			  <input type="hidden" name="asCode" th:value="${as.asCode}">
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 		        <a th:href="@{/admin/asList}"><button type="submit" name="submit" value="submit" class="btn btn-primary">접수</button></a>
@@ -84,6 +87,7 @@
 					<p>'완료' 버튼을 누르면 상태가 변경됩니다.</p>
 					<input type="hidden" name="asCode" th:value="${as.asCode}">
 					<input type="hidden" name="asState" th:value="${as.asState}">
+					<input type="hidden" id ="visitTime" name="visitTime" th:value="${as.visitTime}">
 					
 					</div>
 		      </div>
@@ -103,26 +107,27 @@
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      
-		      <form class="asDel" th:action="@{/admin/asList}" method="POST">
-		      
-		      <div class="modal-body">
-		      	  
-
-					<div style="text-align: center">
-					<h5 style="margin-bottom: 30px; margin-top: 20px;">삭제하시겠습니까?</h5>
-					<p>삭제 후 복구는 불가합니다.</p>
+		      	<h5 class="modal-title" id="staticBackdropLabel">정말로 삭제하시겠습니까?</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+		      </div>		      
+				<form class="asDel" th:action="@{/admin/asList}" method="POST">
+					<div class="modal-body">
+				      <div style="text-align: center">
+				      	<h5>비밀번호 확인</h5>
+				      	<p>단, 삭제는 '대기' 상태일 때만 가능합니다.</p>
+				      	<input type="hidden" id ="asState" name="asState" th:value="${as.asState}">
+				      	<input type="password" id ="pwDelCheck" name="pwDelCheck" placeholder="비밀번호를 입력해주세요" required="required">
+								<input type="hidden" id ="pwDelCheck2" name="memberPw2" th:value="${member.memberPw}">
+						</div>
 					<input type="hidden" name="asCode" th:value="${as.asCode}">
 					
 					</div>
-		      </div>
+		      
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-		        <a th:href="@{/admin/asList}"><button type="submit" name="submit" value="submit" class="btn btn-danger">삭제</button></a>
+		        <a th:href="@{/admin/asList}"><button type="submit" name="submit" value="submit" class="btn btn-danger" onclick="return delCheck()">삭제</button></a>
 		      </div>
 		      </form>
 		    </div>
@@ -143,8 +148,8 @@
 		<div class="x_content col-md-9">
 		
 		<div  style="text-align: right;">
-		<a th:href="@{/admin/asModify(asCode=${as.asCode},memberId=${as.memberId},asTitle=${as.asTitle},asContent=${as.asContent},asState=${as.asState})}"><button type="button" class="btn btn-info" style="margin-bottom: 30px;">수정</button></a>
-		<button type="button" class="btn btn-warning"  data-toggle="modal" data-target="#staticBackdrop3" style="margin-bottom: 30px;">
+		<a th:href="@{/admin/asModify(asCode=${as.asCode},memberId=${as.memberId},asTitle=${as.asTitle},asContent=${as.asContent},asState=${as.asState})}"><button type="button" class="btn btn-info" onclick="return asModify()" style="margin-bottom: 30px;">수정</button></a>
+		<button type="button" class="btn btn-warning" id="as-remove" data-toggle="modal" data-target="#staticBackdrop3" style="margin-bottom: 30px;">
 		삭제
 		</button>
 		</div>
@@ -154,7 +159,18 @@
 		<tbody>
 			<tr>
 				<th scope="row">처리상태</th>
-				<td><span th:text="${as.asState}"></span></td>
+				<td>
+					<th:block th:if="${as.asState != '대기'}">
+						<p style="margin-bottom: 0;">
+						<span th:text="${as.asState}"></span>
+							[방문(예정)일:
+							<span th:text="${as.visitTime}+]"></span>
+						</p>
+					</th:block>
+					<th:block th:unless="${as.asState != '대기'}">
+						<span th:text="${as.asState}"></span>
+					</th:block>
+				</td>
 				<th scope="row">작성시간</th>
 				<td><span th:text="${as.registTime}"></span></td>
 				
@@ -201,15 +217,20 @@
 			<div class="form-group">
 				<div class="col-md-8 col-sm-8  offset-md-2" style="margin-left: 0; text-align: center; padding-top: 50px;">
 				
-				<a th:href="@{/admin/asList}"><button type="button" class="btn btn-success" style="margin-right: 30px;">취소</button></a>
-				
-					<!-- Button trigger modal -->
+				<th:block th:if="${as.asState == '대기'}">
 					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop" style="margin-right: 30px;">
 					  접수
 					</button>
+				</th:block>
+				<th:block th:if="${as.asState == '접수'}">
+					<button type="button" class="btn btn-danger" id="end-as"  data-toggle="modal" data-target="#staticBackdrop2" style="margin-right: 30px;">
+					완료
+					</button>
+				</th:block>
 		
-				<button type="button" class="btn btn-danger"  data-toggle="modal" data-target="#staticBackdrop2" style="margin-right: 30px;">완료</button>
+				
 			
+				<a th:href="@{/admin/asList}"><button type="button" class="btn btn-success" style="margin-right: 30px;">목록</button></a>
 			
 				</div>
 				</div>
@@ -220,22 +241,102 @@
 <th:block layout:fragment="customJsScript">  
 	<script type="text/javascript">
 	
-	/*AS방문 내일날짜로 셋팅*/
-	var currentDates = document.querySelectorAll('.currentDate');
-	var currentDateTimes = document.querySelectorAll('.currentDateTime');
 	
-	var tomorrowDate = new Date
 	
-	tomorrowDate.setHours(tomorrowDate.getHours()+9)
-	tomorrowDate.setDate(tomorrowDate.getDate())
+	/*AS방문 오늘이전날짜 비활성화*/
+	var now_utc = Date.now()
+	var timeOff = new Date().getTimezoneOffset()*60000;
+	var today = new Date(now_utc-timeOff).toISOString().substring(0, 16);
+	document.getElementById("DateLocal").setAttribute("min", today);
 	
-	for(var i=0; i<currentDates.length; i++){
-		currentDates[i].value = tomorrowDate.toISOString().substring(0, 10);		
-		currentDateTimes[i].value = tomorrowDate.toISOString().slice(11, 16);		
-	}
 	
-	/*접수 버튼 클릭 시 값 불러오기*/
 	
+	/*AS방문 오늘날짜로 셋팅*/
+	
+	let dateElement = document.getElementById('DateLocal');
+    let date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -8);
+    dateElement.value = date;
+    dateElement.setAttribute("min", date);
+    
+    function setMinValue() {
+        if(dateElement.value < date) {
+            alert('현재 시간보다 이전의 날짜는 설정할 수 없습니다.');
+            dateElement.value = date;
+        }
+    }
+    
+    /*AS 완료 유효성 검사(날짜확인)*/
+    var endAs = document.querySelector('#end-as');
+  	var visitTime = document.getElementById('visitTime');
+    var vis = visitTime.value;
+    var bi = vis.substr(0,10);
+    
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth();
+    month += 1;
+    if (month <= 9){
+        month = "0" + month;
+    }
+    
+    var day = now.getDate();
+    if (day <= 9){
+        day = "0" + month;
+    }
+    var today = year + '-' + month + '-' + day;
+    console.log(today);
+    
+    if(bi<today){
+    }else {
+    	endAs.addEventListener('click',function(){
+    		alert('완료가능한 날짜가 아닙니다.');
+    		endAs.removeAttribute('data-toggle');
+    	})
+    }
+    
+    
+    /*AS 유효성 검사(수정,삭제 - 대기상태일때만 가능)*/
+    
+    function asModify(){
+    
+    	var asState = document.getElementById('asState');
+    	if(asState.value !== "대기"){
+    		alert("수정 가능한 날짜가 아닙니다.");
+    		return false;
+    	}	return true;   	
+    }
+    
+    var asRemove = document.querySelector('#as-remove');
+    var asState = document.getElementById('asState');
+    if(asState.value == "대기"){
+    }else {
+    	asRemove.addEventListener('click',function(){
+    		alert('삭제 가능한 날짜가 아닙니다.');
+    		asRemove.removeAttribute('data-toggle');
+    	})
+    }
+    
+	<!-- 유효성검사(비밀번호확인) -->
+		
+		function delCheck(){
+			 
+			var pwDelCheck = document.getElementById("pwDelCheck");
+			var pwDelCheck2 = document.getElementById("pwDelCheck2");
+			
+			if(pwDelCheck.value == ""){
+				alert("비밀번호를 입력하세요.")
+				pwDelCheck.focus();
+				return false;
+			}
+			else if(pwDelCheck.value !== pwDelCheck2.value){
+					alert("비밀번호를 확인하세요.")
+					pwDelCheck.focus();
+					return false;
+					
+				} return true;
+				 
+		}
+		
 	
 	
 	

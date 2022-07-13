@@ -50,12 +50,14 @@
 	</resultMap>
 	
 
-	<!-- ><delete id="asDel" parameterType="As">
+	 <delete id="asDel" parameterType="As">
 		/*AS 삭제*/
 		DELETE FROM tb_as
 		WHERE 
 			as_code = #{asCode}
-	</delete> -->
+		and
+			as_state = '대기'		
+	</delete> 
 	
 	<update id="asModify" parameterType="As">
 		/*AS 수정*/
@@ -77,16 +79,18 @@
 			a.as_state = '대기'
 	</update>
 	
-	<!-- <update id="asEnd" parameterType="As">
+	 <update id="asEnd" parameterType="As">
 		/*AS 완료*/
 		UPDATE tb_as AS a
 		SET
 			a.as_state='완료'
 		WHERE 
 			a.as_code = #{asCode}
-		 and
+		 AND
 			a.as_state = '접수'
-	</update>  -->
+		AND
+			<![CDATA[(SELECT DATE_ADD(a.visit_time, INTERVAL 1 HOUR))< NOW()]]>
+	</update>
 
 	<update id="asReceipt" parameterType="As">
 		/*AS 접수*/
