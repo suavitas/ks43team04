@@ -194,8 +194,9 @@ public class AdminBoardController {
 	public String asDetail(@RequestParam(name = "asCode", required = false) String asCode
 							,Model model) {
 		As as = boardService.getAsDetail(asCode);
-		
-		
+		String mId = as.getMemberId();
+		Member member = memberService.getMemberInfoById(mId);
+		model.addAttribute("member", member);
 		model.addAttribute("as", as);
 		log.info("as목록 : {}", as);
 		System.out.println(as);
@@ -259,8 +260,8 @@ public class AdminBoardController {
 	public String asList(@RequestParam(name = "asCode", required = false) String asCode
 						,As as) {
 		boardService.asReceipt(as);
-		//boardService.asEnd(as);
-		//boardService.asDel(as);
+		boardService.asEnd(as);
+		boardService.asDel(as);
 		return "redirect:/admin/asList";
 	}
 	
