@@ -18,6 +18,8 @@ public class PayMember {
 	private String adminLevelCode;
 	private String registTime;
 	
+	
+	
 	public String getMemberId() {
 		return memberId;
 	}

@@ -6,6 +6,7 @@
 <th:block layout:fragment="customContents">
 <th:block th:each="l : ${laundryGoodsNameAndPrice}">
 <th:block th:each="ls : ${l.ilbanGoodsPrice}">
+
 <style>
 .pay-btn{
 	width: 198px; 
@@ -72,6 +73,7 @@
 								<tr>
 									<td><img th:src=@{/user/assets/img/lovetruck.png}></td>
 									<td rowspan="1" th:text="${l.laundryName}">세탁소명</td>
+									
 									<td th:text="${ls.goodsName}"></td>
 									
 									<td rowspan="1">3,000원</td>
@@ -365,16 +367,13 @@
 							<div class="paymethod-list" style="display: block;">
 								<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 									<li class="nav-item" role="presentation">
-										<input type="radio" name="11" onclick="changePay()" id="gyejwaTab" value="계좌">
-									<a class="nav-link active" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">계좌이체</a></li>
+									<a class="nav-link active" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" id="gyejwaTab">계좌이체</a></li>
 									
 									<li class="nav-item" role="presentation">
-										<input type="radio" name="11" onclick="changePay()" id="kakaoTab" value="카카오">
-									<a class="nav-link" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">카카오페이</a></li>
+									<a class="nav-link" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false" id="kakaoTab">카카오페이</a></li>
 									
 									<li class="nav-item" role="presentation">
-										<input type="radio" name="11" onclick="changePay()" id="cardTab" value="카드">
-									<a class="nav-link" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">카드결제</a></li>
+									<a class="nav-link" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false" id="cardTab">카드결제</a></li>
 								</ul>
 
 
@@ -394,20 +393,16 @@
 												</colgroup>
 												<tbody>
 													<tr>
-														<th scope="row">입금자명</th>
-														<td><input id="pname" name="pname" fw-filter=""
-															fw-label="계좌이체 입금자명" fw-msg="" class="inputTypeText"
-															placeholder="" size="15" maxlength="20" th:value="${sessionName}"
+														<th scope="row">계좌주 성함</th>
+														<td><input id="pname" name="pname" class="inputTypeText"
+															placeholder="" size="15" maxlength="20" th:value="${jjname.memberName}"
 															type="text" readonly="readonly"></td>
 													</tr>
 													<tr>
-														<th scope="row">입금은행</th>
-														<td><select id="bankaccount" name="bankaccount"
-															fw-filter="" fw-label="계좌이체 입금은행" fw-msg="">
+														<th scope="row">입금 하실 은행</th>
+														<td><select id="bankaccount" name="bankaccount">
 																<option value="-1">::: 선택해 주세요. :::</option>
-																<option
-																	value="bank-03:3333058679301:[[${sessionName}]]:카카오뱅크:www.kakaobank.com">카카오뱅크:3333058679301
-																	[[${sessionName}]]</option>
+																<option th:value="${jjname.memberPhone}"><em th:text="${jjname.memberPhone}"></em></option>
 														</select>
 															<p class="gBlank5 ">
 																<a href="#none" id="btn-bank-go"><img
@@ -431,8 +426,7 @@
 						</div>
 					</div>
 					<div class="price-detail">
-						<span style="font-size: 13px; float: right;">[[${sessionName}]] 님의 등급 :
-							gold</span>
+						<span style="font-size: 13px; float: right;">[[${sessionName}]] 님의 등급 : <em th:text="${memberlevel.levelName}"></em> </span>
 						<h5>결제상세</h5>
 						<div class="sum">
 							<strong class="price-sum-title">주문금액</strong>
@@ -517,38 +511,11 @@
 				<div class="payment-agree-wrap">
 
 
-					<button type="submit" class="pay-btn" id="gyejwaBtn">결제하기</button>
+					<button type="submit" class="pay-btn" id="lastPayBtn">결제하기</button>
+					<!-- 버튼 하나 속성 변경하는 방식 사용.
 					<button type="button" class="non-action" id="kakaoBtn" onclick="kakaopay()">결제하기</button>
-					<button type="button" class="non-action" id="kcpBtn" onclick="kcp()">결제하기</button>
-
-					<script type="text/javascript">
-							function changePay() {
-
-								var gyejwaBtn = document.getElementById('gyejwaBtn');
-								var kakaoBtn = document.getElementById('kakaoBtn');
-								var kcpBtn = document.getElementById('kcpBtn');
-								var gyejwaTab = document.getElementById('gyejwaTab');
-								var kakaoTab = document.getElementById('kakaoTab');
-								var kcpTab = document.getElementById('kcpTab');
-								
-								if (gyejwaTab.checked == true) {
-									gyejwaBtn.className = 'pay-btn';
-									kakaoBtn.className = 'non-action';
-									kcpBtn.className = 'non-action';
-									
-								}else if(kakaoTab.checked == true){
-									gyejwaBtn.className = 'non-action';
-									kakaoBtn.className = 'pay-btn';
-									kcpBtn.className = 'non-action';
-									
-								}else{
-									gyejwaBtn.className = 'non-action';
-									kakaoBtn.className = 'non-action';
-									kcpBtn.className = 'pay-btn';
-								}
-							}
-							
-						</script>	 
+					<button type="button" class="non-action" id="cardBtn" onclick="kcp()">결제하기</button>
+					-->
 						
 					<div class="shdw-bottom"></div>
 				</div>
@@ -563,8 +530,52 @@
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	<!-- 아래 제이쿼리는 1.0이상이면 원하는 버전을 사용하셔도 무방합니다. -->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+	
 	  <script>
-	      
+	  		
+	  /* 결제 수단별로 결제버튼 속성 달라짐 */
+	  
+		  $(document).ready(function () {
+			  $('#gyejwaTab').on("click", function () {
+			    $('#lastPayBtn').attr('type','submit');
+			    $('#lastPayBtn').attr('onclick','null');
+			    //alert($(this).text());
+			  });
+			});
+	  
+		  $(document).ready(function () {
+			  $('#kakaoTab').on("click", function () {
+			    $('#lastPayBtn').attr('type','button');
+			    $('#lastPayBtn').attr('onclick','kakaopay()');
+			    //alert($(this).text());
+			  });
+			});
+		  
+		  $(document).ready(function () {
+			  $('#cardTab').on("click", function () {
+			    $('#lastPayBtn').attr('type','button');
+			    $('#lastPayBtn').attr('onclick','kcp()');
+			    //alert($(this).text());
+			  });
+			});
+		  
+		  
+		  /* 버튼 3개 두고 클래스명 변경하는 방법도 있음
+		  $(document).ready(function () {
+			  $('#kakaoTab').on("click", function () {
+			    $('#kakaoBtn').attr('class','pay-btn');
+			    alert($(this).text());
+			  });
+			});
+		  $(document).ready(function () {
+			  $('#cardTab').on("click", function () {
+			    $('#cardBtn').attr('class','pay-btn');
+			    alert($(this).text());
+			  });
+			});
+		  */
+		  
+		  /* 결제창 api js 시작 */
 		  function kcp(){
 				//가맹점 식별코드
 				IMP.init('imp11645147');
@@ -624,6 +635,7 @@
 				    alert(msg);
 				});
 			}
+		  /* 결제창 api js 끝 */
 	  </script>
 </th:block>
 
