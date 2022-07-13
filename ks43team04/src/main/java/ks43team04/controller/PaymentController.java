@@ -18,6 +18,7 @@ import ks43team04.dto.Member;
 import ks43team04.dto.MemberLevel;
 import ks43team04.dto.PayMember;
 import ks43team04.service.BillService;
+import ks43team04.service.IlbanGPriceService;
 import ks43team04.service.LaundryService;
 import ks43team04.service.MemberService;
 import ks43team04.service.PaymentService;
@@ -37,6 +38,15 @@ public class PaymentController {
 		this.memberService = memberService;
 		this.paymentService = paymentService;
 		this.billService = billService;
+	private final IlbanGPriceService ilbanGPriceService;
+	
+	
+	public PaymentController(LaundryService laundryService, MemberService memberService, PaymentService paymentService
+							,IlbanGPriceService ilbanGPriceService) {
+		this.laundryService = laundryService;
+		this.memberService = memberService;
+		this.paymentService = paymentService;
+		this.ilbanGPriceService = ilbanGPriceService;
 	}
 	
 	@GetMapping("/myPagePayment2")
@@ -151,27 +161,4 @@ public class PaymentController {
 		return "user/payment/payment";
 	}
 	
-	@GetMapping("/admin/goodsPrice")
-	public String eachGoodsPriceList(@RequestParam(name = "currentPage", required = false, defaultValue = "1") int currentPage,
-	Model model, HttpSession session) {
-		
-		Map<String, Object> resultMap = laundryService.eachGoodsPriceList(currentPage);
-		
-		String sessionId = (String) session.getAttribute("SID");
-		String sessionName = (String) session.getAttribute("SNAME");
-		
-		Member member = memberService.getMemberInfoById(sessionId);
-		
-		model.addAttribute("sessionName", sessionName);
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("resultMap", resultMap);
-		model.addAttribute("eachGoodsPriceList", resultMap.get("ilbangoodsPrice"));
-		model.addAttribute("lastPage", resultMap.get("lastPage"));
-		model.addAttribute("startPageNum", resultMap.get("startPageNum"));
-		model.addAttribute("endPageNum", resultMap.get("endPageNum"));				
-		System.out.println(resultMap);
-		System.out.println(resultMap.get("ilbangoodsPrice"));
-		
-		return "admin/goodsPrice";
-	}
 }
