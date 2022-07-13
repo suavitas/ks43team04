@@ -122,30 +122,6 @@
 		igp.g_price_use_state ='use'
 	</select>
 
-	<select id="LaundryList" fetchSize="1000" parameterType="String"
-		resultMap="LaundryListResultMap">
-		/*세탁소별 휴일 검색*/
-		SELECT
-		tl.laundry_name,
-		tl.laundry_code,
-		th.yearly_holiday_date,
-		th.yearly_holiday_name,
-		th.holiday_code_use,
-		th.holiday_code
-		FROM
-		tb_holiday AS th
-		INNER JOIN
-		tb_laundry AS tl
-		ON
-		th.laundry_code = tl.laundry_code
-		<trim prefix="WHERE" prefixOverrides="AND |OR ">
-			<if test="searchValue != null and searchValue != ''">
-				${searchKey} LIKE CONCAT('%', #{searchValue}, '%');
-			</if>
-		</trim>
-	</select>
-
-
 
 
 	<select id="machineSpecList" resultMap="MachineSpecResultMap">

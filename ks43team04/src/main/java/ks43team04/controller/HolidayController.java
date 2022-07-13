@@ -1,6 +1,7 @@
 package ks43team04.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +35,8 @@ public class HolidayController {
 
 	/* 세탁소별 휴일 */
 	@GetMapping("/lundryHoliday")
-	public String LaundryList(@RequestParam(name = "searchKey", defaultValue = "1") String searchKey,
+	public String LaundryList(@RequestParam(name = "currentPage", required = false, defaultValue = "1") int currentPage,
+			@RequestParam(name = "searchKey", defaultValue = "1") String searchKey,
 			@RequestParam(name = "searchValue", required = false) String searchValue, Model model) {
 
 		if ("laundryName".equals(searchKey)) {
@@ -45,12 +47,19 @@ public class HolidayController {
 			searchKey = "laundry_addr";
 		}
 
-		List<LaundryList> getLaundryList = laundryService.LaundryList(searchKey, searchValue);
-		if (getLaundryList != null)
-			model.addAttribute("getLaundryList", getLaundryList);
-		System.out.println("_______________세탁소별 휴일 목록을 불러옵니다_______________");
-		System.out.println(getLaundryList);
-
+		Map<String, Object> resultMap = holidayService.eachLaundryHoliday(currentPage, searchKey, searchValue);
+	
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("resultMap", resultMap);
+		model.addAttribute("eachLaundryHoliday", resultMap.get("eachLaundryHoliday"));
+		model.addAttribute("lastPage", resultMap.get("lastPage"));
+		model.addAttribute("startPageNum", resultMap.get("startPageNum"));
+		model.addAttribute("endPageNum", resultMap.get("endPageNum"));				
+		model.addAttribute("searchKey", resultMap.get("searchKey"));				
+		model.addAttribute("searchValue", resultMap.get("searchValue"));				
+		System.out.println(resultMap);
+		System.out.println(searchKey);
+		System.out.println(searchValue);
 		return "admin/lundryHoliday";
 	}
 

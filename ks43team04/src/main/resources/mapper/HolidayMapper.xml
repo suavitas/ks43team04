@@ -130,4 +130,36 @@
 			h.holiday_code_use = 'O';
 	</select>
 	
+	<select id="LaundryHolidayLookUpCount" resultType="int">
+		/*세탁소별 휴일 튜플수 페이징*/
+		SELECT
+				COUNT(h.holiday_code)
+				FROM
+				tb_holiday AS h
+
+	</select>
+		<select id="eachLaundryHoliday" parameterType="map" resultType="map">
+		/*세탁소별 휴일 검색*/
+		SELECT
+		tl.laundry_name as laundryName,
+		tl.laundry_code as laundryCode,
+		th.yearly_holiday_date as yearlyHolidayDate,
+		th.yearly_holiday_name as yearlyHolidayName,
+		th.holiday_code_use as holidayCodeUse,
+		th.holiday_code as holidayCode
+		FROM
+		tb_holiday AS th
+		INNER JOIN
+		tb_laundry AS tl
+		ON
+		th.laundry_code = tl.laundry_code
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="searchValue != null and searchValue != ''">
+				${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
+			</if>
+		</trim>
+		LIMIT #{startRow}, #{rowPerPage};
+	</select>
+	
+	
 </mapper>

@@ -13,11 +13,6 @@ import ks43team04.dto.MuinMachienSpec;
 @Mapper
 public interface LaundryMapper {
 
-	/* 세탁소 조건 조회 */
-	public List<LaundryList> LaundryList(String searchKey, String searchValue);
-	
-	/* 세탁소 전체 조회 */
-	public List<LaundryList> LaundryList();
 
 	/*멤버이름으로 세탁소 조회*/
 	public List<LaundryList> getMemberLaundryList(String memberId);
@@ -34,7 +29,6 @@ public interface LaundryMapper {
 	/* 전체 일반 세탁소 상품 가격 조회 */
 	public List<Laundry> ilbanGoodsPriceList();
 	
-
 
 	/* 일반세탁소 스킬 목록 */
 	public List<IlbanSkill> ilbanSkillList();
