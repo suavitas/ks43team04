@@ -38,15 +38,6 @@ public class PaymentController {
 		this.memberService = memberService;
 		this.paymentService = paymentService;
 		this.billService = billService;
-	private final IlbanGPriceService ilbanGPriceService;
-	
-	
-	public PaymentController(LaundryService laundryService, MemberService memberService, PaymentService paymentService
-							,IlbanGPriceService ilbanGPriceService) {
-		this.laundryService = laundryService;
-		this.memberService = memberService;
-		this.paymentService = paymentService;
-		this.ilbanGPriceService = ilbanGPriceService;
 	}
 	
 	@GetMapping("/myPagePayment2")
