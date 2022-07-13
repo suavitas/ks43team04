@@ -8,6 +8,31 @@ public class IlbanGprice {
 	private String gPrice;
 	private String registTime;
 	private String gPriceUseState;
+	/*goods -> g 로 변경해서 오류 발생. 아래 코드 추가해서 오류 제거*/
+	private String ilbanGoodsPriceCode;
+	private String goodsName;
+	private String goodsPrice;
+	private String goodsPriceUseState;
+	
+	
+	public String getGoodsName() {
+		return goodsName;
+	}
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}
+	public String getGoodsPrice() {
+		return goodsPrice;
+	}
+	public void setGoodsPrice(String goodsPrice) {
+		this.goodsPrice = goodsPrice;
+	}
+	public String getGoodsPriceUseState() {
+		return goodsPriceUseState;
+	}
+	public void setGoodsPriceUseState(String goodsPriceUseState) {
+		this.goodsPriceUseState = goodsPriceUseState;
+	}
 	public String getIlbanGPriceCode() {
 		return ilbanGPriceCode;
 	}
@@ -52,23 +77,16 @@ public class IlbanGprice {
 	}
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("IlbanGprice [ilbanGPriceCode=");
-		builder.append(ilbanGPriceCode);
-		builder.append(", laundryCode=");
-		builder.append(laundryCode);
-		builder.append(", ilbanSkillCode=");
-		builder.append(ilbanSkillCode);
-		builder.append(", gName=");
-		builder.append(gName);
-		builder.append(", gPrice=");
-		builder.append(gPrice);
-		builder.append(", registTime=");
-		builder.append(registTime);
-		builder.append(", gPriceUseState=");
-		builder.append(gPriceUseState);
-		builder.append("]");
-		return builder.toString();
+		return "IlbanGprice [ilbanGPriceCode=" + ilbanGPriceCode + ", laundryCode=" + laundryCode + ", ilbanSkillCode="
+				+ ilbanSkillCode + ", gName=" + gName + ", gPrice=" + gPrice + ", registTime=" + registTime
+				+ ", gPriceUseState=" + gPriceUseState + ", ilbanGoodsPriceCode=" + ilbanGoodsPriceCode + ", goodsName="
+				+ goodsName + ", goodsPrice=" + goodsPrice + ", goodsPriceUseState=" + goodsPriceUseState + "]";
+	}
+	public String getIlbanGoodsPriceCode() {
+		return ilbanGoodsPriceCode;
+	}
+	public void setIlbanGoodsPriceCode(String ilbanGoodsPriceCode) {
+		this.ilbanGoodsPriceCode = ilbanGoodsPriceCode;
 	}
 
 	
