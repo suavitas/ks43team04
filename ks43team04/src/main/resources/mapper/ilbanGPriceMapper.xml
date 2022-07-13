@@ -37,13 +37,15 @@
 			 'use');			 
  	</insert>
  	
- 	<delete id="removeGoodsPrice" parameterType="String">
- 		DELETE 
-	        FROM 
-	        tb_ilban_g_price
-	        WHERE
-	       		ilban_G_price_code = #{ilbanGPriceCode}; 
-     </delete>
+ 	<update id="removeGoodsPrice" parameterType="Map">
+ 		UPDATE
+		tb_ilban_g_price
+		set
+		g_price_use_state = #{gPriceUseState}
+		WHERE
+		ilban_G_price_code = #{ilbanGPriceCode};
+   
+     </update>
   
   <update id="modifyGoodsPrice"  parameterType="IlbanGprice">
 		/* 세탁소별 세탁 가격 수정 */
@@ -76,6 +78,7 @@
 		ilban_G_price_code = #{ilbanGPriceCode};
    
 </update>
+  
   
 	
  	

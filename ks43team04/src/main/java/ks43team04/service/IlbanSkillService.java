@@ -1,6 +1,7 @@
 package ks43team04.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,9 +36,9 @@ public class IlbanSkillService {
 	}
 	
 	/* 일반세탁소 가격 삭제 */
-	public int removeGoodsPrice(String ilbanGPriceCode) {
-		int result = ilbanGPriceMapper.removeGoodsPrice(ilbanGPriceCode);
-		System.out.println("______일반세탁소 가격을 삭제하기 위한 서비스_____"+ilbanGPriceCode);
+	public int removeGoodsPrice(Map<String, String> paramMap) {
+		int result = ilbanGPriceMapper.removeGoodsPrice(paramMap);
+		System.out.println("______일반세탁소 가격을 삭제하기 위한 서비스_____"+paramMap);
 		return result;
 	}
 

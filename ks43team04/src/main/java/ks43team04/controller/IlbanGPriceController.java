@@ -1,5 +1,6 @@
 package ks43team04.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -89,23 +90,43 @@ public class IlbanGPriceController {
 								@RequestParam(name = "skillCate", required=false) String skillCate,
 								@RequestParam(name = "gName", required=false) String gName,
 								@RequestParam(name = "gPrice", required=false) String gPrice,
+								@RequestParam(name = "gPriceUseState", required=false) String gPriceUseState,
 								Model model) {
 			
 		System.out.println("_____세탁물 가격을 삭제하기 위해서 정보를 받아왔습니다____");
+		System.out.println("_____gPriceUseState____"+gPriceUseState);
+		System.out.println("_____ilbanGPriceCode____"+ilbanGPriceCode);
+		System.out.println("_____laundryName____"+laundryName);
+		System.out.println("_____skillCate____"+skillCate);
+		System.out.println("_____gName____"+gName);
+		System.out.println("_____gPrice____"+gPrice);
 		
 		model.addAttribute("ilbanGPriceCode", ilbanGPriceCode);
 		model.addAttribute("skillCate", skillCate);
 		model.addAttribute("laundryName", laundryName);
 		model.addAttribute("gName", gName);
 		model.addAttribute("gPrice", gPrice);
+		model.addAttribute("gPriceUseState", gPriceUseState);
 	
 		return "admin/goodsPrice/removeGoodsPrice";
 	}
 	/* 세탁소별 세탁물 가격 삭제쿼리 실행*/
 	@PostMapping("/goodsPrice/removeGoodsPrice")
-	public String removeGoodsPrice(String ilbanGPriceCode) {
+	public String removeGoodsPrice(String ilbanGPriceCode,
+								   String gPriceUseState) {
 		
-		ilbanSkillService.removeGoodsPrice(ilbanGPriceCode);
+		Map<String, String> paramMap = new HashMap<String, String>();
+		
+		if(gPriceUseState.equals("use")) {
+			gPriceUseState = "unuse";
+		} else {
+			gPriceUseState = "use";
+		}
+		paramMap.put("ilbanGPriceCode", ilbanGPriceCode);
+		paramMap.put("gPriceUseState", gPriceUseState);
+		
+		
+		ilbanSkillService.removeGoodsPrice(paramMap);
 		System.out.println("________일반세탁소 가격 삭제를 실행합니다._________"+ilbanGPriceCode);
 		return "redirect:/admin/goodsPrice/goodsPrice";
 	}	
