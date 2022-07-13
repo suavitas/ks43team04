@@ -79,6 +79,19 @@
 			a.as_state = '대기'
 	</update>
 	
+	 <update id="asVisitChange" parameterType="As">
+		/*AS 방문(예정)일 변경*/
+		UPDATE tb_as AS a
+		SET
+			a.visit_time= #{visitTime}
+		WHERE 
+			a.as_code = #{asCode}
+		 AND
+			a.as_state = '접수'
+		AND
+			<![CDATA[(SELECT DATE_SUB(a.visit_time, INTERVAL 1 DAY))> NOW()]]>	
+	</update>
+	
 	 <update id="asEnd" parameterType="As">
 		/*AS 완료*/
 		UPDATE tb_as AS a

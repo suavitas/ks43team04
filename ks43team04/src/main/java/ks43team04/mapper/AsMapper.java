@@ -15,6 +15,9 @@ public interface AsMapper {
 	//AS 수정
 	public int asModify(As as);
 	
+	//AS 방문(예정)일 변경
+	public int asVisitChange(As as);
+	
 	//AS 완료(상태변경)
 	public int asEnd(As as);
 	
