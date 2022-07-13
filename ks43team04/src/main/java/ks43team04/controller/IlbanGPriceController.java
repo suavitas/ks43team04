@@ -23,12 +23,10 @@ import ks43team04.service.LaundryService;
 @RequestMapping("/admin")
 public class IlbanGPriceController {
 
-	private final LaundryService laundryService;
 	private final IlbanSkillService ilbanSkillService;
 	private final IlbanGPriceService ilbanGPriceService;
 	
-	public IlbanGPriceController(LaundryService laundryService,IlbanSkillService ilbanSkillService,IlbanGPriceService ilbanGPriceService){
-	this.laundryService = laundryService;
+	public IlbanGPriceController(IlbanSkillService ilbanSkillService,IlbanGPriceService ilbanGPriceService){
 	this.ilbanSkillService = ilbanSkillService;
 	this.ilbanGPriceService = ilbanGPriceService;
 	}
@@ -38,7 +36,7 @@ public class IlbanGPriceController {
 	Model model, HttpSession session) {
 		
 		
-		Map<String, Object> resultMap = laundryService.eachGoodsPriceList(currentPage);
+		Map<String, Object> resultMap = ilbanGPriceService.eachGoodsPriceList(currentPage);
 		
 		String sessionId = (String) session.getAttribute("SID");
 		String sessionName = (String) session.getAttribute("SNAME");

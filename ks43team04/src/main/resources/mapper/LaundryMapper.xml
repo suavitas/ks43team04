@@ -212,45 +212,7 @@
 		WHERE ig.g_price_use_state = 'use'
 	</select>
 
-	<select id="eachGoodsPriceList" parameterType="map"
-		resultType="map">
-		/*일반세탁소 매장별 상품가격 리스트*/
-	SELECT
-			l.laundry_name as laundryName
-			,gp.ilban_G_price_code as ilbanGPriceCode
-			,gp.g_name as gName
-			,gp.g_price as gPrice
-			,s.skill_cate AS skillCate
-			,gp.g_price_use_state as gPriceUseState
-			,gp.ilban_skill_code as ilbanSkillCode
-			FROM
-			tb_laundry AS l
-			INNER join
-			tb_ilban_g_price AS gp
-			on
-			l.laundry_code= gp.laundry_code
-			INNER join
-			tb_ilban_skill AS s
-			ON
-			gp.ilban_skill_code=s.ilban_skill_code
-		<trim prefix="WHERE" prefixOverrides="AND |OR ">
-			l.laundry_code LIKE CONCAT('%laundry_code_006%')
-		</trim>
-		LIMIT #{startRow}, #{rowPerPage};
-	</select>
-
-
-	<select id="GoodsPriceLookUpCount" resultType="int">
-		/*세탁소 가격 페이징*/
-		SELECT
-		COUNT(G.ilban_G_price_code)
-		FROM
-		tb_ilban_g_price AS G
-		WHERE
-		G.laundry_code
-		LIKE
-		'%laundry_code_006%'
-	</select>
+	
 
 
 
