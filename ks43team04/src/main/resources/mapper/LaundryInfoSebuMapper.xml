@@ -72,6 +72,7 @@
          tb_laundry
    </select>
    <select id="getLaundryInfoSebu"  parameterType="HashMap" resultMap="LaundryInfoResultMap">
+    /* 써치키 써치밸류로 세탁소명 비교해서 세탁소 정보 가져오기 */
 	SELECT 
 		 l.laundry_code
 		,l.m_id

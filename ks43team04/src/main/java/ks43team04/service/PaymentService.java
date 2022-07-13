@@ -3,6 +3,7 @@ package ks43team04.service;
 
 import org.springframework.stereotype.Service;
 
+import ks43team04.dto.JJname;
 import ks43team04.dto.MemberLevel;
 import ks43team04.dto.PayMember;
 import ks43team04.mapper.PaymentMapper;
@@ -22,5 +23,9 @@ public class PaymentService {
 
 	public MemberLevel getMemberLevel(String levelCode) {
 		return paymentMapper.getMemberLevel(levelCode);
+	}
+	
+	public JJname getJJname(String laundryName) {
+		return paymentMapper.getJJname(laundryName);
 	}
 }

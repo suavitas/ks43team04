@@ -24,11 +24,18 @@
 	</resultMap>
 	
 	
-	<resultMap type="MemberLevel" id="PayMemberLevel">
+	<resultMap type="MemberLevel" 				id="PayMemberLevel">
 		<id column="l_level_code"				property="levelCode"/>
 		<result column="level_name" 			property="levelName"/>
 		<result column="admin_level_code" 		property="adminLevelCode"/>
 		<result column="regist_time" 			property="registTime"/>
+	</resultMap>
+	
+	<resultMap type="JJname"				 	id="LdryJJname">
+		<id column="laudnry_code"				property="laundryCode"/>
+		<result column="laundry_name" 			property="laundryName"/>
+		<result column="m_name" 				property="memberName"/>
+		<result column="m_phone" 				property="memberPhone"/>
 	</resultMap>
    
    
@@ -65,4 +72,19 @@
 		WHERE			
 			l.level_code = #{levelCode};
 	</select>
+	<select id="getJJname" parameterType="String" resultMap="LdryJJname">
+		/*세탁소 사장 이름*/
+		SELECT 
+			l.laundry_name
+			,m.m_name
+			,m.m_phone
+		FROM
+			tb_laundry AS l
+			INNER join
+			tb_member AS m
+			on
+			l.m_id = m.m_id
+		WHERE
+			l.laundry_name = #{laundryName};
+	</select>	
 </mapper>

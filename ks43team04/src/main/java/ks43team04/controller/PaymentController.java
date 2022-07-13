@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ks43team04.dto.Bill2;
+import ks43team04.dto.JJname;
 import ks43team04.dto.Laundry;
 import ks43team04.dto.Member;
 import ks43team04.dto.MemberLevel;
@@ -31,6 +32,7 @@ public class PaymentController {
 	private final MemberService memberService;
 	private final PaymentService paymentService;
 	private final BillService billService;
+	
 	
 	
 	public PaymentController(LaundryService laundryService, MemberService memberService, PaymentService paymentService, BillService billService) {
@@ -104,23 +106,7 @@ public class PaymentController {
 	}
 	
 	@GetMapping("payment")
-	public String payment(Model model, HttpSession session) {
-		
-		String sessionId = (String) session.getAttribute("SID");
-		String sessionName = (String) session.getAttribute("SNAME");
-		String sessionLevel = (String) session.getAttribute("SLEVEL");
-		
-		
-		PayMember paymember = paymentService.getPayMInfo(sessionId);
-		
-		model.addAttribute("title", "마이페이지");
-		model.addAttribute("sessionName", sessionName);
-		model.addAttribute("paymember", paymember);
-		model.addAttribute("sessionLevel", sessionLevel);
-		
-		MemberLevel memberlevel = paymentService.getMemberLevel(sessionLevel);	
-		model.addAttribute("memberlevel", memberlevel);
-		
+	public String payment() {
 		return "user/payment/payment";
 	}
 	
@@ -135,11 +121,16 @@ public class PaymentController {
 		
 		String sessionId = (String) session.getAttribute("SID");
 		String sessionName = (String) session.getAttribute("SNAME");
+		String sessionLevel = (String) session.getAttribute("SLEVEL");
 		
 		Member member = memberService.getMemberInfoById(sessionId);
 		String mAddr = member.getMemberAddr();
 		String mPhone = member.getMemberPhone();
 		String mEmail = member.getMemberEmail();
+		
+		PayMember paymember = paymentService.getPayMInfo(sessionId);
+		MemberLevel memberlevel = paymentService.getMemberLevel(sessionLevel);	
+		JJname jjname = paymentService.getJJname(laundryName);	
 		
 		model.addAttribute("laundryGoodsNameAndPrice", laundryGoodsNameAndPrice);
 		model.addAttribute("bill", bill);
@@ -148,6 +139,12 @@ public class PaymentController {
 		model.addAttribute("mPhone", mPhone);
 		model.addAttribute("mEmail", mEmail);
 		model.addAttribute("sessionId", sessionId);
+		model.addAttribute("paymember", paymember);
+		model.addAttribute("sessionLevel", sessionLevel);
+		model.addAttribute("laundryName", laundryName);
+		model.addAttribute("memberlevel", memberlevel);
+		model.addAttribute("jjname", jjname);
+		
 		
 		return "user/payment/payment";
 	}
