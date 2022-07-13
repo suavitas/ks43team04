@@ -15,6 +15,7 @@ import ks43team04.dto.Laundry;
 import ks43team04.dto.Member;
 import ks43team04.dto.MemberLevel;
 import ks43team04.dto.PayMember;
+import ks43team04.service.IlbanGPriceService;
 import ks43team04.service.LaundryService;
 import ks43team04.service.MemberService;
 import ks43team04.service.PaymentService;
@@ -25,12 +26,15 @@ public class PaymentController {
 	private final LaundryService laundryService;
 	private final MemberService memberService;
 	private final PaymentService paymentService;
+	private final IlbanGPriceService ilbanGPriceService;
 	
 	
-	public PaymentController(LaundryService laundryService, MemberService memberService, PaymentService paymentService) {
+	public PaymentController(LaundryService laundryService, MemberService memberService, PaymentService paymentService
+							,IlbanGPriceService ilbanGPriceService) {
 		this.laundryService = laundryService;
 		this.memberService = memberService;
 		this.paymentService = paymentService;
+		this.ilbanGPriceService = ilbanGPriceService;
 	}
 	
 	@PostMapping("/user/payment")
@@ -110,7 +114,7 @@ public class PaymentController {
 	Model model, HttpSession session) {
 		
 		
-		Map<String, Object> resultMap = laundryService.eachGoodsPriceList(currentPage);
+		Map<String, Object> resultMap = ilbanGPriceService.eachGoodsPriceList(currentPage);
 		
 		String sessionId = (String) session.getAttribute("SID");
 		String sessionName = (String) session.getAttribute("SNAME");

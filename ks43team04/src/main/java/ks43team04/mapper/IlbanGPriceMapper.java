@@ -24,4 +24,10 @@ public interface IlbanGPriceMapper {
 	/* 세탁소별 매장 가격 수정 */
 	public int modifyGoodsPrice(IlbanGprice IlbanGprice);
 	
+	/* 매장별 일반 세탁소 상품 가격 페이징 처리 */
+	public List<Map<String, Object>> eachGoodsPriceList(Map<String, Object> paramMap);
+
+	/* 매장별 일반 세탁소 상품 튜플수 */
+	public int GoodsPriceLookUpCount();
+	
 }
