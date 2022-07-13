@@ -2,11 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/userDefault}">
-
 <!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
 <th:block th:each="l : ${laundryGoodsNameAndPrice}">
 <th:block th:each="ls : ${l.ilbanGoodsPrice}">
+<style>
+.pay-btn{
+	width: 198px; 
+	height: 56px;
+	border: 0; 
+	background-color: #F28123; 
+	font-size: 18px; 
+	font-weight: bold; 
+	color: #fff; 
+	cursor: pointer; 
+	margin: 0 6px;
+}
+.pay-btn:hover{
+	background-color: #f29f23; 
+}
+.non-action{
+	display: none;
+}
+</style>
+	
+	
 	
 	<div class="payContainer" style="background-color: #FCFCFC;">
 		<div id="payOrder">
@@ -344,18 +364,17 @@
 						<div class="payment-how">
 							<div class="paymethod-list" style="display: block;">
 								<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-									<li class="nav-item" role="presentation"><a
-										class="nav-link active" id="pills-home-tab" data-toggle="pill"
-										href="#pills-home" role="tab" aria-controls="pills-home"
-										aria-selected="true">무통장입금</a></li>
-									<li class="nav-item" role="presentation"><a
-										class="nav-link" id="pills-profile-tab" data-toggle="pill"
-										href="#pills-profile" role="tab" aria-controls="pills-profile"
-										aria-selected="false">카드</a></li>
-									<li class="nav-item" role="presentation"><a
-										class="nav-link" id="pills-contact-tab" data-toggle="pill"
-										href="#pills-contact" role="tab" aria-controls="pills-contact"
-										aria-selected="false">휴대폰</a></li>
+									<li class="nav-item" role="presentation">
+										<input type="radio" name="11" onclick="changePay()" id="gyejwaTab" value="계좌">
+									<a class="nav-link active" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">계좌이체</a></li>
+									
+									<li class="nav-item" role="presentation">
+										<input type="radio" name="11" onclick="changePay()" id="kakaoTab" value="카카오">
+									<a class="nav-link" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">카카오페이</a></li>
+									
+									<li class="nav-item" role="presentation">
+										<input type="radio" name="11" onclick="changePay()" id="cardTab" value="카드">
+									<a class="nav-link" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">카드결제</a></li>
 								</ul>
 
 
@@ -366,7 +385,7 @@
 
 
 										<div class="ec-base-table">
-											<!-- 무통장입금 -->
+											<!-- 계좌이체 -->
 											<table border="1" id="payment-input-cash" style="">
 
 												<colgroup>
@@ -377,14 +396,14 @@
 													<tr>
 														<th scope="row">입금자명</th>
 														<td><input id="pname" name="pname" fw-filter=""
-															fw-label="무통장 입금자명" fw-msg="" class="inputTypeText"
+															fw-label="계좌이체 입금자명" fw-msg="" class="inputTypeText"
 															placeholder="" size="15" maxlength="20" th:value="${sessionName}"
 															type="text" readonly="readonly"></td>
 													</tr>
 													<tr>
 														<th scope="row">입금은행</th>
 														<td><select id="bankaccount" name="bankaccount"
-															fw-filter="" fw-label="무통장 입금은행" fw-msg="">
+															fw-filter="" fw-label="계좌이체 입금은행" fw-msg="">
 																<option value="-1">::: 선택해 주세요. :::</option>
 																<option
 																	value="bank-03:3333058679301:[[${sessionName}]]:카카오뱅크:www.kakaobank.com">카카오뱅크:3333058679301
@@ -497,41 +516,115 @@
 				</div>
 				<div class="payment-agree-wrap">
 
-					<!-- Button trigger modal -->
-					<button type="button" class="btn btn-primary" data-toggle="modal"
-						data-target="#exampleModal"
-						style="width: 198px; height: 56px; border: 0; background-color: #F28123; font-size: 18px; font-weight: bold; color: #fff; cursor: pointer; margin: 0 6px;">결제하기</button>
 
-					<!-- Modal -->
-					<div class="modal fade" id="exampleModal" tabindex="-1"
-						aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">결제 확인</h5>
-									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body" style="padding: 30px;">
-									<h5>결제를 진행하시겠습니까?</h5>
-								</div>
-								<div class="modal-footer" style="padding: 0;">
-									<button type="button" class="btn btn-secondary"
-										data-dismiss="modal"
-										style="margin: 0; border: 0; border-radius: 0; padding: 0; float: left; width: 50%; height: 50px; font-size: 20px;">닫기</button>
-									<button type="submit" class="btn btn-primary"
-										style="border: 0; border-radius: 0; margin: 0; padding: 0; float: right; width: 50%; height: 50px; font-size: 20px;">결제하기</button>
-								</div>
-							</div>
-						</div>
-					</div>
+					<button type="submit" class="pay-btn" id="gyejwaBtn">결제하기</button>
+					<button type="button" class="non-action" id="kakaoBtn" onclick="kakaopay()">결제하기</button>
+					<button type="button" class="non-action" id="kcpBtn" onclick="kcp()">결제하기</button>
+
+					<script type="text/javascript">
+							function changePay() {
+
+								var gyejwaBtn = document.getElementById('gyejwaBtn');
+								var kakaoBtn = document.getElementById('kakaoBtn');
+								var kcpBtn = document.getElementById('kcpBtn');
+								var gyejwaTab = document.getElementById('gyejwaTab');
+								var kakaoTab = document.getElementById('kakaoTab');
+								var kcpTab = document.getElementById('kcpTab');
+								
+								if (gyejwaTab.checked == true) {
+									gyejwaBtn.className = 'pay-btn';
+									kakaoBtn.className = 'non-action';
+									kcpBtn.className = 'non-action';
+									
+								}else if(kakaoTab.checked == true){
+									gyejwaBtn.className = 'non-action';
+									kakaoBtn.className = 'pay-btn';
+									kcpBtn.className = 'non-action';
+									
+								}else{
+									gyejwaBtn.className = 'non-action';
+									kakaoBtn.className = 'non-action';
+									kcpBtn.className = 'pay-btn';
+								}
+							}
+							
+						</script>	 
+						
 					<div class="shdw-bottom"></div>
 				</div>
 			</form>
 		</div>
 	</div>
+	
+	
+	<!-- 결제 api  -->
+	
+	<!-- jQuery -->
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<!-- 아래 제이쿼리는 1.0이상이면 원하는 버전을 사용하셔도 무방합니다. -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+	  <script>
+	      
+		  function kcp(){
+				//가맹점 식별코드
+				IMP.init('imp11645147');
+				IMP.request_pay({
+				    pg : 'kcp',
+				    pay_method : 'card',
+				    merchant_uid : 'merchant_' + new Date().getTime(),
+				    name : '상품1' , //결제창에서 보여질 이름
+				    amount : 100, //실제 결제되는 가격
+				    buyer_email : 'iamport@siot.do',
+				    buyer_name : '구매자이름',
+				    buyer_tel : '010-1234-5678',
+				    buyer_addr : '서울 강남구 도곡동',
+				    buyer_postcode : '123-456'
+				}, function(rsp) {
+					console.log(rsp);
+				    if ( rsp.success ) {
+				    	var msg = '결제가 완료되었습니다.';
+				        msg += '고유ID : ' + rsp.imp_uid;
+				        msg += '상점 거래ID : ' + rsp.merchant_uid;
+				        msg += '결제 금액 : ' + rsp.paid_amount;
+				        msg += '카드 승인번호 : ' + rsp.apply_num;
+				    } else {
+				    	 var msg = '결제에 실패하였습니다.';
+				         msg += '에러내용 : ' + rsp.error_msg;
+				    }
+				    alert(msg);
+				});
+			}
+		  
+		  function kakaopay(){
+				//가맹점 식별코드
+				IMP.init('imp11645147');
+				IMP.request_pay({
+				    pg : 'kakaopay',
+				    pay_method : 'card',
+				    merchant_uid : 'merchant_' + new Date().getTime(),
+				    name : '상품1' , //결제창에서 보여질 이름
+				    amount : 100, //실제 결제되는 가격
+				    buyer_email : 'iamport@siot.do',
+				    buyer_name : '구매자이름',
+				    buyer_tel : '010-1234-5678',
+				    buyer_addr : '서울 강남구 도곡동',
+				    buyer_postcode : '123-456'
+				}, function(rsp) {
+					console.log(rsp);
+				    if ( rsp.success ) {
+				    	var msg = '결제가 완료되었습니다.';
+				        msg += '고유ID : ' + rsp.imp_uid;
+				        msg += '상점 거래ID : ' + rsp.merchant_uid;
+				        msg += '결제 금액 : ' + rsp.paid_amount;
+				        msg += '카드 승인번호 : ' + rsp.apply_num;
+				    } else {
+				    	 var msg = '결제에 실패하였습니다.';
+				         msg += '에러내용 : ' + rsp.error_msg;
+				    }
+				    alert(msg);
+				});
+			}
+	  </script>
 </th:block>
 
 </th:block>
@@ -612,6 +705,8 @@
 						}
 					}).open();
 		}
+		
+		
 	</script>
 </th:block>
 

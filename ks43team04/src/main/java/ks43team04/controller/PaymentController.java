@@ -39,7 +39,7 @@ public class PaymentController {
 		this.paymentService = paymentService;
 		this.billService = billService;
 	}
-	
+	 
 	@GetMapping("/myPagePayment2")
 	public String myPagePayment2(@RequestParam(name = "currentPage", required = false, defaultValue = "1") int currentPage
 								,Model model,HttpSession session) {
