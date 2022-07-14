@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.MachineMapper">
+	
+	  
+   <update id="modifyMachienSpec" parameterType="MuinMachienSpec">
+		/* 전체 장비 스팩 수정 */
+		UPDATE
+		tb_muin_spec
+		<trim prefix="SET" prefixOverrides=",">
+
+			<if test="machineCategory != null and machineCategory != ''">
+				machine_category = #{machineCategory}
+			</if>
+			<if test="machineRelease != null and machineRelease != ''">
+				,machine_release = #{machineRelease}
+			</if>
+			<if test="machineLimit != null and machineLimit != ''">
+				,machine_limit = #{machineLimit}
+			</if>
+			<if test="machineMotor != null and machineMotor != ''">
+				,machine_motor = #{machineMotor}
+			</if>
+			<if test="machineEnergy != null and machineEnergy != ''">
+				,machine_energy = #{machineEnergy}
+			</if>			
+			<if test="machineCourse != null and machineCourse != ''">
+				,machine_course = #{machineCourse}
+			</if>			
+			<if test="machineRemoval != null and machineRemoval != ''">
+				,machine_removal = #{machineRemoval}
+			</if>
+			<if test="machineTimer != null and machineTimer != ''">
+				,machine_timer = #{machineTimer}
+			</if>			
+			<if test="machineSafety != null and machineSafety != ''">
+				,machine_safety = #{machineSafety}
+			</if>
+			<if test="machineSkill != null and machineSkill != ''">
+				,machine_skill = #{machineSkill}
+			</if>
+			<if test="machineManagement != null and machineManagement != ''">
+				,machine_management = #{machineManagement}
+			</if>
+			<if test="machineDisplay != null and machineDisplay != ''">
+				,machine_display = #{machineDisplay}
+			</if>
+			<if test="machineControl != null and machineControl != ''">
+				,machine_control = #{machineControl}
+			</if>
+			<if test="machinePower != null and machinePower != ''">
+				,machine_Power = #{machinePower}
+			</if>
+			<if test="machineSpace != null and machineSpace != ''">
+				,machine_space = #{machineSpace}
+			</if>
+			<if test="machineColor != null and machineColor != ''">
+				,machine_color = #{machineColor}
+			</if>			
+			<if test="machineSize != null and machineSize != ''">
+				,machine_size = #{machineSize}
+			</if>
+			<if test="machineAs != null and machineAs != ''">
+				,machine_as = #{machineAs}
+			</if>
+			<if test="machineDoor != null and machineDoor != ''">
+				,machine_door = #{machineDoor}
+			</if>
+			<if test="adminLevelCode != null and adminLevelCode != ''">
+				,admin_level_code = 'admin_level_code_001'
+			</if>	
+		</trim>
+				,regist_time = NOW()
+			
+	
+		WHERE
+		muin_spec_code = #{MachineSpecCode};
+   
+    
+   
+</update>
+  
+	
+ 	
+	
+	
+</mapper>
