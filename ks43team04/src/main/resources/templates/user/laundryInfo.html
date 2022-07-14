@@ -4,6 +4,78 @@
 	layout:decorate="~{layouts/userDefault}">
 <!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
+	<style>
+.billing-address-form input {
+	font-size: 12px;
+	letter-spacing: 0.03em;
+	height: 100%;
+	line-height: 30px;
+	padding: 0 10px;
+	border: 0;
+	border-radius: 5px;
+	background: #f5f5f5;
+	vertical-align: middle;
+	outline: 0;
+	margin-top: -20px;
+	font-weight: 700px;
+}
+
+.billing-address-form select {
+	line-height: 30px;
+	width: auto;
+	height: 32px;
+	background: none;
+	font-size: 12px;
+	padding: 0;
+	border: 0;
+	border-radius: 5px;
+	margin: 0;
+	background: #f5f5f5;
+	font-weight: 700px;
+}
+
+.billing-address-form h5 {
+	margin-bottom: 12px;
+}
+
+#yeyekFirstBtn {
+	border: none;
+	background-color: #fff;
+	display: inline-block;
+	color: #333;
+	font-size: 14px;
+	padding: 8px 14px;
+	height: 41.19px;
+}
+
+.boxbox .append-btn {
+	width: 15%;
+	float: right;
+	display: inline;
+	margin-top: 54px;
+	padding: 4px;
+	margin-right: 9%;
+	background-color: #F28123;
+	border: 0;
+	color: #fff;
+}
+.boxbox .append-btn:hover{
+	background-color: #f29c23;
+}
+.boxbox .remove-btn {
+	width: 10%;
+	display: inline;
+	padding: 2px;
+	background-color: #f5f5f5;
+	border: 0;
+	color: #333;
+	margin-left: 3%;
+}
+.strBox p{
+	display: inline;
+	vertical-align: middle;
+}
+</style>
 
 	<div id="container" style="width: 100%; height: 1200px;">
 		<div class="left-tit-area">
@@ -101,12 +173,20 @@
 						style="margin-top: 25px;">
 						<a class="nav-link active" id="nav-home-tab" data-toggle="tab"
 							href="#nav-home" role="tab" aria-controls="nav-home"
-							aria-selected="true">기본정보</a> <a class="nav-link"
-							id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
-							role="tab" aria-controls="nav-profile" aria-selected="false">기능별
-							가격</a> <a class="nav-link" id="nav-contact-tab" data-toggle="tab"
+							aria-selected="true" style="color: #333;">기본정보</a> <a
+							class="nav-link" id="nav-profile-tab" data-toggle="tab"
+							href="#nav-profile" role="tab" aria-controls="nav-profile"
+							aria-selected="false" style="color: #333;">기능별 가격</a> <a
+							class="nav-link" id="nav-contact-tab" data-toggle="tab"
 							href="#nav-contact" role="tab" aria-controls="nav-contact"
-							aria-selected="false">리뷰</a>
+							aria-selected="false" style="color: #333;">리뷰</a> <a
+							class="nav-link" id="nav-yeyak-tab" data-toggle="tab"
+							href="#nav-contact" role="tab" aria-controls="nav-contact"
+							aria-selected="false" style="padding: 0;">
+							<button type="button" class="btn btn-primary btn-lg yeyak-btn"
+								id="yeyekFirstBtn" data-toggle="modal" data-target="#ilbanYeyak"
+								data-backdrop="static" data-keyboard="false">예약하기</button>
+						</a>
 					</div>
 				</nav>
 
@@ -192,161 +272,186 @@
 					<div class="tab-pane fade" id="nav-contact" role="tabpanel"
 						aria-labelledby="nav-contact-tab"
 						style="border-bottom: 1px solid #f2f2f2; border-right: 1px solid #f2f2f2;">
-						<th:block th:if="${not #lists.isEmpty(laundryInfo)}"
-							th:each="l : ${laundryInfo}">
-							<button type="button" class="btn btn-primary btn-lg yeyak-btn"
-								data-toggle="modal" data-target="#ilbanYeyak" data-backdrop="static" data-keyboard="false"
-								>예약하기</button>
-							<!-- Modal -->
-							<div class="modal fade" id="ilbanYeyak" tabindex="-1"
-								role="dialog" th:aria-labelledby="${'myModal' + 'Label'}">
-								<div class="modal-dialog" role="document">
-									<div class="modal-content">
-										<form th:action="@{/user/payment}" method="post">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"
-													aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-												<h4 class="modal-title" th:id="${'myModal'+'Label'}"
-													th:text="${l.laundryName}">예약사항</h4>
-
-											</div>
-											<div class="modal-body">
-												<!-- 예약사항 폼 시작-->
-												<div class="checkout-accordion-wrap">
-													<div class="accordion" id="accordionExample">
-														<div class="card single-accordion">
-															<div class="card-header" id="headingOne">
-																<h5 class="mb-0">
-																	<button class="btn btn-link" type="button"
-																		data-toggle="collapse" data-target="#collapseOne"
-																		aria-expanded="true" aria-controls="collapseOne">수거
-																		및 배송신청</button>
-																</h5>
-															</div>
-															<div id="collapseOne" class="collapse show"
-																aria-labelledby="headingOne"
-																data-parent="#accordionExample">
-																<div class="card-body">
-																	<div class="billing-address-form">
-																		<input type="hidden" name="laundryName"
-																			th:value="${l.laundryName}">
-																		<h5>수거일 예약 신청</h5>
-																		<input type="date" class="currentDate"> <input
-																			type="time" class="currentDateTime"
-																			style="margin-bottom: 20px;">
-																		<p>
-																			수거는 예약날짜 및 시간 으로 부터 <br />최대 24시간의 시간이 소요 됩니다.
-																		</p>
-																		<div th:class="${'append-info'}">
-																			<div class="boxbox">
-																				<h5>세탁기능 선택</h5>
-																				<select>
-																					<th:block th:each="ls : ${ilbanSkillList}">
-																						<option th:text="${ls.skillCate}"
-																							th:value="${ls.skillCate}"></option>
-																					</th:block>
-																				</select> <br />
-																				<h5 style="margin-top: 20px;">세탁물 선택</h5>
-																				<select class="igp" name="goodsName">
-																					<th:block
-																						th:each="ls , st : ${ilbanGoodsPriceList}">
-																						<th:block th:each="lss : ${ls.ilbanGoodsPrice}">
-																							<option
-																								th:if="${ls.laundryName} eq ${l.laundryName}"
-																								th:text="${lss.goodsName}"
-																								th:value="${lss.goodsName}"></option>
-																						</th:block>
-																					</th:block>
-																				</select>
-																			</div>
-																		</div>
-																		<br />
-																		<div class="strBox"></div>
-																		<div style="margin-bottom: 20px">
-																			<button type="button" class="btn btn-info append-btn">추가하기</button>
-																			<button type="button" class="btn btn-info remove-btn">제거하기</button>
-																		</div>
-																		<p>
-																			<input type="text" placeholder="상세주소">
-																		</p>
-																		<p>
-																			<input type="tel" placeholder="연락받을 연락처">
-																		</p>
-																		<p>
-																			<textarea name="bill" id="bill" cols="30" rows="10"
-																				placeholder="배송시 요청사항"></textarea>
-																		</p>
-
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div class="card single-accordion">
-															<div class="card-header" id="headingTwo">
-																<h5 class="mb-0">
-																	<button class="btn btn-link collapsed" type="button"
-																		data-toggle="collapse" data-target="#collapseTwo"
-																		aria-expanded="false" aria-controls="collapseTwo">가격표</button>
-																</h5>
-															</div>
-															<div id="collapseTwo" class="collapse"
-																aria-labelledby="headingTwo"
-																data-parent="#accordionExample">
-																<div class="card-body">
-																	<div class="shipping-address-form">
-																		<th:block>
-																			<div class="cart-table-wrap">
-																				<table class="cart-table tbServiceList">
-																					<thead class="cart-table-head">
-																						<tr class="table-head-row">
-																							<th class="product-quantity">상품명</th>
-																							<th class="product-total">가격</th>
-																						</tr>
-																					</thead>
-																					<tbody>
-																						<th:block
-																							th:each="ls , st : ${ilbanGoodsPriceList}">
-																							<tr class="table-body-row"
-																								th:each="lss : ${ls.ilbanGoodsPrice}">
-																								<td class="product-quantity"
-																									th:if="${ls.laundryName} eq ${l.laundryName}"
-																									th:text="${lss.goodsName}"></td>
-																								<td class="product-total"
-																									th:if="${ls.laundryName} eq ${l.laundryName}"
-																									th:text="${lss.goodsPrice}"></td>
-																							</tr>
-																						</th:block>
-																					</tbody>
-																				</table>
-																			</div>
-																		</th:block>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-												<!-- 예약사항 폼 끝-->
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-default"
-													data-dismiss="modal">취소</button>
-												<button type="submit" class="btn btn-primary">결제하기</button>
-											</div>
-										</form>
-									</div>
-								</div>
-							</div>
-							<!-- 모달 예약하기 버튼 끝 -->
-						</th:block>
+						<p
+							style="text-align: left; text-indent: -9999px; display: inline-block; width: 150px; height: 250px; background: transparent url(http://99juice.co.kr/_sp/image/no-result-found.gif) no-repeat center center;"></p>
+					</div>
+					<!-- 예약버튼 공백 탭 -->
+					<div class="tab-pane fade" id="nav-yeyak" role="tabpanel"
+						aria-labelledby="nav-profile-tab"
+						style="border-bottom: 1px solid #f2f2f2; border-right: 1px solid #f2f2f2;">
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<th:block th:if="${not #lists.isEmpty(laundryInfo)}"
+		th:each="l : ${laundryInfo}">
+		<!-- Modal -->
+		<div class="modal fade" id="ilbanYeyak" tabindex="-1" role="dialog"
+			th:aria-labelledby="${'myModal' + 'Label'}">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<form th:action="@{/user/payment}" method="post">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" th:id="${'myModal'+'Label'}"
+								th:text="${l.laundryName}">예약사항</h4>
+						</div>
+						<div class="modal-body">
+							<!-- 예약사항 폼 시작-->
+							<div class="checkout-accordion-wrap">
+								<div class="accordion" id="accordionExample">
+									<div class="card single-accordion">
+										<div class="card-header" id="headingOne">
+											<h5 class="mb-0">
+												<button class="btn btn-link" type="button"
+													data-toggle="collapse" data-target="#collapseOne"
+													aria-expanded="true" aria-controls="collapseOne">수거
+													및 배송신청</button>
+											</h5>
+										</div>
+										<div id="collapseOne" class="collapse show"
+											aria-labelledby="headingOne" data-parent="#accordionExample">
+											<div class="card-body">
+												<div class="billing-address-form">
+													<input type="hidden" name="laundryName"
+														th:value="${l.laundryName}">
+													<h5 style="margin-bottom: 20px;">수거일 예약 신청</h5>
+													<input type="date" class="currentDate"> <input
+														type="time" class="currentDateTime">
+													<p style="margin-top: 5px; font-size: 11px;">※ 수거는 예약날짜
+														및 시간 으로 부터 최대 24시간의 시간이 소요 됩니다.</p>
 
+													<!-- 
+														for (var i = 0; i < removeBtn.length; i++) {
+															removeBtn[i].addEventListener('click', function(e) {
+																var strBox = e.target.parentElement.parentElement.parentElement.parentElement
+																		.querySelector('.strBox')
+																var ps = strBox.querySelectorAll('div');
+																var l = ps.length;
+												
+																if (l <= 0) {
+																	alert('더이상 제거 할 수 없습니다.');
+																} else {
+																	ps[l - 1].remove();
+																}
+												
+															});
+														}
+																
+													-->
+													<div th:class="${'append-info'}">
+														<div class="boxbox" style="margin-bottom: 10px;">
+															<div class="select-box" id="leftSelect"
+																style="float: left; display: inline-block; width: 30%; margin-right: 3%;">
+																<h5 style="margin-top: 20px;">세탁물 선택</h5>
+																<select class="igp" name="goodsName"
+																	style="width: 120px;">
+																	<th:block th:each="ls , st : ${ilbanGoodsPriceList}">
+																		<th:block th:each="lss : ${ls.ilbanGoodsPrice}">
+																			<option th:if="${ls.laundryName} eq ${l.laundryName}"
+																				th:text="${lss.goodsName}"
+																				th:value="${lss.goodsName}"></option>
+																		</th:block>
+																	</th:block>
+																</select>
+															</div>
+															<div class="select-box" id="rightSelect"
+																style="width: 42%; display: inline-block;">
+																<h5 style="margin-top: 20px;">세탁기능 선택</h5>
+																<select class="isp" name="goodsOption">
+																	<th:block th:each="ls : ${ilbanSkillList}">
+																		<option th:text="${ls.skillCate}"
+																			th:value="${ls.skillCate}"></option>
+																	</th:block>
+																</select> <br />
+															</div>
+															<button type="button" class="btn btn-info append-btn">추가</button>
+															<div class="strBox" style="margin-top: 16px;"></div>
+														</div>
+													</div>
+													<br />
+													<!--  
+													<th:block th:each="m : ${member}">
+													<div>
+														<span th:text="|이름 : ${m.memberName} 님|"></span>
+													</div>
+														<span th:text="|주소 : ${m.memberPostNum}|"></span>
+														<span th:text="|${m.memberAddr}|"></span>
+														<span th:text="|${m.memberDetailAddr}|"></span>
+													<div>
+														<span th:text="|번호 : ${m.memberPhone}|"></span>
+													</div>
+													</th:block>
+													-->
+													<p>
+														<textarea name="bill" id="bill" cols="30" rows="10"
+															placeholder="배송시 요청사항"></textarea>
+													</p>
+
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="card single-accordion">
+										<div class="card-header" id="headingTwo">
+											<h5 class="mb-0">
+												<button class="btn btn-link collapsed" type="button"
+													data-toggle="collapse" data-target="#collapseTwo"
+													aria-expanded="false" aria-controls="collapseTwo">가격표</button>
+											</h5>
+										</div>
+										<div id="collapseTwo" class="collapse"
+											aria-labelledby="headingTwo" data-parent="#accordionExample">
+											<div class="card-body">
+												<div class="shipping-address-form">
+													<th:block>
+														<div class="cart-table-wrap">
+															<table class="cart-table tbServiceList">
+																<thead class="cart-table-head">
+																	<tr class="table-head-row">
+																		<th class="product-quantity">상품명</th>
+																		<th class="product-total">가격</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<th:block th:each="ls , st : ${ilbanGoodsPriceList}">
+																		<tr class="table-body-row"
+																			th:each="lss : ${ls.ilbanGoodsPrice}">
+																			<td class="product-quantity"
+																				th:if="${ls.laundryName} eq ${l.laundryName}"
+																				th:text="${lss.goodsName}"></td>
+																			<td class="product-total"
+																				th:if="${ls.laundryName} eq ${l.laundryName}"
+																				th:text="${lss.goodsPrice}"></td>
+																		</tr>
+																	</th:block>
+																</tbody>
+															</table>
+														</div>
+													</th:block>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 예약사항 폼 끝-->
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">취소</button>
+							<button type="submit" class="btn btn-primary">결제하기</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- 모달 예약하기 버튼 끝 -->
+	</th:block>
 	<!--매장정보 모달 -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -664,36 +769,39 @@
 		var removeBtn = document.querySelectorAll('.remove-btn');
 
 		for (var i = 0; i < appendBtn.length; i++) {
-			appendBtn[i].addEventListener('click',
-					function(e) {
-						var box = e.target.parentElement.parentElement
-								.querySelector('.boxbox')
-						var strGp = box.querySelector('.igp').value;
-
-						e.target.parentElement.parentElement
-								.querySelector('.strBox').innerHTML += '<p>'
-								+ strGp + '</p>';
-
-					});
+			appendBtn[i]
+					.addEventListener(
+			'click',
+			function(e) {
+				var box = e.target.parentElement.parentElement.parentElement
+						.querySelector('.boxbox')
+				var strGp = box.querySelector('.igp').value;
+				var strSp = box.querySelector('.isp').value;
+	
+				e.target.parentElement.parentElement
+						.querySelector('.strBox').innerHTML 
+					   += '<div class="pPlusBtn">'
+						+ '<p>'	
+						+ '- '
+						+ strGp + '</p>'
+						+ '<p>'	
+						+ ' > '
+						+ strSp + '</p>'
+						+ ' : '
+						+ '<button type="button" class="btn btn-info remove-btn">' 
+						+ '제거' 
+						+ '</button>'
+						+ '</div>';
+			});
+			  
 		}
+		
 
 		/*제거하기 클릭시 세탁기능, 세탁물 선택창 제거*/
-		for (var i = 0; i < removeBtn.length; i++) {
-			removeBtn[i].addEventListener('click', function(e) {
-				var strBox = e.target.parentElement.parentElement
-						.querySelector('.strBox')
-				var ps = strBox.querySelectorAll('p');
-				var l = ps.length;
-
-				if (l <= 0) {
-					alert('더이상 제거 할 수 없습니다.');
-				} else {
-					ps[l - 1].remove();
-				}
-
-			});
-		}
-
+		$(document).on('click','.remove-btn',function(){
+			$(this).parent().remove();
+		});
+		
 		/*수거배송 신청예약 폼 내일날짜로 셋팅*/
 		var currentDates = document.querySelectorAll('.currentDate');
 		var currentDateTimes = document.querySelectorAll('.currentDateTime');

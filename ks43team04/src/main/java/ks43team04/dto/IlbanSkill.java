@@ -4,6 +4,7 @@ public class IlbanSkill {
 	private String ilbanSkillCode;
 	private String skillCate;
 	private String adminLevelCode;
+	private String IlbanSkill;
 	private String registTime;
 
 	public String getIlbanSkillCode() {
@@ -41,7 +42,15 @@ public class IlbanSkill {
 	@Override
 	public String toString() {
 		return "IlbanSkill [ilbanSkillCode=" + ilbanSkillCode + ", skillCate=" + skillCate + ", adminLevelCode="
-				+ adminLevelCode + ", registTime=" + registTime + "]";
+				+ adminLevelCode + ", IlbanSkill=" + IlbanSkill + ", registTime=" + registTime + "]";
+	}
+
+	public String getIlbanSkill() {
+		return IlbanSkill;
+	}
+
+	public void setIlbanSkill(String ilbanSkill) {
+		IlbanSkill = ilbanSkill;
 	}
 
 }

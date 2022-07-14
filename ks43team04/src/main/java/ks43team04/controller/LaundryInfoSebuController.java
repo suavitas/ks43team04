@@ -4,6 +4,8 @@ package ks43team04.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ks43team04.dto.IlbanSkill;
 import ks43team04.dto.Laundry;
 import ks43team04.dto.LaundryInfoSebu;
+import ks43team04.dto.Member;
 import ks43team04.service.LaundryInfoSebuService;
+import ks43team04.service.MemberService;
 import ks43team04.service.YeyakService;
 
 
@@ -25,12 +29,15 @@ import ks43team04.service.YeyakService;
 public class LaundryInfoSebuController {
 	
    private static final Logger log = LoggerFactory.getLogger(LaundryInfoSebuController.class);
+  
    private final LaundryInfoSebuService laundryInfoSebuService;
    private final YeyakService yeyakService;
+   private final MemberService memberService;
    
-   public LaundryInfoSebuController(YeyakService yeyakService,LaundryInfoSebuService laundryInfoSebuService) {
+   public LaundryInfoSebuController(MemberService memberService,YeyakService yeyakService,LaundryInfoSebuService laundryInfoSebuService) {
       this.laundryInfoSebuService = laundryInfoSebuService;
       this.yeyakService = yeyakService;
+      this.memberService = memberService;
    }
    
    /*test*/
@@ -44,10 +51,12 @@ public class LaundryInfoSebuController {
    
    @PostMapping("/laundryInfo")
    public String getLaundryInfoSebu(@RequestParam(name = "searchKey") String searchKey,
-         @RequestParam(name = "searchValue", required = false) String searchValue, Model model) {
-      
+		   							@RequestParam(name = "searchValue", required = false) String searchValue, Model model, HttpSession session) {
+	   
+	   String sessionId = (String) session.getAttribute("SID");
 	   HashMap<String, String> search = new HashMap<>();
-	      
+	   
+	   Member member = memberService.getMemberInfoById(sessionId);
 	      log.info("searchKey : {}", searchKey);
 	      log.info("searchValue : {}", searchValue);
 	      
@@ -69,7 +78,8 @@ public class LaundryInfoSebuController {
 	      
 	      model.addAttribute("ilbanSkillList",ilbanSkillList);
 	      model.addAttribute("ilbanGoodsPriceList",ilbanGoodsPriceList);
-	      
+	      model.addAttribute("sessionId", sessionId);
+	      model.addAttribute("member", member);
 	      
 	      System.out.println(ilbanSkillList+"일반스킬리스트");
 	      System.out.println(laundryInfo);
