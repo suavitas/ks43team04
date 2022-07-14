@@ -503,7 +503,7 @@ public class BoardService {
 
 	/* 공지사항 목록 조회(페이징 처리) */
 	public Map<String, Object> getNoticeList(int currentPage){
-		int rowPerPage = 10;
+		int rowPerPage = 50;
 		int startPageNum = 1;
 		int endPageNum = 3;
 		
@@ -512,7 +512,7 @@ public class BoardService {
 		int startRow = (currentPage - 1) * rowPerPage;
 		
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("startRow", startRow);
+		paramMap.put("startRow", 0);
 		paramMap.put("rowPerPage", rowPerPage);
 		
 		List<Board> getNoticeList = boardMapper.getNoticeList(paramMap);

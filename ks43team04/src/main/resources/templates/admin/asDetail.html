@@ -181,12 +181,21 @@
 		<div class="x_content col-md-9">
 		
 		<div  style="text-align: right;">
-		<a th:href="@{/admin/asModify(asCode=${as.asCode},memberId=${as.memberId},asTitle=${as.asTitle},asContent=${as.asContent},asState=${as.asState})}"><button type="button" class="btn btn-info" onclick="return asModify()" style="margin-bottom: 30px;">수정</button></a>
+		<th:block th:if="${ssmember.levelCode == 'level_code_02'}">
+		<a th:href="@{/admin/asModify(asCode=${as.asCode},memberId=${as.memberId},asTitle=${as.asTitle},asContent=${as.asContent},asState=${as.asState})}">
+		<button type="button" class="btn btn-info" onclick="return asModify()" style="margin-bottom: 30px;">수정</button>
+		</a>
 		<button type="button" class="btn btn-warning" id="as-remove" data-toggle="modal" data-target="#staticBackdrop3" style="margin-bottom: 30px;">
 		삭제
 		</button>
-		</div>
+		</th:block>
 		
+		<th:block th:if="${as.asState == '접수'}">
+		<button type="button" class="btn btn-warning" id="visit-as"  data-toggle="modal" data-target="#staticBackdrop4" style="margin-right: 30px; float: left;">
+			날짜변경
+		</button>
+		</th:block>	
+		</div>
 		<table class="table table-bordered">
 		
 		<tbody>
@@ -259,9 +268,7 @@
 					<button type="button" class="btn btn-danger" id="end-as"  data-toggle="modal" data-target="#staticBackdrop2" style="margin-right: 30px;">
 					완료
 					</button>
-					<button type="button" class="btn btn-warning" id="visit-as"  data-toggle="modal" data-target="#staticBackdrop4" style="margin-right: 30px;">
-					날짜변경
-					</button>
+
 				</th:block>
 		
 				
