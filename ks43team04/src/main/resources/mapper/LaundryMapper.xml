@@ -36,6 +36,7 @@
 	<resultMap type="IlbanSkill" id="ilbanSkillResultMap">
 		<id column="ilban_skill_code" property="ilbanSkillCode" />
 		<result column="skill_cate" property="skillCate" />
+		<result column="skill_price" property="skillPrice" />
 		<result column="admin_level_code" property="adminLevelCode" />
 		<result column="regist_time" property="registTime" />
 	</resultMap>

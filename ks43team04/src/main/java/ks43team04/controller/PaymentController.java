@@ -52,7 +52,7 @@ public class PaymentController {
 		Member member = memberService.getMemberInfoById(sessionId);
 		//세션 이름 저장
 		model.addAttribute("sessionName", sessionName);
-		
+		model.addAttribute("member", member);
 		String memberId = sessionId;
 		//rowCount > id 결제건수
 		int rowCount = billService.getBillCount2(memberId);
