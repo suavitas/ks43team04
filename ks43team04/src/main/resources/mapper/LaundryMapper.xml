@@ -125,8 +125,9 @@
 
 
 	<select id="machineSpecList" resultMap="MachineSpecResultMap">
+		/*관리자 무인 세탁소 장비 스팩*/
 		SELECT
-			muin_spec_code,
+			muin_spec_code as MachineSpecCode,
 			machine_category,
 			machine_release,
 			machine_limit,
@@ -139,7 +140,7 @@
 			machine_skill,
 			machine_management,
 			machine_display,
-			machine_control,
+			machine_control as MachineControl, 
 			machine_Power,
 			machine_space,
 			machine_color,
