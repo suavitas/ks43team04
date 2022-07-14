@@ -192,14 +192,19 @@ public class AdminBoardController {
 	/*고장 신고 상세 조회*/
 	@GetMapping("/asDetail")
 	public String asDetail(@RequestParam(name = "asCode", required = false) String asCode
-							,Model model) {
+							,Model model, HttpSession session) {
 		As as = boardService.getAsDetail(asCode);
 		String mId = as.getMemberId();
 		Member member = memberService.getMemberInfoById(mId);
+		String sessionId = (String) session.getAttribute("SID");
+		Member ssmember = memberService.getMemberInfoById(sessionId);
+		
 		model.addAttribute("member", member);
+		model.addAttribute("ssmember", ssmember);
 		model.addAttribute("as", as);
 		log.info("as목록 : {}", as);
 		System.out.println(as);
+		System.out.println(ssmember);
 		return "admin/asDetail";
 	}
 	
