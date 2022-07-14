@@ -10,78 +10,107 @@
 <th:block layout:fragment="customJsScript"> 
 	<script type="text/javascript">
 		
-		/*유효성검사 */
-		function validCheck(){
-			var title = document.getElementById("title");
-			var content = document.getElementById("content");
-			if(title.value == ""){
-				alert("제목을 입력하세요.")
-				title.focus();
-				return false;
-			};
-			if(content.value == ""){
-				alert("내용을 입력하세요.")
-				content.focus();
-				return false;
-			};				
-		}
+			
 		
-		/*첨부파일 필드추가*/
-		let fileIdx = 0; /*[- 파일 인덱스 처리용 전역 변수 -]*/
-		function addFile() {
-		
-			const fileDivs = $('div[data-name="fileDiv"]');
-			if (fileDivs.length > 3) {
-				alert('파일은 최대 네 개까지 업로드 할 수 있습니다.');
-				return false;
+			/*유효성검사 */
+			function validCheck(){
+				var title = document.getElementById("title");
+				var content = document.getElementById("content");
+				if(title.value == ""){
+					alert("제목을 입력하세요.")
+					title.focus();
+					return false;
+				};
+				if(content.value == ""){
+					alert("내용을 입력하세요.")
+					content.focus();
+					return false;
+				};
+				return true;
 			}
-		
-			fileIdx++;
-		
-			const fileHtml = `
-				<div data-name="fileDiv" class="form-group row filebox bs3-primary">
-					<label for="file_${fileIdx}" class="col-md-1 control-label"></label>
-					<div class="col-sm-10">
-						<input type="text" class="upload-name" value="파일 찾기" readonly />
-						<label for="file_${fileIdx}" class="control-label">찾아보기</label>
-						<input type="file" name="boardImgFile" id="file_${fileIdx}" class="upload-hidden" onchange="changeFilename(this)" />
-		
-						<button type="button" onclick="removeFile(this)" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
-							<i class="fa fa-minus" aria-hidden="true"></i>
-						</button>
+			
+			/*첨부파일 필드추가*/
+			let fileIdx = 0; /*[- 파일 인덱스 처리용 전역 변수 -]*/
+			function addFile() {
+			
+				const fileDivs = $('div[data-name="fileDiv"]');
+				if (fileDivs.length > 3) {
+					alert('파일은 최대 네 개까지 업로드 할 수 있습니다.');
+					return false;
+				}
+			
+				fileIdx++;
+			
+				const fileHtml = `
+					<div data-name="fileDiv" class="form-group row filebox bs3-primary">
+						<label for="file_${fileIdx}" class="col-md-1 control-label"></label>
+						<div class="col-sm-10">
+							<input type="text" class="upload-name" value="파일 찾기" readonly />
+							<label for="file_${fileIdx}" class="control-label">찾아보기</label>
+							<input type="file" name="boardImgFile" id="file_${fileIdx}" class="upload-hidden" onchange="changeFilename(this)" />
+			
+							<button type="button" onclick="removeFile(this)" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+								<i class="fa fa-minus" aria-hidden="true"></i>
+							</button>
+						</div>
 					</div>
-				</div>
-			`;
-		
-			$('#btnDiv').before(fileHtml);
-		}
-		
-		
-		/*첨부파일 필드삭제*/
-		function removeFile(elem) {
-		
-			const prevTag = $(elem).prev().prop('tagName');
-			if (prevTag === 'BUTTON') {
-				const file = $(elem).prevAll('input[type="file"]');
-				const filename = $(elem).prevAll('input[type="text"]');
-				file.val('');
-				filename.val('파일 찾기');
-				return false;
+				`;
+			
+				$('#btnDiv').before(fileHtml);
 			}
+			
+			
+			/*첨부파일 필드삭제*/
+			function removeFile(elem) {
+			
+				const prevTag = $(elem).prev().prop('tagName');
+				if (prevTag === 'BUTTON') {
+					const file = $(elem).prevAll('input[type="file"]');
+					const filename = $(elem).prevAll('input[type="text"]');
+					file.val('');
+					filename.val('파일 찾기');
+					return false;
+				}
+			
+				const target = $(elem).parents('div[data-name="fileDiv"]');
+				target.remove();
+			}
+	 		
+			/*첨부파일 첨부 시 파일 이름로 변경*/
+			function changeFilename(file) {
+			
+				file = $(file);
+				const filename = file[0].files[0].name;
+				const target = file.prevAll('input');
+				target.val(filename);
+			}
+			
+			$(document).on('click','.submitBtn', function(){
+				var validResult = validCheck();
+				if(!validResult) return false;
+				var form = $('#noticeForm')[0]; 
+				var data = new FormData(form);
+				
+				// ajax 통신
+	            $.ajax({
+	                type : "POST",            // HTTP method type(GET, POST) 형식이다.
+	                url : "/admin/noticeForm",      // 컨트롤러에서 대기중인 URL 주소이다.
+	                enctype: 'multipart/form-data',
+	                data : data,            // Json 형식의 데이터이다.
+	                dataType : 'text',
+	                processData:false,
+	                contentType:false,
+	                cache:false,
+	                success : function(result){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+	                    location.href = result;
+	                },
+	                error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+	                    alert("통신 실패.")
+	                }
+	            });
+				
+			});
 		
-			const target = $(elem).parents('div[data-name="fileDiv"]');
-			target.remove();
-		}
- 		
-		/*첨부파일 첨부 시 파일 이름로 변경*/
-		function changeFilename(file) {
-		
-			file = $(file);
-			const filename = file[0].files[0].name;
-			const target = file.prevAll('input');
-			target.val(filename);
-		}
-	
 	</script>
 
 	<style>
@@ -161,13 +190,13 @@
 				<div class="form-group row">
 					<label class="control-label col-md-1 col-sm-1">제목</label>
 						<div class="col-md-8 col-sm-8">
-							<input type="text" class="form-control" name="boardTitle" id="title" placeholder="제목" required="required">
+							<input type="text" class="form-control" name="boardTitle" id="title" placeholder="제목">
 						</div>
 				</div>
 				<div class="form-group row">
 					<label class="control-label col-md-1 col-sm-1">내용</label>
 						<div class="col-md-8 col-sm-8">
-							<p><textarea class="form-control" name="boardContent" id="content" placeholder="내용" style="resize: none; height: 350px;" required="required"></textarea></p>
+							<p><textarea class="form-control" name="boardContent" id="content" placeholder="내용" style="resize: none; height: 350px;" ></textarea></p>
 						</div>
 				</div>
 				
@@ -192,7 +221,7 @@
 				<div id="btnDiv" class="form-group">
 					<div class="col-md-9 col-sm-9 offset-md-2" style="margin-left: 0; text-align: center; padding-top: 50px;">
 						<a th:href="@{/admin/noticeList}"><button type="button" class="btn btn-primary" style="margin-right: 30px;">취소</button></a>
-						<a th:href="@{/admin/noticeList}"><button type="submit" class="btn btn-success" value="Submit" style="margin-left: 30px;" onclick="return validCheck()">등록</button></a>
+						<button type="button" class="btn btn-success submitBtn" style="margin-left: 30px;">등록</button>
 					</div>
 				</div>
 			</form>
