@@ -42,7 +42,10 @@
 		{    
 		  overflow-y:hidden; 
 		}
-		
+		.row{display:block;width:100%;}
+		.row .col-sm-6{width:227px;}
+		.row .btn-secondary{position:absolute; right:19px; top:3px;}
+		.x_content{padding-top:20px !important; z-index:1;}
 	</style>
 	
 		<h4><strong>공지사항 관리</strong></h4>
@@ -55,7 +58,6 @@
 	 		<h4 style="margin: 20px;">공지사항</h4>
 	 			
 	 			<div class="x_title">
-		 			<a th:href="@{/admin/noticeForm}"><button type="button" class="btn btn-secondary" style="float: right; margin-top: 20px; margin-right: 20px;">등록하기</button></a>
 				
 	 			
 			<!-- 공지사항 테이블 -->
@@ -63,6 +65,7 @@
 				<div class="row">
                           <div class="col-sm-12">
                             <div class="card-box table-responsive">
+		 			<a th:href="@{/admin/noticeForm}" class="btn btn-secondary" style="z-index: 1;">등록하기</a>
 			
 			<table id="datatable-fixed-header" class="table table-striped table-bordered" style="width: 100%;">
 				<thead>

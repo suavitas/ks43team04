@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -472,6 +473,7 @@ public class AdminBoardController {
 	}
 	
 	@PostMapping("/noticeForm")
+	@ResponseBody
 	public String noticeForm(Board board, HttpSession session 
 							,RedirectAttributes reAttr, @RequestParam MultipartFile[] boardImgFile, HttpServletRequest request) {
 		System.out.println("------------------------게시글 등록 처리-----------------------------");
@@ -494,7 +496,7 @@ public class AdminBoardController {
 		reAttr.addAttribute("boardIdx", boardIdx);
 		System.out.println("------------------------게시글 등록 처리 끝-----------------------------");
 		
-		return "redirect:/admin/noticeList";
+		return "/admin/noticeList";
 	}
 	
 	/*공지사항 상세 조회*/
