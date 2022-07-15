@@ -42,7 +42,7 @@
 
 <th:block layout:fragment="customContents">
 	<form  th:action="@{/admin/addHoliday}" method="post" id="addHolidayForm"
-		style="text-align: center;">
+		>
 		<table class="table table-striped jambo_table bulk_action"
 			style="width: 60%; margin: 0 auto; margin-top: 80px; border-collapse: separate;">
 			<thead>
@@ -66,11 +66,11 @@
 				</tr>
 				<tr class="even pointer">
 					<td>휴일 명</td>
-					<td><input type="text" name="yearlyHolidayName" th:value="${yearlyHolidayName}"></td>
+					<td><input style="width: 50%;" type="text" name="yearlyHolidayName" th:value="${yearlyHolidayName}"></td>
 				</tr>
 				<tr class="even pointer">
 					<td>휴일 날짜</td>
-					<td><input type="date" name="yearlyHolidayDate" th:value="${yearlyHolidayDate}"></td>
+					<td><input style="width: 50%;" type="date" name="yearlyHolidayDate" th:value="${yearlyHolidayDate}"></td>
 					
 				</tr>
 					<tr class="even pointer">
