@@ -11,16 +11,16 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
 	<script>
 		$(function(){
-			$(document).on('click', '.changeMachineStateBtn', function() {
+			$(document).on('click', '.addMachineStateBtn', function() {
 				$.ajax({
-        		    url: "/admin/machine/changeMachineState",
+        		    url: "/admin/machine/addMachineState",
         		    type: "POST",
         		    dataType: "text",
-        		    data: $('#changeMachineStateBtnForm').serialize(),
+        		    data: $('#addMachineStateBtnForm').serialize(),
         		    success: function(data){
         		    	swal(
-        		    	        '장비 스팩 수정',
-        		    	        '<b style="color:green;">수정완료</b> 되었습니다!',
+        		    	        '장비 스팩 추가',
+        		    	        '<b style="color:green;">추가완료</b> 되었습니다!',
         		    	        'success'
         		    	      ).then((result) => {
         				          if (result.value) {
@@ -44,7 +44,7 @@
 
 
 			<h4>전체 장비 스팩</h4>
-			<form th:action="@{/admin/machine/changeMachineState}" method="post" id="changeMachineStateBtnForm"
+			<form th:action="@{/admin/machine/addMachineState}" method="post" id="addMachineStateBtnForm"
 							style="text-align: center;">
 				<div class="responsive-table" style="overflow: auto;">
 
@@ -63,7 +63,7 @@
 							</tr>
 							<tr>
 								<td>출시</td>
-								<td><input style="width: 50%;" name="MachineRelease"
+								<td><input type="date" style="width: 50%;" name="MachineRelease"
 									th:value="${MachineRelease}"></td>
 							</tr>
 							<tr>
@@ -97,7 +97,7 @@
 								<td><input style="width: 50%;"; name="MachineTimer" th:value="${MachineTimer}"></td>
 							</tr>
 							<tr>
-								<td>조작부</td>
+								<td>안전기능</td>
 								<td><input style="width: 50%;"; name="MachineSafety" th:value="${MachineSafety}"></td>
 							</tr>
 							<tr>
@@ -113,6 +113,11 @@
 								<td>디스플레이</td>
 								<td><input style="width: 50%;"; name="MachineDisplay"
 									th:value="${MachineDisplay}"></td>
+							</tr>
+							<tr>
+								<td>조작부</td>
+								<td><input style="width: 50%;"; name="MachineControl"
+									th:value="${MachineControl}"></td>
 							</tr>
 							<tr>
 								<td>소비전력</td>
@@ -140,9 +145,9 @@
 							</tr>
 							<tr>
 								<td colspan="2">
-									<button type="button" class="btn btn-danger btn-sm changeMachineStateBtn"
+									<button type="button" class="btn btn-danger btn-sm addMachineStateBtn"
 										data-toggle="modal" data-target="#deleteModal">
-										전체 장비 스팩 수정</button>
+										전체 장비 스팩 추가</button>
 								</td>
 							</tr>
 						</tbody>

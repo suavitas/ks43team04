@@ -24,5 +24,22 @@ public class MachineService {
 		return result;
 	}
 	
+	/*전체 장비 스팩 추가*/
+	public int addMachienSpec(MuinMachienSpec muinMachienSpec){
+		   int result = machineMapper.addMachienSpec(muinMachienSpec);
+		   System.out.println("________전체 장비 스팩 추가 실행 서비스__________"+muinMachienSpec);
+		return result;
+	}
+	/*전체 장비 스팩 삭제*/
+	public int removeMachienSpec(String MachineSpecCode) {
+		
+		  int result = machineMapper.removeMachienSpec(MachineSpecCode);
+		  System.out.println("________전체 장비 스팩 삭제 실행 서비스__________"+MachineSpecCode);
+			return result;
+	}
+	
+	
+	
+	
 	
 }
