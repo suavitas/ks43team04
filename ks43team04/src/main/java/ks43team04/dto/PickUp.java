@@ -14,6 +14,8 @@ public class PickUp {
 	private List<LaundryList> laundryList;
 	private List<User> user;
 	private List<Member> memberList;
+	private List<Request> requestList;
+	private List<ContractRider> contractRiderList;
 
 	public List<Member> getMemberList() {
 		return memberList;
@@ -95,6 +97,25 @@ public class PickUp {
 		this.contractRriderCode = contractRriderCode;
 	}
 
+	
+	public List<Request> getRequestList() {
+		return requestList;
+	}
+
+	public void setRequestList(List<Request> requestList) {
+		this.requestList = requestList;
+	}
+
+	
+	
+	public List<ContractRider> getContractRiderList() {
+		return contractRiderList;
+	}
+
+	public void setContractRiderList(List<ContractRider> contractRiderList) {
+		this.contractRiderList = contractRiderList;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -118,6 +139,10 @@ public class PickUp {
 		builder.append(user);
 		builder.append(", memberList=");
 		builder.append(memberList);
+		builder.append(", requestList=");
+		builder.append(requestList);
+		builder.append(", contractRiderList=");
+		builder.append(contractRiderList);
 		builder.append("]");
 		return builder.toString();
 	}

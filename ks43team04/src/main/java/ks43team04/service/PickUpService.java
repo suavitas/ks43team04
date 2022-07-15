@@ -18,6 +18,12 @@ public class PickUpService {
 		this.pickUpMapper = pickUpMapper;
 	}
 
+	/*매장별 수거 목록(점주)*/
+	public List<PickUp> pickUpListByStore(List<String> laundryCodeList){
+		List<PickUp> pickUpListByStore = pickUpMapper.pickUpListByStore(laundryCodeList);
+		return pickUpListByStore;
+	}
+	
 	public List<PickUp> getPickUpList() {
 
 		List<PickUp> getPickUpList = pickUpMapper.getPickUpList();

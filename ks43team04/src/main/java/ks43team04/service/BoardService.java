@@ -15,6 +15,7 @@ import ks43team04.common.FileUtils;
 import ks43team04.dto.As;
 import ks43team04.dto.Board;
 import ks43team04.dto.Event;
+import ks43team04.dto.Laundry;
 import ks43team04.dto.LaundryList;
 import ks43team04.dto.Review;
 import ks43team04.mapper.AsMapper;
@@ -96,8 +97,8 @@ public class BoardService {
 	}
 	
 	/*멤버이름으로 세탁소조회*/
-	public List<LaundryList> getMemberLaundryList(String memberId){
-		List<LaundryList> getMemberLaundryList = laundryMapper.getMemberLaundryList(memberId);
+	public List<Laundry> getMemberLaundryList(String memberId){
+		List<Laundry> getMemberLaundryList = laundryMapper.getMemberLaundryList(memberId);
 		return getMemberLaundryList;
 	}
 	
