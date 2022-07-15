@@ -3,9 +3,43 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/adminDefault}">
 
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+</th:block>
 
+<th:block layout:fragment="customJsScript">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+	<script>
+		$(function(){
+			$(document).on('click', '.removeHolidayBtn', function() {
+				$.ajax({
+        		    url: "/admin/removeHoliday",
+        		    type: "post",
+        		    dataType: "text",
+        		    data: $('#removeHolidayForm').serialize(),
+        		    success: function(data){
+        		    	swal(
+        		    	        '휴일삭제',
+        		    	        '<b style="color:green;">삭제완료</b> 되었습니다!',
+        		    	        'success'
+        		    	      ).then((result) => {
+        				          if (result.value) {
+        				              window.location = data;
+        				          }
+        		    	      });
+        		    	
+        		    },
+        		    error: function (request, status, error){        
+
+        		    }
+				
+		    	});
+			});
+		});
+	</script>
+</th:block>
 <th:block layout:fragment="customContents">
-	<form  th:action="@{/admin/removeHoliday}" method="post"
+	<form  th:action="@{/admin/removeHoliday}" method="post" id="removeHolidayForm"
 		style="text-align: center;">
 		<table class="table table-striped jambo_table bulk_action"
 			style="width: 50%; margin: 0 auto; margin-top: 80px; border-collapse: separate;">
@@ -30,13 +64,13 @@
 				</tr>
 					<tr class="even pointer">
 					<td colspan="2">
-						<button type="submit" class="btn btn-danger btn-sm"
+						<button type="button" class="btn btn-danger btn-sm removeHolidayBtn"
 							data-toggle="modal" data-target="#deleteModal">휴일 정보 삭제</button>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		<input type="hidden" name="ilbanGPriceCode" th:value="${ilbanGPriceCode}">
+		<input type="hidden" name="holidayCode" th:value="${holidayCode}">
 	</form>
 	
 </th:block>

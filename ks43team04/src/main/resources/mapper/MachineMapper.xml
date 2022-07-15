@@ -73,14 +73,19 @@
 			</if>	
 		</trim>
 				,regist_time = NOW()
-			
-	
+
 		WHERE
 		muin_spec_code = #{MachineSpecCode};
-   
-    
-   
 </update>
+
+<delete id="">
+	DELETE 
+		FROM 
+		tb_muin_spec
+		WHERE  
+		muin_spec_code = #{MachineSpecCode};
+
+</delete>
   
 	
  	
