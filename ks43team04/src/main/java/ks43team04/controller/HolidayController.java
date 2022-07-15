@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ks43team04.dto.HolidayList;
 import ks43team04.dto.LaundryList;
@@ -88,11 +89,12 @@ public class HolidayController {
 	
 	/* 세탁소별 휴일 삭제쿼리 실행하기*/
 	@PostMapping("/removeHoliday")
+	@ResponseBody
 	public String removeHoliday(String holidayCode) {
 
 		holidayService.removeHoliday(holidayCode);
 		System.out.println("________세탁소별 휴일 정보 삭제를 실행합니다.___________"+holidayCode);
-		return "redirect:/admin/lundryHoliday";
+		return "/admin/lundryHoliday";
 	}
 	
 	
@@ -121,15 +123,18 @@ public class HolidayController {
 
 	/* 세탁소별 휴일 수정하기*/
 	@PostMapping("/changeHoliday")
+	@ResponseBody
 	public String changeHoliday(HolidayList Laundryholiday) {
 
 		holidayService.modifyHoliday(Laundryholiday);
 		System.out.println("________세탁소별 휴일 정보를 수정했습니다.___________"+Laundryholiday);
-		return "redirect:/admin/lundryHoliday";
+		
+		return "/admin/lundryHoliday";
 	}
 	
 	/* 세탁소별 휴가 추가 */
 	@PostMapping("/addHoliday")
+	@ResponseBody
 	public String addHoliday(@RequestParam(name = "laundryCode", required=false) String laundryCode,
 			@RequestParam(name = "yearlyHolidayName", required=false) String yearlyHolidayName,
 			@RequestParam(name = "yearlyHolidayDate", required=false) String yearlyHolidayDate, 
@@ -139,7 +144,7 @@ public class HolidayController {
 			System.out.println("______________"+ laundryCode);
 			System.out.println("______________"+ yearlyHolidayName);
 			System.out.println("______________"+ yearlyHolidayDate);
-		return "redirect:/admin/lundryHoliday";
+		return "/admin/lundryHoliday";
 	}
 	
 	/* 세탁소별 휴가 추가 */
