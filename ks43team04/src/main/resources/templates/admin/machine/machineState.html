@@ -40,7 +40,7 @@
 							<th>색상</th>
 							<th>제품크기</th>
 							<th>무상AS</th>
-							<th>도어</th>						
+							<th>도어</th>
 							<th>등록시간</th>
 
 						</tr>
@@ -49,16 +49,27 @@
 						<tr th:if="${not #lists.isEmpty(MachineSpecList)}"
 							th:each="l : ${MachineSpecList}">
 							<td><a
-								th:href="@{/admin/machine/changeMachineState(MachineSpecCode=${l.MachineSpecCode},MachineCategory=${l.MachineCategory},MachineRelease=${l.MachineRelease},MachineLimit=${l.MachineLimit},
-										MachineMotor=${l.MachineMotor},MachineEnergy=${l.MachineEnergy},MachineCourse=${l.MachineCourse},
-										MachineRemoval=${l.MachineRemoval},MachineCourse=${l.MachineCourse},MachineTimer=${l.MachineTimer},
-										MachineSafety=${l.MachineSafety},MachineSkill=${l.MachineSkill},MachineManagement=${l.MachineManagement},
-										MachineDisplay=${l.MachineDisplay},MachinePower=${l.MachinePower},MachineSpace=${l.MachineSpace},
-										MachineColor=${l.MachineColor},MachineSize=${l.MachineSize},MachineAs=${l.MachineAs},MachineDoor=${l.MachineDoor},MachineControl=${l.MachineControl})}"><button
-										type="button" class="btn btn-success btn-sm"
-										data-toggle="modal" data-target="#deleteModal">수정</button> </a></td>
-							<td><a class="btn btn-danger btn-sm" data-toggle="modal"
-								data-target="#deleteModal" href="#">삭제</a></td>
+								th:href="@{/admin/machine/changeMachineState(MachineSpecCode=${l.MachineSpecCode},MachineCategory=${l.MachineCategory},
+										MachineRelease=${l.MachineRelease},MachineLimit=${l.MachineLimit},MachineMotor=${l.MachineMotor},
+										MachineEnergy=${l.MachineEnergy},MachineCourse=${l.MachineCourse},MachineRemoval=${l.MachineRemoval},
+										MachineTimer=${l.MachineTimer},MachineSafety=${l.MachineSafety},MachineSkill=${l.MachineSkill},
+										MachineManagement=${l.MachineManagement},MachineDisplay=${l.MachineDisplay},MachinePower=${l.MachinePower},
+										MachineSpace=${l.MachineSpace},MachineColor=${l.MachineColor},MachineSize=${l.MachineSize},MachineAs=${l.MachineAs},
+										MachineDoor=${l.MachineDoor},MachineControl=${l.MachineControl})}">
+									<button type="button" class="btn btn-success btn-sm"
+										data-toggle="modal" data-target="#deleteModal">수정</button>
+							</a></td>
+							<td><a
+								th:href="@{/admin/machine/removeMachineState(MachineSpecCode=${l.MachineSpecCode},MachineCategory=${l.MachineCategory},
+										MachineRelease=${l.MachineRelease},MachineLimit=${l.MachineLimit},MachineMotor=${l.MachineMotor},
+										MachineEnergy=${l.MachineEnergy},MachineCourse=${l.MachineCourse},MachineRemoval=${l.MachineRemoval},
+										MachineTimer=${l.MachineTimer},MachineSafety=${l.MachineSafety},MachineSkill=${l.MachineSkill},
+										MachineManagement=${l.MachineManagement},MachineDisplay=${l.MachineDisplay},MachinePower=${l.MachinePower},
+										MachineSpace=${l.MachineSpace},MachineColor=${l.MachineColor},MachineSize=${l.MachineSize},MachineAs=${l.MachineAs},
+										MachineDoor=${l.MachineDoor},MachineControl=${l.MachineControl})}">
+									<button type="button" class="btn btn-danger btn-sm"
+										data-toggle="modal" data-target="#deleteModal">삭제</button>
+							</a></td>
 							<td th:text="${l.MachineCategory}"></td>
 							<td th:text="${l.MachineRelease}"></td>
 							<td th:text="${l.MachineLimit}+kg"></td>
@@ -87,8 +98,9 @@
 					</tbody>
 				</table>
 			</div>
-			<input name="MachineSpecCode" th:value="${MachineSpecCode}" hidden="true">
-			<input name="MachineControl" th:value="${MachineControl}" hidden="true">
+			<input name="MachineSpecCode" th:value="${MachineSpecCode}"
+				hidden="true"> <input name="MachineControl"
+				th:value="${MachineControl}" hidden="true">
 		</div>
 	</div>
 
