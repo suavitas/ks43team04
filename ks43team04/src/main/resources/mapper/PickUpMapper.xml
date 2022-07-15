@@ -52,62 +52,62 @@
 			<result column="admin_level_code" 				property="adminLevelCode"/>
 			<result column="regist_time"					property="registTime"/>
 		</collection>
+		<collection property="requestList" 					ofType="Request">
+			<id column="request_code"						property="requestCode"/>
+			<result column="request_cate" 					property="requestCate"/>
+		</collection>
+		<collection property="contractRiderList" 						ofType="ContractRider">
+			<id column="head_contract_rider_code"						property="headContractRiderCode"/>
+			<result column="head_contract_admin" 						property="headContractAdmin"/>
+			<result column="head_rider_conpany_name" 					property="headRiderConpanyName"/>
+			<result column="head_rider_phone" 							property="headRiderPhone"/>
+			<result column="head_rider_area" 							property="headRiderArea"/>
+			<result column="head_rider_contract_date" 					property="headRiderContractDate"/>
+		</collection>
 	</resultMap>
 	
-<!-- 	<update id="noticeModify" parameterType="Board">
-		/* 공지 글 수정 */
-			UPDATE 
-				tb_board
-			set		
-				board_title = #{boardTitle}
-				,board_content = #{boardContent}
-				,board_add_file = #{boardAddFile}
-				,board_add_file_name = #{boardAddFileName}
-				,board_add_file_vol = #{boardAddFileVol}
-				,update_time = CURDATE()			
-			WHERE board_code = #{boardCode};
-	</update>
-	
-	
-	<insert id="noticeWrite" parameterType="Board">
-		/* 공지 글 작성 */
-	 INSERT INTO tb_board
-		(board_code
-			,board_menu_code
-			,m_id
-			,board_parent_no
-			,board_read_count
-			,board_title
-			,board_content
-			,board_secret
-			,board_add_file
-			,board_add_file_name
-			,board_add_file_vol
-			,regist_time
-			,update_time)
-		VALUES (
-			(SELECT
-			CONCAT('notice_code','_',(LPAD(COUNT(*)+1,3,'0')+1))FROM tb_board ALIAS_FOR_SUBQUERY)
-		, 'notice_menu_code_001'
-		, 'id001'			
-		, (SELECT
-			IFNULL(MAX(b.board_parent_no), 0)+1
-			FROM
-			tb_board AS b)
-		, 0		
-		, #{boardTitle}
-		, #{boardContent}
-		, '0'
-		, '0'
-		, '0'
-		, '0'
-		, CURDATE()
-		, CURDATE());
 
-	</insert> -->
-
+	<select id="pickUpListByStore" resultMap="pickUpResultMap" parameterType="list">
+		/* 매장별 수거 현황 */
+		SELECT
+			i.ilban_pickup_code
+			,i.pickup_want_date
+			,i.pickup_finish_time
+			,m.m_name
+			,l.laundry_name
+			,r.request_cate
+			,c.head_rider_conpany_name
+		FROM
+			tb_ilban_pickup AS i
+		INNER JOIN
+			tb_user AS u
+			on
+			u.user_code = i.user_code
+		INNER JOIN
+			tb_member AS m
+			on
+			u.m_id = m.m_id	
+		INNER JOIN
+			tb_laundry AS l
+			ON 
+			i.laundry_code=l.laundry_code	
+		INNER JOIN
+			tb_request AS r
+			on
+			r.request_code = i.request_code
+		INNER JOIN
+			tb_contract_rider AS c
+			on
+			c.head_contract_rider_code = i.contract_rider_code
+		WHERE
+			l.laundry_code IN
+			  <foreach item="laundryCode" index="index" collection="laundryCodeList"
+			      open="(" separator="," close=")">
+			        #{laundryCode}
+			  </foreach>
+				
+	</select>
 	
-
 	<select id="getPickUpList" parameterType="String" resultMap="pickUpResultMap">
 	  	SELECT
 			l.laundry_name 

@@ -296,7 +296,6 @@
 	
 	
 	/*AS방문 오늘날짜로 셋팅*/
-	
 	let dateElement = document.getElementById('DateLocal');
     let date = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, -8);
     
@@ -333,7 +332,7 @@
     console.log(today);
     console.log(bi);
     
-    if(bi<today){
+    if(bi <= today){
     }else {
     	endAs.addEventListener('click',function(){
     		alert('완료 가능한 날짜가 아닙니다.');
@@ -363,37 +362,17 @@
    	console.log(tomorrowfo);
    	console.log(bi);
    	
-    		
-    if(bi>tomorrowfo){
-    			console.log('히히');
-    }else {
-    	visitAs.addEventListener('click',function(){
-    		alert('변경 가능한 날짜가 아닙니다.');
-    		visitAs.removeAttribute('data-toggle');
-    	})
-    }
+   	visitAs.addEventListener('click',function(){
+   		if(bi>tomorrowfo){
+			console.log('히히');
+		}else {
+			visitAs.removeAttribute('data-toggle');
+			alert('변경가능날짜가아닙니다.')
+		}  		
+   	});
     
     
-    /*AS 유효성 검사(수정,삭제 - 대기상태일때만 가능)*/
     
-    function asModify(){
-    
-    	var asState = document.getElementById('asState');
-    	if(asState.value !== "대기"){
-    		alert('대기 상태일때만 수정이 가능합니다.');
-    		return false;
-    	}	return true;   	
-    }
-    
-    var asRemove = document.querySelector('#as-remove');
-    var asState = document.getElementById('asState');
-    if(asState.value == "대기"){
-    }else {
-    	asRemove.addEventListener('click',function(){
-    		alert('대기 상태일때만 삭제가 가능합니다.');
-    		asRemove.removeAttribute('data-toggle');
-    	})
-    }
     
 	<!-- 유효성검사(비밀번호확인) -->
 		

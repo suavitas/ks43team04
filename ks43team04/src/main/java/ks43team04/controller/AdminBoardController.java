@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ks43team04.dto.As;
 import ks43team04.dto.Board;
 import ks43team04.dto.Event;
+import ks43team04.dto.Laundry;
 import ks43team04.dto.LaundryList;
 import ks43team04.dto.Member;
 import ks43team04.dto.Review;
@@ -136,7 +137,7 @@ public class AdminBoardController {
 							,Model model, HttpSession session) {
 		String sessionId = (String) session.getAttribute("SID");
 		Member member = memberService.getMemberInfoById(sessionId);
-		List<LaundryList> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
+		List<Laundry> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
 		model.addAttribute("title", "AS등록");
 		model.addAttribute("titleName", "AS등록");
 		model.addAttribute("member", member);
@@ -179,7 +180,7 @@ public class AdminBoardController {
 		String sessionName = (String) session.getAttribute("SNAME");
 		Member member = memberService.getMemberInfoById(sessionId);
 		
-		List<LaundryList> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
+		List<Laundry> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
 		List<As> asListById = boardService.asListById(sessionId);
 		
 		model.addAttribute("sessionName", sessionName);
@@ -236,7 +237,7 @@ public class AdminBoardController {
 		As as = boardService.getAsDetail(asCode);
 		String sessionId = (String) session.getAttribute("SID");
 		Member member = memberService.getMemberInfoById(sessionId);
-		List<LaundryList> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
+		List<Laundry> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
 		model.addAttribute("member", member);
 		model.addAttribute("getMemberLaundryList", getMemberLaundryList);
 		model.addAttribute("as", as);
