@@ -1,5 +1,6 @@
 package ks43team04.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,12 +17,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ks43team04.dto.Board;
 import ks43team04.dto.Laundry;
 import ks43team04.dto.Member;
+import ks43team04.dto.MemberLevel;
 import ks43team04.mapper.BillMapper;
+import ks43team04.mapper.BoardMapper;
 import ks43team04.mapper.MemberMapper;
 import ks43team04.service.BillService;
+import ks43team04.service.BoardService;
 import ks43team04.service.MemberService;
+import ks43team04.service.PaymentService;
 import ks43team04.service.UserService;
 
 @Controller
@@ -35,14 +41,18 @@ public class MemberController {
 	private final MemberMapper memberMapper;
 	private final BillMapper billMapper;
 	private final BillService billService;
+	private final PaymentService paymentService;
+	private final BoardService boardService;
 
 	
-	public MemberController(MemberService memberService, MemberMapper memberMapper,BillMapper billMapper,UserService userService,BillService billService) {
+	public MemberController(MemberService memberService, MemberMapper memberMapper,BillMapper billMapper,UserService userService,BillService billService, PaymentService paymentService, BoardService boardService) {
 		this.memberService = memberService;
 		this.memberMapper = memberMapper;
 		this.billMapper = billMapper;
 		this.userService = userService;
 		this.billService = billService;
+		this.paymentService = paymentService;
+		this.boardService = boardService;
 	}
 	/**
 	 * 고객 마이페이지 > 환불내역
@@ -116,14 +126,18 @@ public class MemberController {
 	@GetMapping("/myPageWrite")
 	public String myPageWrite(Model model, HttpSession session) {
 
+		
 		String sessionId = (String) session.getAttribute("SID");
 		String sessionName = (String) session.getAttribute("SNAME");
-
 		Member member = memberService.getMemberInfoById(sessionId);
+		List<Board> myWritingList = boardService.myWritingList(member.getMemberId());
+		
 
 		model.addAttribute("title", "마이페이지");
 		model.addAttribute("sessionName", sessionName);
 		model.addAttribute("member", member);
+		model.addAttribute("myWritingList", myWritingList);
+		System.out.println(myWritingList);
 
 		return "/member/myPageWrite";
 	}
@@ -139,11 +153,15 @@ public class MemberController {
 		String sessionLevel = (String) session.getAttribute("SLEVEL");
 
 		Member member = memberService.getMemberInfoById(sessionId);
+		MemberLevel memberlevel = paymentService.getMemberLevel(sessionLevel);	
 
 		model.addAttribute("title", "마이페이지");
 		model.addAttribute("sessionName", sessionName);
 		model.addAttribute("sessionLevel", sessionLevel);
 		model.addAttribute("member", member);
+		model.addAttribute("memberlevel", memberlevel);
+		System.out.println(member);
+		System.out.println(memberlevel);
 		return "/member/myPagePoint";
 	}
 

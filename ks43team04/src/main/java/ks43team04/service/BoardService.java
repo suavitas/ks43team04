@@ -42,6 +42,12 @@ public class BoardService {
 		this.fileMapper = fileMapper;
 	}
 	
+	/*내가 쓴 글 조회*/
+	public List<Board> myWritingList(String memberId){
+		List<Board> myWritingList = boardMapper.myWritingList(memberId);
+		return myWritingList;
+	}
+	
 	/*문의사항 답변 수정*/
 	public int qnaCommentModify(Board board) {
 		int result = boardMapper.qnaCommentModify(board);
