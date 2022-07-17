@@ -3,30 +3,68 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/userDefault}">
 	  
+	<th:block layout:fragment="customCss">
+		<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css}">
+	</th:block>  
 	
-	<th:block layout:fragment="customScript">
-		<script type="text/javascript" th:src="@{/user/assets/js/jquery-1.11.3.min.js}"></script>
-	</th:block>	
-	
-	<!-- 새로고침 후 탭 유지 -->
-	<th:block layout:fragment="customJsScript"> 
+	<th:block layout:fragment="customJsPlugin">
+		<script th:src="@{https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js}"></script>
+	</th:block>
+	  
+	<th:block layout:fragment="customJsScript">
 		<script type="text/javascript">
-		$(document).ready(function() {
-		    if (location.hash) {
-		        $("a[href='" + location.hash + "']").tab("show");
-		    }
-		    $(document.body).on("click", "a[data-toggle='tab']", function(event) {
-		        location.hash = this.getAttribute("href");
-		    });
-		});
-		$(window).on("popstate", function() {
-		    var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
-		    $("a[href='" + anchor + "']").tab("show");
-		});
+			$(".tbqnaList").DataTable().destroy(); 
+			$(function(){
+				$('.tbqnaList').DataTable({
+					stateSave: true,
+			    	destroy : true,
+			    	ordering: false,
+			    	order: [ [ 1, "asc" ] ],
+			    
+				});
+				
+			});
+			
+			<!-- 새로고침 후 탭 유지 -->
+			$(document).ready(function() {
+			    if (location.hash) {
+			        $("a[href='" + location.hash + "']").tab("show");
+			    }
+			    $(document.body).on("click", "a[data-toggle='tab']", function(event) {
+			        location.hash = this.getAttribute("href");
+			    });
+			});
+			$(window).on("popstate", function() {
+			    var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
+			    $("a[href='" + anchor + "']").tab("show");
+			});
 		</script>
+		
+		<style>
+			td a{
+				color: #051922;
+			}
+			.cart-section {
+				background-color: #f5f6fa; 
+				padding: 60px 0 100px; 
+				margin: 0; 
+				border-top: #e5e5e5 1px solid;
+			}
+			table.dataTable thead th {
+				text-align: center;
+			}
+			table.dataTable .qnaTitle {
+				text-align: left; 
+				padding-left: 20px;
+			}
+			.dataTables_wrapper {
+				margin-top: 20px;
+			}
+			
+
+		</style>
 	</th:block>	
-	  
-	  
+	
 	<!-- 사용자정의 contents -->
 	<th:block layout:fragment="customContents">
 
@@ -51,9 +89,8 @@
 		</div>
 		
 		<!-- QnA category -->
-		<div class="cart-section mt-150 mb-150" style="background-color: #f5f6fa; padding: 60px 0 100px; margin: 0; border-top: #e5e5e5 1px solid;">
-			<div class="container">	
-			
+		<div class="cart-section mt-150 mb-150">
+			<div class="container">			
 				<!-- QnA category tab -->				
 				<nav>
 					<div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -70,55 +107,54 @@
 						<div class="row" style="float: none; margin: 100 auto;">
 							<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
 								<div class="cart-table-wrap">
-									<table class="cart-table tbqnaList">
+									<table class="cart-table tbqnaList" style="width: 100%">
 										<thead class="cart-table-head">
 											<tr class="table-head-row">
-												<th class="product-remove">번호</th>
-												<th class="product-remove">답변상태</th>
-												<th class="product-remove">비밀글</th>
-												<th class="product-image" style="width: 40%">제목</th>
-												<th class="product-name">첨부</th>
-												<th class="product-price">작성자</th>
-												<th class="product-quantity">작성일</th>
-												<th class="product-total">조회</th>
+												<th style="width: 7%;">번호</th>
+												<th style="width: 10%;">답변상태</th>
+												<th style="width: 8%;">비밀글</th>
+												<th style="width: 37%">제목</th>
+												<th style="width: 6%;">첨부</th>
+												<th style="width: 10%;">작성자</th>
+												<th style="width: 15%;">작성일</th>
+												<th style="width: 7%;">조회</th>
 											</tr>
 										</thead>
 										<tbody>				
 											<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaServiceList)}" th:each="l : ${qnaServiceList}">
-												<td class="product-remove" th:text="${l.boardIdx}"></td>
-												<td class="product-remove" th:text="${l.commentState}"></td>
-												<td class="product-remove">
+												<td th:text="${l.boardIdx}"></td>
+												<td th:text="${l.commentState}"></td>
+												<td>
 													<th:block th:if="${l.boardSecret=='Y'}">
 														<i class="bi bi-key-fill"></i>
 													</th:block>
 													<th:block th:unless="${l.boardSecret=='N'}">
 													</th:block>
 												</td>
-												<td class="product-image" style="text-align: left; padding-left: 20px;">
+												<td class="qnaTitle">
 												<th:block th:if="${l.boardOrderNo=='1'}">
 														<i class="bi bi-arrow-return-right"></i>
 													</th:block>
 													<th:block th:unless="${l.boardOrderNo=='1'}">
-													</th:block>
-												
+													</th:block>												
 													<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 												</td>
-												<td class="product-name">
+												<td>
 													<th:block th:if="${l.boardAddFile=='1'}">
 														<i class="bi bi-paperclip"></i>
 													</th:block>
 													<th:block th:unless="${l.boardAddFile=='1'}">
 													</th:block>
 												</td>
-												<td class="product-price">
+												<td>
 													<th:block th:if="${l.memberId=='id001'}" th:text="관리자"></th:block>
 													<th:block th:unless="${l.memberId=='id001'}" th:text="${l.memberId}"></th:block>
 												</td>
-												<td class="product-quantity" th:text="${l.registTime}"></td>
-												<td class="product-total" th:text="${l.boardReadCount}"></td>
+												<td th:text="${l.registTime}"></td>
+												<td th:text="${l.boardReadCount}"></td>
 											</tr>
 											<tr th:unless="${not #lists.isEmpty(qnaServiceList)}">
-	   									<td colspan="8">조회된 내용이 없습니다.</td>
+	   											<td colspan="8">조회된 내용이 없습니다.</td>
 	   										</tr>
 										</tbody>
 									</table>
@@ -133,242 +169,201 @@
 						<div class="row" style="float: none; margin: 100 auto;">
 							<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
 								<div class="cart-table-wrap">
-									<table class="cart-table tbqnaList">
+									<table class="cart-table tbqnaList" style="width: 100%;">
 										<thead class="cart-table-head">
 											<tr class="table-head-row">
-												<th class="product-remove">번호</th>
-												<th class="product-remove">답변상태</th>
-												<th class="product-remove">비밀글</th>
-												<th class="product-image" style="width: 40%">제목</th>
-												<th class="product-name">첨부</th>
-												<th class="product-price">작성자</th>
-												<th class="product-quantity">작성일</th>
-												<th class="product-total">조회</th>
+												<th>번호</th>
+												<th>답변상태</th>
+												<th>비밀글</th>
+												<th>제목</th>
+												<th>첨부</th>
+												<th>작성자</th>
+												<th>작성일</th>
+												<th>조회</th>
 											</tr>
 										</thead>
 										<tbody>				
 											<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaPickupList)}" th:each="l : ${qnaPickupList}">
-												<td class="product-remove" th:text="${l.boardIdx}"></td>
-												<td class="product-remove" th:text="${l.commentState}"></td>
-												<td class="product-remove">
+												<td th:text="${l.boardIdx}" style="width: 7%;"></td>
+												<td th:text="${l.commentState}" style="width: 10%;"></td>
+												<td style="width: 8%;">
 													<th:block th:if="${l.boardSecret=='Y'}">
 														<i class="bi bi-key-fill"></i>
 													</th:block>
 													<th:block th:unless="${l.boardSecret=='N'}">
 													</th:block>
 												</td>
-												<td class="product-image" style="text-align: left; padding-left: 20px;">
+												<td class="qnaTitle" style="width: 37%">
 													<th:block th:if="${l.boardOrderNo=='1'}">
 														<i class="bi bi-arrow-return-right"></i>
 													</th:block>
 													<th:block th:unless="${l.boardOrderNo=='1'}">
 													</th:block>
-												
-												<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
+													<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
 												</td>
-												<td class="product-name">
+												<td style="width: 6%;">
 													<th:block th:if="${l.boardAddFile=='1'}">
 														<i class="bi bi-paperclip"></i>
 													</th:block>
 													<th:block th:unless="${l.boardAddFile=='1'}">
 													</th:block>
 												</td>
-												<td class="product-price">
+												<td style="width: 10%;">
 													<th:block th:if="${l.memberId=='id001'}" th:text="관리자"></th:block>
 													<th:block th:unless="${l.memberId=='id001'}" th:text="${l.memberId}"></th:block>
 												</td>
-												<td class="product-quantity" th:text="${l.registTime}"></td>
-												<td class="product-total" th:text="${l.boardReadCount}"></td>
+												<td th:text="${l.registTime}" style="width: 15%;"></td>
+												<td th:text="${l.boardReadCount}" style="width: 7%;"></td>
 											</tr>
 											<tr th:unless="${not #lists.isEmpty(qnaPickupList)}">
-	   									<td colspan="8">조회된 내용이 없습니다.</td>
+	   											<td colspan="8">조회된 내용이 없습니다.</td>
 	   										</tr>
-									</table>
+										</table>
+									</div>
 								</div>
-							</div>
-						</div>					
-					</div>
-				 
-				<!-- question list (3) 결제/할인/마일리지 -->
-				<div class="tab-pane fade" id="nav-washPay1" role="tabpanel" aria-labelledby="nav-washPay1-tab">
-						<!-- Q&A 목록 조회 -->		
-						<div class="row" style="float: none; margin: 100 auto;">
-							<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
-								<div class="cart-table-wrap">
-									<table class="cart-table tbqnaList">
-										<thead class="cart-table-head">
-											<tr class="table-head-row">
-												<th class="product-remove">번호</th>										
-												<th class="product-remove">답변상태</th>										
-												<th class="product-remove">비밀글</th>
-												<th class="product-image" style="width: 40%">제목</th>
-												<th class="product-name">첨부</th>
-												<th class="product-price">작성자</th>
-												<th class="product-quantity">작성일</th>
-												<th class="product-total">조회</th>
-											</tr>
-										</thead>
-										<tbody>				
-											<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaPayList)}" th:each="l : ${qnaPayList}">
-												<td class="product-remove" th:text="${l.boardIdx}"></td>
-												<td class="product-remove" th:text="${l.commentState}"></td>
-												<td class="product-remove">
-													<th:block th:if="${l.boardSecret=='Y'}">
-														<i class="bi bi-key-fill"></i>
-													</th:block>
-													<th:block th:unless="${l.boardSecret=='N'}">
-													</th:block>
-												</td>
-												<td class="product-image" style="text-align: left; padding-left: 20px;">
-												<th:block th:if="${l.boardOrderNo=='1'}">
-														<i class="bi bi-arrow-return-right"></i>
-													</th:block>
-													<th:block th:unless="${l.boardOrderNo=='1'}">
-													</th:block>
-												<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
-												</td>
-												<td class="product-name">
-													<th:block th:if="${l.boardAddFile=='1'}">
-														<i class="bi bi-paperclip"></i>
-													</th:block>
-													<th:block th:unless="${l.boardAddFile=='1'}">
-													</th:block>
-												</td>
-												<td class="product-price">
-													<th:block th:if="${l.memberId=='id001'}" th:text="관리자"></th:block>
-													<th:block th:unless="${l.memberId=='id001'}" th:text="${l.memberId}"></th:block>
-												</td>
-												<td class="product-quantity" th:text="${l.registTime}"></td>
-												<td class="product-total" th:text="${l.boardReadCount}"></td>
-											</tr>
-											<tr th:unless="${not #lists.isEmpty(qnaPayList)}">
-	   									<td colspan="8">조회된 내용이 없습니다.</td>
-	   										</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>			
-						
-						
-				</div>
-				
-				<!-- question list (4) 서비스 불만족 -->				
-				<div class="tab-pane fade" id="nav-washComplain1" role="tabpanel" aria-labelledby="nav-washComplain1-tab">
-						<!-- Q&A 목록 조회 -->		
-						<div class="row" style="float: none; margin: 100 auto;">
-							<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
-								<div class="cart-table-wrap">
-									<table class="cart-table tbqnaList">
-										<thead class="cart-table-head">
-											<tr class="table-head-row">
-												<th class="product-remove">번호</th>
-												<th class="product-remove">답변상태</th>
-												<th class="product-remove">비밀글</th>
-												<th class="product-image" style="width: 40%">제목</th>
-												<th class="product-name">첨부</th>
-												<th class="product-price">작성자</th>
-												<th class="product-quantity">작성일</th>
-												<th class="product-total">조회</th>
-											</tr>
-										</thead>
-										<tbody>				
-											<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaComplainList)}" th:each="l : ${qnaComplainList}">
-												<td class="product-remove" th:text="${l.boardIdx}"></td>
-												<td class="product-remove" th:text="${l.commentState}"></td>
-												<td class="product-remove">
-													<th:block th:if="${l.boardSecret=='Y'}">
-														<i class="bi bi-key-fill"></i>
-													</th:block>
-													<th:block th:unless="${l.boardSecret=='N'}">
-													</th:block>
-												</td>
-												<td class="product-image" style="text-align: left; padding-left: 20px;">
-												<th:block th:if="${l.boardOrderNo=='1'}">
-														<i class="bi bi-arrow-return-right"></i>
-													</th:block>
-													<th:block th:unless="${l.boardOrderNo=='1'}">
-													</th:block>
-												<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
-												</td>
-												<td class="product-name">
-													<th:block th:if="${l.boardAddFile=='1'}">
-														<i class="bi bi-paperclip"></i>
-													</th:block>
-													<th:block th:unless="${l.boardAddFile=='1'}">
-													</th:block>
-												</td>
-												<td class="product-price">
-													<th:block th:if="${l.memberId=='id001'}" th:text="관리자"></th:block>
-													<th:block th:unless="${l.memberId=='id001'}" th:text="${l.memberId}"></th:block>
-												</td>
-												<td class="product-quantity" th:text="${l.registTime}"></td>
-												<td class="product-total" th:text="${l.boardReadCount}"></td>
-											</tr>
-											<tr th:unless="${not #lists.isEmpty(qnaComplainList)}">
-	   									<td colspan="8">조회된 내용이 없습니다.</td>
-	   										</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>			
-						
-						
-				</div>
-			
-
-			
-	<!-- 문의하기  -->
-		<div id="qna-btn" class="btnArea">
-			<ul style="list-style: none;">
-				<li class="qnaWrite">
-					<a th:href="@{/user/board/qnaWrite}" class="boxed-btn" style="font-weight: 700;">문의하기</a>
-				</li>			
-			</ul>	
-		</div>			
-			
-	
-
-
-
-	<!-- 페이징 -->
-		<div class="row">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12 text-center">
-						<div class="pagination-wrap">
-							<ul>
-								<li><a href="#">Prev</a></li>
-								<li><a class="active" href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">Next</a></li>
-							</ul>
+							</div>					
 						</div>
+				 
+					<!-- question list (3) 결제/할인/마일리지 -->
+					<div class="tab-pane fade" id="nav-washPay1" role="tabpanel" aria-labelledby="nav-washPay1-tab">
+							<!-- Q&A 목록 조회 -->		
+							<div class="row" style="float: none; margin: 100 auto;">
+								<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
+									<div class="cart-table-wrap">
+										<table class="cart-table tbqnaList" style="width: 100%">
+											<thead class="cart-table-head">
+												<tr class="table-head-row">
+													<th>번호</th>
+													<th>답변상태</th>
+													<th>비밀글</th>
+													<th>제목</th>
+													<th>첨부</th>
+													<th>작성자</th>
+													<th>작성일</th>
+													<th>조회</th>
+												</tr>
+											</thead>
+											<tbody>				
+												<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaPayList)}" th:each="l : ${qnaPayList}">
+													<td th:text="${l.boardIdx}" style="width: 7%;"></td>
+													<td th:text="${l.commentState}" style="width: 10%;"></td>
+													<td style="width: 8%;">
+														<th:block th:if="${l.boardSecret=='Y'}">
+															<i class="bi bi-key-fill"></i>
+														</th:block>
+														<th:block th:unless="${l.boardSecret=='N'}">
+														</th:block>
+													</td>
+													<td class="qnaTitle" style="width: 37%">
+														<th:block th:if="${l.boardOrderNo=='1'}">
+															<i class="bi bi-arrow-return-right"></i>
+														</th:block>
+														<th:block th:unless="${l.boardOrderNo=='1'}">
+														</th:block>
+														<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
+													</td>
+													<td style="width: 6%;">
+														<th:block th:if="${l.boardAddFile=='1'}">
+															<i class="bi bi-paperclip"></i>
+														</th:block>
+														<th:block th:unless="${l.boardAddFile=='1'}">
+														</th:block>
+													</td>
+													<td style="width: 10%;">
+														<th:block th:if="${l.memberId=='id001'}" th:text="관리자"></th:block>
+														<th:block th:unless="${l.memberId=='id001'}" th:text="${l.memberId}"></th:block>
+													</td>
+													<td th:text="${l.registTime}" style="width: 15%;"></td>
+													<td th:text="${l.boardReadCount}" style="width: 7%;"></td>
+												</tr>
+												<tr th:unless="${not #lists.isEmpty(qnaPayList)}">
+		   											<td colspan="8">조회된 내용이 없습니다.</td>
+		   										</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>			
+							
+							
+					</div>
+					
+					<!-- question list (4) 서비스 불만족 -->				
+					<div class="tab-pane fade" id="nav-washComplain1" role="tabpanel" aria-labelledby="nav-washComplain1-tab">
+							<!-- Q&A 목록 조회 -->		
+							<div class="row" style="float: none; margin: 100 auto;">
+								<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
+									<div class="cart-table-wrap">
+										<table class="cart-table tbqnaList"  style="width: 100%">
+											<thead class="cart-table-head">
+												<tr class="table-head-row">
+													<th>번호</th>
+													<th>답변상태</th>
+													<th>비밀글</th>
+													<th>제목</th>
+													<th>첨부</th>
+													<th>작성자</th>
+													<th>작성일</th>
+													<th>조회</th>
+												</tr>
+											</thead>
+											<tbody>				
+												<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaComplainList)}" th:each="l : ${qnaComplainList}">
+													<td th:text="${l.boardIdx}" style="width: 7%;"></td>
+													<td th:text="${l.commentState}" style="width: 10%;"></td>
+													<td style="width: 8%;">
+														<th:block th:if="${l.boardSecret=='Y'}">
+															<i class="bi bi-key-fill"></i>
+														</th:block>
+														<th:block th:unless="${l.boardSecret=='N'}">
+														</th:block>
+													</td>
+													<td class="qnaTitle" style="width: 37%">
+														<th:block th:if="${l.boardOrderNo=='1'}">
+															<i class="bi bi-arrow-return-right"></i>
+														</th:block>
+														<th:block th:unless="${l.boardOrderNo=='1'}">
+														</th:block>
+														<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
+													</td>
+													<td style="width: 6%;">
+														<th:block th:if="${l.boardAddFile=='1'}">
+															<i class="bi bi-paperclip"></i>
+														</th:block>
+														<th:block th:unless="${l.boardAddFile=='1'}">
+														</th:block>
+													</td>
+													<td style="width: 10%;">
+														<th:block th:if="${l.memberId=='id001'}" th:text="관리자"></th:block>
+														<th:block th:unless="${l.memberId=='id001'}" th:text="${l.memberId}"></th:block>
+													</td>
+													<td th:text="${l.registTime}" style="width: 15%;"></td>
+													<td th:text="${l.boardReadCount}" style="width: 7%;"></td>
+												</tr>
+												<tr th:unless="${not #lists.isEmpty(qnaComplainList)}">
+		   											<td colspan="8">조회된 내용이 없습니다.</td>
+		   										</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>		
+						</div>
+				
+
+			
+						<!-- 문의하기  -->
+						<div id="qna-btn" class="btnArea">
+							<ul style="list-style: none;">
+								<li class="qnaWrite">
+									<a th:href="@{/user/board/qnaWrite}" class="boxed-btn" style="font-weight: 700;">문의하기</a>
+								</li>			
+							</ul>	
+						</div>			
+			
 					</div>
 				</div>
 			</div>
-		</div>
-		
-
-	</div>
-			
-			
-	
-		
-
-		
-			
-		
-		
-		
-		
-		
-		
-
-		
-	</div>
-</div>
-</th:block>		
+	</th:block>		
 
 </html>
