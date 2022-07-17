@@ -144,7 +144,33 @@
 			CONCAT('%', #{memberId}, '%');
  	</select>
  
- 	<select id="laundryIncome"  resultType="Map">
+ 	 	<select id="ilbanOrderList"  resultType="Map">
+	SELECT
+		o.order_code as orderCode ,
+		m.m_id as mId ,
+		m.m_name as mName ,
+		g.g_name as gName ,
+		g.g_price as gPrice ,
+		m.m_addr as mAddr 
+	FROM
+		tb_order AS o
+		INNER JOIN 
+		tb_user AS u
+		on
+		o.user_code = u.user_code
+		INNER join
+		tb_member AS m
+		on
+		m.m_id = u.m_id
+		INNER JOIN 
+		tb_ilban_g_price AS g
+		on
+		o.ilban_G_price_code = g.ilban_G_price_code;
+	</select>
+	
+	<select id="eachLaundryIncome" parameterType="map"
+		resultType="map">
+	/*세탁소별 매출액*/	
 	SELECT
 		l.laundry_name as laundryName,
 		m.m_name as memberName,
@@ -168,29 +194,17 @@
 		WHERE 
 		l.laundry_code = 'laundry_code_006';
 	</select>
- 	<select id="ilbanOrderList"  resultType="Map">
-	SELECT
-		o.order_code as orderCode ,
-		m.m_id as mId ,
-		m.m_name as mName ,
-		g.g_name as gName ,
-		g.g_price as gPrice ,
-		m.m_addr as mAddr 
-	FROM
-		tb_order AS o
-		INNER JOIN 
-		tb_user AS u
-		on
-		o.user_code = u.user_code
-		INNER join
-		tb_member AS m
-		on
-		m.m_id = u.m_id
-		INNER JOIN 
-		tb_ilban_g_price AS g
-		on
-		o.ilban_G_price_code = g.ilban_G_price_code;
+	
+	<select id="laundryIncomeLookUpCount" resultType="int">
+	/*세탁소별 페이징*/	
+		SELECT
+			count(b.total_price)
+			FROM
+			tb_bill AS b
+			where
+			b.order_num_groupcode like CONCAT('%','laundry_code_006')
 	</select>
+	  
 	
 	
 </mapper>
