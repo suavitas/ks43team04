@@ -3,173 +3,84 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/userDefault}">
 
-	<th:block layout:fragment="customCss">
-		<link rel="stylesheet" th:href="@{https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css}">
-	</th:block>  
-	
-	<th:block layout:fragment="customJsPlugin">
-		<script th:src="@{https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js}"></script>
-	</th:block>
-	
-	<th:block layout:fragment="customJsScript">
-		<script>
-			$(function(){
-				$('.tbEventList').DataTable({
-					language : {'info':'맘대로'}
-				});
-			});
-		</script>
-	</th:block>	  
 	  
-<!-- 사용자정의 contents -->
-<th:block layout:fragment="customContents">
-	<!-- 게시판 타이틀 -->
-	<div id="container">
-		<div id="top-loca">
-			<div class="boardPath">
-				<a th:href="@{/}">HOME</a>
-				 > 
-				<a th:href="@{/user/board/eventList}">이벤트</a>
-			</div>	
-			<h2>이벤트</h2>			
-		</div>
-	</div>	
-		
-	<!-- 게시판 탭  -->			
-	<div class="list-group list-group-horizontal col-sm-6" style="margin:0 auto; text-align: center;">
-  		<a th:href="@{/user/board/noticeList}" class="list-group-item list-group-item-action">공지사항	</a>
-		<a th:href="@{/user/board/eventList}" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">
-		이벤트
-		</a>
-		<a th:href="@{/user/board/faqList}" class="list-group-item list-group-item-action">FAQ</a>
-		<a th:href="@{/user/board/qnaList}" class="list-group-item list-group-item-action">문의사항</a>
-	</div>
+	<!-- 사용자정의 contents -->
+	<th:block layout:fragment="customContents">
 	
-	<!-- 이벤트 테이블 -->
-	<div class="cart-section mt-150 mb-150" style="background-color: #f5f6fa; padding: 60px 0 100px; margin: 0; border-top: #e5e5e5 1px solid;">
-		<div class="container">
-			<div class="row" style="float: none; margin: 100 auto;">
-				<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">				
-					
-	
-	<!-- 이벤트 목록 -->
-	<!-- latest news -->
-	<div class="latest-news mt-150 mb-150">
-		<div class="container">
-		
-		
-			<div class="row">
-			
-			
-				<th:block  th:if="${not #lists.isEmpty(eventList)}" th:each="l, status : ${eventList}">			
-				<div class="col-lg-4 col-md-6 text-center">
-					<div class="single-product-item">
-						
-						<th:block  th:if="${not #lists.isEmpty(l.boardAttach)}" th:each="b : ${l.boardAttach}">
-					
-							<div class="product-image" th:if="${b.representImg == 'Y'}">
-									<div th:data-img="${b.saveFile}">
-									<a th:href="@{/user/board/eventDetail(eventCode=${l.eventCode})}"><img th:src="@{'/' + ${#strings.replace(b.filePath,'\','/')}}"></a>
-									
-									<!-- th:data-setbg="@{'/' + ${#strings.replace(b.filePath,'\','/')}}"> -->
-						
-							</div>
-							</div>
-					
-							<!-- <div class="product-image">
-								<a th:href="@{/user/board/eventDetail(eventCode=${l.eventCode})}"><img th:src="@{/user/assets/img/products/laundry.png}" alt="세탁소"></a>
-							</div> -->
-						</th:block>
-						<th:block th:unless="${not #lists.isEmpty(boardAttach)}">
-							<!-- <div class="product-image">
-								<a th:href="@{/user/board/eventDetail(eventCode=${l.eventCode})}"><img th:src="@{/user/assets/img/products/laundry.png}" alt="세탁소"></a>
-							</div>
-						</th:block>	 -->
-							<h5 th:text="${l.eventState}"></h5>
-							<h5 th:text="${l.eventTitle}"></h5>
-					</div>
-				</div>
+		<style>			
+			.cart-section {
+				background-color: #f5f6fa; 
+				padding: 60px 0 100px; 
+				margin: 0; 
+				border-top: #e5e5e5 1px solid;
 				
-				</th:block>
-				
-					<th:block th:unless="${not #lists.isEmpty(eventList)}">
-						<div class="col-lg-4 col-md-6">
-								<div style="text-align: center;">등록된 게시물이 없습니다.</div>
-							</div>
-					</th:block>
-					
-						<!-- <a th:href="@{/user/board/eventDetail(eventCode=6)}"><div class="latest-news-bg news-bg-11" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
-						
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-latest-news">
-						<a th:href="@{/user/board/eventDetail(eventCode=5)}"><div class="latest-news-bg1 news-bg-22" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
-						
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-latest-news">
-						<a th:href="@{/user/board/eventDetail(eventCode=4)}"><div class="latest-news-bg1 news-bg-33" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
-						
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-latest-news">
-						<a th:href="@{/user/board/eventDetail(eventCode=3)}"><div class="latest-news-bg1 news-bg-44" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
-					
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-latest-news">
-						<a th:href="@{/user/board/eventDetail(eventCode=2)}"><div class="latest-news-bg1 news-bg-55" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
-					
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-latest-news">
-						<a th:href="@{/user/board/eventDetail(eventCode=1)}"><div class="latest-news-bg1 news-bg-66" style="height: 500px; border-radius: 20px; background-size: cover;"></div></a>
-					
-					</div> -->
-				</div>
+			}		
+		</style>
+		
+		<!-- 게시판 타이틀 -->
+		<div id="container">
+			<div id="top-loca">
+				<div class="boardPath">
+					<a th:href="@{/}">HOME</a>
+					 > 
+					<a th:href="@{/user/board/eventList}">이벤트</a>
+				</div>	
+				<h2>이벤트</h2>			
 			</div>
-
-		<!-- 페이징 -->
-		<div class="row">
+		</div>	
+		
+		<!-- 게시판 탭  -->			
+		<div class="list-group list-group-horizontal col-sm-6" style="margin:0 auto; text-align: center;">
+	  		<a th:href="@{/user/board/noticeList}" class="list-group-item list-group-item-action">공지사항	</a>
+			<a th:href="@{/user/board/eventList}" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">
+			이벤트
+			</a>
+			<a th:href="@{/user/board/faqList}" class="list-group-item list-group-item-action">FAQ</a>
+			<a th:href="@{/user/board/qnaList}" class="list-group-item list-group-item-action">문의사항</a>
+		</div>
+	
+		<!-- 이벤트 테이블 -->
+		<div class="cart-section mt-150 mb-150">
 			<div class="container">
-				<div class="row">
-					<div class="col-lg-12 text-center">
+				<div class="row" style="float: none; margin: 100 auto;">
+					<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">				
 					
-					<!-- 이벤트 등록하기  -->
-
-						<div class="pagination-wrap">
-							<ul>
-								<li><a href="#">Prev</a></li>
-								<li><a class="active" href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">Next</a></li>
-							</ul>
+						<!-- 이벤트 목록 조회 -->
+						<div class="latest-news mt-150 mb-150">
+							<div class="container">
+								<div class="row">								
+									<th:block  th:if="${not #lists.isEmpty(eventList)}" th:each="l, status : ${eventList}">			
+										<div class="col-lg-4 col-md-6 text-center">
+											<div class="single-product-item">
+												<th:block  th:if="${not #lists.isEmpty(l.boardAttach)}" th:each="b : ${l.boardAttach}">
+													<div class="product-image" th:if="${b.representImg == 'Y'}">
+														<div th:data-img="${b.saveFile}">
+															<a th:href="@{/user/board/eventDetail(eventCode=${l.eventCode})}"><img th:src="@{'/' + ${#strings.replace(b.filePath,'\','/')}}"></a>
+														</div>
+													</div>
+												</th:block>
+												<th:block th:unless="${not #lists.isEmpty(boardAttach)}">
+													<h5 th:text="${l.eventState}"></h5>
+													<h5 th:text="${l.eventTitle}"></h5>
+												</th:block>	
+											</div>
+										</div>
+									</th:block>
+									
+									<th:block th:unless="${not #lists.isEmpty(eventList)}">
+										<div class="col-lg-4 col-md-6">
+												<div style="text-align: center;">등록된 게시물이 없습니다.</div>
+											</div>
+									</th:block>
+										
+										
+								</div>
+							</div>
 						</div>
 					</div>
+							
 				</div>
 			</div>
-		</div>
-			
-
-		</div>
-	</div>
-	<!-- end latest news -->
-		
-		
-
-		
-		
-		
-		
-		
-		
-		</div>
-		</div>
-</div>	
-</th:block>
+		</div>	
+	</th:block>
 </html>
