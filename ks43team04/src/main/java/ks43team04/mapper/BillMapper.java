@@ -17,9 +17,6 @@ public interface BillMapper {
 	/* 마이페이지 > 결제건수 조회 row 수*/
 	public int getBillCount(String memberId);
 	
-	/* 세탁소별 월별 매출 */
-	public List<Bill> laundryIncome();
-	
 	/* 일반세탁소 오더 목록 */
 	public List<Bill> ilbanOrderList(String memberId);
 	
@@ -33,4 +30,11 @@ public interface BillMapper {
 	
 	/*예약 -> 결제 -> 페이징처리*/
 	public List<Map<String, Object>> billPage(Map<String, Object> paramMap);
+		
+	/* 세탁소별 월별 매출 */
+	public List<Map<String, Object>> eachLaundryIncome(Map<String, Object> paramMap);
+	
+	/*무인세탁소 월별 매출액 카운팅*/
+	public int laundryIncomeLookUpCount();
+	
 }
