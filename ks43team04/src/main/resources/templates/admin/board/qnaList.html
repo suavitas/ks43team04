@@ -26,7 +26,7 @@
 		
 		/*Data Table*/
 		$(document).ready(function () {
-		    $('#datatable-fixed-header').DataTable({
+		    $('.table').DataTable({
 		    	stateSave: true,
 		    	destroy : true,
 		    	ordering: false,
@@ -103,8 +103,8 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr th:if="${not #lists.isEmpty(qnaServiceList)}" th:each="l : ${qnaServiceList}">
-												<td th:text="${l.boardIdx}"></td>
+											<tr th:if="${not #lists.isEmpty(qnaServiceList)}" th:each="l, status : ${qnaServiceList}">
+												<td th:text="${status.count}"></td>
 												<td th:text="${l.commentState}"></td>
 												<td>
 													<th:block th:if="${l.boardSecret=='Y'}">

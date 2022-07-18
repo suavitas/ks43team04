@@ -165,10 +165,10 @@
 									<a th:href="@{/admin/qnaCommentModify(boardIdx=${board.boardIdx},boardMenuCode=${board.boardMenuCode},boardSecret=${board.boardSecret},memberId=${board.memberId},boardTitle=${board.boardTitle},boardContent=${board.boardContent})}">
 										<button type="button" class="btn btn-warning" style="margin:10px 30px 30px 0;">수정</button>
 									</a>
+										<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#staticBackdrop">삭제</button>
 								</th:block>
 								<th:block th:unless="${board.boardOrderNo=='1'}">
 								</th:block>
-										<button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#staticBackdrop">삭제</button>
 								
 								<th:block th:if="${board.boardOrderNo=='0' && board.commentState=='답변대기'}">
 									<div style="text-align: center;">
