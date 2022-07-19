@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import ks43team04.dto.ContractRider;
 import ks43team04.dto.Delivery;
 import ks43team04.dto.Laundry;
 import ks43team04.dto.LaundryList;
@@ -56,13 +57,17 @@ public class PickUpController {
 		System.out.println(laundryCodeList);
 		List<PickUp> pickUpListByStore = pickUpService.pickUpListByStore(laundryCodeList);
 		
+		List<ContractRider> getRiderList = pickUpService.getRiderList();
+		
 		model.addAttribute("sessionName", sessionName);
 		model.addAttribute("getMemberLaundryList", getMemberLaundryList);
 		model.addAttribute("member", member);
 		model.addAttribute("pickUpListByStore", pickUpListByStore);
 		model.addAttribute("laundryCode", getMemberLaundryList);
+		model.addAttribute("getRiderList", getRiderList);
 		System.out.println(getMemberLaundryList);
 		System.out.println(pickUpListByStore);
+		System.out.println(getRiderList);
 		return "admin/pickUpByStore";
 	}
 	

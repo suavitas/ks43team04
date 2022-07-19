@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import ks43team04.dto.ContractRider;
 import ks43team04.dto.PickUp;
 import ks43team04.dto.YearlyHoliday;
 import ks43team04.mapper.HolidayMapper;
@@ -16,6 +17,12 @@ public class PickUpService {
 
 	public PickUpService(PickUpMapper pickUpMapper) {
 		this.pickUpMapper = pickUpMapper;
+	}
+	
+	/*배송 업체 목록*/
+	public List<ContractRider> getRiderList(){
+		List<ContractRider> getRiderList = pickUpMapper.getRiderList();
+		return getRiderList;
 	}
 
 	/*매장별 수거 목록(점주)*/

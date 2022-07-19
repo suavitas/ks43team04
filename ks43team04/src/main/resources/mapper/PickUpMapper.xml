@@ -64,8 +64,29 @@
 			<result column="head_rider_area" 							property="headRiderArea"/>
 			<result column="head_rider_contract_date" 					property="headRiderContractDate"/>
 		</collection>
+		
 	</resultMap>
 	
+	<resultMap type="ContractRider" 									id="ContractRiderResultMap">
+			<id column="head_contract_rider_code"						property="headContractRiderCode"/>
+			<result column="head_contract_admin" 						property="headContractAdmin"/>
+			<result column="head_rider_conpany_name" 					property="headRiderConpanyName"/>
+			<result column="head_rider_phone" 							property="headRiderPhone"/>
+			<result column="head_rider_area" 							property="headRiderArea"/>
+			<result column="head_rider_contract_date" 					property="headRiderContractDate"/>
+	</resultMap>
+	
+	<select id="getRiderList" resultMap="ContractRiderResultMap" parameterType="list">
+		/*배송업체 리스트 조회*/
+		SELECT
+			c.head_contract_rider_code
+			,c.head_rider_conpany_name
+			,c.head_rider_phone
+			,c.head_rider_area
+		FROM
+			tb_contract_rider AS c
+	</select>
+
 
 	<select id="pickUpListByStore" resultMap="pickUpResultMap" parameterType="list">
 		/* 매장별 수거 현황 */

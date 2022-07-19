@@ -44,12 +44,6 @@ public class AdminBoardController {
 		this.memberService = memberService;
 	}
 	
-	
-	
-	
-	
-
-	
 	/*고장 신고 등록*/
 	@GetMapping("/asForm")
 	public String asForm(@RequestParam(name = "asCode", required = false) String asCode
@@ -194,10 +188,23 @@ public class AdminBoardController {
 	
 	/*리뷰 목록 조회*/
 	@GetMapping("/review")
-	public String review(Model model) {
+	public String review(@RequestParam(name = "reviewCode", required = false) String reviewCode
+							,Model model, HttpSession session) {
 		List<Review> reviewList = boardService.getReviewList();
+		String sessionId = (String) session.getAttribute("SID");
+		Member member = memberService.getMemberInfoById(sessionId);
 		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("sessionId", sessionId);
+		model.addAttribute("member", member);
+		model.addAttribute("reviewCode", reviewCode);
 		return "admin/review";
+	}
+	
+	/*리뷰 삭제*/
+	@PostMapping("/review")
+	public String rvdel(String reviewCode) {
+		boardService.rvDel(reviewCode);
+		return "redirect:/admin/review";
 	}
 	
 	/*Q&A(문의사항)답글 삭제*/

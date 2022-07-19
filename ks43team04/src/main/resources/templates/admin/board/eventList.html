@@ -142,22 +142,22 @@
 								<table id="datatable-fixed-header" class="table table-striped table-bordered" style="width: 100%;">
 									<thead>
 										<tr>
-											<th style="width: 5%;">번호</th>
-											<th style="width: 8%;">진행상태</th>
-											<th style="width: 45%;">제목</th>
-											<th style="width: 6%;">첨부</th>
-											<th style="width: 10%;">작성자</th>
-											<th style="width: 20%;">작성일</th>
-											<th style="width: 6%;">조회</th>	
+											<th>번호</th>
+											<th>진행상태</th>
+											<th>제목</th>
+											<th>첨부</th>
+											<th>작성자</th>
+											<th>작성일</th>
+											<th>조회</th>	
 										</tr>
 									</thead>
 										<tr th:if="${not #lists.isEmpty(runEventList)}" th:each="l : ${runEventList}">
-											<td th:text="${l.eventNo}"></td>
-											<td th:text="${l.eventState}"></td>
-											<td style="text-align: left;">
+											<td style="width: 5%;" th:text="${l.eventNo}"></td>
+											<td style="width: 8%;" th:text="${l.eventState}"></td>
+											<td style="width: 45%; text-align: left;">
 												<strong><a th:href="@{/admin/eventDetail(eventCode=${l.eventCode})}" th:text="${l.eventTitle}"></a></strong>
 											</td>
-											<td>
+											<td style="width: 6%;">
 												<th:block th:if="${l.eventAddFile=='1'}">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
 													  <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
@@ -166,13 +166,13 @@
 												<th:block th:unless="${l.eventAddFile=='1'}">
 												</th:block>
 											</td>
-											<td>
+											<td style="width: 10%;">
 												<th:block th:if="${l.memberId=='id001'}">
 													<span style="text-align: center; color: #212529;">관리자</span>
 												</th:block>
 											</td>
-											<td th:text="${l.registTime}"></td>
-											<td th:text="${l.eventReadCount}"></td>
+											<td style="width: 20%;" th:text="${l.registTime}"></td>
+											<td style="width: 6%;" th:text="${l.eventReadCount}"></td>
 										</tr>
 										<tr th:unless="${not #lists.isEmpty(runEventList)}">
 											<td colspan="7">조회된 내용이 없습니다.</td>
@@ -185,22 +185,22 @@
 								<table id="datatable-fixed-header" class="table table-striped table-bordered" style="width: 100%;">
 									<thead>
 										<tr>
-											<th style="width: 5%;">번호</th>
-											<th style="width: 8%;">진행상태</th>
-											<th style="width: 45%;">제목</th>
-											<th style="width: 6%;">첨부</th>
-											<th style="width: 10%;">작성자</th>
-											<th style="width: 20%;">작성일</th>
-											<th style="width: 6%;">조회</th>	
+											<th>번호</th>
+											<th>진행상태</th>
+											<th>제목</th>
+											<th>첨부</th>
+											<th>작성자</th>
+											<th>작성일</th>
+											<th>조회</th>	
 										</tr>
 									</thead>
 										<tr th:if="${not #lists.isEmpty(endEventList)}" th:each="l : ${endEventList}">
-											<td th:text="${l.eventNo}"></td>
-											<td th:text="${l.eventState}"></td>
-											<td style="text-align: left;">
+											<td style="width: 5%;" th:text="${l.eventNo}"></td>
+											<td style="width: 8%;" th:text="${l.eventState}"></td>
+											<td style="width: 45%; text-align: left;">
 												<strong><a th:href="@{/admin/eventDetail(eventCode=${l.eventCode})}" th:text="${l.eventTitle}"></a></strong>
 											</td>
-											<td>
+											<td style="width: 6%;">
 												<th:block th:if="${l.eventAddFile=='1'}">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
 												  		<path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
@@ -209,13 +209,13 @@
 												<th:block th:unless="${l.eventAddFile=='1'}">
 												</th:block>
 											</td>
-											<td>
+											<td style="width: 10%;">
 												<th:block th:if="${l.memberId=='id001'}">
 													<span style="text-align: center; color: #212529;">관리자</span>
 												</th:block>
 											</td>
-											<td th:text="${l.registTime}"></td>
-											<td th:text="${l.eventReadCount}"></td>
+											<td style="width: 20%;" th:text="${l.registTime}"></td>
+											<td style="width: 6%;" th:text="${l.eventReadCount}"></td>
 										</tr>
 										<tr th:unless="${not #lists.isEmpty(endEventList)}">
 											<td colspan="7">조회된 내용이 없습니다.</td>
