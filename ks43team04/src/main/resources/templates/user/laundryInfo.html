@@ -777,16 +777,18 @@
 						.querySelector('.boxbox')
 				var strGp = box.querySelector('.igp').value;
 				var strSp = box.querySelector('.isp').value;
-	
+				var strT001 = document.querySelector(".igp");
+				var strT01 = strT001.options[strT001.selectedIndex].text;
+				var StrT0 = strT001.options[strT001.selectedIndex].value;
 				e.target.parentElement.parentElement
 						.querySelector('.strBox').innerHTML 
 					   += '<div class="pPlusBtn">'
 						+ '<p>'	
 						+ '- '
-						+ strGp + '</p>'
+						+ strT01 + '</p>'
 						+ '<p>'	
 						+ ' > '
-						+ strSp + '</p>'
+						+ StrT0 + '</p>'
 						+ ' : '
 						+ '<button type="button" class="btn btn-info remove-btn">' 
 						+ '제거' 
