@@ -180,22 +180,6 @@ public class BoardController {
 		return "/user/board/eventList";
 	}
 	
-	/*공지사항 작성 ------------------------지울예정
-	@GetMapping("/noticeWrite")
-	public String noticeWrite(Model model) {
-		model.addAttribute("title", "공지등록");
-		model.addAttribute("titleName", "공지등록");
-		return "/user/board/noticeWrite";
-	}
-
-	@PostMapping("/noticeWrite")
-	public String noticeWrite(Board board, HttpSession session) {
-		String sessionId = (String) session.getAttribute("SID");
-		boardService.noticeWrite(board, sessionId);
-		log.info("공지 등록 data : {}", board);
-		log.info("화면에서 입력받은 data: {}, boardCode");
-		return "redirect:/user/board/noticeList";
-	}*/
 	
 	/*공지사항 상세 조회*/
 	@GetMapping("/noticeDetail")

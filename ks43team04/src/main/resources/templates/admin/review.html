@@ -17,6 +17,27 @@
 		    });
 		});
 		
+		/*유효성검사(비밀번호확인)*/
+		
+		function delCheck(){
+			 
+			var pwDelCheck = document.getElementById("pwDelCheck");
+			var pwDelCheck2 = document.getElementById("pwDelCheck2");
+			
+			if(pwDelCheck.value == ""){
+				alert("비밀번호를 입력하세요.")
+				pwDelCheck.focus();
+				return false;
+			}
+			else if(pwDelCheck.value !== pwDelCheck2.value){
+					alert("비밀번호를 확인하세요.")
+					pwDelCheck.focus();
+					return false;
+					
+				} return true;
+				 
+		}
+		
 		</script>
 		<style>
 			
@@ -36,6 +57,37 @@
 	  
 	<!-- 사용자정의 contents -->
 	<th:block layout:fragment="customContents">
+	
+			<!-- 삭제 Modal -->
+		<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog">
+		    	<div class="modal-content">
+		      		<div class="modal-header">
+		      			<h5 class="modal-title" id="staticBackdropLabel">정말로 삭제하시겠습니까?</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+					        </button>
+		     		</div>		      
+						<form class="rvDel" th:action="@{/admin/review}" method="POST">
+							<div class="modal-body">
+								<div style="text-align: center">
+						      		<h5>비밀번호 확인</h5>
+						      			<p>단, 삭제는 '대기' 상태일 때만 가능합니다.</p>
+									      	<input type="text" id ="reviewCode" name="reviewCode" th:value="${reviewCode}">	
+									      	<input type="password" id ="pwDelCheck" name="pwDelCheck" placeholder="비밀번호를 입력해주세요" required="required">
+													<input type="hidden" id ="pwDelCheck2" name="memberPw2" th:value="${member.memberPw}">
+													
+								</div>
+							</div>
+				      
+							<div class="modal-footer">
+						        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+						        <a th:href="@{/admin/review}"><button type="submit" name="submit" value="submit" class="btn btn-danger" onclick="return delCheck()">삭제</button></a>
+						     </div>
+						</form>
+					</div>
+				</div>
+			</div>	
 	
 		<!-- 탭 이름 -->
 		<h4><strong>리뷰 관리</strong></h4>
@@ -70,7 +122,11 @@
 														<td th:text="${l.reviewContent}"  style="text-align: left;"></td>
 														<td th:text="${l.memberId}"></td>
 														<td th:text="${l.registTime}"></td>
-														<td><a href="#">삭제</a></td>
+														<td>
+														<a th:href="@{/admin/review(reviewCode=${l.reviewCode})}" type="button" class="btn btn-danger-sm" id="rv-remove" data-toggle="modal" data-target="#staticBackdrop">삭제</a>
+													<input type="text" id ="reviewCode" name="reviewCode" th:value="${l.reviewCode}">	
+														</td>
+												
 													</tr>
 													<tr th:unless="${not #lists.isEmpty(reviewList)}">
 														<td colspan="7">조회된 내용이 없습니다.</td>
@@ -78,6 +134,8 @@
 												</th:block>
 											</tbody>
 										</table>
+										
+												
 									</div>
 								</div>
 							</div>

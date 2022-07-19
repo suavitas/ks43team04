@@ -53,6 +53,9 @@ public interface BoardMapper {
 	//리뷰 조회
 	public List<Review> getReviewList();
 	
+	//리뷰 삭제
+	public int rvDel(String reviewCode);
+	
 	//공지사항 글 삭제
 	public int noticeRemove(Board board);
 

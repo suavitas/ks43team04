@@ -34,6 +34,7 @@
 		    	autowidth: false
 		    });
 		});
+		
 		</script>
 		
 		<style>
@@ -136,26 +137,26 @@
 								<table id="datatable-fixed-header" class="table table-striped table-bordered" style="width: 100%;">
 									<thead>
 										<tr>
-											<th style="width: 5%;">번호</th>
-											<th style="width: 7%;">진행상태</th>	
-											<th style="width: 17%;">세탁소명</th>	
-											<th style="width: 27%;">제목</th>
-											<th style="width: 6%;">첨부</th>
-											<th style="width: 8%;">작성자</th>
-											<th style="width: 15%;">작성일</th>					
-											<th style="width: 15%;">방문(예정)일</th>						
+											<th>번호</th>
+											<th>진행상태</th>	
+											<th>세탁소명</th>	
+											<th>제목</th>
+											<th>첨부</th>
+											<th>작성자</th>
+											<th>작성일</th>					
+											<th>방문(예정)일</th>						
 										</tr>
 									</thead>
 									<tbody>
 									<th:block th:if="${not #lists.isEmpty(readyAsList)}" th:each="l : ${readyAsList}">
 										<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl, status :${l.LaundryList}">
-											<td th:text="${l.asNumber}"></td> <!-- status.count -->
-											<td th:text="${l.asState}"></td>
-											<td th:text="${sl.laundryName}"></td>
-											<td style="text-align: left;">
+											<td style="width: 5%;" th:text="${l.asNumber}"></td> <!-- status.count -->
+											<td style="width: 7%;" th:text="${l.asState}"></td>
+											<td style="width: 17%;" th:text="${sl.laundryName}"></td>
+											<td style="text-align: left; width: 27%;">
 											<strong><a th:href="@{/admin/asDetail(asCode=${l.asCode})}" th:text="${l.asTitle}"></a></strong>
 											</td>
-											<td>
+											<td style="width: 6%;">
 												<th:block th:if="${l.asAddFile=='1'}">
 													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
 													  <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
@@ -164,9 +165,9 @@
 												<th:block th:unless="${l.asAddFile=='1'}">
 												</th:block>
 											</td>
-											<td th:text="${sl.memberId}"></td>
-											<td th:text="${l.registTime}"></td>					
-											<td th:text="${l.visitTime}"></td>					
+											<td style="width: 8%;" th:text="${sl.memberId}"></td>
+											<td style="width: 15%;" th:text="${l.registTime}"></td>					
+											<td style="width: 15%;" th:text="${l.visitTime}"></td>					
 										</tr>
 										<tr th:unless="${not #lists.isEmpty(readyAsList)}">
 											<td colspan="8">조회된 내용이 없습니다.</td>
@@ -181,26 +182,26 @@
 							<table id="datatable-fixed-header" class="table table-striped table-bordered" style="width: 100%;">
 								<thead>
 									<tr>
-										<th style="width: 5%;">번호</th>
-										<th style="width: 7%;">진행상태</th>	
-										<th style="width: 17%;">세탁소명</th>	
-										<th style="width: 27%;">제목</th>
-										<th style="width: 6%;">첨부</th>
-										<th style="width: 8%;">작성자</th>
-										<th style="width: 15%;">작성일</th>					
-										<th style="width: 15%;">방문(예정)일</th>					
+										<th>번호</th>
+										<th>진행상태</th>	
+										<th>세탁소명</th>	
+										<th>제목</th>
+										<th>첨부</th>
+										<th>작성자</th>
+										<th>작성일</th>					
+										<th>방문(예정)일</th>					
 									</tr>
 								</thead>
 								<tbody>
 								<th:block th:if="${not #lists.isEmpty(startAsList)}" th:each="l : ${startAsList}">
 									<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl, status :${l.LaundryList}">
-										<td th:text="${l.asNumber}"></td> <!-- status.count -->
-										<td th:text="${l.asState}"></td>
-										<td th:text="${sl.laundryName}"></td>
-										<td style="text-align: left;">
+										<td style="width: 5%;" th:text="${l.asNumber}"></td> <!-- status.count -->
+										<td style="width: 7%;" th:text="${l.asState}"></td>
+										<td style="width: 17%;" th:text="${sl.laundryName}"></td>
+										<td style="text-align: left; width: 27%;">
 											<strong><a th:href="@{/admin/asDetail(asCode=${l.asCode})}" th:text="${l.asTitle}"></a></strong>
 										</td>
-										<td>
+										<td style="width: 6%;">
 											<th:block th:if="${l.asAddFile=='1'}">
 												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
 												  <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
@@ -209,9 +210,9 @@
 											<th:block th:unless="${l.asAddFile=='1'}">
 											</th:block>
 										</td>
-										<td th:text="${sl.memberId}"></td>
-										<td th:text="${l.registTime}"></td>					
-										<td th:text="${l.visitTime}"></td>					
+										<td style="width: 8%;" th:text="${sl.memberId}"></td>
+										<td style="width: 15%;" th:text="${l.registTime}"></td>					
+										<td style="width: 15%;" th:text="${l.visitTime}"></td>					
 									</tr>
 									<tr th:unless="${not #lists.isEmpty(startAsList)}">
 										<td colspan="8">조회된 내용이 없습니다.</td>
@@ -226,26 +227,26 @@
 						<table id="datatable-fixed-header" class="table table-striped table-bordered" style="width: 100%;">
 							<thead>
 								<tr>
-									<th style="width: 5%;">번호</th>
-									<th style="width: 7%;">진행상태</th>	
-									<th style="width: 17%;">세탁소명</th>	
-									<th style="width: 27%;">제목</th>
-									<th style="width: 6%;">첨부</th>
-									<th style="width: 8%;">작성자</th>
-									<th style="width: 15%;">작성일</th>					
-									<th style="width: 15%;">방문(예정)일</th>						
+									<th>번호</th>
+									<th>진행상태</th>	
+									<th>세탁소명</th>	
+									<th>제목</th>
+									<th>첨부</th>
+									<th>작성자</th>
+									<th>작성일</th>					
+									<th>방문(예정)일</th>						
 								</tr>
 							</thead>
 							<tbody>
 							<th:block th:if="${not #lists.isEmpty(endAsList)}" th:each="l : ${endAsList}">
 								<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl, status :${l.LaundryList}">
-									<td th:text="${l.asNumber}"></td> <!-- status.count -->
-									<td th:text="${l.asState}"></td>
-									<td th:text="${sl.laundryName}"></td>
-									<td style="text-align: left;">
+									<td style="width: 5%;" th:text="${l.asNumber}"></td> <!-- status.count -->
+									<td style="width: 7%;" th:text="${l.asState}"></td>
+									<td style="width: 17%;" th:text="${sl.laundryName}"></td>
+									<td style="text-align: left; width: 27%;">
 										<strong><a th:href="@{/admin/asDetail(asCode=${l.asCode})}" th:text="${l.asTitle}"></a></strong>
 									</td>
-									<td>
+									<td style="width: 6%;">
 										<th:block th:if="${l.asAddFile=='1'}">
 											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
 											  <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
@@ -254,9 +255,9 @@
 										<th:block th:unless="${l.asAddFile=='1'}">
 										</th:block>
 									</td>
-									<td th:text="${sl.memberId}"></td>
-									<td th:text="${l.registTime}"></td>					
-									<td th:text="${l.visitTime}"></td>					
+									<td style="width: 8%;" th:text="${sl.memberId}"></td>
+									<td style="width: 15%;" th:text="${l.registTime}"></td>					
+									<td style="width: 15%;" th:text="${l.visitTime}"></td>					
 								</tr>
 								<tr th:unless="${not #lists.isEmpty(endAsList)}">
 									<td colspan="8">조회된 내용이 없습니다.</td>

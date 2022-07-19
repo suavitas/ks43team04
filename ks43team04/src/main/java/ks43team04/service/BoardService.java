@@ -114,6 +114,12 @@ public class BoardService {
 		return reviewList;
 	}
 	
+	/*리뷰 삭제*/
+	public int rvDel(String reviewCode) {
+		int result = boardMapper.rvDel(reviewCode);
+		return result;
+	}
+	
 	/*AS 삭제*/
 	public int asDel(As as) {
 		int result = asMapper.asDel(as);

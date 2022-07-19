@@ -150,6 +150,20 @@
 		-moz-appearance: none;
 		appearance: none;
 	}
+	.btn-write {
+		background-color: #f28213;
+		border-color: #f28213;
+		color: #fff;
+		font-weight: bold;
+	}
+	#btnDiv {
+		margin-left: 0; 
+		text-align: center; 
+		padding-top: 50px;
+	}
+	.col-md-9 {
+		max-width: 100%;
+	}
 
 </style>
 </th:block>		
@@ -183,112 +197,93 @@
 			<div class="row" style="float: none; margin: 100 auto;">
 				<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
 
-	<!--작성 폼 -->
-	<div class="form-title">
-						<h2>수정하기</h2>
-						<p>수정하세요</p>
-					</div>
-				 	<div id="form_status">
-					<div class="contact-form">
-						<form id="fruitkha-contact" th:action="@{/user/board/qnaModify}" method="POST"  enctype="multipart/form-data" name="multipart" >
-							<table class="col-lg-8 col-lg-12">
-								<colgroup>
-									<col style="width:120px">
-									<col>
-									</colgroup>
-								<tbody style="background:none;">
-									<tr>
-										<th scope="row" class="table-head">작성자</th>
-										<td class="table-data">
-											<p>
-												<input type="text" name="memberId" id="name" th:value="${board.memberId}" style="padding: 5px 15px 5px 15px; margin-top: 10px; margin-bottom: 10px; width: 30%" readonly="readonly">
-												<input type="hidden" name="boardIdx" id="boardIdx" th:value="${board.boardIdx}">
-											</p>
-										</td>
-									</tr>
-								
-								
-								
-									<tr>
-										<th scope="row" class="table-head table-row">문의유형</th>
-										<td class="table-data">
-										
-										<select name="boardMenuCode" id="boardMenuCode" th:value="${board.boardMenuCode}" style="padding: 5px 15px 5px 5px;" required="required">
-											<option value="">카테고리 선택</option>
-											<option th:selected="${board.boardMenuCode} == 'notice_menu_code_002'" th:value="notice_menu_code_002">서비스 이용</option>
-											<option th:selected="${board.boardMenuCode} == 'notice_menu_code_003'" th:value="notice_menu_code_003">수거/배송</option>
-											<option th:selected="${board.boardMenuCode} == 'notice_menu_code_004'" th:value="notice_menu_code_004">결제/포인트</option>
-											<option th:selected="${board.boardMenuCode} == 'notice_menu_code_005'" th:value="notice_menu_code_005">서비스 불만족</option>
-										</select>
-										
-										<label style="padding-left: 10px; margin-left: 10px;">
-										  <input type="checkbox" name="boardSecret" th:checked="${board.boardSecret eq 'Y'}" value='Y' id="boardSecret" onclick="clickSecret()">  비밀글
-										  <input type="hidden" name="boardSecret" value='N' id="boardSecret_hidden">
-										</label>
-									
-									<tr>
-										<th scope="row" class="table-head">제목</th>
-										<td class="table-data">
-											<p>
-												<input type="text" th:value="${board.boardTitle}" name="boardTitle" id="title" required="required" style="padding: 5px 15px 5px 15px; margin-top: 10px; margin-bottom: 10px; width: 100%">
-											</p>
-										</td>
-									</tr>
-									
-									<tr>
-										<th scope="row" class="table-head">문의내용</th>
-										<td class="table-data">
-											<p><textarea name="boardContent" id="content" cols="30" rows="10"  required="required" th:text="${board.boardContent}" style="margin-bottom: 10px;"></textarea></p>
-										</td>
-									</tr>
-																
-								</tbody>	
-							</table>
-						
-							<input type="hidden" name = "updateTime" th:value="${updateTime}">
-							<!-- 첨부파일 -->	
-				<div data-name="fileDiv" class="form-group row filebox bs3-primary">
-					<label for="file_0" class="col-md-1 control-label"><strong>파일첨부</strong></label>
-						<div class="col-sm-10">
-							<input type="text" class="upload-name" value="파일 찾기" readonly />
-								<label for="file_0" class="control-label">찾아보기</label>
-									<input type="file" name="boardImgFile" id="file_0" class="upload-hidden" onchange="changeFilename(this)" />		
-										<button type="button" onclick="addFile()" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
-											<i class="fa fa-plus" aria-hidden="true"></i>
-										</button>
-										<button type="button" onclick="removeFile(this)" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
-											<i class="fa fa-minus" aria-hidden="true"></i>
-										</button>
-						</div>
+				<!--작성 폼 -->
+				<div class="form-title">
+					<h2>문의사항 수정</h2>
 				</div>
+					<div id="form_status">
+						<div class="contact-form">
+							<form id="fruitkha-contact" th:action="@{/user/board/qnaModify}" method="POST"  enctype="multipart/form-data" name="multipart" >
+								<table class="col-lg-8 col-lg-12">
+									<colgroup>
+										<col style="width:120px">
+										<col>
+										</colgroup>
+									<tbody style="background:none;">
+										<tr>
+											<th scope="row" class="table-head">작성자</th>
+											<td class="table-data">
+												<p>
+													<input type="text" name="memberId" id="name" th:value="${board.memberId}" style="padding: 5px 15px 5px 15px; margin-top: 10px; margin-bottom: 10px; width: 30%" readonly="readonly">
+													<input type="hidden" name="boardIdx" id="boardIdx" th:value="${board.boardIdx}">
+												</p>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row" class="table-head table-row">문의유형</th>
+											<td class="table-data">											
+											<select name="boardMenuCode" id="boardMenuCode" th:value="${board.boardMenuCode}" style="padding: 5px 15px 5px 5px;" required="required">
+												<option value="">카테고리 선택</option>
+												<option th:selected="${board.boardMenuCode} == 'notice_menu_code_002'" th:value="notice_menu_code_002">서비스 이용</option>
+												<option th:selected="${board.boardMenuCode} == 'notice_menu_code_003'" th:value="notice_menu_code_003">수거/배송</option>
+												<option th:selected="${board.boardMenuCode} == 'notice_menu_code_004'" th:value="notice_menu_code_004">결제/포인트</option>
+												<option th:selected="${board.boardMenuCode} == 'notice_menu_code_005'" th:value="notice_menu_code_005">서비스 불만족</option>
+											</select>
+											
+											<label style="padding-left: 10px; margin-left: 10px;">
+											  <input type="checkbox" name="boardSecret" th:checked="${board.boardSecret eq 'Y'}" value='Y' id="boardSecret" onclick="clickSecret()">  비밀글
+											  <input type="hidden" name="boardSecret" value='N' id="boardSecret_hidden">
+											</label>
+										<tr>
+											<th scope="row" class="table-head">제목</th>
+											<td class="table-data">
+												<p>
+													<input type="text" th:value="${board.boardTitle}" name="boardTitle" id="title" required="required" style="padding: 5px 15px 5px 15px; margin-top: 10px; margin-bottom: 10px; width: 100%">
+												</p>
+											</td>
+										</tr>										
+										<tr>
+											<th scope="row" class="table-head">문의내용</th>
+											<td class="table-data">
+												<p><textarea name="boardContent" id="content" cols="30" rows="10"  required="required" th:text="${board.boardContent}" style="margin-bottom: 10px;"></textarea></p>
+											</td>
+										</tr>
+																	
+									</tbody>	
+								</table>
+							
+								<input type="hidden" name = "updateTime" th:value="${updateTime}">
+								
+								<!-- 첨부파일 -->	
+								<div data-name="fileDiv" class="form-group row filebox bs3-primary">
+									<label for="file_0" class="col-md-1 control-label"><strong>파일첨부</strong></label>
+										<div class="col-sm-10">
+											<input type="text" class="upload-name" value="파일 찾기" readonly />
+												<label for="file_0" class="control-label">찾아보기</label>
+													<input type="file" name="boardImgFile" id="file_0" class="upload-hidden" onchange="changeFilename(this)" />		
+														<button type="button" onclick="addFile()" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+															<i class="fa fa-plus" aria-hidden="true"></i>
+														</button>
+														<button type="button" onclick="removeFile(this)" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+															<i class="fa fa-minus" aria-hidden="true"></i>
+														</button>
+										</div>
+								</div>
 					
-						
-							<div id="btnDiv" class="form-group">
-					<div class="col-md-9 col-sm-9 offset-md-2" style="margin-left: 0; text-align: center; padding-top: 50px;">
-						<a th:href="@{/user/board/qnaList}"><button type="button" class="btn btn-primary">취소</button></a>
-							<a th:href="@{/user/board/qnaList}"><button type="submit" class="btn btn-success" value="Submit" style=" margin: 50px;" onclick="return validCheck()">수정</button></a>
-							</div>
-							</div>
-						</form>
+							
+								<div id="btnDiv" class="form-group">
+									<div class="col-md-9 col-sm-9">
+										<a th:href="@{/user/board/qnaList}"><button type="button" class="btn btn-secondary btn-lg">취소</button></a>
+										<a th:href="@{/user/board/qnaList}"><button type="submit" class="btn btn-write btn-lg" value="Submit" style=" margin: 50px;" onclick="return validCheck()">수정</button></a>
+									</div>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
-
-		</div>
-
-	</div>
+			</div>
 		
-
-		
-			
-		
-		
-		
-		
-		
-		
-
-		</div>
-		
+		</div>	
 	</div>
 		
 </th:block>
