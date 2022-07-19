@@ -136,11 +136,12 @@ public class BoardController {
 
 	/*Q&A(문의사항) 목록 조회*/
 	@GetMapping("/qnaList")
-	public String qnaServiceList(Model model) {
+	public String qnaServiceList(Model model, HttpSession session) {
 		List<Board> qnaServiceList = boardService.getQnaServiceList();
 		List<Board> qnaPickupList = boardService.getQnaPickupList();
 		List<Board> qnaPayList = boardService.getQnaPayList();
 		List<Board> qnaComplainList = boardService.getQnaComplainList();
+		String sessionId = (String) session.getAttribute("SID");
 		log.info("문의사항 서비스 이용 목록 : {}", qnaServiceList);
 		log.info("문의사항 수거 배송 목록 : {}", qnaPickupList);
 		log.info("문의사항 결제 포인트 목록 : {}", qnaPayList);
@@ -148,6 +149,7 @@ public class BoardController {
 		model.addAttribute("qnaPickupList", qnaPickupList);
 		model.addAttribute("qnaPayList", qnaPayList);
 		model.addAttribute("qnaComplainList", qnaComplainList);
+		model.addAttribute("sessionId", sessionId);
 		return "/user/board/qnaList";
 	}
 
