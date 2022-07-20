@@ -1,79 +1,110 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/adminDefault}">
-	  
-	<th:block layout:fragment="customCss">
-		<!-- datepicker -->
-		<link th:href="@{/admin/build/css/datepicker.css}" rel="stylesheet">
-	</th:block>
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/adminDefault}">
 
-<style>
-	.column-title {
-		font-size: 8px;
-	}
-</style>  	  
-	  
+<th:block layout:fragment="customCss">
+	<link th:href="@{/admin/build/css/datepicker.css}" rel="stylesheet">
+</th:block>
+
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		th:href="@{https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css}">
+</th:block>
+
+<th:block layout:fragment="customScript">
+	<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+</th:block>
+
+<th:block layout:fragment="customJsScript">
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.table').DataTable({
+				stateSave : true,
+				destroy : true,
+				ordering : false,
+				order : [ [ 1, "asc" ] ],
+				autowidth : false
+			});
+		});
+	</script>
+</th:block>
+
+
+<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+
+	<style>
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+#userList td {
+	vertical-align: middle;
+}
+
+#userList {
+	text-align: center;
+}
+
+.x_content {
+	padding-top: 20px;
+}
+</style>
 	<!-- 사용자정의 contents -->
-	<th:block layout:fragment="customContents">
-   	<h4>매장별 회원관리</h4>
-   	<div class="col-md-12 col-sm-12 mt-5">
+
+	<h4>
+		<strong>덕진사컴퓨터드라이크리닝</strong> 회원관리
+	</h4>
+	<div class="container" style="margin-top: 20px;">
+		<div class="col-md-12 col-sm-12">
 			<div class="x_panel">
-			<h2>회원 목록</h2>
-			<div class="x_title">
-			</div>
-				<div class="x_content">
-				  <div class="table-responsive"style="overflow: scroll; width: 100%; height: 480px;">
-				
-					<table class="table table-striped jambo_table bulk_action" >					
-							<thead>
-								<tr class="headings" style="text-align: center;">
-									<th>
-										<input type="checkbox" id="check-all" class="flat">
-									</th>
-									<th class="column-title" >세탁소 명</th>
-									<th class="column-title" >회원 아이디</th>
-									<th class="column-title">회원 이름</th>
-									<th class="column-title">회원 주소</th>
-										
-									<th class="bulk-actions" colspan="12">
-										<a class="antoo" style="color:#fff; font-weight:500;">전체 선택 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:if="${not #lists.isEmpty(LaundryUserList)}" th:each="l : ${LaundryUserList}" class="even pointer">
-									<td class="a-center">
-										<input type="checkbox" class="flat" name="table_records">
-									</td>
-										<td th:text="${l.laundryName}" style="text-align: center;"></td>
-										<td th:text="${l.UserName}" style="text-align: center;"></td>
-										<td th:text="${l.UserId}" style="text-align: center;"></td>
-										<td th:text="${l.UserAdrr}" style="text-align: center;"></td>			
-								</tr>
-							</tbody>
-						</table>
+				<h2 style="font-size: 30px;">회원 목록</h2>
+				<div class="x_title">
+					<div class="x_content">
+						<div class="row">
+							<div class="col-sm-12">
+								<div class="card-box table-responsive">
+									<!-- 테이블 -->
+									<table id="userList"
+										class="table table-striped jambo_table bulk_action"
+										style="width: 100%;">
+
+										<thead>
+											<tr class="headings" style="text-align: center;">
+												<th><input type="checkbox" id="check-all" class="flat">
+												</th>
+												<th class="column-title">세탁소 명</th>
+												<th class="column-title">회원 아이디</th>
+												<th class="column-title">회원 이름</th>
+												<th class="column-title">회원 주소</th>
+												<th class="bulk-actions" colspan="12"><a class="antoo"
+													style="color: #fff; font-weight: 500;">전체 선택 ( <span
+														class="action-cnt"> </span> ) <i
+														class="fa fa-chevron-down"></i></a></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:if="${not #lists.isEmpty(LaundryUserList)}"
+												th:each="l : ${LaundryUserList}" class="even pointer">
+												<td class="a-center"><input type="checkbox"
+													class="flat" name="table_records"></td>
+												<td th:text="${l.laundryName}"></td>
+												<td th:text="${l.UserName}"></td>
+												<td th:text="${l.UserId}"></td>
+												<td th:text="${l.UserAdrr}"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
 					</div>
-					
-					<nav aria-label="Page navigation example">
-						<ul class="pagination justify-content-center">
-							<li class="page-item">
-								<a class="page-link" th:href="@{/admin/lundryUser}" tabindex="-1"> <
-								</a>
-							</li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item">
-								<a class="page-link" th:href="@{/admin/lundryUser}" tabindex="-3">></a>
-							</li>
-						</ul>
-					</nav>
 				</div>
 			</div>
-		</div>	
-
-	</table>
+		</div>
+	</div>
 </th:block>
 
 </html>
