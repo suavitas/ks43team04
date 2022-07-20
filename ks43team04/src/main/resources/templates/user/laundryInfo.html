@@ -53,8 +53,9 @@
 	float: right;
 	display: inline;
 	margin-top: 54px;
+	margin-left: 10px;
 	padding: 4px;
-	margin-right: 9%;
+	margin-right: 0;
 	background-color: #F28123;
 	border: 0;
 	color: #fff;
@@ -325,47 +326,29 @@
 													<p style="margin-top: 5px; font-size: 11px;">※ 수거는 예약날짜
 														및 시간 으로 부터 최대 24시간의 시간이 소요 됩니다.</p>
 
-													<!-- 
-														for (var i = 0; i < removeBtn.length; i++) {
-															removeBtn[i].addEventListener('click', function(e) {
-																var strBox = e.target.parentElement.parentElement.parentElement.parentElement
-																		.querySelector('.strBox')
-																var ps = strBox.querySelectorAll('div');
-																var l = ps.length;
-												
-																if (l <= 0) {
-																	alert('더이상 제거 할 수 없습니다.');
-																} else {
-																	ps[l - 1].remove();
-																}
-												
-															});
-														}
-																
-													-->
 													<div th:class="${'append-info'}">
 														<div class="boxbox" style="margin-bottom: 10px;">
 															<div class="select-box" id="leftSelect"
 																style="float: left; display: inline-block; width: 30%; margin-right: 3%;">
 																<h5 style="margin-top: 20px;">세탁물 선택</h5>
 																<select class="igp" name="goodsName"
-																	style="width: 120px;">
+																	style="width: 140px;">
 																	<th:block th:each="ls , st : ${ilbanGoodsPriceList}">
 																		<th:block th:each="lss : ${ls.ilbanGoodsPrice}">
-																			<option th:if="${ls.laundryName} eq ${l.laundryName}"
-																				th:text="${lss.goodsName}"
-																				th:value="${lss.goodsName}"></option>
+																			<option th:if="${ls.laundryName} eq ${l.laundryName}" 
+																				th:text="|${lss.goodsName} : ${lss.goodsPrice}원|"
+																				th:value="${lss.goodsName}" th:data-goodsPrice="${lss.goodsPrice}"></option>
 																		</th:block>
 																	</th:block>
 																</select>
 															</div>
 															<div class="select-box" id="rightSelect"
 																style="width: 42%; display: inline-block;">
-																<h5 style="margin-top: 20px;">세탁기능 선택</h5>
-																<select class="isp" name="goodsOption">
+																<h5 style="margin-top: 20px; margin-left: 14px;">세탁기능 선택</h5>
+																<select class="isp" name="goodsOption" style="margin-left: 15px;">
 																	<th:block th:each="ls : ${ilbanSkillList}">
-																		<option th:text="${ls.skillCate}"
-																			th:value="${ls.skillCate}"></option>
+																		<option th:text="|${ls.skillCate} : ${ls.skillPrice}원|"
+																			th:value="${ls.skillCate}" th:data-skillPrice="${ls.skillPrice}"></option>
 																	</th:block>
 																</select> <br />
 															</div>
@@ -387,11 +370,7 @@
 													</div>
 													</th:block>
 													-->
-													<p>
-														<textarea name="bill" id="bill" cols="30" rows="10"
-															placeholder="배송시 요청사항"></textarea>
-													</p>
-
+													<p class="sumaa">총계 : </p>
 												</div>
 											</div>
 										</div>
@@ -404,6 +383,7 @@
 													aria-expanded="false" aria-controls="collapseTwo">가격표</button>
 											</h5>
 										</div>
+										<input type="hidden" name="bill">
 										<div id="collapseTwo" class="collapse"
 											aria-labelledby="headingTwo" data-parent="#accordionExample">
 											<div class="card-body">
@@ -770,14 +750,19 @@
 
 		for (var i = 0; i < appendBtn.length; i++) {
 			appendBtn[i]
-					.addEventListener(
-			'click',
-			function(e) {
+					.addEventListener('click',function(e) {
 				var box = e.target.parentElement.parentElement.parentElement
 						.querySelector('.boxbox')
 				var strGp = box.querySelector('.igp').value;
 				var strSp = box.querySelector('.isp').value;
-	
+				
+				/* 세탁물, 세탁기능 가격 */
+				var sumGp =parseInt( $(".igp option:selected").attr('data-goodsPrice') );
+				var sumSp =parseInt( $(".isp option:selected").attr('data-skillPrice') );
+				var sumPrice = sumGp+sumSp;
+				var sumaa=0;
+				var sumFinal = document.querySelectorAll('.sumFinal');
+				
 				e.target.parentElement.parentElement
 						.querySelector('.strBox').innerHTML 
 					   += '<div class="pPlusBtn">'
@@ -788,14 +773,17 @@
 						+ ' > '
 						+ strSp + '</p>'
 						+ ' : '
+						+ '<p class="sumFinal">'
+						+ sumPrice +'</p>'
+						+ '원'
 						+ '<button type="button" class="btn btn-info remove-btn">' 
 						+ '제거' 
 						+ '</button>'
 						+ '</div>';
+				
 			});
-			  
 		}
-		
+				
 
 		/*제거하기 클릭시 세탁기능, 세탁물 선택창 제거*/
 		$(document).on('click','.remove-btn',function(){
