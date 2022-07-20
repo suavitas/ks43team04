@@ -58,37 +58,7 @@
 	<!-- 사용자정의 contents -->
 	<th:block layout:fragment="customContents">
 	
-			<!-- 삭제 Modal -->
-		<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-			<div class="modal-dialog">
-		    	<div class="modal-content">
-		      		<div class="modal-header">
-		      			<h5 class="modal-title" id="staticBackdropLabel">정말로 삭제하시겠습니까?</h5>
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-					        </button>
-		     		</div>		      
-						<form class="rvDel" th:action="@{/admin/review}" method="POST">
-							<div class="modal-body">
-								<div style="text-align: center">
-						      		<h5>비밀번호 확인</h5>
-						      			<p>단, 삭제는 '대기' 상태일 때만 가능합니다.</p>
-									      	<input type="text" id ="reviewCode" name="reviewCode" th:value="${reviewCode}">	
-									      	<input type="password" id ="pwDelCheck" name="pwDelCheck" placeholder="비밀번호를 입력해주세요" required="required">
-													<input type="hidden" id ="pwDelCheck2" name="memberPw2" th:value="${member.memberPw}">
-													
-								</div>
-							</div>
-				      
-							<div class="modal-footer">
-						        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-						        <a th:href="@{/admin/review}"><button type="submit" name="submit" value="submit" class="btn btn-danger" onclick="return delCheck()">삭제</button></a>
-						     </div>
-						</form>
-					</div>
-				</div>
-			</div>	
-	
+		
 		<!-- 탭 이름 -->
 		<h4><strong>리뷰 관리</strong></h4>
 			<!-- 본문 내용 시작 -->
@@ -114,8 +84,8 @@
 												</tr>
 											</thead>
 											<tbody>
-												<th:block th:if="${not #lists.isEmpty(reviewList)}" th:each="l : ${reviewList}">
-													<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl, status :${l.LaundryList}">
+												<th:block th:if="${not #lists.isEmpty(reviewList)}" th:each="l ,status : ${reviewList}">
+													<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl :${l.LaundryList}">
 														<td th:text="${l.reveiwNum}"></td>
 														<td th:text="${sl.laundryName}"></td>
 														<td th:text="${l.countingStar}"></td>
@@ -123,14 +93,47 @@
 														<td th:text="${l.memberId}"></td>
 														<td th:text="${l.registTime}"></td>
 														<td>
-														<a th:href="@{/admin/review(reviewCode=${l.reviewCode})}" type="button" class="btn btn-danger-sm" id="rv-remove" data-toggle="modal" data-target="#staticBackdrop">삭제</a>
-													<input type="text" id ="reviewCode" name="reviewCode" th:value="${l.reviewCode}">	
+														<button type="button" class="btn btn-danger btn-sm" id="rv-remove" data-toggle="modal" th:data-target="${'#staticBackdrop'+status.count}">삭제</button>
+															<input type="hidden" th:id ="${'reviewCode'+status.count}" name="reviewCode2" th:value="${l.reviewCode}">	
 														</td>
 												
 													</tr>
 													<tr th:unless="${not #lists.isEmpty(reviewList)}">
 														<td colspan="7">조회된 내용이 없습니다.</td>
 													</tr>
+													
+														<!-- 삭제 Modal -->
+														<div class="modal fade" th:id="${'staticBackdrop'+status.count}" data-backdrop="static" data-keyboard="false" tabindex="-1" th:aria-labelledby="${'staticBackdropLabel'+status.count}" aria-hidden="true">
+															<div class="modal-dialog">
+														    	<div class="modal-content">
+														      		<div class="modal-header">
+														      			<h5 class="modal-title" th:id="${'staticBackdropLabel'+status.count}">정말로 삭제하시겠습니까?</h5>
+																	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																				<span aria-hidden="true">&times;</span>
+																	        </button>
+														     		</div>		      
+																		<form class="rvDel" th:action="@{/admin/review}" method="POST">
+																			<div class="modal-body">
+																				<div style="text-align: center">
+																		      		<h5>비밀번호 확인</h5>
+																		      			<p>단, 삭제는 '대기' 상태일 때만 가능합니다.</p>
+																		      				
+																					      	<input type="text" id ="rvCode" name="reviewCode" th:value="${l.reviewCode}">	
+																					      	<input type="password" id ="pwDelCheck" name="pwDelCheck" placeholder="비밀번호를 입력해주세요" required="required">
+																									<input type="hidden" id ="pwDelCheck2" name="memberPw2" th:value="${member.memberPw}">
+																				</div>
+																			</div>
+																      
+																			<div class="modal-footer">
+																		        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+																		        <a th:href="@{/admin/review}"><button type="submit" name="submit" value="submit" class="btn btn-danger" onclick="return delCheck()">삭제</button></a>
+																		     </div>
+																		</form>
+																	</div>
+																</div>
+															</div>	
+													<!-- 삭제 Modal 끝 -->
+													
 												</th:block>
 											</tbody>
 										</table>
@@ -143,6 +146,8 @@
 					</div>
 										
 				</div>
+				
+				
 	</th:block>
 
 </html>

@@ -60,9 +60,14 @@
 													</div>
 												</th:block>
 												<th:block th:unless="${not #lists.isEmpty(boardAttach)}">
-													<h5 th:text="${l.eventState}"></h5>
-													<h5 th:text="${l.eventTitle}"></h5>
-												</th:block>	
+													<th:block th:if="${l.eventState == '진행중'}">								
+														<h5 th:text="${l.eventState}"></h5>
+														<a th:href="@{/user/board/eventDetail(eventCode=${l.eventCode})}"><h5 th:text="${l.eventTitle}"></h5></a>
+													</th:block>
+													<th:block th:unless="${l.eventState == '진행중'}">								
+														<h5 th:text="${l.eventState}" style="color: #ADB4B6;"></h5>
+														<a th:href="@{/user/board/eventDetail(eventCode=${l.eventCode})}"><h5 th:text="${l.eventTitle}" style="color: #ADB4B6;"></h5></a>
+													</th:block>		
 											</div>
 										</div>
 									</th:block>

@@ -110,10 +110,18 @@
 										</thead>
 											<tr th:if="${not #lists.isEmpty(eventList)}" th:each="l : ${eventList}">
 												<td th:text="${l.eventNo}"></td>
+												<th:block th:if="${l.eventState == '진행중'}">
 												<td th:text="${l.eventState}"></td>
 												<td style="text-align: left;">
 													<strong><a th:href="@{/admin/eventDetail(eventCode=${l.eventCode})}" th:text="${l.eventTitle}"></a></strong>
 												</td>
+												</th:block>
+												<th:block th:unless="${l.eventState == '진행중'}">
+												<td th:text="${l.eventState}"></td>
+												<td style="text-align: left;">
+													<strong><a th:href="@{/admin/eventDetail(eventCode=${l.eventCode})}" th:text="${l.eventTitle}"></a></strong>
+												</td>
+												</th:block>
 												<td>
 													<th:block th:if="${l.eventAddFile=='1'}">
 														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">

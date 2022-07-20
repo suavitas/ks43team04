@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import ks43team04.dto.As;
 import ks43team04.dto.Board;
 import ks43team04.dto.Event;
 import ks43team04.dto.Review;

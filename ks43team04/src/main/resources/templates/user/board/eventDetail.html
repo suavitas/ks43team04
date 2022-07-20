@@ -36,97 +36,58 @@
 			<div class="row" style="float: none; margin: 100 auto;">
 				<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
 
-	<!--상세 글 보기 -->
-		<div class="subject" style="border-bottom: 1px solid #d8d8d8">
-			<h3 style="padding: 11px 0 12px 0; margin: 0; font-size: 20px; font-weight: bold;" th:text="${event.eventTitle}"></h3>	
-		</div>
-		<div class="info">
-			<div class="xleft" style="text-align: right; padding: 10px 0 10px 0; font-size: 13px;">
-					<span class="addFile">
-	                       <th:block th:if="${not #lists.isEmpty(event.boardAttach)}" th:each="b : ${event.boardAttach}">
-		                      <a href="#"> 
-		                       <i class="bi bi-download" title="첨부파일"></i>
-	                        	    <th:block th:text="${b.saveFile}"></th:block>
-	                        	  </a>         
-			                    <span class="split">|</span>                 
-                    </span>                
-                    	<th:block th:if="${event.memberId.equals('id001')}">
-									<span>관리자</span>
-						</th:block>	
-	                <span class="split">|</span> 
-	                <span class="han" th:text="${event.registTime}"></span> 
-	                <span class="split">|</span> 
-					<span class="han">조회</span> <span class="num" th:text="${event.eventReadCount}"></span> 
-	              
-			</div>
-		</div>
+				<!--상세 글 보기 -->
+					<div class="subject" style="border-bottom: 1px solid #d8d8d8">
+						<h3 style="padding: 11px 0 12px 0; margin: 0; font-size: 20px; font-weight: bold;" th:text="[+${event.eventState}+] + ${event.eventTitle}"></h3>	
+					</div>
+					<div class="info">
+						<div class="xleft" style="text-align: right; padding: 10px 0 10px 0; font-size: 13px;">
+								<span class="addFile">
+				                       <th:block th:if="${not #lists.isEmpty(event.boardAttach)}" th:each="b : ${event.boardAttach}">
+					                      <a href="#"> 
+					                       <i class="bi bi-download" title="첨부파일"></i>
+				                        	    <th:block th:text="${b.saveFile}"></th:block>
+				                        	  </a>         
+						                    <span class="split">|</span>                 
+			                    </span>                
+			                    	<th:block th:if="${event.memberId.equals('id001')}">
+												<span>관리자</span>
+									</th:block>	
+				                <span class="split">|</span> 
+				                <span class="han" th:text="${event.registTime}"></span> 
+				                <span class="split">|</span> 
+								<span class="han">조회</span> <span class="num" th:text="${event.eventReadCount}"></span> 
+				              
+						</div>
+					</div>
+					
+					<div id="nContent" class="content" style="padding-top: 40px;">
 		
-		<div id="nContent" class="content" style="padding-top: 40px;">
-		
-		<!-- 첨부파일 시작 -->
-
-								<th:block th:if="${not #lists.isEmpty(event.boardAttach)}" th:each="b : ${event.boardAttach}">									
-									<a class="pt" th:data-img="${b.saveFile}">
-										<img th:src="@{'/' + ${#strings.replace(b.filePath,'\','/')}}" alt="이미지를 불러올 수 없습니다." style="width: 700px; margin-bottom: 50px;">
-									</a>
-								</th:block>
-								<th:block th:unless="${not #lists.isEmpty(event.boardAttach)}">
-								</th:block>
+					<!-- 첨부파일 시작 -->
+						<th:block th:if="${not #lists.isEmpty(event.boardAttach)}" th:each="b : ${event.boardAttach}">									
+							<a class="pt" th:data-img="${b.saveFile}">
+								<img th:src="@{'/' + ${#strings.replace(b.filePath,'\','/')}}" alt="이미지를 불러올 수 없습니다." style="width: 700px; margin-bottom: 50px;">
+							</a>
+						</th:block>
+						<th:block th:unless="${not #lists.isEmpty(event.boardAttach)}">
+						</th:block>
 					<!-- 첨부파일 끝 -->
 		
-			<p th:text="${event.eventContent}"></p>
-
-		</div>
-
+					<pre><p th:text="${event.eventContent}" style="font-size: 13px;"></p></pre>
+					</div>		
 				
-						
-						
-						
-					
-					
-						
-							
-		<!-- 목록버튼(공지사항 목록으로 돌아가기) -->
-		<div class="row">
-			
-		
-			<div class="btnArea col-lg-6 col-sm-12" style="text-align:right; 0px; margin-top: 80px;">
-				<span>
-						<a th:href="@{/user/board/eventList}" class="cart-btn btn-lg">목록보기</a>
-				</span>
-			</div>	
-			
-			
-		</div>
+					<!-- 목록버튼(공지사항 목록으로 돌아가기) -->
+					<div class="row">
+						<div class="btnArea col-lg-6 col-sm-12" style="text-align:right; 0px; margin-top: 80px;">
+							<span>
+								<a th:href="@{/user/board/eventList}" class="cart-btn btn-lg">목록보기</a>
+							</span>
+						</div>	
 					</div>
 				</div>
-
+			</div>
 		</div>
 
-
-
-		
-			
-		
-		
-		
-		
-		
-		
-
-	
-		
-			
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	</div>
 		
 </th:block>
