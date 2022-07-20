@@ -29,8 +29,8 @@
 	<div class="list-group list-group-horizontal col-sm-12"
 		style="margin: 0 auto; text-align: center; padding-right: 0px;">
 		<a th:href="@{/user/myPage}"
-			class="list-group-item list-group-item-action">회원정보</a> <a href="#"
-			class="list-group-item list-group-item-action">예약 현황</a> <a href="#"
+			class="list-group-item list-group-item-action">회원정보</a> <a th:href="@{/user/myPageReservationStatus}"
+			class="list-group-item list-group-item-action">예약 현황</a> <a th:href="@{/user/myPageDelivery}"
 			class="list-group-item list-group-item-action">수거배송 조회</a> <a
 			th:href="@{/user/myPagePayment2}" class="list-group-item list-group-item-action">결제 내역</a> <a
 			th:href="@{/user/myPageRefund}"
@@ -39,8 +39,7 @@
 			aria-current="true">환불 내역</a> <a th:href="@{/user/myPagePoint}"
 			class="list-group-item list-group-item-action">포인트 조회</a> <a
 			th:href="@{/user/myPageWrite}"
-			class="list-group-item list-group-item-action">내가 쓴 글</a> <a href="#"
-			class="list-group-item list-group-item-action">리뷰?</a>
+			class="list-group-item list-group-item-action">문의 내역</a>
 	</div>
 	<style>
 .date-select-div {

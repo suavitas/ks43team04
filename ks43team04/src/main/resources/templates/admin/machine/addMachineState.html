@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/adminDefault}">
+
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+</th:block>
+
+<th:block layout:fragment="customJsScript">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+	<script>
+		$(function(){
+			$(document).on('click', '.addMachineStateBtn', function() {
+				$.ajax({
+        		    url: "/admin/machine/addMachineState",
+        		    type: "POST",
+        		    dataType: "text",
+        		    data: $('#addMachineStateBtnForm').serialize(),
+        		    success: function(data){
+        		    	swal(
+        		    	        '장비 스팩 추가',
+        		    	        '<b style="color:green;">추가완료</b> 되었습니다!',
+        		    	        'success'
+        		    	      ).then((result) => {
+        				          if (result.value) {
+        				              window.location = data;
+        				          }
+        		    	      });
+        		    	
+        		    },
+        		    error: function (request, status, error){        
+
+        		    }
+				
+		    	});
+			});
+		});
+	</script>
+</th:block>
+
+<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+
+
+			<h4>전체 장비 스팩</h4>
+			<form th:action="@{/admin/machine/addMachineState}" method="post" id="addMachineStateBtnForm"
+							style="text-align: center;">
+				<div class="responsive-table" style="overflow: auto;">
+
+					<table id="reportList" class="table table-striped jambo_table bulk_action"
+						style="width: 80%; white-space: nowrap;">
+						<thead>
+							<tr class="headings">
+								<th class="column-title" colspan="2">장비 스팩</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>장비구분</td>
+								<td>세탁기<input type="radio" name="MachineCategory" th:value="세탁기"> 
+							 		건조기<input type="radio" name="MachineCategory" th:value="건조기"></td>										
+							</tr>
+							<tr>
+								<td>출시</td>
+								<td><input type="date" style="width: 50%;" name="MachineRelease"
+									th:value="${MachineRelease}"></td>
+							</tr>
+							<tr>
+								<td>용량</td>
+								<td><input style="width: 50%;"; name="MachineLimit" th:value="${MachineLimit}"></td>
+							</tr>
+							<tr>
+								<td>모터</td>
+								<td><input style="width: 50%;"; name="MachineMotor" th:value="${MachineMotor}"></td>
+							</tr>
+							<tr>
+								<td>에너지효율</td>
+								<td>1등급<input type="radio" name="MachineEnergy" th:value="1등급"> 
+							 		2등급<input type="radio" name="MachineEnergy" th:value="2등급">									
+							 		3등급<input type="radio" name="MachineEnergy" th:value="3등급">										
+							 		4등급<input type="radio" name="MachineEnergy" th:value="4등급">									
+							 		5등급<input type="radio" name="MachineEnergy" th:value="5등급"></td>										
+							</tr>
+
+							<tr>
+								<td>세탁코스</td>
+								<td><input style="width: 50%;"; name="MachineCourse" th:value="${MachineCourse}"></td>
+							</tr>
+							<tr>
+								<td>보풀제거</td>
+								<td><input style="width: 50%;"; name="MachineRemoval"
+									th:value="${MachineRemoval}"></td>
+							</tr>
+							<tr>
+								<td>타이머</td>
+								<td><input style="width: 50%;"; name="MachineTimer" th:value="${MachineTimer}"></td>
+							</tr>
+							<tr>
+								<td>안전기능</td>
+								<td><input style="width: 50%;"; name="MachineSafety" th:value="${MachineSafety}"></td>
+							</tr>
+							<tr>
+								<td>부가기능</td>
+								<td><input style="width: 50%;"; name="MachineSkill" th:value="${MachineSkill}"></td>
+							</tr>
+							<tr>
+								<td>세탁조관리</td>
+								<td><input style="width: 50%;"; name="MachineManagement"
+									th:value="${MachineManagement}"></td>
+							</tr>
+							<tr>
+								<td>디스플레이</td>
+								<td><input style="width: 50%;"; name="MachineDisplay"
+									th:value="${MachineDisplay}"></td>
+							</tr>
+							<tr>
+								<td>조작부</td>
+								<td><input style="width: 50%;"; name="MachineControl"
+									th:value="${MachineControl}"></td>
+							</tr>
+							<tr>
+								<td>소비전력</td>
+								<td><input style="width: 50%;"; name="MachinePower" th:value="${MachinePower}"></td>
+							</tr>
+							<tr>
+								<td>설치최소공간</td>
+								<td><input style="width: 50%;"; name="MachineSpace" th:value="${MachineSpace}"></td>
+							</tr>
+							<tr>
+								<td>색상</td>
+								<td><input style="width: 50%;"; name="MachineColor" th:value="${MachineColor}"></td>
+							</tr>
+							<tr>
+								<td>제품크기</td>
+								<td><input style="width: 50%;"; name="MachineSize" th:value="${MachineSize}"></td>
+							</tr>
+							<tr>
+								<td>무상AS</td>
+								<td><input style="width: 50%;"; name="MachineAs" th:value="${MachineAs}"></td>
+							</tr>
+							<tr>
+								<td>도어</td>
+								<td><input style="width: 50%;"; name="MachineDoor" th:value="${MachineDoor}"></td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<button type="button" class="btn btn-danger btn-sm addMachineStateBtn"
+										data-toggle="modal" data-target="#deleteModal">
+										전체 장비 스팩 추가</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<input name="RegistTime" th:value="${RegistTime}" hidden="true">
+				<input name="MachineSpecCode" th:value="${MachineSpecCode}" hidden="true">
+	</form>
+</th:block>
+
+
+</html>

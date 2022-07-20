@@ -5,12 +5,16 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import ks43team04.dto.As;
 import ks43team04.dto.Board;
 import ks43team04.dto.Event;
 import ks43team04.dto.Review;
 
 @Mapper
 public interface BoardMapper {
+	
+	//내가 쓴 글 조회
+	public List<Board> myWritingList(String memberId);
 	
 	//문의사항 답변 수정
 	public int qnaCommentModify(Board board);
@@ -48,6 +52,9 @@ public interface BoardMapper {
 	
 	//리뷰 조회
 	public List<Review> getReviewList();
+	
+	//리뷰 삭제
+	public int rvDel(String reviewCode);
 	
 	//공지사항 글 삭제
 	public int noticeRemove(Board board);

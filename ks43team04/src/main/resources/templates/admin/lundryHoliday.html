@@ -4,9 +4,17 @@
 	layout:decorate="~{layouts/adminDefault}">
 
 
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+</th:block>
 
 <!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+		
+		<script type="text/javascript">
+		
+	</script>
 
 	<div class="x_panel">
 		<h2>세탁소별 휴일 목록</h2>
@@ -14,8 +22,7 @@
 
 		<div class="x_content">
 			<div th:include="search/laundrySearch :: searchLaundryFragment"></div>
-			<br />
-			<a th:href="@{/admin/addHoliday}"><input type="button"
+			<br /> <a th:href="@{/admin/addHoliday}"><input type="button"
 				class="btn btn-info" value="세탁소 휴일 추가"></a><br /> <br />
 			<div style="width: 100%;">
 				<table class="table table-striped jambo_table bulk_action">
@@ -42,14 +49,14 @@
 									th:href="@{/admin/changeHoliday(laundryName=${l.get('laundryName')}, 
 											yearlyHolidayName=${l.get('yearlyHolidayName')},yearlyHolidayDate=${l.get('yearlyHolidayDate')},
 											holidayCodeUse=${l.get('holidayCodeUse')},holidayCode=${l.get('holidayCode')},laundryCode=${l.get('laundryCode')})}"><button
-											type="button" onclick="changeCheck()"
+											type="button"  onclick="Alert()" name="modifybtn"
 											class="btn btn-success btn-sm" data-toggle="modal"
 											data-target="#deleteModal">수정</button> </a></td>
 								<td><a
 									th:href="@{/admin/removeHoliday(laundryName=${l.get('laundryName')}, 
 											yearlyHolidayName=${l.get('yearlyHolidayName')},yearlyHolidayDate=${l.get('yearlyHolidayDate')},
 											holidayCodeUse=${l.get('holidayCodeUse')},holidayCode=${l.get('holidayCode')},laundryCode=${l.get('laundryCode')})}"><button
-											type="button" onclick="removeCheck()"
+											type="button" onclick="Confirm()"
 											class="btn btn-danger btn-sm" data-toggle="modal"
 											data-target="#deleteModal">삭제</button> </a></td>
 						</th:block>
@@ -77,26 +84,6 @@
 			</nav>
 		</div>
 	</div>
-	<script type="text/javascript">
-		function changeCheck() {
-
-			if (confirm("수정하시겠습니까??") == true) {
-
-			} else {
-				return false;
-
-			}
-		}
-		function removeCheck() {
-
-			if (confirm("삭제하시겠습니까??") == true) {
-
-			} else {
-				return false;
-
-			}
-		}
-	</script>
 </th:block>
 
 </html>

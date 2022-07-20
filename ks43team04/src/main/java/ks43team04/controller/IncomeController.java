@@ -1,11 +1,15 @@
 package ks43team04.controller;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ks43team04.dto.Bill;
 import ks43team04.dto.LaundryList;
@@ -48,11 +52,28 @@ public class IncomeController {
 	/* 세탁소별 월별 수입 */
 
 	@GetMapping("/lundryIncome")
-	public String lundryIncome(Model model) {
-		List<Bill> laundryIncome = billService.laundryIncome();
-		model.addAttribute("laundryIncome", laundryIncome);
-		System.out.println("__________모델입니다__________"+model);
-		System.out.println("__________세탁소별 월별 수입 조회____________"+laundryIncome);
+	public String eachLaundryIncome(@RequestParam(name = "currentPage", required = false, defaultValue = "1") int currentPage,
+								Model model, HttpSession session) {
+
+		Map<String, Object> resultMap =  billService.eachLaundryIncome(currentPage);
+		
+		String sessionId = (String) session.getAttribute("SID");
+		String sessionName = (String) session.getAttribute("SNAME");
+		
+		model.addAttribute("sessionName", sessionName);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("resultMap", resultMap);
+		model.addAttribute("laundryByIncome", resultMap.get("laundryByIncome"));
+		model.addAttribute("lastPage", resultMap.get("lastPage"));
+		model.addAttribute("startPageNum", resultMap.get("startPageNum"));
+		model.addAttribute("endPageNum", resultMap.get("endPageNum"));		
+		System.out.println("____________resultMap____________"+resultMap);
+		System.out.println("__________세탁소별 월별 수입 조회 모델입니다__________"+model);
+		System.out.println("__________세탁소별 월별 수입 조회 컨트롤러____________");
+
+		System.out.println(resultMap.get("laundryByIncome"));
+		System.out.println(resultMap.get("eachLaundryIncome"));
+		
 		return "admin/lundryIncome";
 	}
 

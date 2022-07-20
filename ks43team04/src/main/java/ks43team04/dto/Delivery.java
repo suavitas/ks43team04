@@ -16,103 +16,99 @@ public class Delivery {
 	private List<LaundryList> laundryList;
 	private List<User> user;
 	private List<Member> memberList;
-
+	private List<Request> requestList;
+	private List<Bill> bill;
+	private List<ContractRider> contractRiderList;
 	public String getDeliveryCode() {
 		return deliveryCode;
 	}
-
 	public void setDeliveryCode(String deliveryCode) {
 		this.deliveryCode = deliveryCode;
 	}
-
 	public String getLaundryCode() {
 		return laundryCode;
 	}
-
 	public void setLaundryCode(String laundryCode) {
 		this.laundryCode = laundryCode;
 	}
-
 	public String getRequestCode() {
 		return requestCode;
 	}
-
 	public void setRequestCode(String requestCode) {
 		this.requestCode = requestCode;
 	}
-
 	public String getDeliveryAddr() {
 		return deliveryAddr;
 	}
-
 	public void setDeliveryAddr(String deliveryAddr) {
 		this.deliveryAddr = deliveryAddr;
 	}
-
 	public String getUserCode() {
 		return userCode;
 	}
-
 	public void setUserCode(String userCode) {
 		this.userCode = userCode;
 	}
-
 	public String getBillCode() {
 		return billCode;
 	}
-
 	public void setBillCode(String billCode) {
 		this.billCode = billCode;
 	}
-
 	public String getDeliveryPlanDate() {
 		return deliveryPlanDate;
 	}
-
 	public void setDeliveryPlanDate(String deliveryPlanDate) {
 		this.deliveryPlanDate = deliveryPlanDate;
 	}
-
 	public String getDeliveryFinishTime() {
 		return deliveryFinishTime;
 	}
-
 	public void setDeliveryFinishTime(String deliveryFinishTime) {
 		this.deliveryFinishTime = deliveryFinishTime;
 	}
-
 	public String getContractRiderCode() {
 		return contractRiderCode;
 	}
-
 	public void setContractRiderCode(String contractRiderCode) {
 		this.contractRiderCode = contractRiderCode;
 	}
-
 	public List<LaundryList> getLaundryList() {
 		return laundryList;
 	}
-
 	public void setLaundryList(List<LaundryList> laundryList) {
 		this.laundryList = laundryList;
 	}
-
 	public List<User> getUser() {
 		return user;
 	}
-
 	public void setUser(List<User> user) {
 		this.user = user;
 	}
-
 	public List<Member> getMemberList() {
 		return memberList;
 	}
-
 	public void setMemberList(List<Member> memberList) {
 		this.memberList = memberList;
 	}
-
+	public List<Request> getRequestList() {
+		return requestList;
+	}
+	public void setRequestList(List<Request> requestList) {
+		this.requestList = requestList;
+	}
+	public List<Bill> getBill() {
+		return bill;
+	}
+	public void setBill(List<Bill> bill) {
+		this.bill = bill;
+	}
+	public List<ContractRider> getContractRiderList() {
+		return contractRiderList;
+	}
+	public void setContractRiderList(List<ContractRider> contractRiderList) {
+		this.contractRiderList = contractRiderList;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -140,8 +136,21 @@ public class Delivery {
 		builder.append(user);
 		builder.append(", memberList=");
 		builder.append(memberList);
+		builder.append(", requestList=");
+		builder.append(requestList);
+		builder.append(", bill=");
+		builder.append(bill);
+		builder.append(", contractRiderList=");
+		builder.append(contractRiderList);
 		builder.append("]");
 		return builder.toString();
 	}
 
+	
+	
+	
+	
+	
 }
+
+

@@ -15,6 +15,7 @@ import ks43team04.common.FileUtils;
 import ks43team04.dto.As;
 import ks43team04.dto.Board;
 import ks43team04.dto.Event;
+import ks43team04.dto.Laundry;
 import ks43team04.dto.LaundryList;
 import ks43team04.dto.Review;
 import ks43team04.mapper.AsMapper;
@@ -39,6 +40,12 @@ public class BoardService {
 		this.asMapper = asMapper;
 		this.laundryMapper = laundryMapper;
 		this.fileMapper = fileMapper;
+	}
+	
+	/*내가 쓴 글 조회*/
+	public List<Board> myWritingList(String memberId){
+		List<Board> myWritingList = boardMapper.myWritingList(memberId);
+		return myWritingList;
 	}
 	
 	/*문의사항 답변 수정*/
@@ -96,8 +103,8 @@ public class BoardService {
 	}
 	
 	/*멤버이름으로 세탁소조회*/
-	public List<LaundryList> getMemberLaundryList(String memberId){
-		List<LaundryList> getMemberLaundryList = laundryMapper.getMemberLaundryList(memberId);
+	public List<Laundry> getMemberLaundryList(String memberId){
+		List<Laundry> getMemberLaundryList = laundryMapper.getMemberLaundryList(memberId);
 		return getMemberLaundryList;
 	}
 	
@@ -105,6 +112,12 @@ public class BoardService {
 	public List<Review> getReviewList(){
 		List<Review> reviewList = boardMapper.getReviewList();
 		return reviewList;
+	}
+	
+	/*리뷰 삭제*/
+	public int rvDel(String reviewCode) {
+		int result = boardMapper.rvDel(reviewCode);
+		return result;
 	}
 	
 	/*AS 삭제*/
@@ -503,7 +516,7 @@ public class BoardService {
 
 	/* 공지사항 목록 조회(페이징 처리) */
 	public Map<String, Object> getNoticeList(int currentPage){
-		int rowPerPage = 10;
+		int rowPerPage = 50;
 		int startPageNum = 1;
 		int endPageNum = 3;
 		
@@ -512,7 +525,7 @@ public class BoardService {
 		int startRow = (currentPage - 1) * rowPerPage;
 		
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("startRow", startRow);
+		paramMap.put("startRow", 0);
 		paramMap.put("rowPerPage", rowPerPage);
 		
 		List<Board> getNoticeList = boardMapper.getNoticeList(paramMap);

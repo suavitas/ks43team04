@@ -1,16 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	  
-	<div th:fragment="searchLaundryFragment">
-		<form th:action="@{/admin/lundryHoliday}">
-			<select name="searchKey">
-			    <option value="laundryName">세탁소 이름</option>		    
-			    <option value="yearlyHolidayDate">휴일</option>
-			    <option value="laundryAddr">주소</option>
-			</select>
-			<input type="text" name="searchValue"/>
-			<input type="submit" value="검색버튼"/>
-		</form>
-	</div>
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<div th:fragment="searchLaundryFragment">
+	<form th:action="@{/admin/lundryHoliday}">
+		<div class="title_right">
+			<div class="col-md-5 col-sm-5  form-group row pull-right top_search">
+				<div class="input-group">
+				<select name="searchKey" class="form-control" style="width: 27%;">
+				<option value="laundryName">세탁소 이름</option>
+				<option value="yearlyHolidayDate">휴일</option>
+				<option value="laundryAddr">주소</option>
+			</select> 
+			<input type="text" class="form-control" placeholder="예)홈플러스 전주 효자점"
+				name="searchValue" style="width: 60%;"> <span
+				class="input-group-btn">
+				<button class="btn btn-secondary" type="submit">Go!</button>
+			</span>
+				</div>
+			</div>
+		</div>
+	</form>
+
+</div>
+
 </html>

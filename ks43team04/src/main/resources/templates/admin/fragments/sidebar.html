@@ -18,24 +18,23 @@
                       <li><a th:href="@{/admin/loginHistory}">회원 접속내역</a></li>
                     </ul>
                   </li>
-                     <li><a><i class="fa fa-table"></i> !휴일<span class="fa fa-chevron-down"></span></a>
+                     <li><a><i class="fa fa-table"></i> !휴일(이용민,정승현)<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a th:href="@{/admin/holiday}">!전체 공휴일(정승현)</a></li>
                       <li><a th:href="@{/admin/lundryHoliday}">!세탁소별 휴일(이용민)</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-bar-chart-o"></i> !회계 <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-bar-chart-o"></i> !회계(이용민,최우영) <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a th:href="@{/admin/income}">#전체 매장 월별 매출(이용민)</a></li>
-                      <li><a th:href="@{/admin/retrun}">#전체 매장 월별 환불 횟수</a></li>
-                      <li><a th:href="@{/admin/memberPoint}">전체 회원 포인트 사용 내역(최우영)</a></li>
                       <li><a th:href="@{/admin/pickUp}">전체 수거 및 배송 현황(이용민)</a></li>
-                    </ul>
+                      <li><a th:href="@{/admin/retrun}">#전체 매장 월별 환불 횟수</a></li>
+                      <li><a th:href="@{/admin/memberPoint}">전체 회원 포인트 사용 내역(최우영)</a></li>                    </ul>
                   </li>
-                  <li><a><i class="fa fa-clone"></i>!장비<span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-clone"></i>!장비(이용민,안수빈)<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a th:href="@{/admin/machine}">#매장별 장비 현황(이용민)</a></li>
-                      <li><a th:href="@{/admin/machineState}">보유 장비 스팩(이용민)</a></li>                                         
+                   	  <li><a th:href="@{/admin/machine/machineState}">보유 장비 스팩(이용민)</a></li> 
+                      <li><a th:href="@{/admin/machine/machine}">매장별 장비 현황(이용민)</a></li>
                       <li><a th:href="@{/admin/asList}">!장비 고장 신고 목록(안수빈) </a></li>                     
                     </ul>
                   </li>                                    
@@ -54,26 +53,26 @@
                                   
                  <h3>매장 관리</h3>
 					<ul class="nav side-menu">
-						<li><a><i class="fa fa-desktop"></i>무인 세탁소 관리<span class="fa fa-chevron-down"></span></a>
+						<li><a><i class="fa fa-desktop"></i> 무인 세탁소 관리 (이용민,정승현,안수빈,최우영)<span class="fa fa-chevron-down"></span></a>
 		                    <ul class="nav child_menu">		                      
 		                      <li><a th:href="@{/admin/selectHoliday}">!세탁소 휴일 지정(정승현)</a></li>
-		                      <li><a th:href="@{/admin/lundryUser}">매장별 회원 목록(이용민)</a></li>		                      
-		                      <li><a th:href="@{/admin/lundryIncome}">#월별 매출액(이용민)</a></li>		                      
+		                      <li><a th:href="@{/admin/lundryIncome}">#월별 매출액(이용민)</a></li>	
+		                      <li><a th:href="@{/admin/lundryUser}">매장별 회원 목록(이용민)</a></li>
 		                      <li><a th:href="@{/admin/asListById}">!장비 고장 신고(안수빈) </a></li>	                      
 		                      <li><a th:href="@{/admin/yeyakStatus}">세탁기 예약 현황(최우영)</a></li>		                      
 		                    </ul>                  
 						</li>
-						<li><a><i class="fa fa-desktop"></i>일반 세탁소 관리<span class="fa fa-chevron-down"></span></a>
+						<li><a><i class="fa fa-desktop"></i> 일반  세탁소  관리 (이용민 ,정승현,안수빈,최우영)<span class="fa fa-chevron-down"></span></a>
 		                    <ul class="nav child_menu">
+		                   	  <li><a th:href="@{/admin/goodsPrice/goodsPrice}">!세탁물 종류 및 가격(이용민)</a></li>
 		                      <li><a th:href="@{/admin/selectHoliday}">!세탁소 휴일 지정(정승현)</a></li>		                      
 		                      <li><a th:href="@{/admin/lundryReturn}">#환불 신청</a></li>		                      
 		                      <li><a th:href="@{/admin/ilbanSales}">일반세탁소 매출(최우영)</a></li>
 		                      <li><a th:href="@{/admin/order}">주문 현황(이용민)</a></li>
 		                      <li><a th:href="@{/admin/pickUpByStore}">수거 현황(안수빈)</a></li>		                     
 		                      <li><a th:href="@{/admin/deliveryByStore}">배송 현황(안수빈)</a></li>		                     
-		                      <li><a href="{#}">배송 현황(안수빈)</a></li>		                     
-		                      <li><a th:href="@{/admin/goodsPrice/goodsPrice}">!세탁물 종류 및 가격(이용민)</a></li>
-		                    </ul>                  
+		                      <li><a href="{#}">배송 현황(안수빈)</a></li> 
+		                    </ul>                 
 						</li>
 					</ul> 
               </div>

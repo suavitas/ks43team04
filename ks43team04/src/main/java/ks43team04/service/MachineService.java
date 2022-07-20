@@ -1,68 +1,45 @@
 package ks43team04.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
-import ks43team04.dto.HolidayList;
-import ks43team04.dto.LaundryList;
-import ks43team04.dto.YearlyHoliday;
-import ks43team04.mapper.HolidayMapper;
-import ks43team04.mapper.LaundryListMapper;
+import ks43team04.dto.MuinMachienSpec;
+import ks43team04.mapper.MachineMapper;
 
 @Service
 public class MachineService {
 
-	private final HolidayMapper holidayMapper;
-	private final LaundryListMapper laundryListMapper;
+	private final MachineMapper machineMapper;
+	
 
-	public MachineService(HolidayMapper holidayMapper, LaundryListMapper laundryListMapper) {
-		this.holidayMapper = holidayMapper;
-		this.laundryListMapper = laundryListMapper;
+	public MachineService(MachineMapper machineMapper) {
+		this.machineMapper = machineMapper;
+
 	}
 
-	public List<YearlyHoliday> yearlyHolidayList() {
 
-		List<YearlyHoliday> yearlyHolidayList = holidayMapper.yearlyHolidayList();
-
-		return yearlyHolidayList;
-	}
-
-	/* 세탁소별 휴일 정보 넘기는 메서드 */
-	public HolidayList getHolidayByHolidayCode(String holidayCode) {
-
-		HolidayList getHolidayByHolidayCode = holidayMapper.getHolidayByHolidayCode(holidayCode);
-		return getHolidayByHolidayCode;
-	}
-
-	/* 세탁소별 휴일 수정 */
-	public int modifyHoliday(HolidayList Laundryholiday) {
-		int result = holidayMapper.modifyHoliday(Laundryholiday);
-
+	/* 전체 장비 스팩 수정 */
+	public int modifyMachienSpec(MuinMachienSpec MuinMachienSpec) {
+		int result = machineMapper.modifyMachienSpec(MuinMachienSpec);
+		System.out.println("________전체 장비 스팩 수정 실행 서비스__________"+MuinMachienSpec);
 		return result;
 	}
 	
-	/*
-	 * 세탁소별 휴일 삭제 public int removeHoliday(String holidayCode) { int result =
-	 * holidayMapper.removeHoliday(holidayCode);
-	 * 
-	 * return result; }
-	 * 
-	 * 
-	 * 세탁소별 휴일 추가를 위한 세탁소 이름으로 조회 public List<LaundryList> addHoliday() {
-	 * 
-	 * List<LaundryList> addlaundryName = laundryListMapper.addlaundryName();
-	 * 
-	 * return addlaundryName; }
-	 * 
-	 * 세탁소별 휴일 추가할 정보 public int addHoliday(String laundryCode, String
-	 * yearlyHolidayName,String yearlyHolidayDate){
-	 * 
-	 * 
-	 * int result = holidayMapper.addHoliday(laundryCode, yearlyHolidayName,
-	 * yearlyHolidayDate);
-	 * 
-	 * return result; }
-	 * 
-	 */
+	/*전체 장비 스팩 추가*/
+	public int addMachienSpec(MuinMachienSpec muinMachienSpec){
+		   int result = machineMapper.addMachienSpec(muinMachienSpec);
+		   System.out.println("________전체 장비 스팩 추가 실행 서비스__________"+muinMachienSpec);
+		return result;
+	}
+	/*전체 장비 스팩 삭제*/
+	public int removeMachienSpec(String MachineSpecCode) {
+		
+		  int result = machineMapper.removeMachienSpec(MachineSpecCode);
+		  System.out.println("________전체 장비 스팩 삭제 실행 서비스__________"+MachineSpecCode);
+			return result;
+	}
+	
+	
+	
+	
+	
 }

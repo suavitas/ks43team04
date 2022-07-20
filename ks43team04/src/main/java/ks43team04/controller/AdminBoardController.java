@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ks43team04.dto.As;
 import ks43team04.dto.Board;
 import ks43team04.dto.Event;
+import ks43team04.dto.Laundry;
 import ks43team04.dto.LaundryList;
 import ks43team04.dto.Member;
 import ks43team04.dto.Review;
@@ -42,100 +44,13 @@ public class AdminBoardController {
 		this.memberService = memberService;
 	}
 	
-	/*이벤트 삭제*/
-	@PostMapping("/eventList")
-	public String eventList(Event event) {
-		boardService.eventRemove(event);
-		return "redirect:/admin/eventList";
-	}
-	
-	/*이벤트 수정*/
-	@GetMapping("/eventModify")
-	public String eventModify(@RequestParam(name = "eventCode", required = false) String eventCode
-								,@RequestParam(name = "eventState", required = false) String eventState
-								,@RequestParam(name = "memberId", required = false) String memberId
-								,@RequestParam(name = "eventTitle", required = false) String eventTitle
-								,@RequestParam(name = "eventContent", required = false) String eventContent
-								,@RequestParam(name = "updateTime", required = false) String updateTime
-								,Model model) {
-		Event event = boardService.eventDetail(eventCode);
-		model.addAttribute("event", event);
-		/*model.addAttribute("eventCode", eventCode);
-		model.addAttribute("eventState", eventState);
-		model.addAttribute("memberId", memberId);
-		model.addAttribute("eventTitle", eventTitle);
-		model.addAttribute("eventContent", eventContent);
-		model.addAttribute("updateTime", updateTime);*/
-		return "/admin/eventModify";
-	}
-	
-	@PostMapping("/eventModify")
-	public String eventModify(@RequestParam(name = "eventCode", required = false) String eventCode
-								,@RequestParam(name = "eventState", required = false) String eventState
-								,@RequestParam(name = "memberId", required = false) String memberId
-								,@RequestParam(name = "eventTitle", required = false) String eventTitle
-								,@RequestParam(name = "eventContent", required = false) String eventContent
-								,@RequestParam(name = "updateTime", required = false) String updateTime
-								,Event event) {
-		boardService.eventModify(event);
-		System.out.println("eventModify----------"+event);
-		return "redirect:/admin/eventList";
-	}
-	
-	
-	
-	/*공지사항 삭제*/
-	@PostMapping("/noticeList")
-	public String noticeList(Board board) {
-		boardService.noticeRemove(board);
-		return "redirect:/admin/noticeList";
-	}
-	
-	/*공지사항 수정*/
-	@GetMapping("/noticeModify")
-	public String noticeModify(@RequestParam(name = "boardIdx", required = false) String boardIdx
-								,@RequestParam(name = "memberId", required = false) String memberId
-								,@RequestParam(name = "boardTitle", required = false) String boardTitle
-								,@RequestParam(name = "boardContent", required = false) String boardContent
-								,@RequestParam(name = "boardAddFile", required = false) String boardAddFile
-								,@RequestParam(name = "boardAddFileName", required = false) String boardAddFileName
-								,@RequestParam(name = "boardAddFileVol", required = false) String boardAddFileVol
-								,@RequestParam(name = "updateTime", required = false) String updateTime
-								,Model model) {
-		model.addAttribute("boardIdx", boardIdx);
-		model.addAttribute("memberId", memberId);
-		model.addAttribute("boardTitle", boardTitle);
-		model.addAttribute("boardContent", boardContent);
-		model.addAttribute("boardAddFile", boardAddFile);
-		model.addAttribute("boardAddFileName", boardAddFileName);
-		model.addAttribute("boardAddFileVol", boardAddFileVol);
-		model.addAttribute("updateTime", updateTime);
-		return "/admin/noticeModify";
-	}
-	
-	@PostMapping("/noticeModify")
-	public String noticeModify(@RequestParam(name = "boardIdx", required = false) String boardIdx
-								,@RequestParam(name = "memberId", required = false) String memberId
-								,@RequestParam(name = "boardTitle", required = false) String boardTitle
-								,@RequestParam(name = "boardContent", required = false) String boardContent
-								,@RequestParam(name = "boardAddFile", required = false) String boardAddFile
-								,@RequestParam(name = "boardAddFileName", required = false) String boardAddFileName
-								,@RequestParam(name = "boardAddFileVol", required = false) String boardAddFileVol
-								,@RequestParam(name = "updateTime", required = false) String updateTime
-								,Board board) {
-		boardService.noticeModify(board);
-		System.out.println("noticeModify----------"+board);
-		return "redirect:/admin/noticeList";
-	}
-	
-	
 	/*고장 신고 등록*/
 	@GetMapping("/asForm")
 	public String asForm(@RequestParam(name = "asCode", required = false) String asCode
 							,Model model, HttpSession session) {
 		String sessionId = (String) session.getAttribute("SID");
 		Member member = memberService.getMemberInfoById(sessionId);
-		List<LaundryList> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
+		List<Laundry> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
 		model.addAttribute("title", "AS등록");
 		model.addAttribute("titleName", "AS등록");
 		model.addAttribute("member", member);
@@ -178,7 +93,7 @@ public class AdminBoardController {
 		String sessionName = (String) session.getAttribute("SNAME");
 		Member member = memberService.getMemberInfoById(sessionId);
 		
-		List<LaundryList> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
+		List<Laundry> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
 		List<As> asListById = boardService.asListById(sessionId);
 		
 		model.addAttribute("sessionName", sessionName);
@@ -192,14 +107,19 @@ public class AdminBoardController {
 	/*고장 신고 상세 조회*/
 	@GetMapping("/asDetail")
 	public String asDetail(@RequestParam(name = "asCode", required = false) String asCode
-							,Model model) {
+							,Model model, HttpSession session) {
 		As as = boardService.getAsDetail(asCode);
 		String mId = as.getMemberId();
 		Member member = memberService.getMemberInfoById(mId);
+		String sessionId = (String) session.getAttribute("SID");
+		Member ssmember = memberService.getMemberInfoById(sessionId);
+		
 		model.addAttribute("member", member);
+		model.addAttribute("ssmember", ssmember);
 		model.addAttribute("as", as);
 		log.info("as목록 : {}", as);
 		System.out.println(as);
+		System.out.println(ssmember);
 		return "admin/asDetail";
 	}
 	
@@ -230,7 +150,7 @@ public class AdminBoardController {
 		As as = boardService.getAsDetail(asCode);
 		String sessionId = (String) session.getAttribute("SID");
 		Member member = memberService.getMemberInfoById(sessionId);
-		List<LaundryList> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
+		List<Laundry> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
 		model.addAttribute("member", member);
 		model.addAttribute("getMemberLaundryList", getMemberLaundryList);
 		model.addAttribute("as", as);
@@ -268,10 +188,23 @@ public class AdminBoardController {
 	
 	/*리뷰 목록 조회*/
 	@GetMapping("/review")
-	public String review(Model model) {
+	public String review(@RequestParam(name = "reviewCode", required = false) String reviewCode
+							,Model model, HttpSession session) {
 		List<Review> reviewList = boardService.getReviewList();
+		String sessionId = (String) session.getAttribute("SID");
+		Member member = memberService.getMemberInfoById(sessionId);
 		model.addAttribute("reviewList", reviewList);
+		model.addAttribute("sessionId", sessionId);
+		model.addAttribute("member", member);
+		model.addAttribute("reviewCode", reviewCode);
 		return "admin/review";
+	}
+	
+	/*리뷰 삭제*/
+	@PostMapping("/review")
+	public String rvdel(String reviewCode) {
+		boardService.rvDel(reviewCode);
+		return "redirect:/admin/review";
 	}
 	
 	/*Q&A(문의사항)답글 삭제*/
@@ -280,7 +213,6 @@ public class AdminBoardController {
 		boardService.qnaRemove(board);
 		return "redirect:/admin/qnaList";
 	}
-	
 	
 	/*Q&A(문의사항)답글 수정*/
 	@GetMapping("/qnaCommentModify")
@@ -294,7 +226,7 @@ public class AdminBoardController {
 		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
 		model.addAttribute("board", board);
 		System.out.println("board 코멘트 수정"+board);
-		return "/admin/qnaCommentModify";
+		return "/admin/board/qnaCommentModify";
 	}
 	@PostMapping("qnaCommentModify")
 	public String qnaCommentModify(@RequestParam(name = "boardIdx", required = false) String boardIdx
@@ -324,7 +256,7 @@ public class AdminBoardController {
 		model.addAttribute("boardIdx", boardIdx);
 		model.addAttribute("boardGroupNo", board.getBoardGroupNo());
 		model.addAttribute("boardSecret", board.getBoardSecret());
-		return "/admin/qnaComment";
+		return "/admin/board/qnaComment";
 	}
 	
 	@PostMapping("/qnaComment")
@@ -367,7 +299,7 @@ public class AdminBoardController {
 		model.addAttribute("board", board);
 		model.addAttribute("member", member);
 		System.out.println("board상세조회"+board);
-		return "/admin/qnaDetail";
+		return "/admin/board/qnaDetail";
 	}
 	
 	/*Q&A(문의사항) 목록 조회*/
@@ -384,7 +316,47 @@ public class AdminBoardController {
 		model.addAttribute("qnaPickupList", qnaPickupList);
 		model.addAttribute("qnaPayList", qnaPayList);
 		model.addAttribute("qnaComplainList", qnaComplainList);		
-		return "admin/qnaList";
+		return "/admin/board/qnaList";
+	}
+	
+	/*이벤트 삭제*/
+	@PostMapping("/eventList")
+	public String eventList(Event event) {
+		boardService.eventRemove(event);
+		return "redirect:/admin/eventList";
+	}
+	
+	/*이벤트 수정*/
+	@GetMapping("/eventModify")
+	public String eventModify(@RequestParam(name = "eventCode", required = false) String eventCode
+								,@RequestParam(name = "eventState", required = false) String eventState
+								,@RequestParam(name = "memberId", required = false) String memberId
+								,@RequestParam(name = "eventTitle", required = false) String eventTitle
+								,@RequestParam(name = "eventContent", required = false) String eventContent
+								,@RequestParam(name = "updateTime", required = false) String updateTime
+								,Model model) {
+		Event event = boardService.eventDetail(eventCode);
+		model.addAttribute("event", event);
+		/*model.addAttribute("eventCode", eventCode);
+		model.addAttribute("eventState", eventState);
+		model.addAttribute("memberId", memberId);
+		model.addAttribute("eventTitle", eventTitle);
+		model.addAttribute("eventContent", eventContent);
+		model.addAttribute("updateTime", updateTime);*/
+		return "/admin/board/eventModify";
+	}
+	
+	@PostMapping("/eventModify")
+	public String eventModify(@RequestParam(name = "eventCode", required = false) String eventCode
+								,@RequestParam(name = "eventState", required = false) String eventState
+								,@RequestParam(name = "memberId", required = false) String memberId
+								,@RequestParam(name = "eventTitle", required = false) String eventTitle
+								,@RequestParam(name = "eventContent", required = false) String eventContent
+								,@RequestParam(name = "updateTime", required = false) String updateTime
+								,Event event) {
+		boardService.eventModify(event);
+		System.out.println("eventModify----------"+event);
+		return "redirect:/admin/eventList";
 	}
 	
 	/*이벤트 등록*/
@@ -396,7 +368,7 @@ public class AdminBoardController {
 		model.addAttribute("title", "이벤트 등록");
 		model.addAttribute("titleName", "이벤트 등록");
 		model.addAttribute("member", member);
-		return "admin/eventForm";
+		return "/admin/board/eventForm";
 	}	
 	@PostMapping("/eventForm")
 	public String eventForm(Event event, HttpSession session
@@ -436,7 +408,7 @@ public class AdminBoardController {
 		model.addAttribute("event", event);
 		model.addAttribute("member", member);
 		System.out.println("event MODEL"+event);
-		return "admin/eventDetail";
+		return "/admin/board/eventDetail";
 		}		
 
 	/*이벤트 목록 조회*/
@@ -448,9 +420,53 @@ public class AdminBoardController {
 		model.addAttribute("eventList", eventList);
 		model.addAttribute("runEventList", runEventList);
 		model.addAttribute("endEventList", endEventList);
-		return "admin/eventList";
+		return "/admin/board/eventList";
 	}
 	
+	/*공지사항 삭제*/
+	@PostMapping("/noticeList")
+	public String noticeList(Board board) {
+		boardService.noticeRemove(board);
+		return "redirect:/admin/noticeList";
+	}
+	
+	/*공지사항 수정*/
+	@GetMapping("/noticeModify")
+	public String noticeModify(@RequestParam(name = "boardIdx", required = false) String boardIdx
+								,@RequestParam(name = "memberId", required = false) String memberId
+								,@RequestParam(name = "boardTitle", required = false) String boardTitle
+								,@RequestParam(name = "boardContent", required = false) String boardContent
+								,@RequestParam(name = "boardAddFile", required = false) String boardAddFile
+								,@RequestParam(name = "boardAddFileName", required = false) String boardAddFileName
+								,@RequestParam(name = "boardAddFileVol", required = false) String boardAddFileVol
+								,@RequestParam(name = "updateTime", required = false) String updateTime
+								,Model model) {
+		model.addAttribute("boardIdx", boardIdx);
+		model.addAttribute("memberId", memberId);
+		model.addAttribute("boardTitle", boardTitle);
+		model.addAttribute("boardContent", boardContent);
+		model.addAttribute("boardAddFile", boardAddFile);
+		model.addAttribute("boardAddFileName", boardAddFileName);
+		model.addAttribute("boardAddFileVol", boardAddFileVol);
+		model.addAttribute("updateTime", updateTime);
+		return "/admin/board/noticeModify";
+	}
+	
+	@PostMapping("/noticeModify")
+	public String noticeModify(@RequestParam(name = "boardIdx", required = false) String boardIdx
+								,@RequestParam(name = "memberId", required = false) String memberId
+								,@RequestParam(name = "boardTitle", required = false) String boardTitle
+								,@RequestParam(name = "boardContent", required = false) String boardContent
+								,@RequestParam(name = "boardAddFile", required = false) String boardAddFile
+								,@RequestParam(name = "boardAddFileName", required = false) String boardAddFileName
+								,@RequestParam(name = "boardAddFileVol", required = false) String boardAddFileVol
+								,@RequestParam(name = "updateTime", required = false) String updateTime
+								,Board board) {
+		boardService.noticeModify(board);
+		System.out.println("noticeModify----------"+board);
+		return "redirect:/admin/noticeList";
+	}
+		
 	/*공지사항 작성*/
 	@GetMapping("/noticeForm")
 	public String noticeForm(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
@@ -463,10 +479,11 @@ public class AdminBoardController {
 		model.addAttribute("titleName", "공지등록");
 		model.addAttribute("member", member);
 		System.out.println("noticeForm get====="+member);
-		return "/admin/noticeForm";
+		return "/admin/board/noticeForm";
 	}
 	
 	@PostMapping("/noticeForm")
+	@ResponseBody
 	public String noticeForm(Board board, HttpSession session 
 							,RedirectAttributes reAttr, @RequestParam MultipartFile[] boardImgFile, HttpServletRequest request) {
 		System.out.println("------------------------게시글 등록 처리-----------------------------");
@@ -489,7 +506,7 @@ public class AdminBoardController {
 		reAttr.addAttribute("boardIdx", boardIdx);
 		System.out.println("------------------------게시글 등록 처리 끝-----------------------------");
 		
-		return "redirect:/admin/noticeList";
+		return "/admin/noticeList";
 	}
 	
 	/*공지사항 상세 조회*/
@@ -508,7 +525,7 @@ public class AdminBoardController {
 		System.out.println("--------member-noticedetail--------" + member);
 	
 		
-		return "admin/noticeDetail";
+		return "/admin/board/noticeDetail";
 	}
 	
 	/*공지사항 목록 조회*/
@@ -527,7 +544,7 @@ public class AdminBoardController {
 		model.addAttribute("rowCount", resultMap.get("rowCount"));
 		
 		log.info("getNoticeList : {}", resultMap.get("getNoticeList"));
-		return "admin/noticeList";
+		return "/admin/board/noticeList";
 	}
 	
 }

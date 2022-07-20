@@ -102,7 +102,7 @@
 		 AND
 			a.as_state = '접수'
 		AND
-			<![CDATA[(SELECT DATE_ADD(a.visit_time, INTERVAL 1 HOUR))< NOW()]]>
+			<![CDATA[(SELECT DATE_ADD(a.visit_time, INTERVAL 30 second))< NOW()]]>
 	</update>
 
 	<update id="asReceipt" parameterType="As">
@@ -114,7 +114,7 @@
 		WHERE 
 			a.as_code = #{asCode}
 		and
-			a.as_state = '대기'
+			a.as_state = '대기'	
 	</update>
 	
 	<insert id="asForm" parameterType="As">

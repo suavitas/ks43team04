@@ -33,7 +33,7 @@ public class IlbanGPriceController {
 	
 	@GetMapping("/goodsPrice/goodsPrice")
 	public String eachGoodsPriceList(@RequestParam(name = "currentPage", required = false, defaultValue = "1") int currentPage,
-	Model model, HttpSession session) {
+									Model model, HttpSession session) {
 		
 		
 		Map<String, Object> resultMap = ilbanGPriceService.eachGoodsPriceList(currentPage);
@@ -49,9 +49,13 @@ public class IlbanGPriceController {
 		model.addAttribute("lastPage", resultMap.get("lastPage"));
 		model.addAttribute("startPageNum", resultMap.get("startPageNum"));
 		model.addAttribute("endPageNum", resultMap.get("endPageNum"));				
-		System.out.println(resultMap);
+		System.out.println("____________resultMap____________"+resultMap);
 		System.out.println("____________세탁소 매장 가격표를 가지고옵니다.____________");
+		System.out.println("____________세탁소매장 월별 매출액 조회 컨트롤러____________");
+		
 		System.out.println(resultMap.get("ilbangoodsPrice"));
+		System.out.println(resultMap.get("eachGoodsPriceList"));
+		
 		
 		return "admin/goodsPrice/goodsPrice";
 	}

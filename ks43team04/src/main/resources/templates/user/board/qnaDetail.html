@@ -26,12 +26,11 @@
 				 
 		}
 		
-		
 		</script>
 	</th:block>	  
 	  
-<!-- 사용자정의 contents -->
-<th:block layout:fragment="customContents">
+	<!-- 사용자정의 contents -->
+	<th:block layout:fragment="customContents">
 
  	<!-- 삭제 Modal 시작 -->
 	<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -82,7 +81,7 @@
   		<a th:href="@{/user/board/noticeList}" class="list-group-item list-group-item-action">공지사항</a>
 		<a th:href="@{/user/board/eventList}" class="list-group-item list-group-item-action">이벤트</a>
 		<a th:href="@{/user/board/faqList}" class="list-group-item list-group-item-action">FAQ</a>
-		<a th:href="@{/user/board/qnaList}" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">문의사항</a>
+		<a th:href="@{/user/board/qnaList}" data-cate="QnAList" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">문의사항</a>
 	</div>
 	
 	
@@ -92,92 +91,77 @@
 			<div class="row" style="float: none; margin: 100 auto;">
 				<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
 
-	<!--상세 글 보기 -->
-		<div class="subject" style="border-bottom: 1px solid #d8d8d8">
-			<div class="row">
-			<th:block th:if="${board.commentState != null}">
-				<h3 style="padding: 11px 20px 12px 20px; margin: 0; font-size: 20px; font-weight: bold;" th:text="[+${board.commentState}+]"></h3>	
-			</th:block>
-			<th:block th:unless="${board.commentState != null}">
-				<h3 style="padding: 11px 20px 12px 20px; margin: 0; font-size: 20px; font-weight: bold;" th:text="[답변]"></h3>
-			</th:block>
-				<th:block th:if="${board.boardSecret=='Y'}">
-					<i class="bi bi-key-fill" style="padding-right: 10px; margin: 18px 10px 10px 10px;"></i>
-				</th:block>
-				<th:block th:unless="${board.boardSecret=='N'}">
-				</th:block>	
-			<h3 style="padding: 11px 0 12px 0; margin: 0; font-size: 20px; font-weight: bold;" th:text="${board.boardTitle}"></h3>	
-			</div>
-		</div>
-		<div class="info">
-			<div class="xright" style="text-align: right; padding: 10px 0 10px 0; font-size: 13px;">
-					<span class="addFile">
-	                       <th:block th:if="${not #lists.isEmpty(board.boardAttach)}" th:each="b : ${board.boardAttach}">
-		                      <a href="#"> 
-		                       <i class="bi bi-download" title="첨부파일"></i>
-	                        	    <th:block th:text="${b.saveFile}"></th:block>
-	                        	  </a>         
-			                    <span class="split">|</span>                 
-                    </span> 
-	              	<th:block th:if="${board.memberId.equals('id001')}">
-									<span>관리자</span>
-						</th:block>	     
-	                <span class="split">|</span> 
-	                <span class="han" th:text="${board.registTime}"></span> 
-	                <span class="split">|</span> 
-					<span class="han">조회</span> <span class="num" th:text="${board.boardReadCount}"></span> 
-	              
-			</div>
-		</div>
-		
-		<div id="nContent" class="content" style="padding-top: 40px;">
-		
-				<!-- 첨부파일 시작 -->
-
-								<th:block th:if="${not #lists.isEmpty(board.boardAttach)}" th:each="b : ${board.boardAttach}">									
-									<a class="pt" th:data-img="${b.saveFile}">
-										<img th:src="@{'/' + ${#strings.replace(b.filePath,'\','/')}}" alt="이미지를 불러올 수 없습니다." style="width: 700px; margin-bottom: 50px;">
-									</a>
-								</th:block>
-								<th:block th:unless="${not #lists.isEmpty(board.boardAttach)}">
-								</th:block>
+					<!--상세 글 보기 -->
+					<div class="subject" style="border-bottom: 1px solid #d8d8d8">
+						<div class="row">
+							<th:block th:if="${board.commentState != null}">
+								<h3 style="padding: 11px 20px 12px 20px; margin: 0; font-size: 20px; font-weight: bold;" th:text="[+${board.commentState}+]"></h3>	
+							</th:block>
+							<th:block th:unless="${board.commentState != null}">
+								<h3 style="padding: 11px 20px 12px 20px; margin: 0; font-size: 20px; font-weight: bold;" th:text="[답변]"></h3>
+							</th:block>
+							<th:block th:if="${board.boardSecret=='Y'}">
+								<i class="bi bi-key-fill" style="padding-right: 10px; margin: 18px 10px 10px 10px;"></i>
+							</th:block>
+							<th:block th:unless="${board.boardSecret=='N'}">
+							</th:block>	
+								<h3 style="padding: 11px 0 12px 0; margin: 0; font-size: 20px; font-weight: bold;" th:text="${board.boardTitle}"></h3>	
+						</div>
+					</div>
+					<div class="info">
+						<div class="xright" style="text-align: right; padding: 10px 0 10px 0; font-size: 13px;">
+								<span class="addFile">
+				                       <th:block th:if="${not #lists.isEmpty(board.boardAttach)}" th:each="b : ${board.boardAttach}">
+					                      <a href="#"> 
+					                       <i class="bi bi-download" title="첨부파일"></i>
+				                        	    <th:block th:text="${b.saveFile}"></th:block>
+				                        	  </a>         
+						                    <span class="split">|</span>                 
+			                    </span> 
+				              	<th:block th:if="${board.memberId.equals('id001')}">
+												<span>관리자</span>
+				                <span class="split">|</span> 
+									</th:block>	     
+				                <span class="han" th:text="${board.registTime}"></span> 
+				                <span class="split">|</span> 
+								<span class="han">조회</span> <span class="num" th:text="${board.boardReadCount}"></span> 
+				              
+						</div>
+					</div>
+					
+					<div id="nContent" class="content" style="padding-top: 40px;">
+	
+						<!-- 첨부파일 시작 -->
+						<th:block th:if="${not #lists.isEmpty(board.boardAttach)}" th:each="b : ${board.boardAttach}">									
+							<a class="pt" th:data-img="${b.saveFile}">
+								<img th:src="@{'/' + ${#strings.replace(b.filePath,'\','/')}}" alt="이미지를 불러올 수 없습니다." style="width: 700px; margin-bottom: 50px;">
+							</a>
+						</th:block>
+						<th:block th:unless="${not #lists.isEmpty(board.boardAttach)}">
+						</th:block>
 					<!-- 첨부파일 끝 -->
 			
-			<p th:text="${board.boardContent}"></p>
-
-
-		</div>
+						<p th:text="${board.boardContent}"></p>
+					</div>
 
 							
-		<!-- 목록버튼(qna 목록으로 돌아가기) -->
-		<div class="row">
-			
-			<div class="btnArea col-lg-6 col-sm-12" style="padding-top: 0px; margin-top: 80px;">
-				<span>
-						<a th:href="@{/user/board/qnaModify(boardIdx=${board.boardIdx},boardMenuCode=${board.boardMenuCode},boardSecret=${board.boardSecret},memberId=${board.memberId},boardTitle=${board.boardTitle},boardContent=${board.boardContent})}" class="cart-btn btn-lg">수정</a>
-						<button type="button" class="cart-btn btn-lg" data-toggle="modal" data-target="#staticBackdrop">삭제</button>
-						
-				</span>
-			</div>
-			<div class="btnArea col-lg-6 col-sm-12" style="text-align:right; 0px; margin-top: 80px;">
-				<span>
-						<a th:href="@{/user/board/qnaList}" class="cart-btn btn-lg">목록보기</a>
-				</span>
-			</div>	
-			
-			
-		</div>
+					<!-- 목록버튼(qna 목록으로 돌아가기) -->
+					<div class="row">
+						<div class="btnArea col-lg-6 col-sm-12" style="padding-top: 0px; margin-top: 80px;">
+							<span>
+								<a th:href="@{/user/board/qnaModify(boardIdx=${board.boardIdx},boardMenuCode=${board.boardMenuCode},boardSecret=${board.boardSecret},memberId=${board.memberId},boardTitle=${board.boardTitle},boardContent=${board.boardContent})}" class="btn btn-warning btn-lg">수정</a>
+								<button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#staticBackdrop" style="margin-left: 10px;">삭제</button>
+							</span>
+						</div>
+						<div class="btnArea col-lg-6 col-sm-12" style="text-align:right; 0px; margin-top: 80px;">
+							<span>
+								<a href="javascript:history.back();" class="cart-btn btn-lg" >목록보기</a>
+							</span>
+						</div>	
 					</div>
 				</div>
-
+			</div>
 		</div>
-
-
-
-		
-	
-		
-		
 	</div>
 </th:block>
 </html>

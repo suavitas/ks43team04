@@ -755,23 +755,16 @@
 						.querySelector('.boxbox')
 				var strGp = box.querySelector('.igp').value;
 				var strSp = box.querySelector('.isp').value;
-				
-				/* 세탁물, 세탁기능 가격 */
-				var sumGp =parseInt( $(".igp option:selected").attr('data-goodsPrice') );
-				var sumSp =parseInt( $(".isp option:selected").attr('data-skillPrice') );
-				var sumPrice = sumGp+sumSp;
-				var sumaa=0;
-				var sumFinal = document.querySelectorAll('.sumFinal');
-				
+
 				e.target.parentElement.parentElement
 						.querySelector('.strBox').innerHTML 
 					   += '<div class="pPlusBtn">'
 						+ '<p>'	
 						+ '- '
-						+ strGp + '</p>'
+						+ strT01 + '</p>'
 						+ '<p>'	
 						+ ' > '
-						+ strSp + '</p>'
+						+ StrT0 + '</p>'
 						+ ' : '
 						+ '<p class="sumFinal">'
 						+ sumPrice +'</p>'

@@ -3,10 +3,46 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/adminDefault}">
 
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+</th:block>
+
+<th:block layout:fragment="customJsScript">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+	<script>
+		$(function(){
+			$(document).on('click', '.addHolidayBtn', function() {
+				$.ajax({
+        		    url: "/admin/addHoliday",
+        		    type: "POST",
+        		    dataType: "text",
+        		    data: $('#addHolidayForm').serialize(),
+        		    success: function(data){
+        		    	swal(
+        		    	        '휴일 추가',
+        		    	        '<b style="color:green;">추가완료</b> 되었습니다!',
+        		    	        'success'
+        		    	      ).then((result) => {
+        				          if (result.value) {
+        				              window.location = data;
+        				          }
+        		    	      });
+        		    	
+        		    },
+        		    error: function (request, status, error){        
+
+        		    }
+				
+		    	});
+			});
+		});
+	</script>
+</th:block>
+
 
 <th:block layout:fragment="customContents">
-	<form  th:action="@{/admin/addHoliday}" method="post"
-		style="text-align: center;">
+	<form  th:action="@{/admin/addHoliday}" method="post" id="addHolidayForm"
+		>
 		<table class="table table-striped jambo_table bulk_action"
 			style="width: 60%; margin: 0 auto; margin-top: 80px; border-collapse: separate;">
 			<thead>
@@ -30,16 +66,16 @@
 				</tr>
 				<tr class="even pointer">
 					<td>휴일 명</td>
-					<td><input type="text" name="yearlyHolidayName" th:value="${yearlyHolidayName}"></td>
+					<td><input style="width: 50%;" type="text" name="yearlyHolidayName" th:value="${yearlyHolidayName}"></td>
 				</tr>
 				<tr class="even pointer">
 					<td>휴일 날짜</td>
-					<td><input type="date" name="yearlyHolidayDate" th:value="${yearlyHolidayDate}"></td>
+					<td><input style="width: 50%;" type="date" name="yearlyHolidayDate" th:value="${yearlyHolidayDate}"></td>
 					
 				</tr>
 					<tr class="even pointer">
 					<td colspan="2">
-						<button type="submit" class="btn btn-danger btn-sm"
+						<button type="button" class="btn btn-danger btn-sm addHolidayBtn"
 							data-toggle="modal" data-target="#deleteModal">휴일 추가</button>
 					</td>
 				</tr>

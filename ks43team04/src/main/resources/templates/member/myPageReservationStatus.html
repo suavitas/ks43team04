@@ -25,14 +25,14 @@
 			class="list-group-item list-group-item-action">회원정보</a> 
 			
 			<a th:href="@{/user/myPageReservationStatus}"
-			class="list-group-item list-group-item-action">예약 현황</a> 
-			
-			<a href="#"
 			class="list-group-item list-group-item-action"
 			style="background-color: #F28123; border-color: #F28123;"
-			aria-current="true">수거배송 조회</a> 
+			aria-current="true">예약 현황</a> 
 			
-			<a href="#"
+			<a th:href="@{/user/myPageDelivery}"
+			class="list-group-item list-group-item-action">수거배송 조회</a> 
+			
+			<a th:href="@{/user/myPagePayment2}"
 			class="list-group-item list-group-item-action">결제 내역</a> 
 			
 			<a
@@ -45,10 +45,8 @@
 			
 			<a
 			th:href="@{/user/myPageWrite}"
-			class="list-group-item list-group-item-action">내가 쓴 글</a> 
+			class="list-group-item list-group-item-action">문의 내역</a> 
 			
-			<a href="#"
-			class="list-group-item list-group-item-action">리뷰?</a>
 	</div>
 
 
