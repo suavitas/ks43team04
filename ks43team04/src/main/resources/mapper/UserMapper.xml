@@ -40,9 +40,9 @@
 	
 	<select id="LaundryUserList" parameterType="map" resultType="map">
 	SELECT
-		l.laundry_name as laundryName ,
-		lu.m_name as UserName ,
-		lu.m_id as UserId ,
+		l.laundry_name as laundryName,
+		lu.m_name as UserName,
+		lu.m_id as UserId,
 		lu.m_adrr as UserAdrr 
 		
 	FROM
@@ -52,7 +52,7 @@
 		on
 		lu.laundry_code = l.laundry_code
 		where
-		lu.laundry_code ='laundry_code_001'
+		lu.laundry_code ='laundry_code_006'
 		ORDER BY l.laundry_name;
 	</select>
 </mapper>

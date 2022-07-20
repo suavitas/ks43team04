@@ -192,7 +192,8 @@
 		ON
 		u.m_id = m.m_id
 		WHERE 
-		l.laundry_code = 'laundry_code_006';
+		l.laundry_code = 'laundry_code_006'
+		LIMIT #{startRow}, #{rowPerPage};
 	</select>
 	
 	<select id="laundryIncomeLookUpCount" resultType="int">
