@@ -118,10 +118,8 @@
 				                        	  </a>         
 						                    <span class="split">|</span>                 
 			                    </span> 
-				              	<th:block th:if="${board.memberId.equals('id001')}">
-												<span>관리자</span>
-				                <span class="split">|</span> 
-									</th:block>	     
+				              	<th:block th:text="${board.memberId}"></th:block>	
+				                <span class="split">|</span> 									     
 				                <span class="han" th:text="${board.registTime}"></span> 
 				                <span class="split">|</span> 
 								<span class="han">조회</span> <span class="num" th:text="${board.boardReadCount}"></span> 
@@ -141,7 +139,7 @@
 						</th:block>
 					<!-- 첨부파일 끝 -->
 			
-						<p th:text="${board.boardContent}"></p>
+						<pre><p th:text="${board.boardContent}" style="font-size: 13px;"></p></pre>
 					</div>
 
 							

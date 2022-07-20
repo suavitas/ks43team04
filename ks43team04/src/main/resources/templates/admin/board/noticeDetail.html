@@ -111,13 +111,13 @@
 											<td><span th:text="${board.registTime}"></span></td>
 										</tr>
 										<tr>
-											<th scope="row">첨부파일</th>
+											<th scope="row" style="width:20%;">첨부파일</th>
 											<td style="width: 30%;">
 												<th:block th:if="${not #lists.isEmpty(board.boardAttach)}" th:each="b : ${board.boardAttach}">
 													<a th:href="@{/admin/fileDown(fileIdx=${b.fileIdx})}"><span th:text="${b.saveFile}"></span></a><br>
 												</th:block>
 											</td>
-											<th scope="row">조회수</th>
+											<th scope="row" style="width:20%;">조회수</th>
 											<td th:text="${board.boardReadCount}"></td>
 										</tr>
 										<tr>
@@ -137,7 +137,8 @@
 												<th:block th:unless="${not #lists.isEmpty(board.boardAttach)}">
 												</th:block>
 												<!-- 이미지 보기 끝 -->					
-												<p th:text="${board.boardContent}"></p>
+												<pre><p th:text="${board.boardContent}" style="font-size: 13px;"></p></pre>
+												
 							 				</td>
 										</tr>
 									</tbody>

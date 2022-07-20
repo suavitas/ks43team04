@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import ks43team04.dto.Delivery;
-import ks43team04.dto.PickUp;
 import ks43team04.mapper.DeliveryMapper;
 
 @Service

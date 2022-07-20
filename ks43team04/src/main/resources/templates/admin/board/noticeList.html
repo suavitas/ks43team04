@@ -19,7 +19,7 @@
 		    	stateSave: true,
 		    	destroy : true,
 		    	ordering: false,
-		    	order: [ [ 1, "asc" ] ],
+		    	order: [ [ 1, "DESC" ] ],
 		    	autowidth: false
 		    });
 		});
@@ -100,9 +100,9 @@
 												</thead>
 												<tbody>
 													<tr th:if="${not #lists.isEmpty(getNoticeList)}" th:each="l , status : ${getNoticeList}">
-													<!--  <td th:text="${#numbers.formatInteger((rowCount - status.index) - ((currentPage - 1)*7),0)}"></td> -->
+														<td th:text="${#numbers.formatInteger((rowCount - status.index) - ((currentPage - 1)*7),0)}"></td>
 														<!-- <td th:text="${l.boardIdx}"></td> -->
-														<td th:text="${status.count}"></td>
+														<!-- <td th:text="${status.count}"></td> -->
 														<td style="text-align: left;">
 															<strong><a th:href="@{/admin/noticeDetail(boardMenuCode=${l.boardMenuCode}, boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a></strong>
 														</td>
