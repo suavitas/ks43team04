@@ -4,8 +4,8 @@
 	  layout:decorate="~{layouts/adminDefault}">
 	  
 	  
+	<script type="text/javascript" th:src="@{/common/jquery-3.6.0.min.js}"></script>
 	<th:block layout:fragment="customJsScript">
-		<script type="text/javascript" th:src="@{/common/jquery-3.6.0.min.js}"></script>
 			<script type="text/javascript">
 				$(function() {
 					$('#submitButton').on('click', function() {
@@ -55,7 +55,7 @@
 					
 					<tr class="even pointer">
 						<td colspan="2">
-							<button type="button" id="submitButton"class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">추가하기</button>
+							<button type="button" id="submitButton" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">추가하기</button>
 						</td>
 					</tr>
 				</tbody>
