@@ -1,5 +1,7 @@
 package ks43team04.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -27,6 +29,8 @@ import ks43team04.dto.Laundry;
 import ks43team04.dto.LaundryList;
 import ks43team04.dto.Member;
 import ks43team04.dto.Review;
+import ks43team04.mapper.AsMapper;
+import ks43team04.mapper.BoardMapper;
 import ks43team04.service.BoardService;
 import ks43team04.service.MemberService;
 
@@ -38,10 +42,14 @@ public class AdminBoardController {
 
 	private final MemberService memberService;
 	private final BoardService boardService;
+	private final BoardMapper boardMapper;
+	private final AsMapper asMapper;
 
-	public AdminBoardController( BoardService boardService, MemberService memberService) {
+	public AdminBoardController( BoardService boardService, MemberService memberService, BoardMapper boardMapper, AsMapper asMapper) {
 		this.boardService = boardService;
 		this.memberService = memberService;
+		this.boardMapper = boardMapper;
+		this.asMapper = asMapper;
 	}
 	
 	/*고장 신고 등록*/
@@ -91,15 +99,15 @@ public class AdminBoardController {
 		
 		String sessionId = (String) session.getAttribute("SID");
 		String sessionName = (String) session.getAttribute("SNAME");
-		Member member = memberService.getMemberInfoById(sessionId);
 		
 		List<Laundry> getMemberLaundryList = boardService.getMemberLaundryList(sessionId);
 		List<As> asListById = boardService.asListById(sessionId);
+		int asListByIdCount = asMapper.asListByIdCount(sessionId);
 		
 		model.addAttribute("sessionName", sessionName);
 		model.addAttribute("getMemberLaundryList", getMemberLaundryList);
 		model.addAttribute("asListById", asListById);
-		//model.addAttribute("member", member);
+		model.addAttribute("asListByIdCount", asListByIdCount);
 		System.out.println(asListById);
 		return "admin/asListById";
 	}
@@ -114,6 +122,7 @@ public class AdminBoardController {
 		String sessionId = (String) session.getAttribute("SID");
 		Member ssmember = memberService.getMemberInfoById(sessionId);
 		
+
 		model.addAttribute("member", member);
 		model.addAttribute("ssmember", ssmember);
 		model.addAttribute("as", as);
@@ -130,10 +139,18 @@ public class AdminBoardController {
 		List<As> readyAsList = boardService.readyAsList();
 		List<As> startAsList = boardService.startAsList();
 		List<As> endAsList = boardService.endAsList();
+		int getAsListCount = asMapper.getAsListCount();
+		int readyAsListCount = asMapper.readyAsListCount();
+		int startAsListCount = asMapper.startAsListCount();
+		int endAsListCount = asMapper.endAsListCount();
 		model.addAttribute("asList", asList);
 		model.addAttribute("readyAsList", readyAsList);
 		model.addAttribute("startAsList", startAsList);
 		model.addAttribute("endAsList", endAsList);
+		model.addAttribute("getAsListCount", getAsListCount);
+		model.addAttribute("readyAsListCount", readyAsListCount);
+		model.addAttribute("startAsListCount", startAsListCount);
+		model.addAttribute("endAsListCount", endAsListCount);
 		System.out.println(asList);
 		return "admin/asList";
 	}
@@ -178,11 +195,23 @@ public class AdminBoardController {
 	/*고장 신고 접수, 완료, 방문(예정일)변경, 삭제*/
 	@PostMapping("/asList")
 	public String asList(@RequestParam(name = "asCode", required = false) String asCode
-						,As as) {
-		boardService.asReceipt(as);
-		boardService.asEnd(as);
-		boardService.asDel(as);
-		boardService.asVisitChange(as);
+						,@RequestParam(name = "asState", required = false) String asState
+						,HttpSession session, As as) {
+		String sessionId = (String) session.getAttribute("SID");
+		Member member = memberService.getMemberInfoById(sessionId);		
+		if("대기".equals(as.getAsState())) {
+			if("level_code_00".equals(member.getLevelCode())) {
+				boardService.asReceipt(as);					
+			}else if("level_code_02".equals(member.getLevelCode())) {				
+				boardService.asDel(as);			
+			}
+		}else if("접수".equals(as.getAsState())) {
+			boardService.asEnd(as);
+			boardService.asVisitChange(as);
+		}
+		System.out.println(as.getAsState()+"<=============asStateGet");
+		System.out.println("상태"+asState);
+		System.out.println("시간"+as.getVisitTime());
 		return "redirect:/admin/asList";
 	}
 	
@@ -309,6 +338,10 @@ public class AdminBoardController {
 		List<Board> qnaPickupList = boardService.getQnaPickupList();
 		List<Board> qnaPayList = boardService.getQnaPayList();
 		List<Board> qnaComplainList = boardService.getQnaComplainList();
+		int getQnaServiceListCount = boardMapper.getQnaServiceListCount();
+		int getQnaPickupListCount = boardMapper.getQnaPickupListCount();
+		int getQnaPayListCount = boardMapper.getQnaPayListCount();
+		int getQnaComplainListCount = boardMapper.getQnaComplainListCount();
 		log.info("문의사항 서비스 이용 목록 : {}", qnaServiceList);
 		log.info("문의사항 수거 배송 목록 : {}", qnaPickupList);
 		log.info("문의사항 결제 포인트 목록 : {}", qnaPayList);
@@ -316,6 +349,10 @@ public class AdminBoardController {
 		model.addAttribute("qnaPickupList", qnaPickupList);
 		model.addAttribute("qnaPayList", qnaPayList);
 		model.addAttribute("qnaComplainList", qnaComplainList);		
+		model.addAttribute("getQnaServiceListCount", getQnaServiceListCount);	
+		model.addAttribute("getQnaPickupListCount", getQnaPickupListCount);	
+		model.addAttribute("getQnaPayListCount", getQnaPayListCount);	
+		model.addAttribute("getQnaComplainListCount", getQnaComplainListCount);	
 		return "/admin/board/qnaList";
 	}
 	
@@ -416,10 +453,14 @@ public class AdminBoardController {
 	public String eventList(Model model) {
 		List<Event> eventList = boardService.getEventList();
 		List<Event> runEventList = boardService.runEventList();
-		List<Event> endEventList = boardService.endEventList();		
+		List<Event> endEventList = boardService.endEventList();	
+		int runeventListCount = boardMapper.getRunEventListCount();
+		int endeventListCount = boardMapper.getEndEventListCount();
 		model.addAttribute("eventList", eventList);
 		model.addAttribute("runEventList", runEventList);
 		model.addAttribute("endEventList", endEventList);
+		model.addAttribute("runeventListCount", runeventListCount);
+		model.addAttribute("endeventListCount", endeventListCount);
 		return "/admin/board/eventList";
 	}
 	

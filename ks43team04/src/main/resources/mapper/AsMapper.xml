@@ -49,6 +49,53 @@
 		</collection>
 	</resultMap>
 	
+	<select id="asListByIdCount" resultType="int">
+		/* as 회원별 목록  총 row 수 */
+		SELECT
+			COUNT(a.as_code)
+		FROM
+			tb_as AS a
+		where
+			a.m_id = #{memberId}				
+	</select>
+	
+	<select id="endAsListCount" resultType="int">
+		/* as 완료 목록  총 row 수 */
+		SELECT
+			COUNT(a.as_code)
+		FROM
+			tb_as AS a
+		where
+			a.as_state = '완료'			
+	</select>
+	
+	<select id="startAsListCount" resultType="int">
+		/* as 접수 목록  총 row 수 */
+		SELECT
+			COUNT(a.as_code)
+		FROM
+			tb_as AS a
+		where
+			a.as_state = '접수'		
+	</select>
+	
+	<select id="readyAsListCount" resultType="int">
+		/* as 대기 목록 총 row 수 */
+		SELECT
+			COUNT(a.as_code)
+		FROM
+			tb_as AS a
+		where
+			a.as_state = '대기'	
+	</select>
+	
+	<select id="getAsListCount" resultType="int">
+		/* as 목록 총 row 수 */
+		SELECT
+			COUNT(a.as_code)
+		FROM
+			tb_as AS a;		
+	</select>
 
 	 <delete id="asDel" parameterType="As">
 		/*AS 삭제*/
@@ -101,8 +148,6 @@
 			a.as_code = #{asCode}
 		 AND
 			a.as_state = '접수'
-		AND
-			<![CDATA[(SELECT DATE_ADD(a.visit_time, INTERVAL 5 minute))< NOW()]]>
 	</update>
 
 	<update id="asReceipt" parameterType="As">

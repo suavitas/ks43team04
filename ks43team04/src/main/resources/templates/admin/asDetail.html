@@ -56,8 +56,6 @@
 										<tr>
 											<th scope="row">제목</th>
 											<td colspan="2"><span th:text="${as.asTitle}"></span></td>
-											<th scope="row"></th>
-											<td th:text="${as.asState}" style="display: none;"></td>
 										 </tr>
 								 		<tr>
 											<th scope="row">내용</th>
@@ -74,9 +72,10 @@
 								</div>
 					     	</div>
 					    			  	<input type="hidden" name="asCode" th:value="${as.asCode}">
+					    			  	<input type="hidden" name="asState" th:value="${as.asState}">
 					      	<div class="modal-footer">
 					        	<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-					        	<a th:href="@{/admin/asList}"><button type="submit" name="submit" value="submit" class="btn btn-primary">접수</button></a>
+					        	<button type="submit" name="submit" value="submit" class="btn btn-primary">접수</button>
 							</div>
 						</form>
 					</div>
@@ -106,7 +105,7 @@
 					      </div>
 					      <div class="modal-footer">
 					        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-					        <a th:href="@{/admin/asList}"><button type="submit" name="submit" value="submit" class="btn btn-danger">완료</button></a>
+					        <button type="submit" name="submit" value="submit" class="btn btn-danger">완료</button>
 					      </div>
 						</form>
 					</div>
@@ -129,7 +128,7 @@
 								<div style="text-align: center">
 						      		<h5>비밀번호 확인</h5>
 						      			<p>단, 삭제는 '대기' 상태일 때만 가능합니다.</p>
-									      	<input type="hidden" id ="asState" name="asState" th:value="${as.asState}">
+									      	<input type="hidden" id="asState" name="asState" th:value="${as.asState}">
 									      	<input type="password" id ="pwDelCheck" name="pwDelCheck" placeholder="비밀번호를 입력해주세요" required="required">
 													<input type="hidden" id ="pwDelCheck2" name="memberPw2" th:value="${member.memberPw}">
 								</div>

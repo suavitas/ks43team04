@@ -30,7 +30,7 @@
 		    	stateSave: true,
 		    	destroy : true,
 		    	ordering: false,
-		    	order: [ [ 1, "asc" ] ],
+		    	order: [ [ 1, "desc" ] ],
 		    	autowidth: false
 		    });
 		});
@@ -108,7 +108,7 @@
 												<th style="width: 6%;">조회</th>
 											</tr>
 										</thead>
-											<tr th:if="${not #lists.isEmpty(eventList)}" th:each="l : ${eventList}">
+											<tr th:if="${not #lists.isEmpty(eventList)}" th:each="l, status : ${eventList}">
 												<td th:text="${l.eventNo}"></td>
 												<th:block th:if="${l.eventState == '진행중'}">
 												<td th:text="${l.eventState}"></td>
@@ -124,9 +124,7 @@
 												</th:block>
 												<td>
 													<th:block th:if="${l.eventAddFile=='1'}">
-														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
-														  <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
-														</svg>
+														<i class="fa fa-save"></i>
 													</th:block>
 													<th:block th:unless="${l.eventAddFile=='1'}">
 													</th:block>
@@ -159,17 +157,16 @@
 											<th>조회</th>	
 										</tr>
 									</thead>
-										<tr th:if="${not #lists.isEmpty(runEventList)}" th:each="l : ${runEventList}">
-											<td style="width: 5%;" th:text="${l.eventNo}"></td>
+										<tr th:if="${not #lists.isEmpty(runEventList)}" th:each="l, status : ${runEventList}">
+											<!-- <td th:text="${#numbers.formatIntege((th:maxlength=${runEventList})-status.count+1})"></td> -->
+											<td style="width: 5%;" th:text="${runeventListCount-status.count+1}"></td>
 											<td style="width: 8%;" th:text="${l.eventState}"></td>
 											<td style="width: 45%; text-align: left;">
 												<strong><a th:href="@{/admin/eventDetail(eventCode=${l.eventCode})}" th:text="${l.eventTitle}"></a></strong>
 											</td>
 											<td style="width: 6%;">
 												<th:block th:if="${l.eventAddFile=='1'}">
-													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
-													  <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
-													</svg>
+													<i class="fa fa-save"></i>
 												</th:block>
 												<th:block th:unless="${l.eventAddFile=='1'}">
 												</th:block>
@@ -202,17 +199,15 @@
 											<th>조회</th>	
 										</tr>
 									</thead>
-										<tr th:if="${not #lists.isEmpty(endEventList)}" th:each="l : ${endEventList}">
-											<td style="width: 5%;" th:text="${l.eventNo}"></td>
+										<tr th:if="${not #lists.isEmpty(endEventList)}" th:each="l, status : ${endEventList}">
+											<td style="width: 5%;" th:text="${endeventListCount-status.count+1}"></td>
 											<td style="width: 8%;" th:text="${l.eventState}"></td>
 											<td style="width: 45%; text-align: left;">
 												<strong><a th:href="@{/admin/eventDetail(eventCode=${l.eventCode})}" th:text="${l.eventTitle}"></a></strong>
 											</td>
 											<td style="width: 6%;">
 												<th:block th:if="${l.eventAddFile=='1'}">
-													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
-												  		<path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
-													</svg>
+													<i class="fa fa-save"></i>
 												</th:block>
 												<th:block th:unless="${l.eventAddFile=='1'}">
 												</th:block>

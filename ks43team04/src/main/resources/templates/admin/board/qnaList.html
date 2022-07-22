@@ -58,7 +58,7 @@
 	  
 	<!-- 사용자정의 contents -->
 	<th:block layout:fragment="customContents">
-	
+
 		<!-- 탭 이름 -->
 		<h4><strong>문의사항 관리</strong></h4>
 			<!-- 본문 내용 시작 -->
@@ -104,7 +104,7 @@
 										</thead>
 										<tbody>
 											<tr th:if="${not #lists.isEmpty(qnaServiceList)}" th:each="l, status : ${qnaServiceList}">
-												<td th:text="${status.count}"></td>
+												<td th:text="${getQnaServiceListCount-status.count+1}"></td>
 												<td th:text="${l.commentState}"></td>
 												<td>
 													<th:block th:if="${l.boardSecret=='Y'}">
@@ -163,8 +163,8 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:if="${not #lists.isEmpty(qnaPickupList)}" th:each="l : ${qnaPickupList}">
-											<td style="width: 5%;" th:text="${l.boardIdx}"></td>
+										<tr th:if="${not #lists.isEmpty(qnaPickupList)}" th:each="l, status : ${qnaPickupList}">
+											<td style="width: 5%;" th:text="${getQnaPickupListCount-status.count+1}"></td>
 											<td style="width: 10%;" th:text="${l.commentState}"></td>
 											<td style="width: 8%;">
 												<th:block th:if="${l.boardSecret=='Y'}">
@@ -223,8 +223,8 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:if="${not #lists.isEmpty(qnaPayList)}" th:each="l : ${qnaPayList}">
-											<td style="width: 5%;" th:text="${l.boardIdx}"></td>
+										<tr th:if="${not #lists.isEmpty(qnaPayList)}" th:each="l, status : ${qnaPayList}">
+											<td style="width: 5%;" th:text="${getQnaPayListCount-status.count+1}"></td>
 											<td style="width: 10%;" th:text="${l.commentState}"></td>
 											<td style="width: 8%;">
 												<th:block th:if="${l.boardSecret=='Y'}">
@@ -283,8 +283,8 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr th:if="${not #lists.isEmpty(qnaComplainList)}" th:each="l : ${qnaComplainList}">
-											<td style="width: 5%;" th:text="${l.boardIdx}"></td>
+										<tr th:if="${not #lists.isEmpty(qnaComplainList)}" th:each="l, status : ${qnaComplainList}">
+											<td style="width: 5%;" th:text="${getQnaComplainListCount-status.count+1}"></td>
 											<td style="width: 10%;" th:text="${l.commentState}"></td>
 											<td  style="width: 8%;">
 												<th:block th:if="${l.boardSecret=='Y'}">

@@ -43,9 +43,10 @@ public class MemberController {
 	private final BillService billService;
 	private final PaymentService paymentService;
 	private final BoardService boardService;
+	private final BoardMapper boardMapper;
 
 	
-	public MemberController(MemberService memberService, MemberMapper memberMapper,BillMapper billMapper,UserService userService,BillService billService, PaymentService paymentService, BoardService boardService) {
+	public MemberController(MemberService memberService, MemberMapper memberMapper,BillMapper billMapper,UserService userService,BillService billService, PaymentService paymentService, BoardService boardService, BoardMapper boardMapper) {
 		this.memberService = memberService;
 		this.memberMapper = memberMapper;
 		this.billMapper = billMapper;
@@ -53,6 +54,7 @@ public class MemberController {
 		this.billService = billService;
 		this.paymentService = paymentService;
 		this.boardService = boardService;
+		this.boardMapper = boardMapper;
 	}
 	/**
 	 * 고객 마이페이지 > 환불내역
@@ -131,12 +133,13 @@ public class MemberController {
 		String sessionName = (String) session.getAttribute("SNAME");
 		Member member = memberService.getMemberInfoById(sessionId);
 		List<Board> myWritingList = boardService.myWritingList(member.getMemberId());
-		
+		int myWritingListCount = boardMapper.myWritingListCount(member.getMemberId());
 
 		model.addAttribute("title", "마이페이지");
 		model.addAttribute("sessionName", sessionName);
 		model.addAttribute("member", member);
 		model.addAttribute("myWritingList", myWritingList);
+		model.addAttribute("myWritingListCount", myWritingListCount);
 		System.out.println(myWritingList);
 
 		return "/member/myPageWrite";

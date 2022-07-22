@@ -12,6 +12,9 @@ import ks43team04.dto.Review;
 @Mapper
 public interface BoardMapper {
 	
+	//내가 쓴 글 목록 총 row 수
+	public int myWritingListCount(String memberId);
+	
 	//내가 쓴 글 조회
 	public List<Board> myWritingList(String memberId);
 	
@@ -43,6 +46,10 @@ public interface BoardMapper {
 	//이벤트 상세 조회
 	public Event eventDetail(String eventCode);
 	
+	//이벤트 목록 총 row 수
+	public int getRunEventListCount();
+	public int getEndEventListCount();
+	
 	//이벤트 목록 조회
 	public List<Event> getEventList();
 	public List<Event> getEventListForUser();
@@ -73,7 +80,7 @@ public interface BoardMapper {
 	
 	//문의사항 작성
 	public int qnaWrite(Board board);
-
+		
 	//분류별 게시물 조회
 	public Board getBoardDetailByCode(String boardMenuCode, String boardIdx);
 
@@ -89,6 +96,12 @@ public interface BoardMapper {
 	//문의사항(서비스 이용) 목록 조회
 	public List<Board> getQnaServiceList();
 	
+	//문의사항 목록 총 row 수
+	public int getQnaServiceListCount();
+	public int getQnaPickupListCount();
+	public int getQnaPayListCount();
+	public int getQnaComplainListCount();
+	
 	//공지사항 목록 조회(페이징)
 	public List<Board> getNoticeList(Map<String, Object> paramMap);
 	
@@ -97,4 +110,6 @@ public interface BoardMapper {
 	
 	//공지사항 목록 조회
 	public List<Board> getNoticeList();
+
+	
 }
