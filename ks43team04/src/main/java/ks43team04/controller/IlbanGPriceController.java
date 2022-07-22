@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ks43team04.dto.IlbanGprice;
 import ks43team04.dto.IlbanSkill;
@@ -114,6 +115,7 @@ public class IlbanGPriceController {
 	}
 	/* 세탁소별 세탁물 가격 삭제쿼리 실행*/
 	@PostMapping("/goodsPrice/removeGoodsPrice")
+	@ResponseBody
 	public String removeGoodsPrice(String ilbanGPriceCode,
 								   String gPriceUseState) {
 		
@@ -130,7 +132,7 @@ public class IlbanGPriceController {
 		
 		ilbanSkillService.removeGoodsPrice(paramMap);
 		System.out.println("________일반세탁소 가격 삭제를 실행합니다._________"+ilbanGPriceCode);
-		return "redirect:/admin/goodsPrice/goodsPrice";
+		return "/admin/goodsPrice/goodsPrice";
 	}	
 	
 	/* 세탁소별 세탁물 가격 수정페이지에 정보 불러오기*/
@@ -160,11 +162,12 @@ public class IlbanGPriceController {
 	
 	/* 세탁소별 세탁물 가격 수정쿼리 실행*/
 	@PostMapping("/goodsPrice/changeGoodsPrice")
+	@ResponseBody
 	public String changeGoodsPrice(IlbanGprice ilbanGPriceCode) {
 		
 		ilbanGPriceService.modifyGoodsPrice(ilbanGPriceCode);
 		System.out.println("________일반세탁소 가격 수정를 실행합니다._________"+ilbanGPriceCode);
-		return "redirect:/admin/goodsPrice/goodsPrice";
+		return "/admin/goodsPrice/goodsPrice";
 	}	
 	
 	
