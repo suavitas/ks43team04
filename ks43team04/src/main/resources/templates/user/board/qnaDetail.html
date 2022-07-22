@@ -146,12 +146,15 @@
 					<!-- 목록버튼(qna 목록으로 돌아가기) -->
 					<div class="row">
 						<div class="btnArea col-lg-6 col-sm-12" style="padding-top: 0px; margin-top: 80px;">
-							<span>
+							
+							<span th:if="${sessionId == board.memberId && board.commentState == '답변대기'}">
 								<a th:href="@{/user/board/qnaModify(boardIdx=${board.boardIdx},boardMenuCode=${board.boardMenuCode},boardSecret=${board.boardSecret},memberId=${board.memberId},boardTitle=${board.boardTitle},boardContent=${board.boardContent})}" class="btn btn-warning btn-lg">수정</a>
 								<button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#staticBackdrop" style="margin-left: 10px;">삭제</button>
 							</span>
+							<th:block th:unless="${sessionId == board.memberId && board.commentState == '답변대기'}">
+							</th:block>
 						</div>
-						<div class="btnArea col-lg-6 col-sm-12" style="text-align:right; 0px; margin-top: 80px;">
+						<div class="btnArea col-lg-6 col-sm-12" style="text-align:right; margin-top: 80px;">
 							<span>
 								<a href="javascript:history.back();" class="cart-btn btn-lg" >목록보기</a>
 							</span>

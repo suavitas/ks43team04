@@ -121,8 +121,8 @@
 											</tr>
 										</thead>
 										<tbody>				
-											<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaServiceList)}" th:each="l : ${qnaServiceList}">
-												<td th:text="${l.boardIdx}"></td>
+											<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaServiceList)}" th:each="l, status : ${qnaServiceList}">
+												<td th:text="${getQnaServiceListCount-status.count+1}"></td>
 												<td th:text="${l.commentState}"></td>
 												<td>
 													<th:block th:if="${l.boardSecret=='Y'}">
@@ -132,12 +132,18 @@
 													</th:block>
 												</td>
 												<td class="qnaTitle">
-												<th:block th:if="${l.boardOrderNo=='1'}">
+													<th:block th:if="${l.boardOrderNo=='1'}">
 														<i class="bi bi-arrow-return-right"></i>
 													</th:block>
 													<th:block th:unless="${l.boardOrderNo=='1'}">
-													</th:block>												
-													<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
+													</th:block>
+													<th:block th:if="${l.boardSecret=='Y'}">											
+														<a th:if="${session.SID == l.memberId || session.SLEVEL == 'level_code_00'}" th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx},memberId=${l.memberId})}" th:text="${l.boardTitle}"></a>
+														<a th:unless="${session.SID == l.memberId || session.SLEVEL == 'level_code_00'}" th:href="@{/user/board/secret}" th:text="${l.boardTitle}"></a>
+													</th:block>	
+													<th:block th:unless="${l.boardSecret=='Y'}">
+														<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx},memberId=${l.memberId})}" th:text="${l.boardTitle}"></a>
+													</th:block>
 												</td>
 												<td>
 													<th:block th:if="${l.boardAddFile=='1'}">
@@ -183,8 +189,8 @@
 											</tr>
 										</thead>
 										<tbody>				
-											<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaPickupList)}" th:each="l : ${qnaPickupList}">
-												<td th:text="${l.boardIdx}" style="width: 7%;"></td>
+											<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaPickupList)}" th:each="l, status : ${qnaPickupList}">
+												<td th:text="${getQnaPickupListCount-status.count+1}" style="width: 7%;"></td>
 												<td th:text="${l.commentState}" style="width: 10%;"></td>
 												<td style="width: 8%;">
 													<th:block th:if="${l.boardSecret=='Y'}">
@@ -199,7 +205,13 @@
 													</th:block>
 													<th:block th:unless="${l.boardOrderNo=='1'}">
 													</th:block>
-													<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
+													<th:block th:if="${l.boardSecret=='Y'}">											
+														<a th:if="${session.SID == l.memberId || session.SLEVEL == 'level_code_00'}" th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx},memberId=${l.memberId})}" th:text="${l.boardTitle}"></a>
+														<a th:unless="${session.SID == l.memberId || session.SLEVEL == 'level_code_00'}" th:href="@{/user/board/secret}" th:text="${l.boardTitle}"></a>
+													</th:block>	
+													<th:block th:unless="${l.boardSecret=='Y'}">
+														<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx},memberId=${l.memberId})}" th:text="${l.boardTitle}"></a>
+													</th:block>
 												</td>
 												<td style="width: 6%;">
 													<th:block th:if="${l.boardAddFile=='1'}">
@@ -244,8 +256,8 @@
 												</tr>
 											</thead>
 											<tbody>				
-												<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaPayList)}" th:each="l : ${qnaPayList}">
-													<td th:text="${l.boardIdx}" style="width: 7%;"></td>
+												<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaPayList)}" th:each="l, status : ${qnaPayList}">
+													<td th:text="${getQnaPayListCount-status.count+1}" style="width: 7%;"></td>
 													<td th:text="${l.commentState}" style="width: 10%;"></td>
 													<td style="width: 8%;">
 														<th:block th:if="${l.boardSecret=='Y'}">
@@ -260,7 +272,13 @@
 														</th:block>
 														<th:block th:unless="${l.boardOrderNo=='1'}">
 														</th:block>
-														<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
+														<th:block th:if="${l.boardSecret=='Y'}">											
+															<a th:if="${session.SID == l.memberId || session.SLEVEL == 'level_code_00'}" th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx},memberId=${l.memberId})}" th:text="${l.boardTitle}"></a>
+															<a th:unless="${session.SID == l.memberId || session.SLEVEL == 'level_code_00'}" th:href="@{/user/board/secret}" th:text="${l.boardTitle}"></a>
+														</th:block>	
+														<th:block th:unless="${l.boardSecret=='Y'}">
+															<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx},memberId=${l.memberId})}" th:text="${l.boardTitle}"></a>
+														</th:block>
 													</td>
 													<td style="width: 6%;">
 														<th:block th:if="${l.boardAddFile=='1'}">
@@ -308,8 +326,8 @@
 												</tr>
 											</thead>
 											<tbody>				
-												<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaComplainList)}" th:each="l : ${qnaComplainList}">
-													<td th:text="${l.boardIdx}" style="width: 7%;"></td>
+												<tr class="table-body-row" th:if="${not #lists.isEmpty(qnaComplainList)}" th:each="l, status : ${qnaComplainList}">
+													<td th:text="${getQnaComplainListCount-status.count+1}" style="width: 7%;"></td>
 													<td th:text="${l.commentState}" style="width: 10%;"></td>
 													<td style="width: 8%;">
 														<th:block th:if="${l.boardSecret=='Y'}">
@@ -324,7 +342,13 @@
 														</th:block>
 														<th:block th:unless="${l.boardOrderNo=='1'}">
 														</th:block>
-														<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a>
+														<th:block th:if="${l.boardSecret=='Y'}">											
+															<a th:if="${session.SID == l.memberId || session.SLEVEL == 'level_code_00'}" th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx},memberId=${l.memberId})}" th:text="${l.boardTitle}"></a>
+															<a th:unless="${session.SID == l.memberId || session.SLEVEL == 'level_code_00'}" th:href="@{/user/board/secret}" th:text="${l.boardTitle}"></a>
+														</th:block>	
+														<th:block th:unless="${l.boardSecret=='Y'}">
+															<a th:href="@{/user/board/qnaDetail(boardMenuCode=${l.boardMenuCode},boardIdx=${l.boardIdx},memberId=${l.memberId})}" th:text="${l.boardTitle}"></a>
+														</th:block>
 													</td>
 													<td style="width: 6%;">
 														<th:block th:if="${l.boardAddFile=='1'}">

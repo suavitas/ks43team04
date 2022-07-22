@@ -103,9 +103,9 @@
 											</tr>
 										</thead>
 										<tbody>
-										<th:block th:if="${not #lists.isEmpty(asList)}" th:each="l : ${asList}">
-											<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl, status :${l.LaundryList}">
-												<td th:text="${l.asNumber}"></td> <!-- status.count -->
+										<th:block th:if="${not #lists.isEmpty(asList)}" th:each="l,status : ${asList}">
+											<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl :${l.LaundryList}">
+												<td th:text="${getAsListCount-status.count+1}"></td> <!-- status.count -->
 												<td th:text="${l.asState}"></td>
 												<td th:text="${sl.laundryName}"></td>
 												<td style="text-align: left;">
@@ -148,9 +148,9 @@
 										</tr>
 									</thead>
 									<tbody>
-									<th:block th:if="${not #lists.isEmpty(readyAsList)}" th:each="l : ${readyAsList}">
-										<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl, status :${l.LaundryList}">
-											<td style="width: 5%;" th:text="${l.asNumber}"></td> <!-- status.count -->
+									<th:block th:if="${not #lists.isEmpty(readyAsList)}" th:each="l, status : ${readyAsList}">
+										<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl :${l.LaundryList}">
+											<td style="width: 5%;" th:text="${readyAsListCount-status.count+1}"></td> <!-- status.count -->
 											<td style="width: 7%;" th:text="${l.asState}"></td>
 											<td style="width: 17%;" th:text="${sl.laundryName}"></td>
 											<td style="text-align: left; width: 27%;">
@@ -193,9 +193,9 @@
 									</tr>
 								</thead>
 								<tbody>
-								<th:block th:if="${not #lists.isEmpty(startAsList)}" th:each="l : ${startAsList}">
-									<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl, status :${l.LaundryList}">
-										<td style="width: 5%;" th:text="${l.asNumber}"></td> <!-- status.count -->
+								<th:block th:if="${not #lists.isEmpty(startAsList)}" th:each="l, status : ${startAsList}">
+									<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl :${l.LaundryList}">
+										<td style="width: 5%;" th:text="${startAsListCount-status.count+1}"></td> <!-- status.count -->
 										<td style="width: 7%;" th:text="${l.asState}"></td>
 										<td style="width: 17%;" th:text="${sl.laundryName}"></td>
 										<td style="text-align: left; width: 27%;">
@@ -238,9 +238,9 @@
 								</tr>
 							</thead>
 							<tbody>
-							<th:block th:if="${not #lists.isEmpty(endAsList)}" th:each="l : ${endAsList}">
-								<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl, status :${l.LaundryList}">
-									<td style="width: 5%;" th:text="${l.asNumber}"></td> <!-- status.count -->
+							<th:block th:if="${not #lists.isEmpty(endAsList)}" th:each="l, status : ${endAsList}">
+								<tr th:if="${not #lists.isEmpty(l.LaundryList)}" th:each="sl :${l.LaundryList}">
+									<td style="width: 5%;" th:text="${endAsListCount-status.count+1}"></td> <!-- status.count -->
 									<td style="width: 7%;" th:text="${l.asState}"></td>
 									<td style="width: 17%;" th:text="${sl.laundryName}"></td>
 									<td style="text-align: left; width: 27%;">

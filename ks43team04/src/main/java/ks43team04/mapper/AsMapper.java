@@ -8,6 +8,13 @@ import ks43team04.dto.As;
 
 @Mapper
 public interface AsMapper {
+	
+	//AS 목록 row 수
+	public int getAsListCount();
+	public int readyAsListCount();
+	public int startAsListCount();
+	public int endAsListCount();
+	public int asListByIdCount(String memberId);
 
 	//AS 삭제
 	public int asDel(As as);

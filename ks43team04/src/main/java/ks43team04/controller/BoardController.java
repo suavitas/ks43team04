@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ks43team04.dto.Board;
 import ks43team04.dto.Event;
 import ks43team04.dto.Member;
+import ks43team04.mapper.BoardMapper;
 import ks43team04.service.BoardService;
 import ks43team04.service.MemberService;
 
@@ -31,10 +32,12 @@ public class BoardController {
 
 	private final BoardService boardService;
 	private final MemberService memberService;
+	private final BoardMapper boardMapper;
 
-	public BoardController(BoardService boardService, MemberService memberService) {
+	public BoardController(BoardService boardService, MemberService memberService, BoardMapper boardMapper) {
 		this.boardService = boardService;
 		this.memberService = memberService;
+		this.boardMapper = boardMapper;
 	}
 
 
@@ -58,12 +61,6 @@ public class BoardController {
 							,Model model) {
 		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
 		model.addAttribute("board", board);
-		/*model.addAttribute("boardIdx", boardIdx);
-		model.addAttribute("memberId", memberId);
-		model.addAttribute("boardTitle", boardTitle);
-		model.addAttribute("boardContent", boardContent);
-		model.addAttribute("boardMenuCode", boardMenuCode);
-		model.addAttribute("boardSecret", boardSecret);*/
 		return "/user/board/qnaModify";
 	}
 	@PostMapping("/qnaModify")
@@ -123,17 +120,27 @@ public class BoardController {
 	@GetMapping("/qnaDetail")
 	public String qnaDetail(@RequestParam(name = "boardMenuCode", required = false) String boardMenuCode
 							,@RequestParam(name = "boardIdx", required = false) String boardIdx
-							, Model model) {
+							,@RequestParam(name = "memberId", required = false) String memberId
+							,HttpSession session
+							,Model model) {
 		Board board = boardService.getBoardDetailByCode(boardMenuCode, boardIdx);
 		int readCount = boardService.readCount(board);
 		model.addAttribute("readCount", readCount);
+		String sessionId = (String) session.getAttribute("SID");
 		String mId = board.getMemberId();
 		Member member = memberService.getMemberInfoById(mId);
 		model.addAttribute("board", board);
 		model.addAttribute("member", member);
+		model.addAttribute("sessionId", sessionId);
 		return "/user/board/qnaDetail";
 	}
 
+	/*비밀글 권한*/
+	@GetMapping("/secret")
+	public String secret() {
+		return "/user/board/secret";
+	}
+	
 	/*Q&A(문의사항) 목록 조회*/
 	@GetMapping("/qnaList")
 	public String qnaServiceList(Model model, HttpSession session) {
@@ -141,7 +148,12 @@ public class BoardController {
 		List<Board> qnaPickupList = boardService.getQnaPickupList();
 		List<Board> qnaPayList = boardService.getQnaPayList();
 		List<Board> qnaComplainList = boardService.getQnaComplainList();
+		int getQnaServiceListCount = boardMapper.getQnaServiceListCount();
+		int getQnaPickupListCount = boardMapper.getQnaPickupListCount();
+		int getQnaPayListCount = boardMapper.getQnaPayListCount();
+		int getQnaComplainListCount = boardMapper.getQnaComplainListCount();
 		String sessionId = (String) session.getAttribute("SID");
+		String sessionLevel = (String) session.getAttribute("SLEVEL");
 		log.info("문의사항 서비스 이용 목록 : {}", qnaServiceList);
 		log.info("문의사항 수거 배송 목록 : {}", qnaPickupList);
 		log.info("문의사항 결제 포인트 목록 : {}", qnaPayList);
@@ -150,6 +162,11 @@ public class BoardController {
 		model.addAttribute("qnaPayList", qnaPayList);
 		model.addAttribute("qnaComplainList", qnaComplainList);
 		model.addAttribute("sessionId", sessionId);
+		model.addAttribute("sessionLevel", sessionLevel);
+		model.addAttribute("getQnaServiceListCount", getQnaServiceListCount);	
+		model.addAttribute("getQnaPickupListCount", getQnaPickupListCount);	
+		model.addAttribute("getQnaPayListCount", getQnaPayListCount);	
+		model.addAttribute("getQnaComplainListCount", getQnaComplainListCount);	
 		return "/user/board/qnaList";
 	}
 

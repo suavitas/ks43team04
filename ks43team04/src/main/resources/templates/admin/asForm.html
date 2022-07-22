@@ -10,6 +10,9 @@
 	<th:block layout:fragment="customJsScript"> 
 		<script type="text/javascript">
 		
+	    
+	  
+		
 		/*유효성검사 */
 		function validCheck(){
 			var title = document.getElementById("title");
@@ -155,7 +158,8 @@
 									<div class="form-group row">
 										<label class="control-label col-md-1 col-sm-1 ">세탁소명</label>
 											<div class="col-md-4 col-sm-4"  th:each="l : ${getMemberLaundryList}">
-												<input type="text" class="form-control" readonly="readonly" placeholder="세탁소이름" name="laundryCode" th:value="${l.laundryName}" id="code">
+												<input type="text" class="form-control" readonly="readonly" name="laundryName" th:value="${l.laundryName}" id="name">
+												<input type="hidden" class="form-control" readonly="readonly" name="laundryCode" th:value="${l.laundryCode}" id="code">
 											</div>
 									</div>
 									<div class="form-group row">
