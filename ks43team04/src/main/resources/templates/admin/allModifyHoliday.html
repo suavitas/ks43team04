@@ -8,7 +8,7 @@
 	<!-- 사용자정의 contents -->
 	<th:block layout:fragment="customContents">
 	
-	<h4>2022년 전체  공휴일 조회</h4>
+	<h4>2022년 전체  공휴일 </h4>
 	<form th:action="@{/admin/allModifyHoliday}" method="post">
 	<table class="table table-striped jambo_table bulk_action" style="width: 50%; margin: 0 auto; margin-top:80px; border-collapse: separate;">
 				<thead>
@@ -29,7 +29,7 @@
 					<tr class="even pointer">
 						<td>공휴일 사용여부</td>
 						<td>
-							O<input type="radio" name="holidayCodeUse" value="O"> 
+							O<input type="radio" name="holidayCodeUse" value="O" checked> 
 							X<input type="radio" name="holidayCodeUse" value="X"> 
 						</td>
 					</tr>

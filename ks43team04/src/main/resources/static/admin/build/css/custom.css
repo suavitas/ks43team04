@@ -2189,6 +2189,15 @@ h2 {
 	font-weight: 500;
 }
 
+.yearly-holiday {
+	padding: 0 3px 6px;
+	position: relative;
+	width: 100%;
+	float: left;
+	clear: both;
+	margin-top: 5px;
+}
+
 legend {
 	padding-bottom: 7px;
 }
