@@ -4,11 +4,13 @@
 	layout:decorate="~{layouts/adminDefault}">
 
 <th:block layout:fragment="customCss">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
 </th:block>
 
 <th:block layout:fragment="customJsScript">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
 	<script>
 		$(function(){
 			$(document).on('click', '.removeHolidayBtn', function() {
@@ -20,7 +22,7 @@
         		    success: function(data){
         		    	swal(
         		    	        '휴일삭제',
-        		    	        '<b style="color:red;"><strong>삭제완료</strong></b> 되었습니다!',
+        		    	        '<b style="color:red;"><strong>삭제완료</strong></b>되었습니다!',
         		    	        'success'
         		    	      ).then((result) => {
         				          if (result.value) {
@@ -36,11 +38,12 @@
 		    	});
 			});
 		});
-	</script>
+		</script>
 </th:block>
+
 <th:block layout:fragment="customContents">
-	<form  th:action="@{/admin/removeHoliday}" method="post" id="removeHolidayForm"
-		style="text-align: center;">
+	<form th:action="@{/admin/removeHoliday}" method="post"
+		id="removeHolidayForm" style="text-align: center;">
 		<table class="table table-striped jambo_table bulk_action"
 			style="width: 50%; margin: 0 auto; margin-top: 80px; border-collapse: separate;">
 			<thead>
@@ -51,20 +54,26 @@
 			<tbody>
 				<tr class="even pointer">
 					<td>세탁소 명</td>
-					<td><input th:text="${laundryName}" name="laundryName" th:value="${laundryName}" hidden="true"></td>
+					<td><input th:text="${laundryName}" name="laundryName"
+						th:value="${laundryName}" hidden="true"></td>
 				</tr>
 				<tr class="even pointer">
 					<td>휴일 명</td>
-					<td><input th:text="${yearlyHolidayName}" name="yearlyHolidayName" th:value="${yearlyHolidayName}"  hidden="true"></td>
+					<td><input th:text="${yearlyHolidayName}"
+						name="yearlyHolidayName" th:value="${yearlyHolidayName}"
+						hidden="true"></td>
 				</tr>
 				<tr class="even pointer">
 					<td>휴일 날짜</td>
-					<td><input th:text="${yearlyHolidayDate}"  name="yearlyHolidayDate" th:value="${yearlyHolidayDate}"  hidden="true"></td>
-					
+					<td><input th:text="${yearlyHolidayDate}"
+						name="yearlyHolidayDate" th:value="${yearlyHolidayDate}"
+						hidden="true"></td>
+
 				</tr>
-					<tr class="even pointer">
+				<tr class="even pointer">
 					<td colspan="2">
-						<button type="button" class="btn btn-danger btn-sm removeHolidayBtn"
+						<button type="button"
+							class="btn btn-danger btn-sm removeHolidayBtn"
 							data-toggle="modal" data-target="#deleteModal">휴일 정보 삭제</button>
 					</td>
 				</tr>
@@ -72,6 +81,6 @@
 		</table>
 		<input type="hidden" name="holidayCode" th:value="${holidayCode}">
 	</form>
-	
+
 </th:block>
 </html>

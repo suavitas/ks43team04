@@ -28,7 +28,7 @@
 				<th>상품 가격</th>
 				<th>사용 상태</th>
 				<th>수정</th>
-				<th>삭제</th>
+				<th>가격 사용유무 변경</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -51,7 +51,7 @@
 																gPriceUseState=${l.gPriceUseState})}"><button
 							type="button"
 							class="btn btn-danger btn-sm" data-toggle="modal"
-							data-target="#deleteModal">삭제</button> </a></td>
+							data-target="#deleteModal">가격 사용유무 변경</button> </a></td>
 			<tr th:unless="${not #lists.isEmpty(eachGoodsPriceList)}">
 				<td colspan="8">등록된 상품이 없습니다.</td>
 			</tr>

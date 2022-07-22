@@ -4,17 +4,7 @@
 	layout:decorate="~{layouts/adminDefault}">
 
 
-<th:block layout:fragment="customCss">
-	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-</th:block>
-
-<!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-		
-		<script type="text/javascript">
-		
-	</script>
 
 	<div class="x_panel">
 		<h2>세탁소별 휴일 목록</h2>
@@ -49,14 +39,14 @@
 									th:href="@{/admin/changeHoliday(laundryName=${l.get('laundryName')}, 
 											yearlyHolidayName=${l.get('yearlyHolidayName')},yearlyHolidayDate=${l.get('yearlyHolidayDate')},
 											holidayCodeUse=${l.get('holidayCodeUse')},holidayCode=${l.get('holidayCode')},laundryCode=${l.get('laundryCode')})}"><button
-											type="button"  onclick="Alert()" name="modifybtn"
+											type="button"  onclick="Alert()" name="modifyBtn"
 											class="btn btn-success btn-sm" data-toggle="modal"
 											data-target="#deleteModal">수정</button> </a></td>
 								<td><a
 									th:href="@{/admin/removeHoliday(laundryName=${l.get('laundryName')}, 
 											yearlyHolidayName=${l.get('yearlyHolidayName')},yearlyHolidayDate=${l.get('yearlyHolidayDate')},
 											holidayCodeUse=${l.get('holidayCodeUse')},holidayCode=${l.get('holidayCode')},laundryCode=${l.get('laundryCode')})}"><button
-											type="button" onclick="Confirm()"
+											type="button" onclick="Confirm()" name="delBtn"
 											class="btn btn-danger btn-sm" data-toggle="modal"
 											data-target="#deleteModal">삭제</button> </a></td>
 						</th:block>
