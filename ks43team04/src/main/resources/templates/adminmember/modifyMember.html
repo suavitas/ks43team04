@@ -9,6 +9,51 @@
    <script th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}"></script>
 </th:block>
 
+<th:block layout:fragment="customJsScript2">
+  <script type="text/javascript">
+		var genderCheck = document.querySelector('#gender-check').value;
+		var gender = document.querySelectorAll('.gender');
+		
+		for(var i=0; i<gender.length; i++){
+			if(gender[i].value == genderCheck){
+				gender[i].checked = true
+			}
+		
+		for(var j=0; j<gender.length; j++){
+			gender[j].addEventListener('click',function(e){
+				for(var k=0; k<gender.length; k++){
+					gender[k].checked = false;
+				}
+				e.target.checked = true;
+			});
+		}
+	}
+		levelCode.addEventListener('change',function(e){
+        
+        if(e.target.value == 'level_code_00'){
+           level = '본사'
+        }else if(e.target.value == 'level_code_01'){
+           level = '관리자'
+        }else if(e.target.value == 'level_code_02'){
+           level = '무인점주'
+        }else if(e.target.value == 'level_code_03'){
+           level = '일반점주'
+        }else if(e.target.value == 'level_code_04'){
+           level = 'WELCOME'
+        }else if(e.target.value == 'level_code_05'){
+           level = 'SILVER'
+        }else if(e.target.value == 'level_code_06'){
+           level = 'GOLD'
+        }else if(e.target.value == 'level_code_07'){
+           level = 'VIP'
+        }else if(e.target.value == 'level_code_08'){
+           level = 'VVIP'
+        }
+       levelName.value = level; 
+  });
+   </script>
+ </th:block>
+
 <th:block layout:fragment="customScript">
       <script>
          // 카카오 우편번호 API 
@@ -65,7 +110,8 @@
 			<div class="x_panel">
 			<h2>상세정보</h2>
 			<div class="x_title">
-			</div>     	   
+			</div>     
+		   
 			     <div class="x_content">
 					<form class="form-horizontal form-label-left" th:action="@{/admin/modifyMember}" method="post">
 						<table class="table table-bordered">
@@ -79,12 +125,51 @@
 								<tr>
 									<th scope="row">회원 정보</th>
 									<td>
+										<!-- <div class="form-group row">
+											<div class="col-md-2 col-sm-2">
+												<label class="control-label">회원권한코드</label>
+											</div>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="text" class="form-control readonlyInput" id="levelCode"  name="levelCode" th:value="${member.levelCode}" />
+											</div>
+										</div> -->
+										
+										
+										<div class="form-group row">
+											<div class="col-md-2 col-sm-2">
+												<label class="control-label">회원권한코드</label>
+											</div>
+											<div class="col-md-6 col-sm-6 ">
+											<select id="levelCode" name="levelCode" class="form-control text-center" th:value="${member.levelCode}" style="width: 100%;">
+													<option  value=""> :: 선 택 :: </option>
+													<option  value="level_code_00">본사</option>
+													<option  value="level_code_01">관리자</option>
+													<option  value="level_code_02">무인세탁소점주</option>
+													<option  value="level_code_03">일반세탁소점주</option>
+													<option  value="level_code_04">WELCOME</option>
+													<option  value="level_code_05">SLIVER</option>
+													<option  value="level_code_06">GOLD</option>
+													<option  value="level_code_07">VIP</option>
+													<option  value="level_code_08">VVIP</option>
+											</select>		
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<div class="col-md-2 col-sm-2">
+												<label class="control-label">권한이름</label>
+											</div>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="text" id="levelName" class="form-control" name="levelName" />
+											</div>
+										</div> 
+										
 										<div class="form-group row">
 											<div class="col-md-2 col-sm-2">
 												<label class="control-label" for="memberId">아이디</label>
 											</div>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" class="form-control readonlyInput" name="memberId" th:value="${member.memberId}" readonly="readonly">
+												<input type="text" class="form-control readonlyInput" name="memberId" th:value="${member.memberId}" readonly="readonly" />
 											</div>
 										</div>
 										<div class="form-group row">
@@ -92,7 +177,7 @@
 												<label class="control-label" for="memberName">회원이름</label>
 											</div>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" class="form-control" name="memberName" th:value="${member.memberName}" >
+												<input type="text" class="form-control" name="memberName" th:value="${member.memberName}" />
 											</div>
 										</div>	
 										<div class="form-group row">
@@ -100,28 +185,40 @@
 												<label class="control-label" for="memberName">생년월일</label>
 											</div>
 											<div class="col-md-6 col-sm-6 ">
-												<input type="text" class="form-control" name="memberBirth" th:value="${member.memberBirth}" >
+												<input type="text" class="form-control" name="memberBirth" th:value="${member.memberBirth}" />
 											</div>
-										</div>								
+										</div>
+										<div class="form-group row">
+											<div class="col-md-2 col-sm-2">
+												<label class="control-label" for="memberGender">성별</label>
+											</div>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="hidden" id="gender-check" class="form-control" th:value="${member.memberGender}" />
+												<input type='checkbox' class="gender" name='memberGender' value="여" style="margin: 20px;" /><strong>여성</strong>
+												<input type='checkbox' class="gender" name='memberGender' value="남" style="margin: 20px;" /><strong>남성</strong>
+												
+											</div>
+										</div>
+							
 										<div class="form-group row">
 											<div class="col-md-2 col-sm-2">
 												<label class="control-label" for="memberPostNum">회원 주소</label>
 											</div>
 											<div class="col-md-4 col-sm-4">
-												<input type="text" class="form-control readonlyInput" name="memberPostNum" id="memberPostNum" th:value="${member.memberPostNum}" >
+												<input type="text" class="form-control readonlyInput" name="memberPostNumber" id="memberPostNum" th:value="${member.memberPostNumber}" />
 											</div>
 											<div class="col-md-3 col-sm-3">
-												<button type="button" class="btn btn-info" id="postNum" onclick="searchPostNum()">우편번호찾기</button>
+												<button type="button" class="btn btn-info"  id="memberPostNum" name="memberPostNum" onclick="searchAddForm()">우편번호찾기</button>
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="col-md-6 offset-md-2">
-												<input type="text" class="form-control readonlyInput" id="memberAddr" name="memberAddr"  th:value="${member.memberAddr}">
+												<input type="text" class="form-control readonlyInput" id="memberAddr" name="memberAddr"  th:value="${member.memberAddr}" />
 											</div>
 										</div>
 										<div class="form-group row">
 											<div class="col-md-6 offset-md-2">
-												<input type="text" class="form-control" name="memberDetailAddr" id="memberDetailAddr" th:value="${member.memberDetailAddr}" >
+												<input type="text" class="form-control" name="memberDetailAddr" id="memberDetailAddr" th:value="${member.memberDetailAddr}" />
 											</div>
 										</div>
 										<div class="form-group row">
@@ -129,7 +226,7 @@
 												<label class="control-label">이메일</label>
 											</div>
 											<div class="col-md-6 col-sm-6">
-												<input type="text" class="form-control" name="memberEmail" th:value="${member.memberEmail}" >
+												<input type="text" class="form-control" name="memberEmail" th:value="${member.memberEmail}" />
 											</div>
 										</div>
 										<div class="form-group row">
@@ -137,7 +234,23 @@
 												<label class="control-label">전화번호</label>
 											</div>
 											<div class="col-md-6 col-sm-6">
-												<input type="text" class="form-control" name="memberPhone" th:value="${member.memberPhone}" >
+												<input type="text" class="form-control" name="memberPhone" th:value="${member.memberPhone}" />
+											</div>
+										</div>
+										<div class="form-group row">
+											<div class="col-md-2 col-sm-2">
+												<label class="control-label">가입일</label>
+											</div>
+											<div class="col-md-6 col-sm-6">
+												<input type="text" class="form-control" name="memberRegDate" th:value="${member.memberRegDate}" />
+											</div>
+										</div>
+										<div class="form-group row">
+											<div class="col-md-2 col-sm-2">
+												<label class="control-label">수정일</label> 
+											</div>
+											<div class="col-md-6 col-sm-6">
+												<input type="text" class="form-control" name="registTime" th:value="${member.registTime}" />
 											</div>
 										</div>
 									</td>
@@ -147,11 +260,11 @@
 						<div class="ln_solid"></div>
 						<div class="form-group">
 							<div class="col-md-8 col-sm-8  offset-md-4">
-								<a th:href="@{/admin/adminMemberList}"><button type="button" class="btn btn-primary" id="cancelButton">취소</button></a>
-								<button type="button" class="btn btn-success" id="modifyButton">수정</button>
+								<a th:href="@{/admin/adminMemberList}"><button type="button" class="btn btn-secondary" id="cancelButton">취소</button></a>
+								<a th:href="@{/admin/modifyMember(memberId=${member.memberId})}"><button type="button" class="btn btn-success">수정</button></a>	
 								<button type="submit" class="btn btn-primary">저장</button>
 							</div>
-						</div>	
+						</div>
 					</form>	
 				</div>				
 			</div>

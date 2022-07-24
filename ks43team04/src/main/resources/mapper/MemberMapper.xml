@@ -11,7 +11,7 @@
 		<result column="m_pw_QnA_code" 			property="memberPwQnACode"/>
 		<result column="m_name" 				property="memberName"/>
 		<result column="m_birth" 				property="memberBirth"/>
-		<result column="m_post_num" 			property="memberPostNum"/>
+		<result column="m_post_num" 			property="memberPostNumber"/>
 		<result column="m_addr" 				property="memberAddr"/>
 		<result column="m_detail_addr" 			property="memberDetailAddr"/>
 		<result column="m_phone" 				property="memberPhone"/>
@@ -21,13 +21,13 @@
 		<result column="m_reg_date" 			property="memberRegDate"/>
 		<result column="admin_level_code" 		property="adminLevelCode"/>
 		<result column="regist_time" 			property="registTime"/>
-		<collection property="laundryList" ofType="Laundry">
+		<collection property="laundryList"				 ofType="Laundry">
 			<id column="laundry_code" 					property="laundryCode"/>
 			<result column="m_id" 						property="memberId"/>
 			<result column="level_code" 				property="levelCode"/>
 			<result column="laundry_name" 				property="laundryName"/>
 			<result column="laundry_state" 				property="laundryState"/>
-			<result column="laundry_post_num" 			property="laundryPostNum"/>
+			<result column="laundry_post_num" 			property="laundryPostNumber"/>
 			<result column="laundry_addr"				property="laundryAddr"/>
 			<result column="laundry_detail_addr"		property="laundryDetailAddr"/>
 			<result column="laundry_tel" 				property="laundryTel"/>
@@ -46,7 +46,7 @@
 		<result column="level_code" 				property="levelCode"/>
 		<result column="laundry_name" 				property="laundryName"/>
 		<result column="laundry_state" 				property="laundryState"/>
-		<result column="laundry_post_num" 			property="laundryPostNum"/>
+		<result column="laundry_post_num" 			property="laundryPostNumber"/>
 		<result column="laundry_addr"				property="laundryAddr"/>
 		<result column="laundry_detail_addr"		property="laundryDetailAddr"/>
 		<result column="laundry_tel" 				property="laundryTel"/>
@@ -131,9 +131,7 @@
 		FROM
 			tb_member_login AS l
 	</select>
-	
 
-	
 	<select id="muinMachineList" resultMap="MuinMachineResultMap">
 		SELECT
 			m.muin_machine_code,
@@ -147,8 +145,6 @@
 			tb_muin_machine AS m
 	</select>
 	
-	
-
 
 	<select id="muinLaundryCount" resultType="int">
 	/*무인 튜플 수*/
@@ -199,6 +195,12 @@
 			l.level_code = 'level_code_03'
 		LIMIT #{startRow}, #{rowPerPage};
 	</select>
+	
+	
+	
+	
+	
+	
 	
 	<select id="getStoreOwnerInfoById" parameterType="String" resultMap="memberResultMap">
 		/* 회원 정보조회 (대리점 정보 포함)*/
@@ -265,27 +267,243 @@
 	<insert id="addMemberLaundry" parameterType="Laundry">
 		/* 세탁소 무인, 일반 점주 회원가입 */
 		INSERT INTO tb_laundry	
-		(	laundry_code
+			(	
+			laundry_code
+			,m_id
+			,level_code
 			,laundry_name
+			,laundry_state
 			,business_number
 			,laundry_license_img
 			,laundry_img
+			,skill_licence
 			,laundry_tel
 			,laundry_post_num
 			,laundry_addr
 			,laundry_detail_addr
+			,admin_level_code
+			,regist_time
 		)VALUES (
-			 #{laundryCode}
+			sf_new_laundryCode()
+			,#{memberId}
+			,#{levelCode}
 			,#{laundryName}
+			,'open'
 			,#{businessNumber}
 			,#{laundryLicenseImg}
 			,#{laundryImg}
+			,#{skillLicence}
 			,#{laundryTel}
-			,#{laundryPostNum}
+			,#{laundryPostNumber}
 			,#{laundryAddr}
 			,#{laundryDetailAddr}
-		)
+			,'admin_level_code_003'
+			,NOW()
+		);
 	</insert>
+	
+	<update id="modifyUser" parameterType="map">
+			/* 마이페이지 회원 정보 수정 */
+			UPDATE 
+				tb_member as m
+			inner JOIN
+				tb_laundry as l
+			ON
+				m.m_id = l.m_id	
+			SET
+				m.m_pw = #{member.memberPw},
+				m.m_pw_QnA_code = #{member.memberPwQnACode},
+				m.m_name = #{member.memberName},
+				m.m_birth = #{member.memberBirth},
+				m.m_post_num = #{member.memberPostNumber},
+				m.m_addr = #{member.memberAddr},
+				m.m_detail_addr = #{member.memberDetailAddr},
+				m.m_phone = #{member.memberPhone},
+				m.m_gender = #{member.memberGender},
+				m.m_out_code = 'X',
+			    m.m_email = #{member.memberEmail},
+				m.m_reg_date = NOW(),
+				m.admin_level_code = 'admin_level_code_001',
+				m.regist_time = NOW(),
+				l.laundry_code = #{laundry.laundryCode},
+				l.m_id = #{laundry.memberId},
+				l.level_code = #{laundry.levelCode},
+				l.laundry_name = #{laundry.laundryName},
+				l.laundry_state = 'open',
+				l.laundry_post_num = #{laundry.laundryPostNumber},
+				l.laundry_addr = #{laundry.laundryAddr},
+				l.laundry_detail_addr = #{laundry.laundryDetailAddr},
+				l.laundry_tel = #{laundry.laundryTel},
+				l.laundry_license_img = #{laundry.laundryLicenseImg},
+				l.laundry_img = #{laundry.laundryImg},
+				l.skill_licence = #{laundry.skillLicence},
+				l.business_number = #{laundry.businessNumber},
+				l.admin_level_code = 'admin_level_code_003',
+				l.regist_time = NOW()
+			WHERE
+				m.m_id = #{member.memberId};	
+		</update>
+		
+		<select id="getMemberOutInfoById" parameterType="String" resultType="MemberOut">
+			SELECT 
+				m_out_code 			as memberOutCode,
+				m_id				as memberId, 
+				m_out_reason 		as memberOutReason, 
+				m_out_request_time  as memberOutRequestTime, 
+				m_out_okay_time 	as memberOutOkayTime, 
+				m_out_okay_state 	as memberOutOkayState, 
+				m_not_okay_reason 	as memberNotOkayReason, 
+				admin_level_code 	as adminLevelCode, 
+				regist_time 		as registTime, 
+				change_round		as changeRound, 
+				final_state 		as finalState
+			FROM
+				tb_member_out
+			WHERE
+				m_id = #{memberId};
+		</select>
+		
+		<insert id="removeLaundry" parameterType="String">
+			/*일반점주, 무인점주 탈퇴대기 (미승인) 처리*/
+			INSERT INTO tb_member_out
+		   (
+			   m_out_code,
+			   m_id,
+			   m_out_reason,
+			   m_out_request_time, 
+			   m_out_okay_time, 
+			   m_out_okay_state, 
+			   m_not_okay_reason, 
+			   admin_level_code, 
+			   regist_time, 
+			   change_round, 
+			   final_state
+		   )
+		   VALUES (
+			   sf_new_memberOutCode(),
+			   #{memberId}, 
+			   #{memberOutReason}, 
+			   NOW(), 
+			   NOW(), 
+			   '대기', 
+			   '', 
+			   'admin_level_code_003', 
+			   NOW(), 
+			   '', 
+			   ''
+		   )
+		</insert>
+		
+		<insert id="removeMember" parameterType="String">
+			/*회원 탈퇴(승인) 처리*/
+			INSERT INTO tb_member_out
+		   (
+			   m_out_code,
+			   m_id,
+			   m_out_reason,
+			   m_out_request_time, 
+			   m_out_okay_time, 
+			   m_out_okay_state, 
+			   m_not_okay_reason, 
+			   admin_level_code, 
+			   regist_time, 
+			   change_round, 
+			   final_state
+		   )
+		   VALUES (
+			   sf_new_memberOutCode2(),
+			   #{memberId}, 
+			   #{memberOutReason}, 
+			   NOW(), 
+			   NOW(), 
+			   '완료', 
+			   '', 
+			   'admin_level_code_003', 
+			   NOW(), 
+			   '', 
+			   ''
+		   )
+	</insert>	   	
+		
+	
+	<select id="getUserInfoById" parameterType="String" resultMap="memberResultMap">
+		/* 마이페이지 회원 정보조회 (세탁소 정보 포함)*/
+		SELECT
+			  m.m_id
+			, m.level_code
+			, m.m_pw
+			, m.m_pw_QnA_code
+			, m.m_name
+			, m.m_birth
+			, m.m_post_num
+			, m.m_addr
+			, m.m_detail_addr
+			, m.m_phone
+			, m.m_gender
+			, m.m_out_code
+			, m.m_email
+			, m.m_reg_date
+			, m.admin_level_code
+			, m.regist_time
+			, l.laundry_code
+			, l.m_id
+			, l.level_code
+			, l.laundry_name
+			, l.laundry_state
+			, l.laundry_post_num
+			, l.laundry_addr
+			, l.laundry_detail_addr
+			, l.laundry_tel
+			, l.laundry_license_img
+			, l.laundry_img
+			, l.skill_licence
+			, l.business_number
+			, l.admin_level_code
+			, l.regist_time
+		FROM
+			tb_member AS m
+			left JOIN 
+			tb_laundry AS l
+			ON 
+			m.m_id = l.m_id
+		WHERE
+			m.m_id = #{memberId};
+	</select>
+	
+	<!-- <select id="getUserInfoById" parameterType="String" resultMap="memberResultMap">
+			/* 마이페이지 회원 상세정보 조회*/
+ 			SELECT
+			     m.m_id
+			    ,m.level_code
+				,m.m_pw
+				,m.m_pw_QnA_code
+				,m.m_name
+				,m.m_birth
+				,m.m_post_num
+				,m.m_addr
+				,m.m_detail_addr
+				,m.m_phone
+				,m.m_gender
+				,m.m_out_code
+				,m.m_email
+				,m.m_reg_date
+				,m.admin_level_code
+				,m.regist_time 
+			FROM
+			   tb_member AS m
+			WHERE
+			   m.m_id = #{memberId};
+	</select> -->
+	
+	<update id="memberOut" parameterType="String">
+		/* 회원 탈퇴 업데이트 */
+		UPDATE
+			tb_member AS m
+		SET
+		    m.m_out_code = 'O'
+		WHERE
+			m.m_id = #{memberId};
+	</update>
 	
 	<select id="getMemberInfoById" parameterType="String" resultMap="memberResultMap">
 		/* 회원별 회원 정보조회*/
@@ -300,12 +518,15 @@
 			,m.m_detail_addr
 			,m.m_phone
 			,m.m_gender
+			,m.m_out_code
 			,m.m_email
 			,m.m_reg_date
 		FROM
 		   tb_member AS m
 		WHERE
-		   m.m_id = #{memberId};
+		   m.m_id = #{memberId}
+		AND
+		   m.m_out_code = 'X';
 	</select>
 	
 	<select id="isIdCheck" parameterType="String" resultType="boolean">
@@ -320,33 +541,43 @@
 
 	<insert id="addMember" parameterType="Member">
  		/* 회원가입 */
- 		INSERT INTO tb_member
-			(m_id
+		INSERT INTO tb_member
+			(
+			m_id
+			,level_code
 			,m_pw
+			,m_pw_QnA_code
 			,m_name
-			,m_birth
-			,m_post_num
+			,m_birth 
+			,m_post_num 
 			,m_addr
-			,m_detail_addr
-			,m_phone
-			,m_gender
-			,m_email
-			,m_reg_date
-		)VALUES( 
+			,m_detail_addr 
+			,m_phone 
+			,m_gender 
+			,m_out_code 
+			,m_email 
+			,m_reg_date 
+			,admin_level_code
+			,regist_time
+		)VALUES(
 			#{memberId}
+			,#{levelCode}
 			,#{memberPw}
+			,#{memberPwQnACode}
 			,#{memberName}
-			,#{memberBirth}
-			,#{memberPostNum}
+			,#{memberBirth} 
+			,#{memberPostNumber}
 			,#{memberAddr}
 			,#{memberDetailAddr}
 			,#{memberPhone}
 			,#{memberGender}
+			,'X'
 			,#{memberEmail}
-			,CURDATE() 
-		);	
+			,NOW()
+			,'admin_level_code_001'
+			,NOW()
+		);
  	</insert>
-	
 	
 	
 </mapper>

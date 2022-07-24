@@ -31,10 +31,10 @@
 	                }
 	                
 	                document.getElementById('laundryPostNum').value = data.zonecode;
+	                console.log(document.getElementById('laundryPostNum').value);
 	                document.getElementById('laundryAddr').value = addr;
 	                // 커서를 상세주소 필드로 이동한다.
-	                document.getElementById('laundryDetailAddr').focus();
-	                
+	                document.getElementById('laundryDetailAddr').focus(); 
 	            }
 	        }).open();
 	    }
@@ -53,10 +53,10 @@
 	                    addr = data.jibunAddress;
 	                }
 	                
-	                document.getElementById('laundryPostNum').value = data.zonecode;
-	                document.getElementById('laundryAddr').value = addr;
+	                document.getElementById('memberPostNum').value = data.zonecode;
+	                document.getElementById('memberAddr').value = addr;
 	                // 커서를 상세주소 필드로 이동한다.
-	                document.getElementById('laundryDetailAddr').focus();
+	                document.getElementById('memberDetailAddr').focus();
 	                
 	            }
 	        }).open();
@@ -86,13 +86,14 @@
 								// 아이디 중복이 발생 하지않은 경우(회원가입 O) 입력하는 요소는 활성화
 								if(data){
 									$('#idCheckResult').text('사용 가능한 아이디 입니다.');
+									$('#idCheckResult').css('color', 'blue');
 									$('#addMemberLaundryForm input').prop('disabled', false); 
 									$('#addMemberLaundryForm select').prop('disabled', false);
 									$('#addMemberLaundryForm button').prop('disabled', false);
 								}else{									
 									// 아이디 중복이 발생하는 경우(회원가입 X) 입력하는 요소는 비활성화
 									$('#idCheckResult').text('중복된 아이디가 있습니다.');
-									$('#idCheckResult').attr('color','red');
+									$('#idCheckResult').css('color','red');
 									$('#addMemberLaundryForm input').not('input[name="memberId"]').prop('disabled', true);
 									$('#addMemberLaundryForm button').not('#idCheck').prop('disabled', true);
 									$('#addMemberLaundryForm select').prop('disabled', true);
@@ -104,8 +105,9 @@
 				
 				$('#addMemberLaundryBtn').click(function(){
 					var isSubmit = true;
-					var inputObj = $('.addMemberLaundryForm').find('input');
+					var inputObj = $('#addMemberLaundryForm').find('input');
 					
+					console.log(inputObj);
 					$.each(inputObj, function(){
 						var inputData = $(this).val();
 						var result = validationCheck(inputData);
@@ -114,11 +116,14 @@
 						if(!result){
 							alert('필수 항목입니다. 입력해주세요');
 							$(this).focus();
+							 console.log(inputObj);
 							isSubmit = false;
+							 console.log(isSubmit+'1');
 							return false;
 						}
+					})
+					console.log(isSubmit+'ssss');
 					if(isSubmit) $('#addMemberLaundryForm').submit();
-				})
 			})	   
 		});
 		</script>	
@@ -163,19 +168,30 @@
 				<form id="addMemberLaundryForm" th:action="@{/user/addMemberLaundry}" method="post" class="validation-form" novalidate>
 				
 					<div class="mb-3"  style="margin: 20px auto;">
-						<label for="id"><strong>아이디</strong></label> 
+						<label for="id"><strong>아이디</strong><span id="idCheckResult" style=" right:56%; position: absolute; font-size: 12.5px;"></span></label> 
 						<div style="display: flex;">
-							<input type="text" class="form-control" id="memberId" style="width: 85%;"/>	
+							<input type="text" class="form-control" id="memberId" name="memberId" style="width: 85%;"/>	
 							<button type="button" class="btn btn-success" id="idCheck" style="width: 15%;">중복체크</button>
 						</div>
 							<div>
 								<span id="idCheckResult"></span>
 							</div>
-					</div>			
-
+					</div>
 					<div class="mb-3" style="margin: 20px auto;">
-						<label for="password"><strong>비밀번호</strong></label> 
-						<input type="text" class="form-control" id="memberPw" name="memberPw"/>
+						<input type="hidden" class="form-control" name="levelCode" th:value="${levelCode}"/> 
+					</div>				
+					<div class="mb-3" style="margin: 20px auto;">
+						<label for="password" style="display: block;"><strong>비밀번호</strong></label>
+						<input class="form-control" type="password" id="password1" name="memberPw" 
+						    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}" 
+							title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character" 
+							required style="display: inline;"/>	
+							<div>
+	                  			<span onclick="hideshow()" style="position: absolute; right: 27%; top: 8.9%;"> 
+									<i id="slash" class="fa fa-eye-slash" style="font-size: 20px; display: none;"></i>
+									<i id="eye" class="fa fa-eye " style="font-size: 20px; "></i>
+								</span>
+							</div>
 					</div>
 					
 					<div class="mb-3" style="margin: 20px auto;">
@@ -191,7 +207,7 @@
 						</select>		
 					</div>
 					<div class="mb-3" style="margin: 10px auto;">
-						<input type="text" class="form-control" id="passwordQna" name="passwordQna" placeholder="답변"/> 
+						<input type="text" class="form-control" id="passwordQna" name="memberPwQnACode" placeholder="답변"/> 
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
@@ -207,7 +223,7 @@
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="email"><strong>주소</strong></label> 
 						<div style="display: flex;">
-							<input type="text" class="form-control" name="memberPostNum" id="memberPostNum" placeholder="우편번호" style="width: 85%;"/>
+							<input type="text" class="form-control" name="memberPostNumber" id="memberPostNum" placeholder="우편번호" style="width: 85%;"/>
 							<button type="button" class="btn btn-success" id="memberPostNum" style="width: 15%;" onclick="searchAddForm()">우편찾기</button>				
 						</div>
 					</div>	
@@ -240,29 +256,33 @@
 			           <div data-component="separator" style="border-top: 1px solid rgb(0,0,0); clear: both"></div>
 			      </div>
 			      <br>
-			      
-					<div class="mb-3"  style="margin: 20px auto; display: none;">
-						<label for="name"><strong>세탁소코드</strong></label> 
-							<input type="text" class="form-control" id="laundryName" name="laundryCode" style="width: 85%;"/>	
-					</div>
+		
 					<div class="mb-3"  style="margin: 20px auto;">
 						<label for="name"><strong>세탁소 명</strong></label> 
-							<input type="text" class="form-control" id="laundryName" name="laundryName" style="width: 85%;"/>	
+							<input type="text" class="form-control" id="laundryName" name="laundryName"/>	
 					</div>
+					
+					<th:block th:if="${levelCode == 'level_code_03'}">
+						<div class="mb-3" style="margin: 20px auto;">
+							<label for="gen"><strong>세탁 기능사 자격증</strong></label> 
+							<input type="checkbox" name="skillLicence" value="O" style="margin: 20px;"/><strong>보유</strong>
+	  						<input type="checkbox" name="skillLicence" value="X" style="margin: 20px;"/><strong>미보유</strong>
+						</div>
+					</th:block>
 			      
 			        <div class="mb-3" style="margin: 20px auto;">
 						<label for="num"><strong>사업자등록번호</strong></label> 
 						<input type="text" class="form-control" id="businessNumber" name="businessNumber"/>
-					</div>
+					</div>			
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label><strong>사업자등록증 사진</strong></label>
-						<input type="file" multiple="multiple" class="img-fluid" />
+						<input type="file" multiple="multiple" class="img-fluid" style="margin-left: 20%;"/>
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
-						<label for="imgsetak"><strong>세탁소 사진</strong></label> 
-						<input type="file" multiple="multiple"  class="img-fluid" />
+						<label for="imgsetak"><strong>업체 사진</strong></label> 
+						<input type="file" multiple="multiple"  class="img-fluid" style="margin-left: 30%;"/>
 					</div>
 					
 					<div class="mb-3" style="margin: 20px auto;">
@@ -273,7 +293,7 @@
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="addr"><strong>세탁소 주소</strong></label> 
 						<div style="display: flex;">
-							<input type="text" class="form-control" name="laundryPostNum" id="laundryPostNum" placeholder="우편번호" style="width: 85%;">
+							<input type="text" class="form-control" name="laundryPostNumber" id="laundryPostNum" placeholder="우편번호" style="width: 85%;">
 							<button type="button" class="btn btn-success" id="postNum" style="width: 15%;" onclick="searchLaundryAddForm()">우편찾기</button>				
 						</div>
 					</div>
@@ -480,11 +500,35 @@
 						</div>
 					</div>
 				</form>
-				
 			</div>				
 		</div>
-      </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="../vendors/validator/multifield.js"></script>
+<script src="../vendors/validator/validator.js"></script>
 
+	<!-- Javascript functions	-->
+	<script type="text/javascript">
+		function hideshow(){
+			var password = document.getElementById("password1");
+			var slash = document.getElementById("slash");
+			var eye = document.getElementById("eye");
+			
+			if(password.type === 'password'){
+				console.log("동작2!!!!!!");
+				password.type = "text";
+				slash.style.display = "block";
+				eye.style.display = "none";
+			}
+			else{
+				password.type = "password";
+				console.log("동작!!!!!!!");
+				slash.style.display = "none";
+				eye.style.display = "block";
+			}
+
+		}
+	</script>
+      </div>
      </th:block>
 </html>
   

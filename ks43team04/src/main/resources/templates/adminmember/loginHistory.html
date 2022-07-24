@@ -7,10 +7,126 @@
 		<!-- datepicker -->
 		<link th:href="@{/admin/build/css/datepicker.css}" rel="stylesheet">
 	</th:block>
+	
+	<th:block layout:fragment="customJsScript2">
+		<script type="text/javascript">
+			//검색바
+			$(document).ready(function () {
+			    $('.table').DataTable({
+			    	stateSave: true,
+			    	destroy : true,
+			    	ordering: false,
+			    	order: [ [ 1, "asc" ] ],
+			    	autowidth: false
+			
+			    });
+			});
+			
+			//달력 오류 수정
+			var cdate = document.querySelectorAll('.cdate');
+			for(var i=0; i<cdate.length; i++){
+				cdate[i].addEventListener('click',function(){
+					var disn = document.querySelector('#ui-datepicker-div');
+					disn.style.display = 'none';
+				})
+			}
+			
+			//기간(버튼)별 조건 검색
+			$(document).on('click', '.dateBtnGroup', function(){
+				$('form').remove('#testForm')
+				
+				var startDate = $('input[name="startDate"]').val();
+				var endDate = $('input[name="endDate"]').val();
+				
+				var dateBtnForm = $('<form></form>');
+				
+				dateBtnForm.attr("id", "testForm");
+				dateBtnForm.attr("name", "dateBtnForm");
+				dateBtnForm.attr("method", "get");
+				dateBtnForm.attr("action", "/admin/searchDateLoginList");
+				
+				dateBtnForm.append($('<input/>', {type: 'hidden', name: 'startDate', value: startDate}));
+				dateBtnForm.append($('<input/>', {type: 'hidden', name: 'endDate', value: endDate}));
+				
+				dateBtnForm.appendTo('body');
+				
+				dateBtnForm.submit();
+			});
+			
+			//달력 검색
+			$(document).on('change', '#startDate, #endDate', function(){
+				
+				$('form').remove('#testForm')
+				
+				
+				var startDate = $('input[name="startDate"]').val();
+				var endDate = $('input[name="endDate"]').val();
+				
+				var datepickerForm = $('<form></form>');
+				
+				datepickerForm.attr("id", "testForm");
+				datepickerForm.attr("name", "datepickerForm");
+				datepickerForm.attr("method", "get");
+				datepickerForm.attr("action", "/admin/searchDateLoginList");
+				
+				datepickerForm.append($('<input/>', {type: 'hidden', name: 'startDate', value: startDate}));
+				datepickerForm.append($('<input/>', {type: 'hidden', name: 'endDate', value: endDate}));
+				
+				datepickerForm.appendTo('body');
+					
+				if(startDate != null && endDate != null && startDate != '' && endDate != ''){
+					
+					datepickerForm.submit();
+				}
+			});
+		
+			//권한 조건 검색
+			$(function(){
+				$(document).on('click', '.checkLevel', function(){
+					
+					$('form').remove('#testForm');
+					
+					var checkMemberLevel = $(this).val();
+					
+					console.log(checkMemberLevel);
+					
+					var checkMemberForm = $('<form></form>');
+					
+					checkMemberForm.attr("id", "testForm");
+					checkMemberForm.attr("name", "checkMemberForm");
+					checkMemberForm.attr("method", "get");
+					checkMemberForm.attr("action", "/admin/searchLevelLoginList");
+					
+					checkMemberForm.append($('<input/>', {type: 'hidden', name: 'levelName', value: checkMemberLevel}));
+					
+					checkMemberForm.appendTo('body');
+						
+					checkMemberForm.submit();
+						
+				});
+			});
+		</script>
+	</th:block>
 
 <style>
 	.column-title {
 		font-size: 8px;
+	}
+	.dataTables_wrapper .dataTables_paginate .paginate_button {
+		padding: 0 !important;
+		margin: 0 !important;
+	}
+	
+	#userList td {
+		vertical-align: middle;
+	}
+	
+	#userList {
+		text-align: center;
+	}
+	
+	.x_content {
+		padding-top: 20px;
 	}
 </style>
 
@@ -20,38 +136,36 @@
    	<div class="col-md-12 col-sm-12 mt-5">
 			<div class="x_panel">
 			<h2>로그인/로그아웃 목록</h2>
-			<div class="x_title">
-			</div>
-				<div class="x_content">
-				  <div class="table-responsive">
+			<div class="x_title"></div>
+				<div class="x_content" >
+				  <div class="table-responsive" style="overflow: hidden;">
 					<div class="mb-2">
 						<!-- START : 검색 바 -->
 						<div th:include="member/searchDate :: searchDateFragment"></div>
 						<!-- END : 검색 바 -->
 					</div>
-					
 					<div class="mb-2">
 						<div class="checkbox">
 							<label>권한별 조회</label>
-							<label class="btn btn-default">
-								<input type="checkbox" name="options" id="option1" class="flat"> 회원
-							</label>
-							<label class="btn btn-default">
-								<input type="checkbox" name="options" id="option2" class="flat"> 일반점주
-							</label>
-							<label class="btn btn-default">
-								<input type="checkbox" name="options" id="option3" class="flat"> 무인점주
-							</label>
+									<label class="btn btn-default">
+										<input type="checkbox" class="checkLevel" name="levelName" value="본사"> 본사
+									</label>						
+									<label class="btn btn-default">
+										<input type="checkbox" class="checkLevel" name="levelName" value="관리자"> 관리자
+									</label>
+									<label class="btn btn-default">
+										<input type="checkbox" class="checkLevel" name="levelName" value=""> 회원
+									</label>
+									<label class="btn btn-default">
+										<input type="checkbox" class="checkLevel" name="levelName" value="일반세탁소점주"> 일반점주
+									</label>
+									<label class="btn btn-default">
+										<input type="checkbox" class="checkLevel" name="levelName" value="무인세탁소점주"> 무인점주
+								</label>				
 						</div>					
-					</div>					
-					<div class="clearfix">
-	                        <div class="float-left">
-	                            <span>Total : </span>
-	                        </div>
-	                        <div class="float-right pr-2"></div>
-                    </div>                   
+					</div>					                
 					<form th:action="@{/admin/loginHistory}" method="get">
-						<div class="form-row">
+						<!--  <div class="form-row">
 							<div class="form-group col-md-7">
 								<input type="text" class="form-control" name="searchValue" placeholder="Search" aria-label="Text input with dropdown button">
 							</div>
@@ -59,62 +173,48 @@
 								<button type="submit" class="btn btn-success" id="searchBtn"><i class="fa fa-search"></i> 검색</button>
 								<button type="reset" class="btn btn-info" id="btn_reset"><i class="fa fa-minus-circle"></i> 초기화</button>
 							</div>
-						</div>
+						</div>  -->
 					</form>
-					
-						<table class="table table-striped jambo_table bulk_action">					
-							<thead>
-								<tr class="headings" style="text-align: center;">
-									<th>
-										<input type="checkbox" id="check-all" class="flat">
-									</th>
-									<th class="column-title">최근 로그인 시각</th>
-									<th class="column-title">접속 아이디</th> 
-									<th class="column-title">접속 IP 주소</th>
-									<th class="column-title">운영체제</th>
-									<th class="column-title">브라우저 / 앱</th>
-									<th class="column-title">최근 로그아웃 시각</th>
-									<th class="column-title">삭제</th>
-									<th class="bulk-actions" colspan="7">
-										<a class="antoo" style="color:#fff; font-weight:500;">전체 선택 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:if="${not #lists.isEmpty(loginHistory)}" th:each="l : ${loginHistory}" class="even pointer">
-									<td class="a-center">
-										<input type="checkbox" class="flat" name="table_records">
-									</td>
-									<td th:text="${l.memberLoginTime}" style="text-align: center;"></td>
-									<td th:text="${l.memberId}" style="text-align: center;"></td>
-									<td th:text="${l.ipAddress}" style="text-align: center;"></td>
-									<td th:text="${l.os}" style="text-align: center;"></td>
-									<td th:text="${l.browser}" style="text-align: center;"></td>
-									<td th:text="${l.memberLogoutTime}" style="text-align: center;"></td>
-									<td>
-										<div style="text-align: center;">							
-										<button type="button"  class="btn btn-secondary btn-sm" >삭제</button>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+						<div style="overflow-x:hidden; overflow-y: auto;">
+							<table class="table table-striped jambo_table bulk_action" style="width: 100%;">	
+								<thead>
+									<tr class="headings" style="text-align: center;">
+										<th>
+											<input type="checkbox" id="check-all" class="flat">
+										</th>
+										<th class="column-title">최근 로그인 시각</th>
+										<th class="column-title">접속 아이디</th> 
+										<th class="column-title">접속 IP 주소</th>
+										<th class="column-title">운영체제</th>
+										<th class="column-title">브라우저 / 앱</th>
+										<th class="column-title">최근 로그아웃 시각</th>
+										<th class="column-title">삭제</th>
+										<th class="bulk-actions" colspan="7">
+											<a class="antoo" style="color:#fff; font-weight:500;">전체 선택 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+										</th>
+									</tr>
+								</thead>
+								<tbody  style="text-align: center;">
+									<tr th:if="${not #lists.isEmpty(loginHistory)}" th:each="l : ${loginHistory}" class="even pointer">
+										<td class="a-center">
+											<input type="checkbox" class="flat" name="table_records">
+										</td>
+										<td th:text="${l.memberLoginTime}" ></td>
+										<td th:text="${l.memberId}"></td>
+										<td th:text="${l.ipAddress}"></td>
+										<td th:text="${l.os}"></td>
+										<td th:text="${l.browser}"></td>
+										<td th:text="${l.memberLogoutTime}"></td>
+										<td>
+											<div style="text-align: center;">							
+											<button type="button"  class="btn btn-secondary btn-sm" >삭제</button>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
-					
-					<nav aria-label="Page navigation example">
-						<ul class="pagination justify-content-center">
-							<li class="page-item">
-								<a class="page-link" th:href="@{/admin/loginHistory}" tabindex="-1"> <
-								</a>
-							</li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item">
-								<a class="page-link" href="#">></a>
-							</li>
-						</ul>
-					</nav>
 				</div>
 			</div>
 		</div>

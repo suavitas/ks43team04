@@ -3,6 +3,8 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/adminDefault}">	  
 	  
+	<!-- 사용자정의 contents -->
+	<th:block layout:fragment="customContents">
 
 <link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
@@ -11,35 +13,32 @@
 	<!-- 주소검색 API -->
 	<script th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}"></script>
 </th:block>
-
 <th:block layout:fragment="customScript">
-<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
-		<script type="text/javascript">
-		// 카카오 우편번호 API 
-			function searchAddForm() {
-		        new daum.Postcode({
-		            oncomplete: function(data) {
-		            	
-		            	var addr = '';
-		            	var extraAddr = ''; // 참고항목 변수
+<script type="text/javascript" th:src="@{/common/jquery-3.6.0.min.js}"></script>
+      <script type="text/javascript">
+  		 // 카카오 우편번호 API 
+		function searchAddForm() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	            	
+	            	var addr = '';
+	            	var extraAddr = ''; // 참고항목 변수
 
-		                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-		                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-		                    addr = data.roadAddress;
-		                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-		                    addr = data.jibunAddress;
-		                }
-		                
-		                document.getElementById('memberPostNum').value = data.zonecode;
-		                document.getElementById('memberAddr').value = addr;
-		                // 커서를 상세주소 필드로 이동한다.
-		                document.getElementById('memberDetailAddr').focus();
-		                
-		            }
-		        }).open();
-		    }
-		</script>
-		<script>
+	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+	                
+	                document.getElementById('memberPostNum').value = data.zonecode;
+	                document.getElementById('memberAddr').value = addr;
+	                // 커서를 상세주소 필드로 이동한다.
+	                document.getElementById('memberDetailAddr').focus();
+	                
+	            }
+	        }).open();
+	    }
 			//아이디 중복 체크 
 			$(function(){
 				
@@ -57,7 +56,7 @@
 					if(vCheck){
 					console.log(vCheck)
 						$.ajax({
-							 url: '/user/idCheck'
+							 url: '/admin/idCheck'
 							,type: 'POST'
 							,data: {'memberId' : memberId}
 							,dataType: 'json'
@@ -66,43 +65,42 @@
 								// 아이디 중복이 발생 않은 경우(회원가입 O) 입력하는 요소는 활성화
 								if(data){
 									$('#idCheckResult').text('사용 가능한 아이디 입니다.');
-									$('#addMemberForm input').prop('disabled', false);
-									$('#addMemberForm select').prop('disabled', false);
-									$('#addMemberForm button').prop('disabled', false);
+									$('#idCheckResult').css('color', 'blue');
+									$('#addMemberAdminForm input').prop('disabled', false);
+									$('#addMemberAdminForm select').prop('disabled', false);
+									$('#addMemberAdminForm button').prop('disabled', false);
 								}else{									
 									// 아이디 중복이 발생하는 경우(회원가입 X) 입력하는 요소는 비활성화
 									$('#idCheckResult').text('중복된 아이디가 있습니다.');
-									$('#idCheckResult').attr('color','red');
-									$('#addMemberForm input').not('input[name="memberId"]').prop('disabled', true);
-									$('#addMemberForm button').not('#idCheck').prop('disabled', true);
-									$('#addMemberForm select').prop('disabled', true);
+									$('#idCheckResult').css('color','red');
+									$('#addMemberAdminForm input').not('input[name="memberId"]').prop('disabled', true);
+									$('#addMemberAdminForm button').not('#idCheck').prop('disabled', true);
+									$('#addMemberAdminForm select').prop('disabled', true);
 								}
 							}
 						});
-					}
-					
+					 }	
 				});
 				
-				$('#addMemberBtn').click(function(){
+				$('#addMemberAdminBtn').click(function(){
 					var isSubmit = true;
-					var inputObj = $('#addMemberForm').find('input');
+					var inputObj = $('#addMemberAdminForm').find('input');
 					
 					$.each(inputObj, function(){
 						var inputData = $(this).val();
-						var result = validationCheck(inputData);
-						
+						var result = validationCheck(inputData);					
 						// 사용자가 입력하지 않은 경우
 						if(!result){
 							alert('필수 항목입니다. 입력해주세요');
-							$(this).focus();
-							isSubmit = false;
-							return false;
-						}
-					});		
-					
-					if(isSubmit) $('#addMemberForm').submit();
-				});
-			</script>
+							 $(this).focus();
+							  isSubmit = false;
+							  return false;
+						}										
+					if(isSubmit) $('#addMemberAdminForm').submit();
+                	})
+          		 })
+			});
+		</script>
 	</th:block>	
 <style>
      min-height: 100vh;
@@ -125,8 +123,6 @@
 
 </style>
 
-	<!-- 사용자정의 contents -->
-	<th:block layout:fragment="customContents">
 	<h4>관리자 등록</h4>
 	<div class="container"  style="margin-top: 80px; margin-bottom: 100px;">
 			 <div class="input-form-backgroud row">
@@ -137,29 +133,30 @@
 				</div>
 				<form id="addMemberAdminForm"  style="margin: 30px auto; width: 45%;" th:action="@{/admin/addMemberAdmin}" method="post" class="validation-form" novalidate>
 				
-					<div class="mb-3" >
-						<label for="id"><strong>아이디</strong></label> 
+					<div class="mb-3">
+						<label for="id"><strong>아이디</strong><span id="idCheckResult" style="left:31.5%; position: absolute; font-size: 12.5px;"></span></label> 
 						<div style="display: flex; margin: 0 auto;">
-							<input type="text" class="form-control" id="memberId" name="memberId" />	
-							<input type="button" class="btn btn-success" id="idCheck" name="idCheck" style="width: 20%;" value="중복검사"/>
+							<input type="text" class="form-control" id="memberId" name="memberId"  style="position: relative;"/>	
+							<button type="button" class="btn btn-success" id="idCheck" name="idCheck" style="width: 20%;">중복검사</button>
 						</div>
-							<div>
-								<span id="idCheckResult"></span> 
-							</div>
+					</div>
+					
+					<div class="mb-3" style="margin: 20px auto;">
+						<input type="hidden" class="form-control" name="levelCode" th:value="${levelCode}"/> 
 					</div>	
 					
-                  <div class="mb-3">
-                  		<label for="password" style="display: block;"><strong>비밀번호</strong></label>
+                    <div class="mb-3">
+                  		<label for="password"><strong>비밀번호</strong></label>
 							<input class="form-control" type="password" id="password1" name="memberPw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}" 
-								title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character" required style="display: inline;"/>											                 			
-	                  			<span onclick="hideshow()" style="position: relative; left:45%; top:5%; bottom: 100%; display: inline;">
-									<!-- <i id="slash" class="fa fa-eye-slash"></i>
-									<i id="eye" class="fa fa-eye"></i> -->
-								</span>
-                  			<div>
-						</div>
+								   title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character" required style="display: inline; position: relative;"/>											                 			
+	                  			<div>
+		                  			<span onclick="hideshow()" style="position: absolute; right: 29%; top: 20%;"> 
+										<i id="slash" class="fa fa-eye-slash" style="font-size: 20px;"></i>
+										<i id="eye" class="fa fa-eye " style="font-size: 20px;"></i>
+									</span>
+								</div>	
 					</div>					
-
+					
 					<div class="mb-3" >
 						<label for="email"><strong>이름</strong></label>
 						<input type="email" class="form-control" id="memberName"  name="memberName"/>
@@ -173,8 +170,8 @@
 					<div class="mb-3">
 						<label for="email"><strong>주소</strong></label> 
 						<div style="display: flex;">
-							<input type="text" class="form-control" name="memberPostNum" id="memberPostNum" placeholder="우편번호"/>
-							<input type="button" class="btn btn-success" id="memberPostNum" name="memberPostNum" style="width: 20%;" onclick="searchAddForm()" value="우편찾기"/>			
+							<input type="text" class="form-control" name="memberPostNumber" id="memberPostNum" placeholder="우편번호"/>
+							<input type="button" class="btn btn-success" id="memberPostNum" name="memberPostNum" style="width: 18%;" onclick="searchAddForm()" value="우편찾기"/>
 						</div>
 					</div>	
 					<div class="mb-3">		
@@ -202,7 +199,7 @@
 					<div class="custom-control custom-checkbox" style="text-align: center;">
 						<div class="mb-5" style="padding: 50px;">				
 							<a th:href="@{/admin}"><input type="button" class="btn btn-primary" value="취소" style="width: 30%;"/></a>
-							<input type="submit" class="btn btn-success" id="addMemberBtn" value="등록" style="width: 30%;"/>
+							<input type="submit" class="btn btn-success" id="addMemberAdminBtn" value="등록" style="width: 30%;"/>
 							<!-- <a th:href="@{/user/index}"><input type="button" id="addMemberLaundryBtn" value="회원가입" style="width: 15%;"/></ -->
 						</div>
 					</div>
@@ -213,24 +210,28 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="../vendors/validator/multifield.js"></script>
 <script src="../vendors/validator/validator.js"></script>
+
 	<!-- Javascript functions	-->
 	<script type="text/javascript">
 		function hideshow(){
-			var password = document.getElementById("memberPw");
+			var password = document.getElementById("password1");
 			var slash = document.getElementById("slash");
 			var eye = document.getElementById("eye");
 			
-			if(password.type === 'memberPw'){
+			if(password.type === 'password'){
 				password.type = "text";
+				console.log("동작2!!!!!");
 				slash.style.display = "block";
 				eye.style.display = "none";
 			}
 			else{
 				password.type = "password";
+				console.log("동작!!!!!!!");
 				slash.style.display = "none";
 				eye.style.display = "block";
 			}
-		}		
+
+		}
 	</script>
 	</div>
    </th:block>

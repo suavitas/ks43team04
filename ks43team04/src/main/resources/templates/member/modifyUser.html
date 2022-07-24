@@ -7,25 +7,8 @@
 <th:block layout:fragment="customJsScript">
    <!-- 주소검색 API -->
    <script th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}"></script>
-</th:block>
-
-<th:block layout:fragment="customJsScript2">
- <script type="text/javascript">
-		var genderCheck = document.querySelector('#gender-check').value;
-		var gender = document.querySelectorAll('.gender');
-		
-		for(var i=0; i<gender.length; i++){
-			if(gender[i].value == genderCheck){
-				gender[i].checked = true
-			}
-		}	
-   </script>
- </th:block>
-
-<th:block layout:fragment="customScript">
-      <script>
-         //카카오 우편번호 API 
-         //회원 우편
+         <script>
+         // 카카오 우편번호 API 
          function searchAddForm() {
               new daum.Postcode({
                   oncomplete: function(data) {
@@ -50,7 +33,6 @@
           }
       </script>
       <script>
-      //세탁소 우편
       function searchLaundryAddForm() {
            new daum.Postcode({
                oncomplete: function(data) {
@@ -68,13 +50,37 @@
                    document.getElementById('laundryPostNum').value = data.zonecode;
                    document.getElementById('laundryAddr').value = addr;
                    // 커서를 상세주소 필드로 이동한다.
-                  document.getElementById('laundryDetailAddr').focus();
+                   document.getElementById('laundryDetailAddr').focus();
                    
                }
            }).open();
        }
       </script>
 </th:block>
+
+<th:block layout:fragment="customJsScript2">
+ <script type="text/javascript">
+		var genderCheck = document.querySelector('#gender-check').value;
+		var gender = document.querySelectorAll('.gender');
+		
+		for(var i=0; i<gender.length; i++){
+			if(gender[i].value == genderCheck){
+				gender[i].checked = true
+			}
+		
+		for(var j=0; j<gender.length; j++){
+			gender[j].addEventListener('click',function(e){
+				for(var k=0; k<gender.length; k++){
+					gender[k].checked = false;
+				}
+				e.target.checked = true;
+			});
+		}
+	}
+   </script>
+ </th:block>
+
+
 <style>
      min-height: 100vh;
 
@@ -139,7 +145,7 @@
         <div class="container"  style="margin-top: 80px; margin-bottom: 100px;">
           <div class="input-form-backgroud row">
             <div class="input-form col-md-12 mx-auto" >
-              <form th:action="@{/user/myPage}" method="post" class="validation-form" novalidate>
+              <form th:action="@{/user/modifyUser}" method="post" class="validation-form" novalidate>
                   <div id="cid_1" class="form-input-wide" data-layout="full" >
                     <div data-component="separator" style="border-top:1px solid rgb(0,0,0); clear:both;"></div>
              </div>
@@ -157,12 +163,13 @@
 								<td>
 					<div class="mb-3" style="margin: 20px auto; display: none;">
 						<label for="LevelCode"><strong>회원레벨코드</strong></label> 
-						<input type="hidden" class="form-control" id="LevelCode" name="LevelCode" th:value="${member.LevelCode}" />
+						<input type="text" class="form-control" id="LevelCode" name="LevelCode" th:value="${member.LevelCode}" />
 					</div>
+					
 					<div class="mb-3"  style="margin: 20px auto;"> 
 						<label for="password"><strong>아이디</strong></label> 
 						<div style="display: flex;">
-							<input type="text" class="form-control" id="memberId" style="width: 85%;" th:value="${member.memberId}" readonly="readonly"/>	
+							<input type="text" class="form-control" name="memberId" id="memberId" style="width: 85%;" th:value="${member.memberId}" readonly="readonly">	
 							<button type="button" class="btn btn-success" id="idCheck" style="width: 20%;">중복체크</button>
 						</div>
 							<div>
@@ -172,48 +179,48 @@
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="password"><strong>비밀번호</strong></label> 
-						<input type="text" class="form-control" id="memberPw" name="memberPw" th:value="${member.memberPw}" readonly="readonly"/>
+						<input type="text" class="form-control" id="memberPw" name="memberPw" th:value="${member.memberPw}" />
 					</div>
 					
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="email"><strong>이름</strong></label>
-						<input type="email" class="form-control" id="memberName" name="memberName" th:value="${member.memberName}" readonly="readonly"/>
+						<input type="email" class="form-control" id="memberName" name="memberName" th:value="${member.memberName}" />
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="birth"><strong>생년월일</strong></label> 
-						<input type="date" class="form-control" id="memberBirth" name="memberBirth" th:value="${member.memberBirth}" readonly="readonly"/>
+						<input type="date" class="form-control" id="memberBirth" name="memberBirth" th:value="${member.memberBirth}" />
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="email"><strong>주소</strong></label> 
 						<div style="display: flex;">
-							<input type="text" class="form-control" name="memberPostNumber" id="memberPostNum" placeholder="우편번호" style="width: 85%;" th:value="${member.memberPostNumber}" readonly="readonly"/>
+							<input type="text" class="form-control" name="memberPostNumber" id="memberPostNum" placeholder="우편번호" style="width: 85%;" th:value="${member.memberPostNumber}" />
 							<button type="button" class="btn btn-success" id="memberPostNum" name="memberPostNum" style="width: 20%;" onclick="searchAddForm()">우편찾기</button>				
 						</div>
 					</div>	
 					<div class="mb-3" style="margin: 20px auto;">			
-							<input type="text" class="form-control" name="memberAddr" id="memberAddr" placeholder="주소" style="width: 85%;" th:value="${member.memberAddr}" readonly="readonly"/>
+							<input type="text" class="form-control" name="memberAddr" id="memberAddr" placeholder="주소" style="width: 85%;" th:value="${member.memberAddr}" />
 					</div>
 					<div class="mb-3" style="margin: 20px auto;">			
-							<input type="text" class="form-control" name="memberDetailAddr" id="memberDetailAddr" placeholder="상세주소" style="width: 85%;" th:value="${member.memberDetailAddr}" readonly="readonly"/>
+							<input type="text" class="form-control" name="memberDetailAddr" id="memberDetailAddr" placeholder="상세주소" style="width: 85%;" th:value="${member.memberDetailAddr}" />
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="phone"><strong>전화번호</strong></label> 
-						<input type="text" class="form-control" id="memberPhone" name="memberPhone" placeholder="전화번호 입력" style="width: 85%;" th:value="${member.memberPhone}" readonly="readonly"/>
+						<input type="text" class="form-control" id="memberPhone" name="memberPhone" placeholder="전화번호 입력" style="width: 85%;" th:value="${member.memberPhone}" />
 					</div>
 					
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="gen"><strong>성별 선택</strong></label> 
   						<input type="hidden" id="gender-check" class="form-control" th:value="${member.memberGender}" />
-						<input type='checkbox' class="gender" name='memberGender' value="여" style="margin: 20px;" disabled /><strong>여성</strong>
-						<input type='checkbox' class="gender" name='memberGender' value="남" style="margin: 20px;" disabled /><strong>남성</strong>
+						<input type='checkbox' class="gender" name='memberGender' value="여" style="margin: 20px;" /><strong>여성</strong>
+						<input type='checkbox' class="gender" name='memberGender' value="남" style="margin: 20px;" /><strong>남성</strong>
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="email"><strong>이메일</strong></label> 
-						<input type="text" class="form-control" id="memberEmail" name="memberEmail" placeholder="이메일 입력" th:value="${member.memberEmail}" readonly="readonly"/>
+						<input type="text" class="form-control" id="memberEmail" name="memberEmail" placeholder="이메일 입력" th:value="${member.memberEmail}" />
 					</div>
 	
 					</tbody> 	
@@ -234,63 +241,57 @@
 											<td> 				          
 										<div class="mb-3"  style="margin: 20px auto; display: none;">
 											<label for="name"><strong>세탁소 코드</strong></label> 
-												<input type="hidden" class="form-control" id="laundryCode" name="laundryCode" style="width: 85%;" th:value="${l.laundryCode}" />	
+												<input type="text" class="form-control" id="laundryCode" name="laundryCode" style="width: 85%;" th:value="${l.laundryCode}" />	
 										</div>
 										<div class="mb-3"  style="margin: 20px auto;">
 											<label for="name"><strong>세탁소 명</strong></label> 
-												<input type="text" class="form-control" id="laundryName" name="laundryName" style="width: 85%;" th:value="${l.laundryName}" readonly="readonly">	
+												<input type="text" class="form-control" id="laundryName" name="laundryName" style="width: 85%;" th:value="${l.laundryName}" />	
 										</div>
 								      
 								        <div class="mb-3" style="margin: 20px auto;">
 											<label for="num"><strong>사업자등록번호</strong></label> 
-											<input type="text" class="form-control" id="businessNumber" name="businessNumber" th:value="${l.businessNumber}" readonly="readonly">
+											<input type="text" class="form-control" id="businessNumber" name="businessNumber" th:value="${l.businessNumber}" />
 										</div>
 					
 													
 										<div class="mb-3" style="margin: 20px auto;">
 											<label for="phone"><strong>세탁소 대표번호</strong></label> 
-											<input type="text" class="form-control" id="laundryTel" name="laundryTel" placeholder="대표전화 입력" style="width: 85%;" th:value="${l.laundryTel}" readonly="readonly">
+											<input type="text" class="form-control" id="laundryTel" name="laundryTel" placeholder="대표전화 입력" style="width: 85%;" th:value="${l.laundryTel}" />
 										</div>
 					
 										<div class="mb-3" style="margin: 20px auto;">
 											<label for="addr"><strong>세탁소 주소</strong></label> 
 											<div style="display: flex;">
-												<input type="text" class="form-control" name="laundryPostNumber" id="laundryPostNum" placeholder="우편번호" style="width: 85%;" th:value="${l.laundryPostNumber}" readonly="readonly">
+												<input type="text" class="form-control" name="laundryPostNumber" id="laundryPostNum" placeholder="우편번호" style="width: 85%;" th:value="${l.laundryPostNumber}" />
 												<button type="button" class="btn btn-success" id="laundryPostNum" name="laundryPostNum" style="width: 20%;" onclick="searchLaundryAddForm()">우편찾기</button>				
 											</div>
 										</div>
 										<div class="mb-3" style="margin: 20px auto;">			
-												<input type="text" class="form-control" name="laundryAddr" id="laundryAddr" placeholder="주소" style="width: 85%;" th:value="${l.laundryAddr}" readonly="readonly">
+												<input type="text" class="form-control" name="laundryAddr" id="laundryAddr" placeholder="주소" style="width: 85%;" th:value="${l.laundryAddr}" />
 										</div>
 										<div class="mb-3" style="margin: 20px auto;">			
-												<input type="text" class="form-control" name="laundryDetailAddr" id="laundryDetailAddr" placeholder="상세주소" style="width: 85%;" th:value="${l.laundryDetailAddr}" readonly="readonly">
+												<input type="text" class="form-control" name="laundryDetailAddr" id="laundryDetailAddr" placeholder="상세주소" style="width: 85%;" th:value="${l.laundryDetailAddr}" />
 										</div>
 									</td>
-								 </tr>
-							  </tbody>
-					       </table>
-					     </th:block>	
-					     </table>
-								<div class="ln_solid"></div>
-									<div class="form-group" style="margin: 5%">
-										<div class="col-md-12 col-sm-12 text-center">
-											<a th:href="@{/user/modifyUser(memberId=${member.memberId})}"><button type="button" class="btn btn-success" id="modifyButton">수정</button></a>
-											<button type="submit" class="btn btn-info">저장</button>
-										</div>
+								</tr>
+							</tbody>
+					  </table>
+				</th:block>	
+				</table>
+						<div class="ln_solid"></div>
+								<div class="form-group" style="margin: 5%">
+									<div class="col-md-12 col-sm-12 text-center">
+										<a th:href="@{/user/modifyUser(memberId=${member.memberId})}"><button type="button" class="btn btn-success" id="modifyButton">수정</button></a>
+										<button type="submit" class="btn btn-info">저장</button>
 									</div>
-									<div class="ln_solid"></div>
-									<div class="form-group" style="margin: 5%;" >
-										<div style="text-align: center; padding: 4%; font-size: 16px;">                           
-                                        	<a th:href="@{/user/removeMember}" class="forget">ㅡ 회원 탈퇴하기 ㅡ</a>                                   
-                                       	</div>
-									</div>
-								 </div>		 	
-							  </form>
+								</div>		
 							</div>
-						</div>				
-					</div>				
-				</div>				
-			</div>			
+						 </form>
+						</div>
+					 </div>					
+				  </div>				
+			  </div>				
+		   </div>			
 		</div>
 	</div>
    </th:block>

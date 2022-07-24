@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="~{layouts/userDefault}">     
+
+<th:block layout:fragment="customCss">
+	<!-- Alert2 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+</th:block>
+
+<!-- 사용자 정의 JsScript 파일-->
+<th:block layout:fragment="customJsScript">
+   <!-- 주소검색 API -->
+   <script th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}"></script>
+   <!-- Alert2 -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+</th:block>
+
+<th:block layout:fragment="customJsScript2">
+ <script type="text/javascript">
+ 	$(document).ready(function(){
+		
+		$(document).on('click','#removeBtn', function(){
+			
+			if($("#memberPw").val() == ""){
+				//alert("비밀번호를 입력해주세요");
+				 swal(
+				        '☹️비밀번호❗',
+				        '탈퇴 전 <b style="color:Red;">비밀번호</b>를 확인해주세요!',
+				        'error'
+				      ).then(()=>{				    	  
+						$("#memberPw").focus();
+				      });
+				
+				return false;
+			}
+			swal({
+		        title: '😦정말 탈퇴하시겠습니까?',
+		        showCancelButton: true,
+		        confirmButtonText: '탈퇴',
+		        showLoaderOnConfirm: true,
+		        allowOutsideClick: false
+		      }).then((result) => {
+		        if (result.value) {
+		    	  	var request = $.ajax({
+					  url: "/user/removeMember",
+					  method: "POST",
+					  data: $('#removeForm').serialize(), 
+					  dataType: "json"
+					});
+					 
+					request.done(function( data ) { //true 일 때 실행
+						console.log(data);
+						let result = data.result;
+						if(result == 1){
+				          swal({
+				            type: 'success',
+				            title: '🙂이용해주셔서 감사합니다.',
+				          }).then(() => { 
+				        	  location.href = data.movePage;			        	  
+				          });
+						}
+						else if(result == 3){
+				          swal({
+				            type: 'error',
+				            title: '☹️회원의 정보가 일치하지 않습니다.❗',
+				          }).then(()=>{
+				        	  location.href = data.movePage;
+				          });
+						} else if(result == 2) {
+							swal({
+					            type: 'error',
+					            title: '☹️탈퇴 대기 상태입니다.❗',
+					        }).then(()=>{
+					        	  location.href = data.movePage;
+					        });
+						}
+						
+					});
+					request.fail(function( jqXHR, textStatus ) {
+					  alert( "Request failed: " + textStatus );
+					});
+		        }
+		      });
+			})
+		});
+   </script>
+ </th:block>
+
+<style>
+     min-height: 100vh;
+
+    .input-form {
+      max-width: 800px;
+
+      margin-top: 100px;
+      margin-bottom: 100px;
+      padding: 32px;
+
+      background: #fff;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+    }
+    textarea {
+      position: relative;
+      overflow: auto;
+      height: 100px;
+      border: 1px solid #dadada;
+      box-sizing: border-box;
+   }
+</style>
+</th:block>
+
+<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+   <!-- 게시판 타이틀 -->
+   <div id="container">
+      <div id="top-loca">
+         <div class="boardPath">
+            <a th:href="@{/}">HOME</a>           
+            <h2 style="font-family: 'ONE-Mobile-Regular'">[[${sessionName}]]</h2><span>님의 마이페이지</span>
+         </div>   
+      </div>
+   </div>   
+      
+   <!-- 게시판 탭  -->         
+   <div class="list-group list-group-horizontal col-sm-12" style="margin:0 auto; text-align: center;padding-right: 0px;">
+        <a th:href="@{/user/myPage}" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">
+        	회원정보
+        </a>
+      <a th:href="@{/user/myPageReservationStatus}" class="list-group-item list-group-item-action">예약 현황</a>
+      <a href="#" class="list-group-item list-group-item-action">수거배송 조회</a>
+      <a th:href="@{/user/myPagePayment}" class="list-group-item list-group-item-action">결제 내역</a>
+      <a href="#" class="list-group-item list-group-item-action">환불 내역</a>
+      <a th:href="@{/user/myPagePoint}" class="list-group-item list-group-item-action">포인트 조회</a>
+      <a th:href="@{/user/myPageWrite}" class="list-group-item list-group-item-action">내가 쓴 글</a>
+      <a href="#" class="list-group-item list-group-item-action">리뷰?</a>
+   </div>
+   
+   <!-- 공지사항 테이블 -->
+   <div class="cart-section mt-150 mb-150" style="background-color: #f5f6fa; padding: 60px 0 100px; margin: 0; border-top: #e5e5e5 1px solid;">
+      <div class="container">
+         <div class="row" style="float: none; margin: 100 auto;">
+            <div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
+            <form id="removeForm" th:action="@{/user/removeMember}" method="post" class="validation-form" novalidate>
+		        <div class="container"  style="margin-top: 150px; margin-bottom: 200px;">
+		          <div class="input-form-backgroud row">
+		            <div class="input-form col-md-12 mx-auto" >
+		            
+		            		<h4 class="mb-3">📢탈퇴 대기 사유</h4>
+           						<div id="cid_1" class="form-input-wide" data-layout="full">
+                  					<div data-component="separator" style="border-top:1px solid rgb(0,0,0); clear:both;"></div>
+           						</div>
+             					<div class="point-summary" style="border: 1px solid #dadddf; padding: 30px 0 30px; margin-bottom: 5%;">
+									<div class="mb-3" style="margin: 0 auto;"> 
+										<div>
+											<p class="form-control" style="width:500px; height:100px;"/>												
+										</div>
+									</div>	
+								</div>		
+             						
+             					<h4 class="mb-3">회원 정보 확인</h4>
+             						<div id="cid_1" class="form-input-wide" data-layout="full">
+                    					<div data-component="separator" style="border-top:1px solid rgb(0,0,0); clear:both;"></div>
+             						</div>
+             						<div class="point-summary" style="border: 1px solid #dadddf; padding: 30px 0 30px;">
+             						
+										<div class="mb-3"  style="margin: 20px auto;"> 
+											<label for="id"><strong>아이디</strong></label> 
+											<div style="display: flex;">
+												<input type="text" class="form-control" id="memberId" name="memberId" th:value="${session.SID}"/>						
+												<input type="hidden" class="form-control" id="levelCode" name="levelCode" th:value="${session.SLEVEL}"/>						
+											</div>
+										</div>				
+											<div class="mb-3" style="margin: 20px auto;">
+												<label for="password" style="display: block;"><strong>비밀번호</strong></label>
+												<input class="form-control" type="password" id="memberPw" name="memberPw" 
+												    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}" 
+													title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character" required style="display: inline;"/>	
+											</div>
+										
+											<div class="mb-3" style="margin: 20px auto;">
+												<label for="memberOutReason" style="display: block;"><strong>탈퇴사유</strong></label>
+											</div>
+												<select id="memberOutReason" name="memberOutReason" class="form-control text-center" style="width: 50%; margin: 20px auto;">
+														<option> :: 선 택 :: </option>
+														<option  value="마음에 들지 않아서">마음에 들지 않아서</option>
+														<option  value="서비스 불만">서비스 불만</option>
+														<option  value="이용 불편">이용 불편</option>
+														<option  value="자주 이용하지 않음">자주 이용하지 않음</option>
+														<option  value="기타">기타</option>
+												</select>		
+											</div>
+									</div>
+									<div class="mb-3" style="margin: 40px auto; text-align: center;">
+										<button type="button" id="removeBtn" class="btn btn-secondary btn-xs" style="width: 30%;"> 회원 탈퇴하기 </button>
+									</div>		
+								</div>
+								<div th:if="${not #strings.isEmpty(result)}">
+									<p th:text="${result}"></p>
+								</div>		 	
+							</div>
+						 </form>
+						</div>				
+					</div>				
+				</div>				
+			</div>			
+
+   </th:block>
+</html>
+
+  
