@@ -8,7 +8,7 @@ public class Laundry {
 	private String levelCode;
 	private String laundryName;
 	private String laundryState;
-	private String laundryPostNum;
+	private String laundryPostNumber;
 	private String laundryAddr;
 	private String laundryDetailAddr;
 	private String laundryTel;
@@ -70,12 +70,12 @@ public class Laundry {
 		this.laundryState = laundryState;
 	}
 
-	public String getLaundryPostNum() {
-		return laundryPostNum;
+	public String getLaundryPostNumber() {
+		return laundryPostNumber;
 	}
 
-	public void setLaundryPostNum(String laundryPostNum) {
-		this.laundryPostNum = laundryPostNum;
+	public void setLaundryPostNumber(String laundryPostNumber) {
+		this.laundryPostNumber = laundryPostNumber;
 	}
 
 	public String getLaundryAddr() {
@@ -163,8 +163,8 @@ public class Laundry {
 		builder.append(laundryName);
 		builder.append(", laundryState=");
 		builder.append(laundryState);
-		builder.append(", laundryPostNum=");
-		builder.append(laundryPostNum);
+		builder.append(", laundryPostNumber=");
+		builder.append(laundryPostNumber);
 		builder.append(", laundryAddr=");
 		builder.append(laundryAddr);
 		builder.append(", laundryDetailAddr=");

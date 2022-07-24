@@ -9,7 +9,7 @@
 <!-- 사용자 정의 JsScript 파일-->
 <th:block layout:fragment="customJsScript">
 	<!-- 주소검색 API -->
-	<script th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}"></script>
+	<script th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}"></script>	
 </th:block>
 
 <th:block layout:fragment="customScript">
@@ -30,54 +30,55 @@
 	                    addr = data.jibunAddress;
 	                }
 	                
-	                document.getElementById('laundryPostNum').value = data.zonecode;
-	                document.getElementById('laundryAddr').value = addr;
+	                document.getElementById('memberPostNum').value = data.zonecode;
+	                document.getElementById('memberAddr').value = addr;
 	                // 커서를 상세주소 필드로 이동한다.
-	                document.getElementById('laundryDetailAddr').focus();
+	                document.getElementById('memberDetailAddr').focus();
 	                
 	            }
 	        }).open();
 	    }
 		 //아이디 중복체크 
-         $(function(){
-            function validationCheck(data){
-               if(typeof data == 'undefined' || data == '' || data == null){
-                  return false;
-               }
-               return true;
-            }
-           
-            $('#idCheck').click(function(){
-               var memberId = $('input[name="memberId"]').val();
-               console.log(validationCheck(memberId));
-               var vCheck = validationCheck(memberId);
-               if(vCheck){
-               console.log(vCheck)
-                  $.ajax({
-                      url: '/user/idCheck'
-                     ,type: 'POST'
-                     ,data: {'memberId' : memberId}
-                     ,dataType: 'json'
-                     ,success: function(data){
-                        // 화면에서 맨처음 아이디를 제외한 모든 입력하는 요소는 비활성화 (HTML 속성 추가 disabled="disabled") 
-                        // 아이디 중복이 발생 않은 경우(회원가입 O) 입력하는 요소는 활성화
-                        if(data){
-                           $('#idCheckResult').text('사용 가능한 아이디 입니다.');
-                           $('#addMemberForm input').prop('disabled', false);
-                           $('#addMemberForm select').prop('disabled', false);
-                           $('#addMemberForm button').prop('disabled', false);
-                        }else{                           
-                           // 아이디 중복이 발생하는 경우(회원가입 X) 입력하는 요소는 비활성화
-                           $('#idCheckResult').text('중복된 아이디가 있습니다.');
-                           $('#idCheckResult').attr('color','red');
-                           $('#addMemberForm input').not('input[name="memberId"]').prop('disabled', true);
-                           $('#addMemberForm button').not('#idCheck').prop('disabled', true);
-                           $('#addMemberForm select').prop('disabled', true);
-                        }
-                     }
-                  });
-               }
-            });
+         $(function(){			
+				function validationCheck(data){
+					if(typeof data == 'undefined' || data == '' || data == null){
+						return false;
+					}
+					return true;
+				}
+				
+				$('#idCheck').click(function(){
+					var memberId = $('input[name="memberId"]').val();
+					console.log(validationCheck(memberId));
+					var vCheck = validationCheck(memberId);
+					if(vCheck){
+					console.log(vCheck)
+						$.ajax({
+							 url: '/user/idCheck'
+							,type: 'POST'
+							,data: {'memberId' : memberId}
+							,dataType: 'json'
+							,success: function(data){							
+								// 화면에서 맨처음 아이디를 제외한 모든 입력하는 요소는 비활성화 (HTML 속성 추가 disabled="disabled") 
+								// 아이디 중복이 발생 하지않은 경우(회원가입 O) 입력하는 요소는 활성화
+								if(data){
+									$('#idCheckResult').text('사용 가능한 아이디 입니다.');
+									$('#idCheckResult').css('color', 'blue');
+									$('#addMemberForm input').prop('disabled', false); 
+									$('#addMemberForm select').prop('disabled', false);
+									$('#addMemberForm button').prop('disabled', false);
+								}else{									
+									// 아이디 중복이 발생하는 경우(회원가입 X) 입력하는 요소는 비활성화
+									$('#idCheckResult').text('중복된 아이디가 있습니다.');
+									$('#idCheckResult').css('color','red');
+									$('#addMemberForm input').not('input[name="memberId"]').prop('disabled', true);
+									$('#addMemberForm button').not('#idCheck').prop('disabled', true);
+									$('#addMemberForm select').prop('disabled', true);
+								}
+							}
+						});
+					 }
+				});
             
             $('#addMemberBtn').click(function(){
                var isSubmit = true;
@@ -86,15 +87,18 @@
                   $.each(inputObj,function(){
                      var inputData = $(this).val();
                       var result = validationCheck(inputData);
-                   // 사용자가 입력하지 않은 경우
+                   	  //사용자가 입력하지 않은 경우
                       if(!result){
                          alert('필수 항목입니다. 입력해주세요');
                           $(this).focus();
                            isSubmit = false;
+                           console.log(isSubmit+'<----isSubmit 값');
                            return false;
-                      }
-                      if(isSubmit) $('#addMemberForm').submit();   
+                      }	  
                   })
+           
+                  if(isSubmit) $('#addMemberForm').submit();
+                
            	 })
          });   
       </script>
@@ -139,21 +143,28 @@
 				<form id="addMemberForm" th:action="@{/user/addMember}" method="post" class="validation-form" novalidate>
 				
 					<div class="mb-3"  style="margin: 20px auto;">
-						<label for="id"><strong>아이디</strong></label> 
+						<label for="id"><strong>아이디</strong><span id="idCheckResult" style=" right:56%; position: absolute; font-size: 12.5px;"></span></label>  
 						<div style="display: flex;">
-							<input type="text" class="form-control" id="memberId" name="memberId" style="width: 85%;"/>	
-							<input type="button" class="btn btn-success" id="idCheck" name="idCheck" style="width: 15%;" value="중복검사"/>
+							<input type="text" class="form-control" id="memberId" name="memberId" style="width: 85%; "/>	
+							<button type="button" class="btn btn-success" id="idCheck"  style="width: 15%;">중복검사</button>
 						</div>
-							<div>
-								<span id="idCheckResult"></span> 
-							</div>
 					</div>					
+					<div class="mb-3" style="margin: 20px auto;">
+						<input type="hidden" class="form-control" name="levelCode" th:value="${levelCode}"/> 
+					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
-						<label for="password"><strong>비밀번호</strong></label> 
-						<input type="text" class="form-control" id="memberPw" name="memberPw"/> 
+						<label for="password" style="display: block;"><strong>비밀번호</strong></label>
+						<input class="form-control" type="password" id="password1" name="memberPw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}" 
+							title="Minimum 8 Characters Including An Upper And Lower Case Letter, A Number And A Unique Character" />	
+							<div>
+	                  			<span onclick="hideshow()" style="position: absolute; right: 27%; top: 13.2%;"> 
+									<i id="slash" class="fa fa-eye-slash" style="font-size: 20px; display: none; "></i>
+									<i id="eye" class="fa fa-eye " style="font-size: 20px; "></i>
+								</span>
+							</div>
 					</div>
-					
+
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="passwordQna"><strong>비밀번호찾기 질문/답변</strong></label> 
 						<select name="searchKey" class="form-control text-center" style="width: 85%;">
@@ -167,7 +178,7 @@
 						</select>		
 					</div>
 					<div class="mb-3" style="margin: 10px auto;">
-						<input type="text" class="form-control" id="passwordQna" name="passwordQna" placeholder="답변"/> 
+						<input type="text" class="form-control" id="passwordQna" name="memberPwQnACode" placeholder="답변"/> 
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">
@@ -183,7 +194,7 @@
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="email"><strong>주소</strong></label> 
 						<div style="display: flex;">
-							<input type="text" class="form-control" name="memberPostNum" id="memberPostNum" placeholder="우편번호" style="width: 85%;"/>
+							<input type="text" class="form-control" name="memberPostNumber" id="memberPostNum" placeholder="우편번호" style="width: 85%;"/>
 							<input type="button" class="btn btn-success" id="memberPostNum" name="memberPostNum" style="width: 15%;" onclick="searchAddForm()" value="우편찾기"/>			
 						</div>
 					</div>	
@@ -406,6 +417,33 @@
 				</form>
 			</div>				
 		</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="../vendors/validator/multifield.js"></script>
+<script src="../vendors/validator/validator.js"></script>
+
+	<!-- Javascript functions	-->
+	<script type="text/javascript">
+		function hideshow(){
+			var password = document.getElementById("password1");
+			var slash = document.getElementById("slash");
+			var eye = document.getElementById("eye");
+			
+			if(password.type === 'password'){
+				console.log("동작2!!!!!!");
+				password.type = "text";
+				slash.style.display = "block";
+				eye.style.display = "none";
+			}
+			else{
+				password.type = "password";
+				console.log("동작!!!!!!!");
+				slash.style.display = "none";
+				eye.style.display = "block";
+			}
+
+		}
+	</script>
+		
      </div>
    </th:block>
 </html>

@@ -1,5 +1,6 @@
 package ks43team04.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,7 @@ import ks43team04.dto.Board;
 import ks43team04.dto.Laundry;
 import ks43team04.dto.Member;
 import ks43team04.dto.MemberLevel;
+import ks43team04.dto.MemberOut;
 import ks43team04.mapper.BillMapper;
 import ks43team04.mapper.BoardMapper;
 import ks43team04.mapper.MemberMapper;
@@ -175,8 +178,7 @@ public class MemberController {
 	 */
 	@PostMapping("/idCheck")
 	@ResponseBody
-	public boolean isIdCheck(@RequestParam(value = "memberId") String memberId) {
-		
+	public boolean isIdCheck(@RequestParam(value = "memberId") String memberId) {	
 		boolean idCheck = false;
 		log.info("아이디중복체크 클릭시 요청받은 memberId의 값: {}", memberId);
 		
@@ -185,6 +187,84 @@ public class MemberController {
 		
 		log.info("아이디중복체크 여부 : {}", result);
 		return idCheck;
+	}
+	
+	 /**
+	  * 고객, 무인점주, 일반점주 탈퇴 처리
+	  * @param memberId
+	  * @param memberPw
+	  * @param reAttr
+	  * @return
+	  */
+	 @PostMapping("/removeMember")
+	 @ResponseBody //ajax통신 자바객체로 변환
+	 public Map<String, Object> removeMember(Member member
+			 								,@RequestParam(name="memberOutReason", required = false, defaultValue = "") String memberOutReason
+			 								,HttpSession session, RedirectAttributes reAttr) {
+		 int re = 1;
+		 String memberId = member.getMemberId();
+		 String memberPw = member.getMemberPw();
+		 Member memberCheck = memberService.getMemberInfoById(memberId);
+		 MemberOut memberOutCheck = memberService.getMemberOutInfoById(memberId);
+		 System.out.println(memberId);
+		 System.out.println(memberOutReason);
+		 
+		 String levelCode = member.getLevelCode();
+		
+		 System.out.println(member);
+		 System.out.println(levelCode);
+		 
+		 Map<String, Object> resultMap = new HashMap<String, Object>();
+		 
+		 if(!ObjectUtils.isEmpty(member.getMemberId()) && !ObjectUtils.isEmpty(memberCheck.getMemberOutCode()) && memberPw.equals(memberCheck.getMemberPw())) { 
+			 System.out.println("동작1");
+			 if(!ObjectUtils.isEmpty(memberOutCheck) && ("level_code_02".equals(levelCode) || "level_code_03".equals(levelCode))) {
+				 //2 = 이미 탈퇴 대기 상태
+				 re = 2;
+			 }
+		 } else {
+			 //3 = 비밀번호 틀림
+			 re = 3;
+		 }
+		
+		 if(("level_code_04".equals(levelCode) || "level_code_05".equals(levelCode) || "level_code_06".equals(levelCode) || "level_code_07".equals(levelCode) || "level_code_08".equals(levelCode)) && re == 1) {
+			 memberService.removeMember(member, memberOutReason);		 
+		 } else if(("level_code_02".equals(levelCode) || "level_code_03".equals(levelCode)) && re == 1) {
+			 memberService.removeLaundry(member, memberOutReason);
+		 }
+		 log.info("동작2");
+		 if(re == 1) {
+			 log.info("회원 탈퇴 성공");	
+			 resultMap.put("result", re);
+			 resultMap.put("movePage", "/user/login");
+			 session.invalidate();
+		 }else {
+			 resultMap.put("result", re);
+			 resultMap.put("movePage", "/user/removeMember");
+			 log.info("회원 탈퇴 실패"); 
+		 }
+		 return resultMap; 
+	 }
+			 
+	/**
+	 * 고객, 무인점주, 일반점주 탈퇴 화면
+	 * @return
+	 */
+	@GetMapping("/removeMember")
+	public String removeMember(@RequestParam(name="memberId", required = false) String memberId
+							  ,@RequestParam(name="result", required = false) String result
+							  ,Model model
+							  ,HttpSession session) {
+		
+		String sessionName = (String) session.getAttribute("SNAME");
+		
+		model.addAttribute("sessionName", sessionName);
+		model.addAttribute("title","회원 탈퇴 화면");
+		model.addAttribute("memberId", memberId);
+		
+		if(result != null) model.addAttribute("result", result);
+		
+		return "member/removeMember";
 	}
 	
 	/**
@@ -196,17 +276,20 @@ public class MemberController {
 	 */
 	@PostMapping("/addMemberLaundry")
 	public String addMemberLaundry(Laundry laundry
-								,@RequestParam(name="laundryCode", required=false) String laundryCode 
-								,HttpServletRequest request) {
+								  ,Member member
+								  ,@RequestParam(name="laundryCode", required=false) String laundryCode  
+								  ,HttpServletRequest request) {
 		log.info("회원가입 화면에서 입력한 data : {}", laundry);
-		log.info("세탁소 정보 기입 : {}", laundryCode);
+		log.info("세탁소 정보 기입 : {}", laundryCode);		
+		System.out.println(member);
 		
+		memberService.addMember(member);
 		memberService.addMemberLaundry(laundry);
 		
 		return "redirect:/user/login";	
 	}
 	/**
-	 * 고객, 관리자 회원가입 처리
+	 * 고객 회원가입 처리
 	 * @param member
 	 * @param memberId
 	 * @param request
@@ -218,11 +301,55 @@ public class MemberController {
 							,HttpServletRequest request) {
 		log.info("회원가입 화면에서 입력한 data : {}", member);
 		log.info("회원가입 화면에서 입력한 memberId : {}", memberId);
-		
 		memberService.addMember(member);
 		
 		return "redirect:/user/login";	
-	}	
+	}
+	  /**
+	   * 고객, 일반점주, 무인점주 마이페이지 수정 처리
+	   * @param member
+	   * @return
+	   */
+	  @PostMapping("/modifyUser") 
+	  public String modifyUser(Member member, Laundry laundry, Model model) {	  
+	  log.info("마이페이지 상세보기 수정정보:{}", member);
+	  
+	  Map<String, Object> paramMap = new HashMap<>();
+	  
+	  System.out.println(member+"<<<<<<<<<<member 값");
+	  System.out.println(laundry+"<<<<<<<<<<<<<laundry 값");
+	  
+	  paramMap.put("member", member);
+	  if(laundry.getLaundryCode() != null) {
+		  paramMap.put("laundry", laundry);
+	  }	  
+	  System.out.println("------------------------------------------");	  
+	  memberService.modifyUser(paramMap);
+	  model.addAttribute("member", member);
+	  return "redirect:/user/myPage";
+	  }
+	
+	/**
+	 * 고객, 일반점주, 무인점주 마이페이지 수정 조회
+	 * @param memberId
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@GetMapping("/modifyUser")
+	public String modifyUser(@RequestParam (name="memberId", required=false) String memberId 
+							,Model model
+							,HttpSession session) {
+		String sessionName = (String) session.getAttribute("SNAME");
+		log.info("화면에서 입력받은 마이페이지 수정보기 data:{}", memberId);
+		
+		Member member = memberService.getUserInfoById(memberId);
+		log.info("member: {}", member);
+		
+		model.addAttribute("member", member);
+		model.addAttribute("sessionName", sessionName);
+		return "member/modifyUser";
+	}
 	
 	/**
 	 * 고객, 일반점주, 무인점주 마이페이지 
@@ -239,12 +366,13 @@ public class MemberController {
 		String sessionLevel = (String) session.getAttribute("SLEVEL");
 		
 		Member member = memberService.getMemberInfoById(sessionId);
-
+		
 		if(sessionLevel != null && (sessionLevel.equals("level_code_02") || sessionLevel.equals("level_code_03"))) {
 			member = memberService.getStoreOwnerInfoById(sessionId);
 		}
 		
-		System.out.println(member);
+		log.info("작동",sessionLevel);
+		System.out.println(sessionLevel);
 		
 		model.addAttribute("title", "마이페이지");
 		model.addAttribute("sessionName", sessionName);
@@ -276,7 +404,7 @@ public class MemberController {
 			String sessionLevel = checkMember.getLevelCode();			
 			System.out.println(memberId);
 			System.out.println(memberPw);
-			session.setAttribute("SID", memberId); 
+			session.setAttribute("SID", memberId);
 			session.setAttribute("SNAME", sessionName);
 			session.setAttribute("SLEVEL", sessionLevel);			
 			
@@ -305,8 +433,11 @@ public class MemberController {
 	 * @return
 	 */
 	@GetMapping("/addMemberLaundry")
-	public String addMemberLaundry(Model model) {		
+	public String addMemberLaundry(Model model
+								,@RequestParam(name="levelCode", required=false) String levelCode){		
 		model.addAttribute("title", "회원가입");		
+		model.addAttribute("levelCode", levelCode);
+		log.info(levelCode,":::::::::::::::");
 		return "member/addMemberLaundry";
 	}
 	
@@ -316,8 +447,10 @@ public class MemberController {
 	 * @return
 	 */
 	@GetMapping("/addMember")
-	public String addMember(Model model) {		
+	public String addMember(Model model
+							,@RequestParam(name="levelCode", required=false) String levelCode) {
 		model.addAttribute("title", "회원가입");		
+		model.addAttribute("levelCode", levelCode);		
 		return "member/addMember";		
 	}
 		
@@ -341,5 +474,6 @@ public class MemberController {
 	public String login() {		
 		return "member/login";
 	}
+
 
 }

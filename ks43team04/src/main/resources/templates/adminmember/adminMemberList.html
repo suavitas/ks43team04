@@ -3,9 +3,166 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/adminDefault}">
 	  
-	<th:block layout:fragment="customCss">
-		<!-- datepicker -->
-		<link th:href="@{/admin/build/css/datepicker.css}" rel="stylesheet">
+<th:block layout:fragment="customCss">
+	<!-- datepicker -->
+	<link th:href="@{/admin/build/css/datepicker.css}" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+</th:block>
+	
+<th:block layout:fragment="customJsScript"></th:block>
+<th:block layout:fragment="customJsScript2">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+		<script type="text/javascript">
+			//달력 오류 수정
+			var cdate = document.querySelectorAll('.cdate');
+			for(var i=0; i<cdate.length; i++){
+				cdate[i].addEventListener('click',function(){
+					var disn = document.querySelector('#ui-datepicker-div');
+					disn.style.display = 'none';
+				})
+			}
+			
+			//권한 이름
+			var levelCode = document.querySelectorAll('.levelCode');
+			
+			for(var i=0; i<levelCode.length; i++){
+				if(levelCode[i].innerText == 'level_code_00'){
+					levelCode[i].innerText = '본사';
+				}else if(levelCode[i].innerText == 'level_code_01'){
+					levelCode[i].innerText = '관리자';
+				}else if(levelCode[i].innerText == 'level_code_02'){
+					levelCode[i].innerText = '무인점주';
+				}else if(levelCode[i].innerText == 'level_code_03'){
+					levelCode[i].innerText = '일반점주';
+				}else if(levelCode[i].innerText == 'level_code_04' || levelCode[i].innerText == 'level_code_05' || levelCode[i].innerText == 'level_code_06' || levelCode[i].innerText == 'level_code_07' || levelCode[i].innerText == 'level_code_08'){
+					levelCode[i].innerText = '회원';
+				}
+			}
+			
+			$(function(){
+				
+				//기간(버튼)별 조건 검색
+				$(document).on('click', '.dateBtnGroup', function(){
+					$('form').remove('#testForm')
+					
+					var startDate = $('input[name="startDate"]').val();
+					var endDate = $('input[name="endDate"]').val();
+					
+					var dateBtnForm = $('<form></form>');
+					
+					dateBtnForm.attr("id", "testForm");
+					dateBtnForm.attr("name", "dateBtnForm");
+					dateBtnForm.attr("method", "get");
+					dateBtnForm.attr("action", "/admin/searchDateMemberList");
+					
+					dateBtnForm.append($('<input/>', {type: 'hidden', name: 'startDate', value: startDate}));
+					dateBtnForm.append($('<input/>', {type: 'hidden', name: 'endDate', value: endDate}));
+					
+					dateBtnForm.appendTo('body');
+					
+					dateBtnForm.submit();
+				});
+				
+				//달력 검색
+				$(document).on('change', '#startDate, #endDate', function(){
+					
+					$('form').remove('#testForm')
+					
+					
+					var startDate = $('input[name="startDate"]').val();
+					var endDate = $('input[name="endDate"]').val();
+					
+					var datepickerForm = $('<form></form>');
+					
+					datepickerForm.attr("id", "testForm");
+					datepickerForm.attr("name", "datepickerForm");
+					datepickerForm.attr("method", "get");
+					datepickerForm.attr("action", "/admin/searchDateMemberList");
+					
+					datepickerForm.append($('<input/>', {type: 'hidden', name: 'startDate', value: startDate}));
+					datepickerForm.append($('<input/>', {type: 'hidden', name: 'endDate', value: endDate}));
+					
+					datepickerForm.appendTo('body');
+						
+					if(startDate != null && endDate != null && startDate != '' && endDate != ''){
+						
+						datepickerForm.submit();
+					}
+				});
+				
+				//권한별 검색
+				$(document).on('click', '.checkLevel', function(){
+					
+					$('form').remove('#testForm');
+					
+					var checkMemberLevel = $(this).val();
+					
+					console.log(checkMemberLevel);
+					
+					var checkMemberForm = $('<form></form>');
+					
+					checkMemberForm.attr("id", "testForm");
+					checkMemberForm.attr("name", "checkMemberForm");
+					checkMemberForm.attr("method", "get");
+					checkMemberForm.attr("action", "/admin/searchLevelMemberList");
+					
+					checkMemberForm.append($('<input/>', {type: 'hidden', name: 'levelName', value: checkMemberLevel}));
+					
+					checkMemberForm.appendTo('body');
+						
+					checkMemberForm.submit();
+						
+				});
+			});
+			
+			$(function() {
+				$(document).on('click', '#confirmStart', function() {
+					const data = {
+				    	levelCode : $(this).parent().parent().parent().find('.hidLevCd').val(),
+				    	memberId :  $(this).parent().parent().parent().find('.memberId').html()
+			      	}
+					console.log(data);
+					Swal.fire({
+						title: '등록기준을 삭제 하시겠습니까?',
+						text: '승인을 누르면 바로 삭제됩니다.',
+						icon: 'warning',
+						showCancelButton: true, 
+						confirmButtonColor: '#3085d6', 
+						cancelButtonColor: '#d33', 
+						confirmButtonText: '승인', 
+						cancelButtonText: '취소', 
+						showLoaderOnConfirm: true,
+					    allowOutsideClick: false
+						
+						//reverseButtons: true, // 버튼 순서 거꾸로
+						   
+					}).then((result) => {
+						if(result.value) {
+						var request = $.ajax({
+							  method: "POST",
+							  url: "/admin/deleteMember",
+							  contentType: 'application/json; charset=utf-8',
+							  data: JSON.stringify(data), 
+							  dataType: "json"
+							});
+						}
+						request.done(function( data ) {
+							console.log(data);
+							Swal.fire({
+									title: '삭제가 완료되었습니다.',
+									icon: 'success'
+							}).then(() => { 
+								location.reload();			        	  
+							});
+						});
+						request.fail(function( jqXHR, textStatus ) {
+							  alert( "Request failed: " + textStatus );
+						});
+					});
+				})
+			})
+		</script>
 	</th:block>
 
 <style>
@@ -23,31 +180,50 @@
 			<div class="x_title">
 			</div>
 				<div class="x_content">
-				  <div class="table-responsive">
+				  <div class="table-responsive" style="overflow: hidden;">
 					<div class="mb-2">
 						<!-- START : 검색 바 -->
-						<div th:include="member/searchDate :: searchDateFragment"></div>
+							<div th:include="member/searchDate :: searchDateFragment"></div>
 						<!-- END : 검색 바 -->
+					</div>
+					<div class="mb-2">
+						<div class="checkbox">
+							<label>권한별 조회</label>
+								<label class="btn btn-default">
+									<input type="checkbox" class="checkLevel" name="levelName" value="본사"> 본사
+								</label>						
+								<label class="btn btn-default">
+									<input type="checkbox" class="checkLevel" name="levelName" value="관리자"> 관리자
+								</label>
+								<label class="btn btn-default">
+									<input type="checkbox" class="checkLevel" name="levelName" value=""> 회원
+								</label>
+								<label class="btn btn-default">
+									<input type="checkbox" class="checkLevel" name="levelName" value="일반세탁소점주"> 일반점주
+								</label>
+								<label class="btn btn-default">
+									<input type="checkbox" class="checkLevel" name="levelName" value="무인세탁소점주"> 무인점주
+							</label>				
+						</div>					
 					</div>
 					<div class="clearfix">
 	                        <div class="float-left">
 	                            <span>Total : </span>
 	                        </div>
 	                        <div class="float-right pr-2"></div>
-                    </div>
-					<form th:action="@{/admin/adminMemberList}" method="get">
+                    </div>                    
+					<form th:action="@{/admin/conditionMemberList}" method="get">
 						<div class="form-row">
 							<div class="form-group col-md-2">
 								<select name="searchKey" class="form-control text-center">
 									<option value=""> :: 선택 :: </option>
 									<option value="m_id">아이디</option>
-									<option value="m_name">회원이름</option>
-									<option value="laundry_name">주소</option>
+									<option value="m_name">이름</option>
+									<option value="m_addr">주소</option>
 								</select>
 							</div>
 							<div class="form-group col-md-6">
-								<input type="text" class="form-control" name="searchValue" placeholder="Search"
-								aria-label="Text input with dropdown button">
+								<input type="text" class="form-control" name="searchValue" placeholder="Search" aria-label="Text input with dropdown button">
 							</div>
 							<div class="form-group col-md-2">
 								<button type="submit" class="btn btn-success" id="searchBtn"><i class="fa fa-search"></i> 검색</button>
@@ -62,7 +238,8 @@
 									<th>
 										<input type="checkbox" id="check-all" class="flat">
 									</th>
-									<th class="column-title" >아이디</th>
+									<th class="column-title">권한이름</th>
+									<th class="column-title">아이디</th>
 									<th class="column-title">이름</th>
 									<th class="column-title">생년월일</th>
 									<th class="column-title">우편번호</th>
@@ -74,7 +251,7 @@
 									<th class="column-title">가입일</th>
 									<th class="column-title">상세조회</th>
 									<th class="column-title">삭제</th>
-									<th class="bulk-actions" colspan="12">
+									<th class="bulk-actions" colspan="13">
 										<a class="antoo" style="color:#fff; font-weight:500;">전체 선택 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
 									</th>
 								</tr>
@@ -83,11 +260,13 @@
 								<tr th:if="${not #lists.isEmpty(adminMemberList)}" th:each="l : ${adminMemberList}" class="even pointer">
 									<td class="a-center">
 										<input type="checkbox" class="flat" name="table_records">
+										<input type="hidden" class="hidLevCd" th:value="${l.LevelCode}">
 									</td>
-										<td th:text="${l.memberId}" ></td>
+										<td class="levelCode" th:text="${l.LevelCode}"></td>
+										<td class="memberId" th:text="${l.memberId}" ></td>
 										<td th:text="${l.memberName}" ></td>
 										<td th:text="${l.memberBirth}"></td>
-										<td th:text="${l.memberPostNum}"></td>
+										<td th:text="${l.memberPostNumber}"></td>
 										<td th:text="${l.memberAddr}"></td>
 										<td th:text="${l.memberDetailAddr}"></td>
 										<td th:text="${l.memberPhone}"></td>
@@ -101,7 +280,7 @@
 									</td>
 									<td>
 										<div style="text-align: center;">							
-										<button type="button"  class="btn btn-secondary btn-sm" >삭제</button>
+											<button class="btn btn-secondary btn-sm" id="confirmStart">삭제</button>
 										</div>
 									</td>
 								</tr>
@@ -127,7 +306,6 @@
 			</div>
 		</div>	
 
-	</table>
 </th:block>
 
 </html>

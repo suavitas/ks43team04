@@ -5,7 +5,27 @@ public class MemberLevel {
 	private String levelName;
 	private String adminLevelCode;
 	private String registTime;
+	
+	private UserLevel userLevel;
+	
+	private Member member;
 
+	public UserLevel getUserLevel() {
+		return userLevel;
+	}
+	
+	public void setUserLevel(UserLevel userLevel) {
+		this.userLevel = userLevel;
+	}
+	
+	public Member getMember() {
+		return member;
+	}
+	
+	public void setMember(Member member) {
+		this.member = member;
+	}
+	
 	public String getLevelCode() {
 		return levelCode;
 	}
@@ -40,8 +60,22 @@ public class MemberLevel {
 
 	@Override
 	public String toString() {
-		return "Level [levelCode=" + levelCode + ", levelName=" + levelName + ", adminLevelCode=" + adminLevelCode
-				+ ", registTime=" + registTime + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("MemberLevel [levelCode=");
+		builder.append(levelCode);
+		builder.append(", levelName=");
+		builder.append(levelName);
+		builder.append(", adminLevelCode=");
+		builder.append(adminLevelCode);
+		builder.append(", registTime=");
+		builder.append(registTime);
+		builder.append(", userLevel=");
+		builder.append(userLevel);
+		builder.append(", member=");
+		builder.append(member);
+		builder.append("]");
+		return builder.toString();
 	}
+
 
 }

@@ -10,9 +10,9 @@
 </th:block>
 
 <th:block layout:fragment="customScript">
-      <script>
+      <script type="text/javascript">
          // 카카오 우편번호 API 
-         function searchAddForm() {
+         function searchPostNum() {
               new daum.Postcode({
                   oncomplete: function(data) {
                      
@@ -26,16 +26,35 @@
                           addr = data.jibunAddress;
                       }
                       
-                      document.getElementById('memberPostNum').value = data.zonecode;
-                      document.getElementById('memberAddr').value = addr;
+                      document.getElementById('laundryPostNum').value = data.zonecode;
+                      document.getElementById('laundryAddr').value = addr;
                       // 커서를 상세주소 필드로 이동한다.
-                      document.getElementById('memberDetailAddr').focus();
+                      document.getElementById('laundryDetailAddr').focus();
                       
                   }
               }).open();
           }
-      </script>
+      </script>  
 </th:block>
+
+<th:block layout:fragment="customJsScript2">
+      <script>
+	   	var levelName = document.querySelector('#levelName');
+	   	var levelCode = document.querySelector('#levelCode').value;
+	   	
+	   	var level = '';
+	   	
+	   	if(levelCode == 'level_code_02'){
+	   		level = '무인세탁소'
+	   	}else if(levelCode == 'level_code_03'){
+	   		level = '일반세탁소'
+	   	
+	   	}
+	   	
+	   	levelName.value = level; 
+   </script>
+</th:block>
+
 <style>
      min-height: 100vh;
 
@@ -65,7 +84,8 @@
 			<div class="x_panel">
 			<h2>상세정보</h2>
 			<div class="x_title">
-			</div>     	   
+			</div>     
+		   
 			      <div class="container">
 			         <div class="row" style="float: none; margin: 100 auto;">
 			            <div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
@@ -106,15 +126,31 @@
 											<label class="control-label" for="laundryCode">업체관리코드</label>
 										</div>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" class="form-control readonlyInput" name="laundryCode" th:value="${laundry.laundryCode}" readonly="readonly">
+											<input type="text" class="form-control readonlyInput" name="laundryCode" th:value="${laundry.laundryCode}" readonly="readonly"/>
 										</div>
 									</div>
+									<div class="form-group row">
+											<div class="col-md-2 col-sm-2">
+												<label class="control-label" for="levelCode">회원권한코드</label>
+											</div>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="text" class="form-control readonlyInput" id="levelCode"  name="levelCode" th:value="${laundry.levelCode}" />
+											</div>
+										</div>
+									<div class="form-group row">
+											<div class="col-md-2 col-sm-2">
+												<label class="control-label" for="memberId">업체분류</label>
+											</div>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="text" id="levelName" class="form-control readonlyInput" name="levelName" />
+											</div>
+										</div> 
 									<div class="form-group row">
 										<div class="col-md-2 col-sm-2">
 											<label class="control-label" for="memberId">가입아이디</label>
 										</div>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" class="form-control" name="memberId" th:value="${laundry.memberId}" disabled="disabled">
+											<input type="text" class="form-control" name="memberId" th:value="${laundry.memberId}" disabled="disabled"/>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -122,7 +158,7 @@
 											<label class="control-label" for="sellerStoreName">업체명</label>
 										</div>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" class="form-control" name="laundryName" th:value="${laundry.laundryName}" >
+											<input type="text" class="form-control" name="laundryName" th:value="${laundry.laundryName}" />
 										</div>
 									</div>
 									<div class="form-group row">
@@ -130,7 +166,7 @@
 											<label class="control-label" for="sellerStoreAddr">업체 주소</label>
 										</div>
 										<div class="col-md-4 col-sm-4">
-												<input type="text" class="form-control" name="laundryPostNum" id="laundryPostNum" th:value="${laundry.laundryPostNum}" >
+												<input type="text" class="form-control" name="laundryPostNumber" id="laundryPostNum" th:value="${laundry.laundryPostNumber}" />
 											</div>
 											<div class="col-md-3 col-sm-3">
 												<button type="button" class="btn btn-info" id="laundryPostNum" onclick="searchPostNum()">우편번호찾기</button>
@@ -138,12 +174,12 @@
 										</div>
 									<div class="form-group row">
 										<div class="col-md-6 offset-md-2">
-											<input type="text" class="form-control" id="laundryAddr" name="laundryAddr"  th:value="${laundry.laundryAddr}" >
+											<input type="text" class="form-control" id="laundryAddr" name="laundryAddr"  th:value="${laundry.laundryAddr}" />
 										</div>
 									</div>
 									<div class="form-group row">
 										<div class="col-md-6 offset-md-2">
-											<input type="text" class="form-control" name="laundryDetailAddr" id="laundryDetailAddr" th:value="${laundry.laundryDetailAddr}" >
+											<input type="text" class="form-control" name="laundryDetailAddr" id="laundryDetailAddr" th:value="${laundry.laundryDetailAddr}"/>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -151,7 +187,7 @@
 											<label class="control-label" for="laundryTel">업체 대표번호</label>
 										</div>
 										<div class="col-md-6 col-sm-6">
-											<input type="text" class="form-control" name="laundryTel" th:value="${laundry.laundryTel}">
+											<input type="text" class="form-control" name="laundryTel" th:value="${laundry.laundryTel}" />
 										</div>
 									</div>
 									<div class="form-group row">
@@ -159,9 +195,19 @@
 											<label class="control-label" for="laundryState">영업상태</label>
 										</div>
 										<div class="col-md-6 col-sm-6">
-											<input type="text" class="form-control" name="laundryState" th:value="${laundry.laundryState}">
+											<input type="text" class="form-control" name="laundryState" th:value="${laundry.laundryState}" />
 										</div>
-									</div>
+									</div> 
+									<th:block  th:if="${laundry.levelCode == 'level_code_03'}">
+										<div class="form-group row">
+											<div class="col-md-2 col-sm-2">
+												<label class="control-label" for="skillLicence">자격증 유무</label>
+											</div>
+											<div class="col-md-6 col-sm-6">
+												<input type="text" class="form-control" name="skillLicence" th:value="${laundry.skillLicence}" />
+											</div>
+										</div>
+									</th:block>
 								</td>
 							</tr>
 							<tr>
@@ -172,7 +218,7 @@
 											<label class="control-label" for="businessNumber">사업자등록번호</label>
 										</div>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" class="form-control" name="businessNumber" th:value="${laundry.businessNumber}" >
+											<input type="text" class="form-control" name="businessNumber" th:value="${laundry.businessNumber}"/>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -180,7 +226,7 @@
 											<label class="control-label" for="registTime">업체 등록날짜</label>
 										</div>
 										<div class="col-md-6 col-sm-6 ">
-											<input type="text" class="form-control" name="registTime" th:value="${laundry.registTime}">
+											<input type="text" class="form-control" name="registTime" th:value="${laundry.registTime}" />
 											</div>
 										</div>
 									</td>
@@ -190,11 +236,11 @@
 							<div class="ln_solid"></div>
 								<div class="form-group">
 									<div class="col-md-8 col-sm-8  offset-md-4">
-										<a th:href="@{/admin/laundryList}"><button type="button" class="btn btn-primary" id="cancelButton">취소</button></a>
-										<button type="button" class="btn btn-success" id="modifyButton">수정</button>
+										<a th:href="@{/admin/laundryList}"><button type="button" class="btn btn-secondary" id="cancelButton">취소</button></a>
+										<button type="button" class="btn btn-success" id="modifyButton">수정</button>	
 										<button type="submit" class="btn btn-primary">저장</button>
 									</div>
-								</div>	
+								</div>
 								</form>
 							</div>
 						</div>
@@ -203,7 +249,7 @@
 			</div>
 		</div>	
 	</div>				
-</div>		
+</div>						
 </th:block>
 </html>
 

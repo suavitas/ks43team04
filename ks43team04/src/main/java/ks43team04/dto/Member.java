@@ -9,7 +9,7 @@ public class Member {
 	private String memberPwQnACode;
 	private String memberName;
 	private String memberBirth;
-	private String memberPostNum;
+	private String memberPostNumber;
 	private String memberAddr;
 	private String memberDetailAddr;
 	private String memberPhone;
@@ -21,6 +21,7 @@ public class Member {
 	private String registTime;
 	
 	private List<Laundry> laundryList;
+	
 
 	public String getMemberId() {
 		return memberId;
@@ -70,12 +71,12 @@ public class Member {
 		this.memberBirth = memberBirth;
 	}
 
-	public String getMemberPostNum() {
-		return memberPostNum;
+	public String getMemberPostNumber() {
+		return memberPostNumber;
 	}
 
-	public void setMemberPostNum(String memberPostNum) {
-		this.memberPostNum = memberPostNum;
+	public void setMemberPostNumber(String memberPostNumber) {
+		this.memberPostNumber = memberPostNumber;
 	}
 
 	public String getMemberAddr() {
@@ -173,8 +174,8 @@ public class Member {
 		builder.append(memberName);
 		builder.append(", memberBirth=");
 		builder.append(memberBirth);
-		builder.append(", memberPostNum=");
-		builder.append(memberPostNum);
+		builder.append(", memberPostNumber=");
+		builder.append(memberPostNumber);
 		builder.append(", memberAddr=");
 		builder.append(memberAddr);
 		builder.append(", memberDetailAddr=");
@@ -198,7 +199,9 @@ public class Member {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
+
+
 	
 
 }
