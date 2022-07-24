@@ -337,7 +337,7 @@
 																		<th:block th:each="lss : ${ls.ilbanGoodsPrice}">
 																			<option th:if="${ls.laundryName} eq ${l.laundryName}" 
 																				th:text="|${lss.goodsName} : ${lss.goodsPrice}원|"
-																				th:value="${lss.goodsName}" th:data-goodsPrice="${lss.goodsPrice}"></option>
+																				th:value="${lss.goodsName}" th:data-goods="${lss.goodsPrice}"></option>
 																		</th:block>
 																	</th:block>
 																</select>
@@ -348,7 +348,7 @@
 																<select class="isp" name="goodsOption" style="margin-left: 15px;">
 																	<th:block th:each="ls : ${ilbanSkillList}">
 																		<option th:text="|${ls.skillCate} : ${ls.skillPrice}원|"
-																			th:value="${ls.skillCate}" th:data-skillPrice="${ls.skillPrice}"></option>
+																			th:value="${ls.skillCate}" th:data-skill="${ls.skillPrice}"></option>
 																	</th:block>
 																</select> <br />
 															</div>
@@ -370,7 +370,7 @@
 													</div>
 													</th:block>
 													-->
-													<p class="sumaa">총계 : </p>
+													<p class="lastSum"></p>
 												</div>
 											</div>
 										</div>
@@ -753,35 +753,56 @@
 					.addEventListener('click',function(e) {
 				var box = e.target.parentElement.parentElement.parentElement
 						.querySelector('.boxbox')
-				var strGp = box.querySelector('.igp').value;
-				var strSp = box.querySelector('.isp').value;
-
+				var strGp = box.querySelector('.igp').value; //상품명
+				var strSp = box.querySelector('.isp').value; //기능명
+				
+				var goodsPrice = $('.igp').find("option:selected").data("goods"); //상품가격   
+				var skillPrice = $('.isp').find("option:selected").data("skill"); //기능가격   
+				var sumPrice = parseInt(goodsPrice+skillPrice); //가격 합계
+				
+				
+			
+			
+				
 				e.target.parentElement.parentElement
 						.querySelector('.strBox').innerHTML 
 					   += '<div class="pPlusBtn">'
 						+ '<p>'	
 						+ '- '
-						+ strT01 + '</p>'
+						+ strGp + '</p>'
 						+ '<p>'	
 						+ ' > '
-						+ StrT0 + '</p>'
+						+ strSp + '</p>'
 						+ ' : '
 						+ '<p class="sumFinal">'
 						+ sumPrice +'</p>'
-						+ '원'
+						+ '<p>원</p>'
 						+ '<button type="button" class="btn btn-info remove-btn">' 
 						+ '제거' 
 						+ '</button>'
 						+ '</div>';
+						
 				
+				var sumFinal =  document.querySelectorAll('.sumFinal'); 
+				var sum = 0;
+					for (var i = 0; i < sumFinal.length; i++) {
+						sum += sumFinal[i];
+						
+						
+				var lastSum = $('.lastSum').html('합계 : ' + sum);
+					};
+				
+					
 			});
 		}
-				
+							
+						
+			/*제거하기 클릭시 세탁기능, 세탁물 선택창 제거*/
+			$(document).on('click','.remove-btn',function(){
+				$(this).parent().remove();
+			});
+	
 
-		/*제거하기 클릭시 세탁기능, 세탁물 선택창 제거*/
-		$(document).on('click','.remove-btn',function(){
-			$(this).parent().remove();
-		});
 		
 		/*수거배송 신청예약 폼 내일날짜로 셋팅*/
 		var currentDates = document.querySelectorAll('.currentDate');

@@ -199,6 +199,7 @@
 		SELECT
 		ilban_skill_code,
 		skill_cate,
+		skill_price,
 		admin_level_code,
 		regist_time
 		FROM
