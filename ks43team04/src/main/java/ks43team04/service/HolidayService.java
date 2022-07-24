@@ -43,6 +43,13 @@ public class HolidayService {
 
 		return yearlyHolidayList;
 	}
+	public List<YearlyHoliday> yearlyHolidayList(Map<String, String> scheduleDate) {
+		
+		List<YearlyHoliday> yearlyHolidayList = holidayMapper.yearlyHolidayListByDate(scheduleDate);
+		
+		return yearlyHolidayList;
+	}
+
 
 	/* 세탁소별 휴일 정보 넘기는 메서드 */
 	public HolidayList getHolidayByHolidayCode(String holidayCode) {
