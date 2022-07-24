@@ -14,11 +14,13 @@ public interface HolidayMapper {
 
 	/**
 	 * 세탁소 조회
+	 * @param scheduleDate 
 	 */
-	public List<HolidayList> holidayList();
+	public List<HolidayList> holidayList(Map<String, String> scheduleDate);
 
 	/**
 	 * 공휴일 조회
+	 * @param scheduleDate 
 	 * 
 	 */
 	public List<YearlyHoliday> yearlyHolidayList();
@@ -47,5 +49,7 @@ public interface HolidayMapper {
 	
 	/* 세탁소 매장별 휴일 페이징 처리 */
 	public List<Map<String, Object>> eachLaundryHoliday(Map<String, Object> paramMap);
+
+	public List<YearlyHoliday> yearlyHolidayListByDate(Map<String, String> scheduleDate);
 
 }

@@ -129,6 +129,19 @@
 		where
 			h.holiday_code_use = 'O';
 	</select>
+	<select id="yearlyHolidayListByDate" parameterType="Map" resultMap="holidayResultMap">
+		SELECT
+			h.yearly_holiday_code 
+			,h.yearly_holiday_date
+			,h.yearly_holiday_name 
+			,h.holiday_code_use
+		FROM
+			tb_yearly_holiday AS h
+		where
+			h.holiday_code_use = 'O'
+			and
+			h.yearly_holiday_date between #{startDate} and #{endDate}
+	</select>
 	
 	<select id="LaundryHolidayLookUpCount" resultType="int">
 		/*세탁소별 휴일 튜플수 페이징*/
