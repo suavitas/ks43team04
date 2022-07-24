@@ -48,9 +48,9 @@
                            		<li><a th:if="${session.SID == null}" th:href="@{/user/login}" style="color: #ADB4B6;"><i class="fa fa-user"></i>로그인</a></li>							
                            		<li><a th:if="${session.SID == null}" th:href="@{/user/index}" style="color: #ADB4B6;">회원가입</a>
                            			<ul class="sub-menu">
-										<li><a th:href="@{/user/addMember}">회원 가입</a></li>
-										<li><a th:href="@{/user/addMemberLaundry}">일반 점주 가입</a></li>
-										<li><a th:href="@{/user/addMemberLaundry}">무인 점주 가입</a></li>
+										<li><a th:href="@{/user/addMember(levelCode=level_code_04)}">회원 가입</a></li>
+										<li><a th:href="@{/user/addMemberLaundry(levelCode=level_code_03)}">일반 점주 가입</a></li>
+										<li><a th:href="@{/user/addMemberLaundry(levelCode=level_code_02)}">무인 점주 가입</a></li>
 									</ul></li>							
 		                        <li><a th:if="${session.SID != null}" th:href="@{/user/logout}"style="color: #ADB4B6;" ><span>[</span>[[${session.SNAME}]]님 접속중]</a></li>	
 		                        <li><a th:unless="${session.SID == null}" th:href="@{/user/logout}" style="color: #F28123"><i class="fa fa-user"></i> 로그아웃</a></li>

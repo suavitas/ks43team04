@@ -2,15 +2,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
  
-             <!-- sidebar menu -->
+            <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu" th:fragment="sidebar">
               <div class="menu_section">
-                <h3>관리자 페이지</h3>
+              	<th:block th:if="${session.SLEVEL == 'level_code_00' || session.SLEVEL == 'level_code_01'}">
+                <h3>관리자 메뉴</h3>
                 <ul class="nav side-menu">
-                  <li><a th:href="@{/}"><span>!관리자 홈(정승현) </span></a> 
                   <li><a><i class="fa fa-edit"></i> !회원(홍휘연) <span class="fa fa-chevron-down"></span></a>
                    <ul class="nav child_menu">
-                      <li><a th:href="@{/admin/addMemberAdmin}">관리자 등록</a></li> 
+                      <li><a th:href="@{/admin/addMemberAdmin(levelCode=level_code_01)}">관리자 등록</a></li> 
                       <li><a th:href="@{/admin/adminMemberList}">전체 회원관리</a></li>                    
                       <li><a th:href="@{/admin/LaundryList}">세탁소 점주 회원관리</a></li>                    
                       <li><a th:href="@{/admin/userLevel}">회원 등급</a></li>                                      
@@ -53,7 +53,8 @@
                                   
                  <h3>매장 관리</h3>
 					<ul class="nav side-menu">
-						<li><a><i class="fa fa-desktop"></i> 무인 세탁소 관리 (이용민,정승현,안수빈,최우영)<span class="fa fa-chevron-down"></span></a>
+						<li th:if="${session.SLEVEL == 'level_code_02' || session.SLEVEL == 'level_code_00' || session.SLEVEL == 'level_code_01'}">
+							<a><i class="fa fa-desktop"></i> 무인 세탁소 관리 (이용민,정승현,안수빈,최우영)<span class="fa fa-chevron-down"></span></a>
 		                    <ul class="nav child_menu">		                      
 		                      <li><a th:href="@{/admin/selectHoliday}">!세탁소 휴일 지정(정승현)</a></li>
 		                      <li><a th:href="@{/admin/lundryIncome}">#월별 매출액(이용민)</a></li>	
@@ -62,7 +63,8 @@
 		                      <li><a th:href="@{/admin/yeyakStatus}">세탁기 예약 현황(최우영)</a></li>		                      
 		                    </ul>                  
 						</li>
-						<li><a><i class="fa fa-desktop"></i> 일반  세탁소  관리 (이용민 ,정승현,안수빈,최우영)<span class="fa fa-chevron-down"></span></a>
+						<li  th:if="${session.SLEVEL == 'level_code_03' || session.SLEVEL == 'level_code_00' || session.SLEVEL == 'level_code_01'}">
+							<a><i class="fa fa-desktop"></i> 일반  세탁소  관리 (이용민 ,정승현,안수빈,최우영)<span class="fa fa-chevron-down"></span></a>
 		                    <ul class="nav child_menu">
 		                   	  <li><a th:href="@{/admin/goodsPrice/goodsPrice}">!세탁물 종류 및 가격(이용민)</a></li>
 		                      <li><a th:href="@{/admin/selectHoliday}">!세탁소 휴일 지정(정승현)</a></li>		                      

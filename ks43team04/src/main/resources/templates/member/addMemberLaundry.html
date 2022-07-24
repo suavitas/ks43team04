@@ -116,7 +116,7 @@
 						if(!result){
 							alert('필수 항목입니다. 입력해주세요');
 							$(this).focus();
-							 console.log(inputObj);
+							 console.log($(this));
 							isSubmit = false;
 							 console.log(isSubmit+'1');
 							return false;
@@ -212,7 +212,7 @@
 
 					<div class="mb-3" style="margin: 20px auto;">
 						<label for="email"><strong>이름</strong></label>
-						<input type="email" class="form-control" id="memberName" name="memberName"/>
+						<input type="text" class="form-control" id="memberName" name="memberName"/>
 					</div>
 
 					<div class="mb-3" style="margin: 20px auto;">

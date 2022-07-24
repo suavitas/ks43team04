@@ -26,10 +26,13 @@
 					cancelButtonColor: '#d33', 
 					confirmButtonText: '승인', 
 					cancelButtonText: '취소', 
+					showLoaderOnConfirm: true,
+				    allowOutsideClick: false
 					
-					reverseButtons: true, // 버튼 순서 거꾸로
+					//reverseButtons: true, // 버튼 순서 거꾸로
 					   
-				}).then(result => {
+				}).then((result) => {
+					if(result.value) {
 					var request = $.ajax({
 						  method: "POST",
 						  url: "/admin/removeUserlevel",
@@ -37,12 +40,15 @@
 						  data: JSON.stringify(data), 
 						  dataType: "json"
 						});
+					}
+					request.done(function( data ) {
 					Swal.fire({
 							title: '삭제가 완료되었습니다.',
 							icon: 'success'
 				          }).then(() => { 
 				        	  location.reload();			        	  
-				          });
+				         });
+					});
 					request.fail(function( jqXHR, textStatus ) {
 						  alert( "Request failed: " + textStatus );
 					});
