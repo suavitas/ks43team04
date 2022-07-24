@@ -13,7 +13,7 @@
  <script type="text/javascript">
 		var genderCheck = document.querySelector('#gender-check').value;
 		var gender = document.querySelectorAll('.gender');
-		
+		console.log("작동");
 		for(var i=0; i<gender.length; i++){
 			if(gender[i].value == genderCheck){
 				gender[i].checked = true
@@ -153,7 +153,7 @@
 					  </thead>  
 			          <tbody>
 			        	<tr>
-							<th scope="row" style="text-align: center;">회원 정보</th>
+							<th scope="row" >회원 정보</th>
 								<td>
 					<div class="mb-3" style="margin: 20px auto; display: none;">
 						<label for="LevelCode"><strong>회원레벨코드</strong></label> 
