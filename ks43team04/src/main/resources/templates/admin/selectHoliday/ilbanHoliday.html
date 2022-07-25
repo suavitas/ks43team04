@@ -6,22 +6,21 @@
 <th:block layout:fragment="customCss">
 	<style>
         table {
-            clear: both;
+            clear: both;            
         }
         th {
             height: 30px;
             width: 50px;
             background-color: #F7F7F7;
             text-align: center;
-            border-width: 1px;
+            
         }
         td {
             text-align: center;
             height: 130px;
             width: 150px;
             background-color: #F7F7F7; 
-            border-width: 1px;
-            border-style: solid; 
+            border: 1px solid #bcbcbc;
         }
         input {
             height: 30px;
@@ -43,16 +42,25 @@
         }
 		h4 {
 			 margin-bottom: 30px;
-		}		
+		}
+		#sidebar-right {
+        width: 300px;
+        padding: 5px;
+        margin-bottom: 5px;
+        float: left;
+        border-left: 1px solid #bcbcbc;     
+        margin-top: 30px;   
+      }			
     </style>
 </th:block>	  
 	  
 	<!-- 사용자정의 contents -->
 <th:block layout:fragment="customContents">		
 	<th:block class="fc-form">
-		<div class="col-lg-9 mb-5 mb-lg-0">
+		<body>		
+		<div class="col-lg-9 mb-5 mb-lg-0">		
 			<div class="blog_left_sidebar">
-			<h4>2022년 세탁소 휴일 지정</h4>
+			<h4>2022년 세탁소 휴일 지정</h4>										
 				<table id="calendar">
 			    <thead>
 			        <tr>
@@ -68,15 +76,23 @@
 			            <th>목</th>
 			            <th>금</th>
 			            <th>토</th>
-			        </tr>
+			        </tr>			        
 			    </thead>
 			    <tbody>			    	
 			    </tbody>
-			</table>					
+			</table>								
 			</div>
 		</div>
-		
+		<div id="sidebar-right">
+       		<div>정기 휴일과 일반 휴일 지정<br>
+        		정기 휴일<br>
+        		대체 휴일<br>
+        		개인사정<br>        	
+        	</div>        	
+      	</div>			
+	</body>		
 	</th:block>  
+	
 	<script th:src="@{/common/jquery.min.js}"></script>	
 	<script th:src="@{/admin/calendar/moment.min.js}"></script>    	
 	<script th:src="@{/admin/calendar/customJs.js}"></script>    	
