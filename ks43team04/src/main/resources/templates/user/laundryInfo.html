@@ -164,7 +164,7 @@
 					<div class="review-star-img">
 						<img alt="star"
 							src="https://jpassets.jobplanet.co.kr/production/uploads/material/media/99/ic_star_green500_sm.svg">
-						<span>4.0</span> <span class="gray-span">일반세탁소</span>
+						<span>5.0</span> <span class="gray-span">일반세탁소</span>
 
 					</div>
 
@@ -292,7 +292,7 @@
 			th:aria-labelledby="${'myModal' + 'Label'}">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
-					<form th:action="@{/user/payment}" method="post">
+					<form th:action="@{/user/payment}" method="post" id="paymentForm">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal"
 								aria-label="Close">
@@ -354,6 +354,7 @@
 															</div>
 															<button type="button" class="btn btn-info append-btn">추가</button>
 															<div class="strBox" style="margin-top: 16px;"></div>
+															<input type="hidden" id="sumFinal" name="sumFinal">
 														</div>
 													</div>
 													<br />
@@ -424,7 +425,7 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">취소</button>
-							<button type="submit" class="btn btn-primary">결제하기</button>
+							<button type="button" class="btn btn-primary" id="submit-button">결제하기</button>
 						</div>
 					</form>
 				</div>
@@ -718,14 +719,14 @@
 				$("#ldryNum").val(ldryNum);
 				$("#ldryNameInput").val(ldryName);
 
-				console.log($(this).parent().find('div').children());
-
-				console.log($(storeInfoObj).eq(0).text());
-				console.log($(storeInfoObj).eq(1).text());
-				console.log($(storeInfoObj).eq(2).text());
-				console.log($(storeInfoObj).eq(3).text());
-
 			});
+			$('#submit-button').on('click', function() {
+				
+				$sumFinal = $('.sumFinal').html();
+				$('#sumFinal').val($sumFinal);
+				console.log($('#sumFinal').val());
+				$('#paymentForm').submit();
+			})
 		});
 
 		/*close 상태 세탁소 폐업으로 글자 변경 + 클릭 안되게 하는 기능*/
@@ -783,14 +784,13 @@
 						+ '</div>';
 						
 				
-				var sumFinal =  document.querySelectorAll('.sumFinal'); 
 				var sum = 0;
-					for (var i = 0; i < sumFinal.length; i++) {
-						sum += sumFinal[i];
-						
-						
 				var lastSum = $('.lastSum').html('합계 : ' + sum);
-					};
+				var sumFinal = document.querySelectorAll('.sumFinal');
+				for(var i=0; i<sumFinal.length; i++){
+					sum += sumFinal[i];
+										
+				}
 				
 					
 			});
@@ -818,6 +818,7 @@
 			currentDateTimes[i].value = tomorrowDate.toISOString()
 					.slice(11, 16);
 		}
+		
 	</script>
 </th:block>
 

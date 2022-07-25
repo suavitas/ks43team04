@@ -107,8 +107,12 @@
 											</div>
 											<div class="point-amount">
 												<div>
-												<span>상품명 : </span>
+												<span>세탁물 : </span>
 												<strong th:text="${l.get('goodsName')}"></strong>
+												</div>
+												<div>
+												<span>세탁기능 : </span>
+												<strong th:text="${l.get('skillCate')}"></strong>
 												</div>
 												<div style="padding-left: 20px; padding-right: 20px; font-size: 30px;">
 													<span th:text="${#numbers.arrayFormatInteger(l.get('totalPrice'),3,'COMMA') + '원'}"></span>
@@ -133,7 +137,7 @@
 												        <h4 class="modal-title">요청사항</h4>
 												      </div>
 												      <div class="modal-body">
-												        <p th:text="${l.get('request')}"></p>
+												        <p th:text="${l.request}"></p>
 												      </div>
 												      <div class="modal-footer">
 												        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>

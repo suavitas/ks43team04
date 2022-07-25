@@ -10,6 +10,7 @@
 		<result column="user_code" 					property="userCode"/>
 		<result column="pay_use_point" 				property="payUsePoint"/>
 		<result column="pay_method" 				property="payMethod"/>
+		<result column="pay_method" 				property="payMethod"/>
 		<result column="pay_ok_date" 				property="payOkDate"/>
 		<result column="refund_code" 				property="refundCode"/>
 		<result column="after_use_point_pay" 		property="afterUsePointPay"/>
@@ -24,7 +25,8 @@
 			m_id			AS memberId, 
 			goods_name		AS goodsName, 
 			total_price		AS totalPrice, 
-			laundry_name	AS laundryName, 
+			laundry_name	AS laundryName,
+			skill_cate      AS skillCate, 
 			request			AS request, 
 			add_point		AS addPoint, 
 			refund			AS refund, 
@@ -60,6 +62,7 @@
 			goods_name, 
 			total_price, 
 			laundry_name, 
+			skill_cate, 
 			request,
 			refund, 
 			add_point,
@@ -72,6 +75,7 @@
 			#{goodsName},
 			#{totalPrice},
 			#{laundryName},
+			#{skillCate},
 			#{request},
 			'X', 
 			#{addPoint},
