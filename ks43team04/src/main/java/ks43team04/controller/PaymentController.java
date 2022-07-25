@@ -102,27 +102,21 @@ public class PaymentController {
 		model.addAttribute("lastPage", resultMap.get("lastPage"));
 		model.addAttribute("startPageNum", resultMap.get("startPageNum"));
 		model.addAttribute("endPageNum", resultMap.get("endPageNum"));
+	
 		
 		return "/member/myPagePayment2";
 	}
 	
 	@PostMapping("/myPagePayment2")
-	public String myPagePayment2(Bill2 bill) {
-		
+	public String myPagePayment2(Bill2 bill
+								,Model model) {
 		System.out.println(bill);
-		
-		billService.addBill2(bill);
 		
 		return "redirect:/user/myPagePayment2";
 	}
-	
-	
-	
 	@PostMapping("/paymentComplete")
 	public String paymentComplete(Bill2 bill) {
-		
 		System.out.println(bill);
-		
 		billService.addBill2(bill);
 		
 		return "/user/payment/paymentComplete";
@@ -139,11 +133,14 @@ public class PaymentController {
 	}
 	
 	@PostMapping("payment")
-	public String yeyakPayment(@RequestParam(name = "laundryName") String laundryName,
-							@RequestParam(name = "goodsName") String goodsName,
-							@RequestParam(name = "bill") String bill,
+	public String yeyakPayment(Bill2 bill,
 							Model model,
+							@RequestParam(name="goodsOption", required = false) String goodsOption,
+							@RequestParam(name="sumFinal", required = false) String sumFinal,
+							@RequestParam(name="request", required = false) String request,
 							HttpSession session) {
+		String laundryName = bill.getLaundryName();
+		String goodsName   = bill.getGoodsName();
 		
 		List<Laundry> laundryGoodsNameAndPrice = laundryService.getLaundryGoodsNameAndPrice(laundryName, goodsName);
 		
@@ -172,6 +169,9 @@ public class PaymentController {
 		model.addAttribute("laundryName", laundryName);
 		model.addAttribute("memberlevel", memberlevel);
 		model.addAttribute("jjname", jjname);
+		model.addAttribute("goodsOption", goodsOption);
+		model.addAttribute("sumFinal", sumFinal);
+		model.addAttribute("request", request);
 		
 		
 		return "user/payment/payment";

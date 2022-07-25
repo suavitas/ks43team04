@@ -41,9 +41,11 @@
 	<input name="laundryCode" type="hidden" th:value="${l.laundryCode}">
 	<input name="memberId" type="hidden" th:value="${sessionId}">
 	<input name="goodsName" type="hidden" th:value="${ls.goodsName}">
-	<input name="totalPrice" type="hidden" th:value="${ls.goodsPrice}">
+	<input name="totalPrice" type="hidden" th:value="${sumFinal}">
+	<input name="skillCate" type="hidden" th:value="${goodsOption}">
 	<input name="laundryName" type="hidden" th:value="${l.laundryName}">
-	<input name="request" type="hidden" th:value="${bill}">
+	<input name="request" type="hidden" th:value="${request}">
+	<!-- <input name="billCode" type="hidden" th:value="${request}"> -->
 	<input name="addPoint" class="add-point2" type="hidden">
 				<div class="product-area">
 					
@@ -56,6 +58,7 @@
 							<col width="160">
 							<col width="160">
 							<col width="160">
+							<col width="160">
 							<col>
 						</colgroup>
 						<thead class="point-plus">
@@ -63,6 +66,7 @@
 								<th scope="col" class="product">주문정보</th>
 								<th scope="col">세탁소</th>
 								<th scope="col">세탁물</th>
+								<th scope="col">세탁기능</th>
 								<th scope="col">배송비</th>
 								<th scope="col" class="bg-point">할인</th>
 								<th scope="col" class="col-price">세탁비용(할인, 배달료 포함)</th>
@@ -73,12 +77,11 @@
 								<tr>
 									<td><img th:src=@{/user/assets/img/lovetruck.png}></td>
 									<td rowspan="1" th:text="${l.laundryName}">세탁소명</td>
-									
 									<td th:text="${ls.goodsName}"></td>
-									
+									<td th:text="${goodsOption}"></td>
 									<td rowspan="1">3,000원</td>
 									<td>1,000원</td>
-									<td th:text="${#numbers.formatInteger(ls.goodsPrice,3,'COMMA')+'원'}">가격</td>
+									<td th:text="${#numbers.formatInteger(sumFinal,3,'COMMA')+'원'}">가격</td>
 								</tr>
 							
 						</tbody>
@@ -167,19 +170,8 @@
 								<div class="comments deliveryMemo">
 
 									<div class="dropdown-wrap">
-										<input type="text" placeholder="요청사항을 직접 입력합니다" title="배송 메세지"
-											name="deliveryMemo" th:value="${bill}"
+										<input type="text" placeholder="요청사항을 직접 입력합니다" title="배송 메세지" name="request" 
 											class="deli-msg placeholder -deliveryForm deliverySingleMemo -click(nmp.front.order.order-sheet.showLatestDeliveryMemo()) -stopDefault">
-										<input type="text" placeholder="요청사항을 직접 입력합니다" title="배송 메세지"
-											name="deliveryMemos.2022062084358289" th:value="${bill}"
-											class="deli-msg placeholder -deliveryForm particularDeliveryMemo deliveryProductMemo -click(nmp.front.order.order-sheet.showLatestDeliveryMemo(2022062084358289)) -stopDefault"
-											style="display: none;"> <a href="#" title="배송메세지 선택"
-											class="dropdown deliverySingleMemo -click(nmp.front.order.order-sheet.showLatestDeliveryMemo(,deliverySingleMemo)) -stopDefault"><span
-											class="dropdown-arr -stopDefault"></span></a> <a href="#"
-											title="배송메세지 선택"
-											class="dropdown deliveryProductMemo -click(nmp.front.order.order-sheet.showLatestDeliveryMemo(2022062084358289,particularDeliveryMemo)) -stopDefault"
-											style="display: none;"><span
-											class="dropdown-arr -stopDefault"></span></a>
 									</div>
 									<span class="length deliverySingleMemo"><em
 										class="deliveryMemoRealLength">0</em>/<em
@@ -416,9 +408,9 @@
 									</div>
 
 									<div class="tab-pane fade" id="pills-profile" role="tabpanel"
-										aria-labelledby="pills-profile-tab">...</div>
+										aria-labelledby="pills-profile-tab">*결제버튼 클릭 시 카카오페이 결제가 이루어집니다.</div>
 									<div class="tab-pane fade" id="pills-contact" role="tabpanel"
-										aria-labelledby="pills-contact-tab">...</div>
+										aria-labelledby="pills-contact-tab">*결제버튼 클릭 시 카카오페이 카드 결제가 이루어집니다.</div>
 								</div>
 
 
@@ -431,7 +423,7 @@
 						<div class="sum">
 							<strong class="price-sum-title">주문금액</strong>
 							<p class="price-sum-detail">
-								<em class="-totalPayPrice" th:text="${#numbers.formatInteger(ls.goodsPrice,3,'COMMA')+'원'}"></em>
+								<em class="-totalPayPrice" th:text="${#numbers.formatInteger(sumFinal,3,'COMMA')+'원'}"></em>
 							</p>
 						</div>
 						<ul class="calc-list">
