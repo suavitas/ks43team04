@@ -5,6 +5,7 @@ public class Bill2 {
 	private String memberId;
 	private String goodsName;
 	private String totalPrice;
+	private String skillCate;
 	private String laundryName;
 	private String refund;
 	private String registTime;
@@ -100,8 +101,16 @@ public class Bill2 {
 	@Override
 	public String toString() {
 		return "Bill2 [billCode=" + billCode + ", memberId=" + memberId + ", goodsName=" + goodsName + ", totalPrice="
-				+ totalPrice + ", laundryName=" + laundryName + ", refund=" + refund + ", registTime=" + registTime
-				+ ", request=" + request + ", addPoint=" + addPoint + "]";
+				+ totalPrice + ", skillCate=" + skillCate + ", laundryName=" + laundryName + ", refund=" + refund
+				+ ", registTime=" + registTime + ", request=" + request + ", addPoint=" + addPoint + "]";
+	}
+
+	public String getSkillCate() {
+		return skillCate;
+	}
+
+	public void setSkillCate(String skillCate) {
+		this.skillCate = skillCate;
 	}
 	
 	
