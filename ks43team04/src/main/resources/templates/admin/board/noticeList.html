@@ -15,7 +15,7 @@
 		<script type="text/javascript">
 				
 		$(document).ready(function () {
-		    $('#datatable-fixed-header').DataTable({
+		    $('.table').DataTable({
 		    	stateSave: true,
 		    	destroy : true,
 		    	ordering: false,
@@ -87,7 +87,7 @@
 										<div class="card-box table-responsive">
 											<a th:href="@{/admin/noticeForm}" class="btn btn-secondary" style="z-index: 1;">등록하기</a>	
 											<!-- 테이블 -->							
-											<table id="datatable-fixed-header" class="table table-striped table-bordered" style="width: 100%;">
+											<table class="table table-striped table-bordered" style="width: 100%;">
 												<thead>
 													<tr>
 														<th style="width: 7%;">번호</th>

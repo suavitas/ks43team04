@@ -112,6 +112,21 @@ public class AdminBoardController {
 		return "admin/asListById";
 	}
 	
+	/*고장 신고 삭제*/
+	@PostMapping("/asListById")
+	public String asListById(@RequestParam(name = "asCode", required = false) String asCode
+						,@RequestParam(name = "asState", required = false) String asState
+						,HttpSession session, As as) {
+		String sessionId = (String) session.getAttribute("SID");
+		Member member = memberService.getMemberInfoById(sessionId);		
+		if("대기".equals(as.getAsState())) {
+			if("level_code_02".equals(member.getLevelCode())) {				
+				boardService.asDel(as);			
+			}
+		}
+		return "redirect:/admin/asListById";
+	}
+	
 	/*고장 신고 상세 조회*/
 	@GetMapping("/asDetail")
 	public String asDetail(@RequestParam(name = "asCode", required = false) String asCode
@@ -192,7 +207,7 @@ public class AdminBoardController {
 		return "redirect:/admin/asListById";
 	}
 	
-	/*고장 신고 접수, 완료, 방문(예정일)변경, 삭제*/
+	/*고장 신고 접수, 완료, 방문(예정일)변경*/
 	@PostMapping("/asList")
 	public String asList(@RequestParam(name = "asCode", required = false) String asCode
 						,@RequestParam(name = "asState", required = false) String asState
@@ -202,8 +217,6 @@ public class AdminBoardController {
 		if("대기".equals(as.getAsState())) {
 			if("level_code_00".equals(member.getLevelCode())) {
 				boardService.asReceipt(as);					
-			}else if("level_code_02".equals(member.getLevelCode())) {				
-				boardService.asDel(as);			
 			}
 		}else if("접수".equals(as.getAsState())) {
 			boardService.asEnd(as);
