@@ -76,13 +76,13 @@ $(document).ready(function(){
     	const 
     	 current = 			moment().startOf('day')
     	,todayDate = 		moment(current).format('YYYY-MM-DD')
-    	,todayDate2 = 		moment(current).format('YYYY-MM-DD')
+    	,todayDate2 = 		moment(current).add(1, 'days').format('YYYY-MM-DD')
     	,weekDate =  		moment(current, "YYYY-MM-DD").subtract(7, 'days').format('YYYY-MM-DD')
     	,monthDate = 		moment(current, "YYYY-MM-DD").subtract(1, 'months').format('YYYY-MM-DD')
     	,threeMonthDate = 	moment(current, "YYYY-MM-DD").subtract(3, 'months').format('YYYY-MM-DD')
     	,sixMonthDate = 	moment(current, "YYYY-MM-DD").subtract(6, 'months').format('YYYY-MM-DD')
     	,YearDate = 		moment(current, "YYYY-MM-DD").subtract(1, 'years').format('YYYY-MM-DD');
-    	
+    	console.log('작동');
     	
     	$('#btn-date1').click(function(){
     		$('#startDate').val(todayDate);
@@ -93,32 +93,32 @@ $(document).ready(function(){
     	$('#btn-date2').click(function(){
     		
     		$('#startDate').val(weekDate);
-    		$('#endDate').val(todayDate);
+    		$('#endDate').val(todayDate2);
     	});
     	
     	$('#btn-date3').click(function(){
     		
     		$('#startDate').val(monthDate);
-    		$('#endDate').val(todayDate);
+    		$('#endDate').val(todayDate2);
     		
     	});
     	
     	$('#btn-date4').click(function(){
     		
     		$('#startDate').val(threeMonthDate);
-    		$('#endDate').val(todayDate);
+    		$('#endDate').val(todayDate2);
     	});
     	
     	$('#btn-date5').click(function(){
     		
     		$('#startDate').val(sixMonthDate);
-    		$('#endDate').val(todayDate);
+    		$('#endDate').val(todayDate2);
     	});
     	
     	$('#btn-date6').click(function(){
     		
     		$('#startDate').val(YearDate);
-    		$('#endDate').val(todayDate);
+    		$('#endDate').val(todayDate2);
     	});
     	
     });
