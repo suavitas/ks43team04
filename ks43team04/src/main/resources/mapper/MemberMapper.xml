@@ -411,7 +411,7 @@
 			   final_state
 		   )
 		   VALUES (
-			   sf_new_memberOutCode2(),
+			   sf_new_memberOutCode(),
 			   #{memberId}, 
 			   #{memberOutReason}, 
 			   NOW(), 

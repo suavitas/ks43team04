@@ -13,6 +13,7 @@
 <th:block layout:fragment="customJsScript2">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 		<script type="text/javascript">
 			//달력 오류 수정
 			var cdate = document.querySelectorAll('.cdate');
@@ -45,10 +46,10 @@
 				//기간(버튼)별 조건 검색
 				$(document).on('click', '.dateBtnGroup', function(){
 					$('form').remove('#testForm')
-					
+										
 					var startDate = $('input[name="startDate"]').val();
 					var endDate = $('input[name="endDate"]').val();
-					
+										
 					var dateBtnForm = $('<form></form>');
 					
 					dateBtnForm.attr("id", "testForm");
@@ -60,7 +61,8 @@
 					dateBtnForm.append($('<input/>', {type: 'hidden', name: 'endDate', value: endDate}));
 					
 					dateBtnForm.appendTo('body');
-					
+
+
 					dateBtnForm.submit();
 				});
 				

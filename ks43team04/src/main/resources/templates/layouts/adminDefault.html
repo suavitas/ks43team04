@@ -8,7 +8,7 @@
          <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                <div class="navbar nav_title" style="border: 0;">
-                  <a href="/admin" class="site_title"><i class="fa fa-paw"></i> <span>내 손안의 세탁소</span></a>
+                  <a href="/admin" class="site_title"><i class="fa fa-home"></i> <span>내 손안의 세탁소</span></a>
                </div>
 
                <div class="clearfix"></div>
@@ -16,11 +16,11 @@
                  <!-- menu profile quick info -->
                <div class="profile clearfix">
                   <div class="profile_pic">
-                     <!-- <img src="/user/testimonail/승현.png" class="img-circle profile_img"> --> 
+                     <img src="/user/testimonail/승현.png" class="img-circle profile_img">
                   </div>
                   <div class="profile_info">
-                     <span>Welcome,</span>
-                     <h2 style="color: #18F0FC">[[${session.SNAME}]] 님</h2>
+                     <span>Welcome ,</span>
+                     <h2 style="color: #18F0FC; text-style: bold;">[[${session.SNAME}]] 님</h2>
                   </div>
                </div>
                <!-- /menu profile quick info -->
@@ -120,7 +120,9 @@
     <script th:src="@{/admin/vendors/jszip/dist/jszip.min.js}"></script>
     <script th:src="@{/admin/vendors/pdfmake/build/pdfmake.min.js}"></script>
     <script th:src="@{/admin/vendors/pdfmake/build/vfs_fonts.js}"></script>
-
+	
+	<script th:src="@{/admin/js/ui/jquery-ui.min.js}"></script>
+	<script th:src="@{/admin/vendors/jquery/dist/searchDate.js}"></script>
     <!-- Custom Theme Scripts -->
     <script th:src="@{/admin/build/js/custom.min.js}"></script>
 	
