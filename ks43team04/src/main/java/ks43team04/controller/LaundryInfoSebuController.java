@@ -3,6 +3,7 @@ package ks43team04.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,9 +13,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import ks43team04.dto.HolidayList;
 import ks43team04.dto.IlbanSkill;
 import ks43team04.dto.Laundry;
 import ks43team04.dto.LaundryInfoSebu;
@@ -39,6 +46,8 @@ public class LaundryInfoSebuController {
       this.yeyakService = yeyakService;
       this.memberService = memberService;
    }
+   
+   
    
    /*test*/
    @GetMapping("/laundryInfo")
@@ -85,6 +94,23 @@ public class LaundryInfoSebuController {
 	      System.out.println(laundryInfo);
       return "user/laundryInfo";
    }
+   
+   @PostMapping("/laundryDateCheck")
+   @ResponseBody
+   public String holidayList(@RequestBody Map<String, String> paramMap) throws JsonProcessingException {
+	   log.info("Map: {}",paramMap);
+	   String laundryCode = paramMap.get("laundryCode");
+	   String yeyakDate = paramMap.get("yeyakDate");
+	   HolidayList holidayList = laundryInfoSebuService.dateCheck(laundryCode, yeyakDate);
+	   
+	   ObjectMapper om  = new ObjectMapper();
+	   
+	   String jsonDelivery = om.writeValueAsString(holidayList);
+	   
+	return jsonDelivery;   
+   }
+   
+   
    /*매장찾기*/
    @GetMapping("/searchmap/searchMap")
    public String userMain() {

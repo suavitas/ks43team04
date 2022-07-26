@@ -205,6 +205,9 @@
 									<tr>
 										<td>세탁소 명</td>
 										<td th:text="${laundryInfo.laundryName}"></td>
+										<td>
+											<input type="hidden" th:value="${laundryInfo.laundryCode}" id="hiddenCode">
+										</td>
 									</tr>
 
 									<tr>
@@ -722,10 +725,33 @@
 			});
 			$('#submit-button').on('click', function() {
 				
-				$sumFinal = $('.sumFinal').html();
-				$('#sumFinal').val($sumFinal);
-				console.log($('#sumFinal').val());
-				$('#paymentForm').submit();
+				const data = {
+		                laundryCode    : $('#hiddenCode').val(),
+		                yeyakDate      : $('.currentDate').val()	
+		             };
+				$.ajax({
+					 url: '/user/laundryDateCheck'
+					,type: 'POST'
+					,dataType: 'json'
+					,contentType: 'application/json; charset=utf-8'
+					,data: JSON.stringify(data)
+				})
+				.done(function (response) {
+                	console.log(response);
+                	// 화면에서 맨처음 아이디를 제외한 모든 입력하는 요소는 비활성화 (HTML 속성 추가 disabled="disabled") 
+					// 아이디 중복이 발생 하지않은 경우(회원가입 O) 입력하는 요소는 활성화
+					if(response == null) {
+						$sumFinal = $('.sumFinal').html();
+						$('#sumFinal').val($sumFinal);
+						console.log($('#sumFinal').val());
+						$('#paymentForm').submit();
+					}else{
+						alert(response.yearlyHolidayName + "은 휴무입니다.");
+					}
+                })
+                .fail(function (e) {
+                   console.log(e);
+                })
 			})
 		});
 
@@ -802,7 +828,6 @@
 				$(this).parent().remove();
 			});
 	
-
 		
 		/*수거배송 신청예약 폼 내일날짜로 셋팅*/
 		var currentDates = document.querySelectorAll('.currentDate');
@@ -818,6 +843,9 @@
 			currentDateTimes[i].value = tomorrowDate.toISOString()
 					.slice(11, 16);
 		}
+		
+	 	
+		
 		
 	</script>
 </th:block>
