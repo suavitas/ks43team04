@@ -27,7 +27,14 @@ public class AdminMemberService {
 		this.adminMemberMapper = adminMemberMapper;
 		this.memberMapper = memberMapper;
 	}
+	
+	//관리자페이지 탈퇴 대기사유 작성 전달 
+	public int getMemberOutMemo(MemberOut memberout) {
+		int result = adminMemberMapper.memberOutWaitMemo(memberout);
+		return result;
+	}
 
+	
 	//관리자페이지 등급관리 삭제
 	public int removeUserlevel(Map<String, String> levelCode){
 		adminMemberMapper.removeUserlevel(levelCode);

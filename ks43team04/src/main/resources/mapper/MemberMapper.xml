@@ -83,6 +83,20 @@
 		<result column="admin_level_code" 		property="adminLevelCode"/>
 		<result column="regist_time" 			property="registTime"/>
 	</resultMap>
+	
+	<resultMap type="MemberOut" 				id="memberOutResultMap">
+			<id column="m_out_code" 				property="memberOutCode"/>
+			<result column="m_id" 					property="memberId"/>
+			<result column="m_out_reason" 			property="memberOutReason"/>
+			<result column="m_out_request_time" 	property="memberOutRequestTime"/>
+			<result column="m_out_okay_time" 		property="memberOutOkayTime"/>
+			<result column="m_out_okay_state" 		property="memberOutOkayState"/>
+			<result column="m_not_okay_reason" 		property="memberNotOkayReason"/>
+			<result column="admin_level_code" 		property="adminLevelCode"/>
+			<result column="regist_time" 			property="registTime"/>
+			<result column="change_round" 			property="changeRound"/>
+			<result column="final_state" 			property="finalState"/>
+		</resultMap>
 
 	<select id="ilbanGoodsPriceList" resultMap="laundryResultMap">
 		/*일반세탁소 상품가격 리스트(사용중)*/
@@ -195,10 +209,6 @@
 			l.level_code = 'level_code_03'
 		LIMIT #{startRow}, #{rowPerPage};
 	</select>
-	
-	
-	
-	
 	
 	
 	
@@ -345,6 +355,7 @@
 		</update>
 		
 		<select id="getMemberOutInfoById" parameterType="String" resultType="MemberOut">
+			/* 대기회원 조회 (대기 회원 탈퇴시도 불가) */
 			SELECT 
 				m_out_code 			as memberOutCode,
 				m_id				as memberId, 
