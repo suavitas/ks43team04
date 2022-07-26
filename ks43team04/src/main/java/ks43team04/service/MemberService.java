@@ -21,14 +21,12 @@ public class MemberService {
 		this.memberMapper = memberMapper;
 		this.adminMemberMapper = adminMemberMapper;
 	}
-	
-	//탈퇴 대기 회원조회
+	//탈퇴 대기 조회
 	public MemberOut getMemberOutInfoById(String memberId) {
-		MemberOut memberout = memberMapper.getMemberOutInfoById(memberId);
-		return memberout;
+		MemberOut result = memberMapper.getMemberOutInfoById(memberId);
+		return result;
 	}
-
-
+	
 	//탈퇴 자동승인 회원(고객) 탈퇴 
 	public int removeMember(Member member, String memberOutReason) {
 		String memberId = member.getMemberId();
@@ -48,7 +46,7 @@ public class MemberService {
 		memberMapper.getMemberInfoById(memberId);
 		
 		int removeLaundry = memberMapper.removeLaundry(memberId, memberOutReason);
-		
+
 		return removeLaundry;
 	}	
 	
@@ -72,7 +70,7 @@ public class MemberService {
 	//일반, 무인 점주 회원가입
 	public int addMemberLaundry(Laundry laundry) {		
 		int addMemberLaundry = memberMapper.addMemberLaundry(laundry);		
-		return addMemberLaundry;	
+		return addMemberLaundry;
 	}
 		
 	//회원 상세정보 조회

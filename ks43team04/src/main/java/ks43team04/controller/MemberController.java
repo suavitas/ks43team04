@@ -205,7 +205,7 @@ public class MemberController {
 		 String memberId = member.getMemberId();
 		 String memberPw = member.getMemberPw();
 		 Member memberCheck = memberService.getMemberInfoById(memberId);
-		 MemberOut memberOutCheck = memberService.getMemberOutInfoById(memberId);
+		 MemberOut memberOutCheck = memberService.getMemberOutInfoById(memberId); //대기(점주 탈퇴성공 후 대기상태) 상태라면 탈퇴 불가 
 		 System.out.println(memberId);
 		 System.out.println(memberOutReason);
 		 
@@ -251,16 +251,18 @@ public class MemberController {
 	 * @return
 	 */
 	@GetMapping("/removeMember")
-	public String removeMember(@RequestParam(name="memberId", required = false) String memberId
-							  ,@RequestParam(name="result", required = false) String result
+	public String removeMember(@RequestParam(name="result", required = false) String result
 							  ,Model model
 							  ,HttpSession session) {
 		
 		String sessionName = (String) session.getAttribute("SNAME");
+		String memberId    = (String) session.getAttribute("SID");
+		MemberOut memberOut = memberService.getMemberOutInfoById(memberId);
 		
 		model.addAttribute("sessionName", sessionName);
 		model.addAttribute("title","회원 탈퇴 화면");
 		model.addAttribute("memberId", memberId);
+		model.addAttribute("memberOut", memberOut);
 		
 		if(result != null) model.addAttribute("result", result);
 		
@@ -312,21 +314,21 @@ public class MemberController {
 	   */
 	  @PostMapping("/modifyUser") 
 	  public String modifyUser(Member member, Laundry laundry, Model model) {	  
-	  log.info("마이페이지 상세보기 수정정보:{}", member);
-	  
-	  Map<String, Object> paramMap = new HashMap<>();
-	  
-	  System.out.println(member+"<<<<<<<<<<member 값");
-	  System.out.println(laundry+"<<<<<<<<<<<<<laundry 값");
-	  
-	  paramMap.put("member", member);
-	  if(laundry.getLaundryCode() != null) {
-		  paramMap.put("laundry", laundry);
-	  }	  
-	  System.out.println("------------------------------------------");	  
-	  memberService.modifyUser(paramMap);
-	  model.addAttribute("member", member);
-	  return "redirect:/user/myPage";
+		  log.info("마이페이지 상세보기 수정정보:{}", member);
+		  
+		  Map<String, Object> paramMap = new HashMap<>();
+		  
+		  System.out.println(member+"<<<<<<<<<<member 값");
+		  System.out.println(laundry+"<<<<<<<<<<<<<laundry 값");
+		  
+		  paramMap.put("member", member);
+		  if(laundry.getLaundryCode() != null) {
+			  paramMap.put("laundry", laundry);
+		  }	  
+		  System.out.println("------------------------------------------");	  
+		  memberService.modifyUser(paramMap);
+		  model.addAttribute("member", member);
+		  return "redirect:/user/myPage";
 	  }
 	
 	/**

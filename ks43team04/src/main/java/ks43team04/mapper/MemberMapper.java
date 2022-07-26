@@ -11,7 +11,7 @@ import ks43team04.dto.MemberOut;
 
 @Mapper
 public interface MemberMapper {
-	
+
 	//탈퇴 대기회원 조회
 	public MemberOut getMemberOutInfoById(String memberId);
 	

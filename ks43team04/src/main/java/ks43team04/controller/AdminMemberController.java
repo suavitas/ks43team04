@@ -43,36 +43,17 @@ public class AdminMemberController {
 		this.adminMemberMapper = adminMemberMapper;
 		this.userMapper = userMapper;
 	}
-	
-	/*
-	 * //관리자페이지 관리자 회원가입(등록) 처리
-	 * 
-	 * @PostMapping("/addMemberAdmin") public String addMemberAdmin(Member member) {
-	 * log.info("회원가입폼 시작"); System.out.println(member);
-	 * 
-	 * adminMemberService.addMemberAdmin(member); log.info("회원가입폼에서 입력받은 데이터:{}",
-	 * member);
-	 * 
-	 * return "redirect:/admin"; }
-	 */	
-	
-	/*
-	 * //관리자페이지 관리자 회원가입(등록)
-	 * 
-	 * @GetMapping("/addMemberAdmin") public String addMemberAdmin(Model model
-	 * ,@RequestParam(name="levelCode", required=false) String levelCode){
-	 * model.addAttribute("title", "관리자페이지 관리자 등록"); model.addAttribute("levelCode",
-	 * levelCode);
-	 * 
-	 * return "adminmember/addMemberAdmin"; }
-	 */
+
 	
 	//관리자페이지 탈퇴 대기사유 작성 전달 
-	@GetMapping("/memberOutWaitMemo")
+	@PostMapping("/memberOutWaitMemo")
 	public String memberOutWaitMemo(Model model
-								   ,@RequestParam(name="memberId", required=false) String memberId){
-		model.addAttribute("memberId", memberId);
-		return "adminmember/memberOutWaitMemo";
+								   ,MemberOut memberOut){
+		model.addAttribute("memberId", memberOut.getMemberId());
+		adminMemberService.getMemberOutMemo(memberOut);
+		
+		log.info("작동-------------------");
+		return "redirect:/admin/adminMemberOut";
 	}
 	
 	//관리자페이지 등급기준 삭제

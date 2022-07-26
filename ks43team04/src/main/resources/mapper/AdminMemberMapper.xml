@@ -83,6 +83,16 @@
 			</association>
 		</resultMap>
 		
+		<update id="memberOutWaitMemo" parameterType="MemberOut"> 
+			/* 탈퇴 사유 등록 */
+			UPDATE
+				tb_member_out AS m
+			SET  
+				m.m_not_okay_reason = #{memberNotOkayReason}
+			WHERE 
+				m.m_id = #{memberId};
+		</update>
+		
 		<delete id="removeUserlevel2" parameterType="String">
 			/* 등급관리 삭제 (2) */
 			DELETE 

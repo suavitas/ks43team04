@@ -191,8 +191,7 @@
 						</div>	
 					</form>			
                                   
-						<form th:action="@{/admin/adminMemberOut}" method="get">
-						</form>
+					
 						<!-- 완료 -->
 						<div class="tab-content" id="myTabContent"  style="overflow:hidden;">
 						<div class="tab-pane fade active show" id="total" role="tabpanel" aria-labelledby="home-tab">
@@ -275,6 +274,7 @@
 										<div style="text-align: center;">
 											<a th:href="@{/admin/adminRemove(memberId=${l.memberId} , memberOutReason=${l.memberOutReason})}"><button type="button" class="btn btn-warning btn-sm">승인</button></a>
 										</div>
+										<!-- modal -->
 										<div class="modal fade" th:id="${'myModal' + status.count}" tabindex="-1" role="dialog" th:aria-labelledby="${'myModal' + status.count + 'Label'}">
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">
@@ -282,23 +282,25 @@
 													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 													<h4 class="modal-title"> 대기 사유작성</h4>	
 												</div>
-												<div class="modal-body">
-													<p>
-														<textarea name="" id="" placeholder="대기 사유를 작성해주세요." style="resize: none; width: 400px; height: 100px;" ></textarea>
-													</p>												
-												</div>
-												<div class="modal-footer">
-													<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-													<button type="submit" class="btn btn-primary">저장하기</button>
-												</div>	
+												<form th:action="@{/admin/memberOutWaitMemo}" method="post">
+													<div class="modal-body">
+														<textarea name="memberNotOkayReason" id="memberOutWaitMemo" placeholder="대기 사유를 작성해주세요." style="resize: none; width: 400px; height: 100px;" ></textarea>											
+														<div class="modal-footer">
+															<input type="hidden" name="memberId" th:value="${l.memberId}">
+															<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+															<input type="submit" class="btn btn-primary" th:value="저장하기">
+														</div>
+													</div>
+												</form>	
 											</div>
 										</div>
 									</div>	
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+									<!-- modal -->
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 					<!-- <nav aria-label="Page navigation example">
 						<ul class="pagination justify-content-center">
 							<li class="page-item">

@@ -151,17 +151,19 @@
 		          <div class="input-form-backgroud row">
 		            <div class="input-form col-md-12 mx-auto" >
 		            
-		            		<h4 class="mb-3">📢탈퇴 대기 사유</h4>
-           						<div id="cid_1" class="form-input-wide" data-layout="full">
-                  					<div data-component="separator" style="border-top:1px solid rgb(0,0,0); clear:both;"></div>
-           						</div>
-             					<div class="point-summary" style="border: 1px solid #dadddf; padding: 30px 0 30px; margin-bottom: 5%;">
-									<div class="mb-3" style="margin: 0 auto;"> 
-										<div>
-											<p class="form-control" style="width:500px; height:100px;"/>												
-										</div>
+		            		<th:block th:if="${session.SLEVEL == 'level_code_02' || session.SLEVEL == 'level_code_03'}">
+			            		<h4 class="mb-3">📢탈퇴 대기 사유</h4>
+	           						<div id="cid_1" class="form-input-wide" data-layout="full">
+	                  					<div data-component="separator" style="border-top:1px solid rgb(0,0,0); clear:both;"></div>
+	           						</div>
+	             					<div class="point-summary" style="border: 1px solid #dadddf; padding: 30px 0 30px; margin-bottom: 5%;">
+										<div class="mb-3" style="margin: 0 auto;"> 
+											<div>
+												<textarea class="form-control" style="width:500px; height:100px;" readonly="readonly">[[${memberOut.memberNotOkayReason}]]</textarea>												
+											</div>
+										</div>	
 									</div>	
-								</div>		
+								</th:block>	
              						
              					<h4 class="mb-3">회원 정보 확인</h4>
              						<div id="cid_1" class="form-input-wide" data-layout="full">

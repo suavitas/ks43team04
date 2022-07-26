@@ -15,6 +15,9 @@ import ks43team04.dto.UserLevel;
 @Mapper
 public interface AdminMemberMapper {
 	
+	//관리자페이지 탈퇴 대기사유 작성 전달 
+	public int memberOutWaitMemo(MemberOut memberout);
+	
 	//관리자페이지 등급관리 삭제 (2)
 	public int removeUserlevel2(Map<String, String> levelCode);
 	
@@ -146,6 +149,7 @@ public interface AdminMemberMapper {
 	
 	/* 로그인 이력 조회 (페이징) */
 	public List<Map<String, Object>> getLoginHistory(Map<String, Object> paramMap);
+
 
 
 
