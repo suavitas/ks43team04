@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ks43team04.dto.HolidayList;
 import ks43team04.dto.LaundryInfoSebu;
 import ks43team04.mapper.LaundryInfoSebuMapper;
 
@@ -26,7 +27,10 @@ public class LaundryInfoSebuService {
 		LaundryInfoSebu laundryInfo = laundryInfoSebuMapper.getLaundryInfoSebu(search);
 		return laundryInfo;
 	}
-
+	public HolidayList dateCheck(String laundryCode, String yeyakDate) {
+		HolidayList holidayList = laundryInfoSebuMapper.dateCheck(laundryCode, yeyakDate);
+		return holidayList;
+	}
 
 
 }

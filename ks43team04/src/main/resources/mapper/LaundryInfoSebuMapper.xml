@@ -109,9 +109,19 @@
 	   	  
    </select>
    
-
-   
-   
+   <select id="dateCheck"  parameterType="String" resultType="HolidayList">
+	   SELECT 
+			h.laundry_code 			AS laundryCode
+			,h.yearly_holiday_date  AS yearlyHolidayDate
+			,h.yearly_holiday_name	AS yearlyHolidayName
+		FROM 
+			tb_holiday AS h
+		WHERE
+			h.laundry_code = #{laundryCode}
+		and
+			h.yearly_holiday_date = #{yeyakDate};
+			
+	</select>
    
    
 </mapper>
