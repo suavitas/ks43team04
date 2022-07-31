@@ -83,6 +83,38 @@
 			</association>
 		</resultMap>
 		
+		<resultMap type="Refund" 					id="refundResultMap">
+			<result column="refund_code" 			property="refundCode"/>
+			<result column="bill_code" 				property="billCode"/>
+			<result column="refund_status" 			property="refundStatus"/>
+			<result column="refund_why_code" 		property="refundWhyCode"/>
+			<result column="regist_time" 			property="registTime"/>
+			<result column="admin_level_code"		property="adminLevelCode"/>
+			<association property="refundWhy"		javaType="RefundWhy">
+				<id 	 column="refund_why_code" 	property="refundWhyCode"/>
+				<result  column="refund_why_cate"	property="refundWhyCate"/>
+				<result  column="admin_level_code"	property="adminLevelCode"/>
+				<result  column="regist_time"		property="registTime"/>
+			</association>
+		</resultMap>
+		
+		<select id="getRefundList" parameterType="String" resultMap="refundResultMap">
+			/* 일반세탁소 관리 - 환불 신청 조회 */
+			SELECT 
+				r.refund_code, 
+				r.bill_code, 
+				r.refund_status, 
+				r.refund_why_code, 
+				r.regist_time,
+				rw.refund_why_cate
+			FROM 
+				tb_refund AS r 
+			INNER JOIN 
+				tb_refund_why AS rw 
+			ON
+				r.refund_why_code = rw.refund_why_code;
+		</select>
+		
 		<update id="memberOutWaitMemo" parameterType="MemberOut"> 
 			/* 탈퇴 사유 등록 */
 			UPDATE
