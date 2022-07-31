@@ -10,11 +10,15 @@ import ks43team04.dto.LoginHistory;
 import ks43team04.dto.Member;
 import ks43team04.dto.MemberLevel;
 import ks43team04.dto.MemberOut;
+import ks43team04.dto.Refund;
 import ks43team04.dto.UserLevel;
 
 @Mapper
 public interface AdminMemberMapper {
 	
+	//관리자페이지 일반세탁소 관리 - 환불 신청
+	public List<Refund> getRefundList();
+
 	//관리자페이지 탈퇴 대기사유 작성 전달 
 	public int memberOutWaitMemo(MemberOut memberout);
 	

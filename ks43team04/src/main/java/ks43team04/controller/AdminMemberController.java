@@ -23,6 +23,7 @@ import ks43team04.dto.LoginHistory;
 import ks43team04.dto.Member;
 import ks43team04.dto.MemberLevel;
 import ks43team04.dto.MemberOut;
+import ks43team04.dto.Refund;
 import ks43team04.dto.UserLevel;
 import ks43team04.mapper.AdminMemberMapper;
 import ks43team04.mapper.UserMapper;
@@ -44,6 +45,18 @@ public class AdminMemberController {
 		this.userMapper = userMapper;
 	}
 
+	//관리자페이지 일반세탁소 관리 - 환불 신청
+	@GetMapping("/laundryReturn")
+	public String refund(Model model){
+		log.info("환불 신청 목록");		
+		
+		model.addAttribute("title", "환불 신청 목록");
+		List<Refund> getRefundList = adminMemberService.getRefundList();
+		model.addAttribute("getRefundList", getRefundList);
+		System.out.println(getRefundList+"<---------getRefundList 리스트값");
+		
+		return "admin/laundryReturn";
+	}
 	
 	//관리자페이지 탈퇴 대기사유 작성 전달 
 	@PostMapping("/memberOutWaitMemo")

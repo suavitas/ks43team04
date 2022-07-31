@@ -11,6 +11,7 @@ import ks43team04.dto.LoginHistory;
 import ks43team04.dto.Member;
 import ks43team04.dto.MemberLevel;
 import ks43team04.dto.MemberOut;
+import ks43team04.dto.Refund;
 import ks43team04.dto.UserLevel;
 import ks43team04.mapper.AdminMemberMapper;
 import ks43team04.mapper.MemberMapper;
@@ -28,8 +29,14 @@ public class AdminMemberService {
 		this.memberMapper = memberMapper;
 	}
 	
+	//관리자페이지일반세탁소 관리 - 환불 신청
+	public List<Refund> getRefundList(){
+		List<Refund> laundryReturn = adminMemberMapper.getRefundList();
+		return laundryReturn;
+	}
+	
 	//관리자페이지 탈퇴 대기사유 작성 전달 
-	public int getMemberOutMemo(MemberOut memberout) {
+	public int getMemberOutMemo(MemberOut memberout){
 		int result = adminMemberMapper.memberOutWaitMemo(memberout);
 		return result;
 	}

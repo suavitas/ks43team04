@@ -26,13 +26,6 @@ public class AdminController {
 		return "admin/retrun";
 	}
 	
-	// 세탁소별 월별 환불 퍼센트
-
-	@GetMapping("/lundryReturn")
-	public String lundryReturn() {
-		return "admin/lundryReturn";
-	}
-
 	// 세탁소별 장비 현황
 
 	@GetMapping("/lundrymachine")
