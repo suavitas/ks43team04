@@ -1,0 +1,1000 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.BoardMapper">
+
+	<resultMap type="Board" 								id="boardResultMap">
+		<id column="board_idx" 								property="boardIdx"/>
+		<result column="board_menu_code" 					property="boardMenuCode"/>
+		<result column="board_idx" 							property="boardIdx"/>
+		<result column="m_id" 								property="memberId"/>
+		<result column="board_group_no" 					property="boardGroupNo"/>
+		<result column="board_order_no" 					property="boardOrderNo"/>
+		<result column="board_read_count" 					property="boardReadCount"/>
+		<result column="board_title" 						property="boardTitle"/>
+		<result column="board_content" 						property="boardContent"/>
+		<result column="board_secret" 						property="boardSecret"/>
+		<result column="board_add_file" 					property="boardAddFile"/>
+		<result column="board_add_file_name" 				property="boardAddFileName"/>
+		<result column="board_add_file_change_name" 		property="boardAddFileChangeName"/>
+		<result column="board_add_file_vol" 				property="boardAddFileVol"/>
+		<result column="regist_time" 						property="registTime"/>
+		<result column="update_time" 						property="updateTime"/>
+		<result column="comment_state" 						property="commentState"/>
+		<collection property="boardAttach" ofType="BoardAttach">
+			<id		column="file_idx"						property="fileIdx"/>
+			<result	column="origin_file"					property="originFile"/>
+			<result	column="save_file"						property="saveFile"/>
+			<result	column="file_size"						property="fileSize"/>
+			<result	column="file_path"						property="filePath"/>
+			<result	column="represent_img"					property="representImg"/>
+			<result	column="upload_id"						property="uploadId"/>
+			<result	column="upload_time"					property="uploadTime"/>
+			<result	column="delYn"							property="delYn"/>
+		</collection>
+	</resultMap>
+
+	<resultMap type="Event" 								id="eventResultMap">
+		<id 	column="event_code" 						property="eventCode"/>
+		<result column="m_id" 								property="memberId"/>
+		<result column="event_no" 							property="eventNo"/>
+		<result column="event_state" 						property="eventState"/>
+		<result column="event_title" 						property="eventTitle"/>
+		<result column="event_content" 						property="eventContent"/>
+		<result column="event_add_file" 					property="eventAddFile"/>
+		<result column="event_add_file_name" 				property="eventAddFileName"/>
+		<result column="event_add_file_change_name" 		property="eventAddFileChangeName"/>
+		<result column="event_add_file_vol" 				property="eventAddFileVol"/>
+		<result column="regist_time" 						property="registTime"/>
+		<result column="update_time" 						property="updateTime"/>
+		<result column="event_read_count" 					property="eventReadCount"/>
+		<collection property="boardAttach" ofType="BoardAttach">
+			<id		column="file_idx"						property="fileIdx"/>
+			<result	column="origin_file"					property="originFile"/>
+			<result	column="save_file"						property="saveFile"/>
+			<result	column="file_size"						property="fileSize"/>
+			<result	column="file_path"						property="filePath"/>
+			<result	column="represent_img"					property="representImg"/>
+			<result	column="upload_id"						property="uploadId"/>
+			<result	column="upload_time"					property="uploadTime"/>
+			<result	column="delYn"							property="delYn"/>
+		</collection>
+
+	</resultMap>
+	
+	<resultMap type="Review" id="reviewResultMap">
+		<id		column="review_code"			property="reviewCode"/>
+		<id		column="reveiw_num"				property="reveiwNum"/>
+		<result	column="laundry_code"			property="laundryCode"/>
+		<result	column="m_id"					property="memberId"/>
+		<result	column="review_content"			property="reviewContent"/>
+		<result	column="counting_star"			property="countingStar"/>
+		<result	column="regist_time"			property="registTime"/>
+		<collection property="LaundryList"         		ofType="LaundryList">
+	      <id column="laundry_code"                 	property="laundryCode"/>
+	      <result column="m_id"                      	property="memberId"/>
+	      <result column="level_code"                	property="levelCode"/>
+	      <result column="laundry_name"                 property="laundryName"/>
+	      <result column="laundry_state"                property="laundryState"/>
+	      <result column="laundry_post_num"             property="laundryPostNum"/>
+	      <result column="laundry_addr"                 property="laundryAddr"/>
+	      <result column="laundry_detail_addr"          property="laundryDetailAddr"/>
+	      <result column="laundry_tel"                	property="laundryTel"/>
+	      <result column="laundry_license_img"          property="laundryLicenseImg"/>
+	      <result column="laundry_img"                	property="laundryImg"/>
+	      <result column="skill_licence"                property="skillLicence"/>
+	      <result column="business_number"             	property="businessNumber"/>
+	      <result column="admin_level_code"             property="adminLevelCode"/>
+	      <result column="regist_time"               	property="registTime"/>
+		</collection>
+	</resultMap>
+	
+	<select id="myWritingListCount" resultType="int">
+		/* 내가 쓴 글 목록 총 row 수 */
+		SELECT
+			COUNT(b.board_idx)
+		FROM
+			tb_board AS b
+		where
+			b.m_id = #{memberId}
+		or
+			b.board_group_no
+				IN(
+					select
+						r.board_group_no
+						from
+							tb_board AS r
+						WHERE 
+							r.m_id = #{memberId})
+		AND 
+			b.board_order_no = 1
+	</select>		
+	
+	<select id="myWritingList" parameterType="map" resultMap="boardResultMap">
+	  	/* 내가 쓴 글 목록 조회 */
+				SELECT
+			b.board_menu_code
+			,b.board_idx
+			,b.board_secret
+			,b.m_id
+			,b.board_order_no
+			,b.board_title
+			,(select
+				IF(a.file_idx is null, false, true)) AS board_add_file
+			,b.m_id AS memberId
+			,(SELECT 
+				IFNULL(b.update_time, b.regist_time)) AS regist_time
+			,b.board_read_count
+			,b.comment_state
+			,ta.save_file
+			,ta.file_path
+			,ta.represent_img
+		FROM
+			tb_board AS b
+		left join
+			tb_attach_board as a
+		on
+			b.board_idx = a.board_idx
+		left JOIN
+			tb_attach AS ta
+		on
+			ta.file_idx = a.file_idx	
+		WHERE
+			b.board_menu_code
+				IN(	
+					SELECT 
+							r.board_menu_code
+						from
+							tb_board AS r
+						where
+							r.m_id = #{memberId})
+		AND
+			b.board_group_no
+				IN(
+					select
+						r.board_group_no
+						from
+							tb_board AS r
+						WHERE 
+							r.m_id = #{memberId})
+		AND 
+			b.board_order_no = 1
+		OR
+			b.m_id = #{memberId}
+		ORDER BY b.board_group_no DESC , b.board_order_no ASC;
+	</select>
+	
+	<update id="qnaCommentModify" parameterType="Board">
+		/* 문의사항 답변 글 수정 */
+			UPDATE 
+				tb_board
+			<trim prefix="SET" prefixOverrides=",">
+				<if test="boardTitle != null and boardTitle != ''">
+					board_title = #{boardTitle}
+				</if>
+				<if test="boardContent != null and boardContent != ''">
+					,board_content = #{boardContent}
+				</if>
+				<if test="boardSecret != null and boardSecret != ''">	
+					,board_secret = #{boardSecret}
+				</if>
+				<if test="updateTime = null or updateTime != null">	
+					,update_time = NOW()
+				</if>	
+			</trim>				
+			WHERE 
+				board_idx = #{boardIdx};
+
+	</update>
+	
+	<delete id="qnaRemove" parameterType="Board">
+		/* 문의사항 글 삭제 */
+		DELETE FROM tb_board 
+		WHERE 
+			board_menu_code = #{boardMenuCode}
+		and	
+			board_idx = #{boardIdx}
+	
+	</delete>	
+	
+	<update id="qnaModify" parameterType="Board">
+		/* 문의사항 글 수정 */
+			UPDATE 
+				tb_board
+			<trim prefix="SET" prefixOverrides=",">
+				<if test="boardMenuCode != null and boardMenuCode != ''">
+					board_menu_code = #{boardMenuCode}
+				</if>
+				<if test="boardTitle != null and boardTitle != ''">
+					,board_title = #{boardTitle}
+				</if>
+				<if test="boardContent != null and boardContent != ''">
+					,board_content = #{boardContent}
+				</if>
+				<if test="boardSecret != null and boardSecret != ''">	
+					,board_secret = #{boardSecret}
+				</if>
+				<if test="updateTime = null or updateTime != null">	
+					,update_time = NOW()
+				</if>	
+			</trim>				
+			WHERE 
+				board_idx = #{boardIdx};
+
+	</update>
+	
+	<update id="eventreadCount" parameterType="Event">
+		/* (이벤트)조회수 올리기 */
+		update 
+			tb_event AS e
+		<trim prefix="SET" prefixOverrides=",">
+		<if test="eventReadCount != null and eventReadCount != ''">
+			e.event_read_count = e.event_read_count + 1
+		</if>
+		</trim>	
+		WHERE 
+			e.event_code = #{eventCode};
+	
+	</update>
+	
+	<update id="readCount" parameterType="Board">
+		/* 조회수 올리기 */
+		update 
+			tb_board AS b
+		<trim prefix="SET" prefixOverrides=",">
+		<if test="boardReadCount != null and boardReadCount != ''">
+			b.board_read_count = b.board_read_count + 1
+		</if>
+		</trim>	
+		WHERE 
+			b.board_idx = #{boardIdx};
+	
+	</update>
+	
+	<delete id="noticeRemove" parameterType="Board">
+		/* 공지 글 삭제 */
+		DELETE FROM tb_board 
+		WHERE 
+			board_menu_code = #{boardMenuCode}
+		and	
+			board_idx = #{boardIdx}
+	
+	</delete>
+	
+	
+	<update id="noticeModify" parameterType="Board">
+		/* 공지 글 수정 */
+			UPDATE 
+				tb_board
+			<trim prefix="SET" prefixOverrides=",">	
+				<if test="boardTitle != null and boardTitle != ''">
+					board_title = #{boardTitle}
+				</if>
+				<if test="boardContent != null and boardContent != ''">
+					,board_content = #{boardContent}
+				</if>
+				<if test="boardAddFile != null and boardAddFile != ''">	
+					,board_add_file = #{boardAddFile}
+				</if>
+				<if test="boardAddFileName != null and boardAddFileName != ''">	
+					,board_add_file_name = #{boardAddFileName}
+				</if>
+				<if test="boardAddFileVol != null and boardAddFileVol != ''">	
+					,board_add_file_vol = #{boardAddFileVol}
+				</if>
+				<if test="updateTime = null or updateTime != null">	
+					,update_time = NOW()
+				</if>	
+			</trim>				
+			WHERE 
+				board_idx = #{boardIdx};
+	</update>
+	
+	
+	<delete id="eventRemove" parameterType="Event">
+		/* 이벤트 글 삭제 */
+		DELETE FROM tb_event 
+		WHERE 
+			event_code = #{eventCode};
+	
+	</delete>
+	
+	<update id="eventModify" parameterType="Event">
+		/* 이벤트 글 수정 */
+			UPDATE 
+				tb_event
+			<trim prefix="SET" prefixOverrides=",">	
+					event_state = #{eventState}
+				<if test="eventTitle != null and eventTitle != ''">
+					,event_title = #{eventTitle}
+				</if>
+				<if test="eventContent != null and eventContent != ''">
+					,event_content = #{eventContent}
+				</if>
+				<if test="updateTime = null or updateTime != null">	
+					,update_time = NOW()
+				</if>	
+			</trim>				
+			WHERE 
+				event_code = #{eventCode};
+	</update>
+	
+
+	
+	<insert id="eventForm" parameterType="Event">
+		/* 이벤트 등록 */
+		INSERT INTO tb_event
+		(event_code
+		, m_id
+		, event_no
+		, event_state
+		, event_title
+		, event_content
+		, event_add_file
+		, event_add_file_name
+		, event_add_file_change_name
+		, event_add_file_vol
+		, regist_time
+		, event_read_count)
+		VALUES (
+			(SELECT
+				max(e.event_code)+1
+			FROM
+				tb_event AS e)
+		, #{memberId}
+		, (SELECT
+				max(e.event_no)+1
+			FROM
+				tb_event AS e)
+		, '진행중'
+		, #{eventTitle}
+		, #{eventContent}
+		, '0'
+		, '0'
+		, '0'
+		, '0'
+		, NOW()
+		, 0);
+		<selectKey resultType="String" keyProperty="eventCode" order="AFTER">
+			SELECT
+				max(e.event_code)
+			FROM
+				tb_event AS e
+		</selectKey>
+	</insert>
+	
+	<delete id="rvDel" parameterType="String">
+		/* 리뷰  삭제 */
+		DELETE FROM tb_review
+		WHERE 
+			review_code = #{reviewCode}
+	
+	</delete>
+	
+	
+	<select id="getReviewList" resultMap="reviewResultMap">
+		/*리뷰 목록 조회*/
+			SELECT
+			r.review_code
+			,r.reveiw_num
+			,l.laundry_name
+			,r.m_id
+			,r.review_content
+			,r.counting_star
+			,r.regist_time
+		FROM
+			tb_review AS r
+		INNER join
+			tb_laundry AS l
+		on
+			r.laundry_code = l.laundry_code
+		order by r.reveiw_num desc;
+	</select>
+		
+	<select id="eventDetail" parameterType="String" resultMap="eventResultMap">
+		/* 이벤트 상세 조회 */
+		SELECT
+			e.event_code
+			,e.event_state
+			,e.event_title
+			,e.event_content
+			,e.event_add_file_name
+			,e.m_id
+			,(SELECT 
+				IFNULL(e.update_time, e.regist_time)) AS regist_time
+			,e.event_read_count			
+			, sub.file_idx
+			, sub.origin_file
+			, sub.save_file
+			, sub.file_size
+			, sub.file_path
+			, sub.represent_img
+			, sub.upload_id
+			, sub.upload_time
+			, sub.event_code			
+		FROM
+			tb_event AS e		
+		LEFT JOIN
+			(select
+				st.file_idx
+				, st.origin_file
+				, st.save_file
+				, st.file_size
+				, st.file_path
+				, st.represent_img
+				, st.upload_id
+				, st.upload_time
+				, sr.event_code
+			from
+				tb_attach AS st
+			INNER join
+				tb_attach_event AS sr
+			ON
+				st.file_idx = sr.file_idx) AS sub
+		on
+			sub.event_code = e.event_code	
+		WHERE
+			e.event_code = #{eventCode};			
+	</select>	
+	
+	<select id="getEventList" resultMap="eventResultMap">
+		/* (ADMIN)이벤트 목록 조회 */
+		SELECT
+			e.event_code
+			,e.event_no
+			,e.event_state
+			,e.event_title
+			,(select
+				IF(te.file_idx is null, false, true)) AS event_add_file
+			,e.m_id
+			,(SELECT 
+				IFNULL(e.update_time, e.regist_time)) AS regist_time
+			,e.event_read_count
+		FROM
+			tb_event AS e
+		LEFT join
+			tb_attach_event AS te
+		ON e.event_code = te.event_code		
+		order by e.event_code DESC;		
+	</select>
+	
+	<select id="getEndEventListCount" resultType="int">
+		/* 이벤트 목록 총 row 수 */
+		SELECT
+			COUNT(e.event_code)
+		FROM
+			tb_event AS e
+		where
+			e.event_state = '종료';		
+	</select>
+	
+	<select id="getRunEventListCount" resultType="int">
+		/* 이벤트 목록 총 row 수 */
+		SELECT
+			COUNT(e.event_code)
+		FROM
+			tb_event AS e
+		where
+			e.event_state = '진행중';		
+	</select>
+	
+	<select id="getEventListForUser" resultMap="eventResultMap">
+		/* (USER)이벤트 목록 조회 */
+		SELECT
+			e.event_code
+			,e.event_state
+			,e.event_title
+			,(select
+				IF(sub.file_idx is null, false, true)) AS event_add_file
+			,e.m_id
+			,(SELECT 
+				IFNULL(e.update_time, e.regist_time)) AS regist_time
+			,e.event_read_count
+			, sub.file_idx
+			, sub.origin_file
+			, sub.save_file
+			, sub.file_size
+			, sub.file_path
+			, sub.represent_img
+			, sub.upload_id
+			, sub.upload_time
+			, sub.event_code			
+		FROM
+			tb_event AS e		
+		LEFT JOIN
+			(select
+				st.file_idx
+				, st.origin_file
+				, st.save_file
+				, st.file_size
+				, st.file_path
+				, st.represent_img
+				, st.upload_id
+				, st.upload_time
+				, sr.event_code
+			from
+				tb_attach AS st
+			INNER join
+				tb_attach_event AS sr
+			ON
+				st.file_idx = sr.file_idx) AS sub
+		on
+			sub.event_code = e.event_code	
+		order by e.event_code DESC;		
+	</select>
+	
+	<select id="runEventList" resultMap="eventResultMap">
+		/* 진행 중인 이벤트 목록 조회 */
+		SELECT
+			e.event_code
+			,e.event_no
+			,e.event_state
+			,e.event_title
+			,(select
+				IF(te.file_idx is null, false, true)) AS event_add_file
+			,e.m_id
+			,(SELECT 
+				IFNULL(e.update_time, e.regist_time)) AS regist_time
+			,e.event_read_count
+		FROM
+			tb_event AS e
+		LEFT join
+			tb_attach_event AS te
+		ON e.event_code = te.event_code	
+		where
+			e.event_state = '진행중'	
+		order by e.event_code DESC;
+	</select>
+	
+	<select id="endEventList" resultMap="eventResultMap">
+		/* 종료 이벤트 목록 조회 */
+		SELECT
+			e.event_code
+			,e.event_no
+			,e.event_state
+			,e.event_title
+			,(select
+				IF(te.file_idx is null, false, true)) AS event_add_file
+			,e.m_id
+			,(SELECT 
+				IFNULL(e.update_time, e.regist_time)) AS regist_time
+			,e.event_read_count
+		FROM
+			tb_event AS e
+		LEFT join
+			tb_attach_event AS te
+		ON e.event_code = te.event_code	
+		where
+			e.event_state = '종료'	
+		order by e.event_code DESC;
+		
+	</select>
+	
+	<insert id="noticeForm" parameterType="Board">
+		/* (ADMIN)공지사항 작성 */
+	 	 INSERT INTO tb_board
+			(board_idx
+			,board_menu_code
+			,m_id
+			,board_group_no
+			,board_order_no
+			,board_read_count
+			,board_title
+			,board_content
+			,board_secret
+			,board_add_file
+			,board_add_file_name
+			,board_add_file_change_name
+			,board_add_file_vol
+			,regist_time)
+		VALUES (
+			(SELECT
+				max(b.board_idx)+1
+			FROM
+				tb_board AS b)
+		, 'notice_menu_code_001'
+		, #{memberId}			
+		, (SELECT
+				max(b.board_group_no)+1
+			FROM
+				tb_board AS b
+			WHERE b.board_menu_code = 'notice_menu_code_001')
+		, 0	
+		, 0		
+		, #{boardTitle}
+		, #{boardContent}
+		, '0'
+		, '0'
+		, '0'
+		, '0'
+		, '0'
+		, NOW());
+		<selectKey resultType="String" keyProperty="boardIdx" order="AFTER">
+			SELECT
+				max(b.board_idx)
+			FROM
+				tb_board AS b
+		</selectKey>
+	</insert>
+	
+	
+
+	
+	<update id="commentComplete" parameterType="Board">
+		/*답변완료 시 원글 상태변경*/
+		UPDATE 
+			tb_board
+		set
+			comment_state = '답변완료'
+
+		WHERE 
+			board_menu_code = #{boardMenuCode}
+		AND
+			board_group_no = #{boardGroupNo}
+		AND 
+			board_order_no = 0;	
+	</update>
+	
+	
+		<insert id="qnaComment" parameterType="Board">
+		/*문의사항 답변 작성 */
+		  INSERT INTO tb_board
+			(board_idx
+			,board_menu_code
+			,m_id
+			,board_group_no
+			,board_order_no
+			,board_read_count
+			,board_title
+			,board_content
+			,board_secret
+			,regist_time)
+		VALUES (
+			(SELECT
+				max(b.board_idx)+1
+			FROM
+				tb_board AS b)
+		, #{boardMenuCode}
+		, #{memberId}			
+		, (SELECT
+				b.board_group_no
+			FROM
+				tb_board AS b
+			WHERE
+				b.board_idx = #{boardIdx})
+		, 1	
+		, 0	
+		, #{boardTitle}
+		, #{boardContent}
+		, #{boardSecret}
+		, NOW());
+		<selectKey resultType="String" keyProperty="boardIdx" order="AFTER">
+			SELECT
+				max(b.board_idx)
+			FROM
+				tb_board AS b
+		</selectKey>
+	</insert>
+	
+	<insert id="qnaWrite" parameterType="Board">
+		/*문의사항 작성 */
+		  INSERT INTO tb_board
+			(board_idx
+			,board_menu_code
+			,m_id
+			,board_group_no
+			,board_order_no
+			,board_read_count
+			,board_title
+			,board_content
+			,board_secret
+			,regist_time
+			,comment_state)
+		VALUES (
+			(SELECT
+				max(b.board_idx)+1
+			FROM
+				tb_board AS b)
+		, #{boardMenuCode}
+		, #{memberId}			
+		, (SELECT
+				max(b.board_group_no)+1
+			FROM
+				tb_board AS b
+			WHERE b.board_menu_code = #{boardMenuCode})
+		, 0	
+		, 0	
+		, #{boardTitle}
+		, #{boardContent}
+		, #{boardSecret}
+		, NOW()
+		, '답변대기');
+		<selectKey resultType="String" keyProperty="boardIdx" order="AFTER">
+			SELECT
+				max(b.board_idx)
+			FROM
+				tb_board AS b
+		</selectKey>
+	</insert>
+
+	
+	<select id="getBoardDetailByCode" parameterType="String" resultMap="boardResultMap">	
+	 	/* 게시물 조회 */
+		SELECT 
+			b.board_idx
+			, b.board_menu_code
+			, b.board_secret
+			, b.board_group_no
+			, b.board_order_no
+			, b.board_title
+			, b.board_content
+			, b.board_add_file
+			, b.board_add_file_name
+			, b.m_id
+			, (SELECT 
+				IFNULL(b.update_time, b.regist_time)) AS regist_time
+			, b.board_read_count
+			, b.comment_state
+			, sub.file_idx
+			, sub.origin_file
+			, sub.save_file
+			, sub.file_size
+			, sub.file_path
+			, sub.represent_img
+			, sub.upload_id
+			, sub.upload_time
+			, sub.delYn
+			, sub.board_idx
+		FROM 
+			tb_board AS b
+		LEFT JOIN
+			(select
+				st.file_idx
+				, st.origin_file
+				, st.save_file
+				, st.file_size
+				, st.file_path
+				, st.represent_img
+				, st.upload_id
+				, st.upload_time
+				, st.delYn
+				, sr.board_idx
+			from
+				tb_attach AS st
+			INNER join
+				tb_attach_board AS sr
+			ON
+				st.file_idx = sr.file_idx) AS sub
+		on
+			sub.board_idx = b.board_idx
+		WHERE
+			b.board_menu_code = #{boardMenuCode}
+		and
+			b.board_idx = #{boardIdx};			
+			
+				 		
+	</select>	
+			
+	<select id="getQnaComplainListCount" resultType="int">
+		/* 문의사항(서비스불만족) 목록 총 row 수 */
+		SELECT
+			COUNT(b.board_idx)
+		FROM
+			tb_board AS b
+		where
+			b.board_menu_code = 'notice_menu_code_005';		
+	</select>		
+			
+	<select id="getQnaPayListCount" resultType="int">
+		/* 문의사항(결제 포인트) 목록 총 row 수 */
+		SELECT
+			COUNT(b.board_idx)
+		FROM
+			tb_board AS b
+		where
+			b.board_menu_code = 'notice_menu_code_004';		
+	</select>		
+			
+	<select id="getQnaPickupListCount" resultType="int">
+		/* 문의사항(수거배송) 목록 총 row 수 */
+		SELECT
+			COUNT(b.board_idx)
+		FROM
+			tb_board AS b
+		where
+			b.board_menu_code = 'notice_menu_code_003';		
+	</select>		
+			
+	<select id="getQnaServiceListCount" resultType="int">
+		/* 문의사항(서비스 이용) 목록 총 row 수 */
+		SELECT
+			COUNT(b.board_idx)
+		FROM
+			tb_board AS b
+		where
+			b.board_menu_code = 'notice_menu_code_002';		
+	</select>		
+			
+	<select id="getQnaComplainList" resultMap="boardResultMap">
+		/* 문의사항(서비스 불만족) 목록 조회 */
+		SELECT
+			b.board_menu_code
+			,b.board_idx
+			,b.board_secret
+			,b.m_id
+			,b.board_title
+			,(select
+				IF(a.file_idx is null, false, true)) AS board_add_file
+			,b.m_id AS memberId
+			,(SELECT 
+				IFNULL(b.update_time, b.regist_time)) AS regist_time
+			,b.board_read_count
+			,b.comment_state
+			,board_order_no
+			,ta.save_file
+			,ta.file_path
+			,ta.represent_img
+		FROM
+			tb_board AS b
+		left join
+			tb_attach_board as a
+		on
+			b.board_idx = a.board_idx
+		left JOIN
+			tb_attach AS ta
+		on
+			ta.file_idx = a.file_idx	
+		WHERE
+			b.board_menu_code= 'notice_menu_code_005'
+		order by b.board_group_no DESC, b.board_order_no asc;	
+	</select>	
+	
+	<select id="getQnaPayList" resultMap="boardResultMap">
+		/* 문의사항(결제 포인트) 목록 조회 */
+		SELECT
+			b.board_menu_code
+			,b.board_idx
+			,b.board_secret
+			,b.m_id
+			,b.board_title
+			,(select
+				IF(a.file_idx is null, false, true)) AS board_add_file
+			,b.m_id AS memberId
+			,(SELECT 
+				IFNULL(b.update_time, b.regist_time)) AS regist_time
+			,b.board_read_count
+			,b.comment_state
+			,board_order_no
+			,ta.save_file
+			,ta.file_path
+			,ta.represent_img
+		FROM
+			tb_board AS b
+		left join
+			tb_attach_board as a
+		on
+			b.board_idx = a.board_idx
+		left JOIN
+			tb_attach AS ta
+		on
+			ta.file_idx = a.file_idx	
+		WHERE
+			b.board_menu_code= 'notice_menu_code_004'
+		order by b.board_group_no DESC, b.board_order_no asc;			
+	</select>	
+		
+	<select id="getQnaPickupList" resultMap="boardResultMap">
+		/* 문의사항(수거 배송) 목록 조회 */
+		SELECT
+			b.board_menu_code
+			,b.board_idx
+			,b.board_secret
+			,b.m_id
+			,b.board_title
+			,(select
+				IF(a.file_idx is null, false, true)) AS board_add_file
+			,b.m_id AS memberId
+			,(SELECT 
+				IFNULL(b.update_time, b.regist_time)) AS regist_time
+			,b.board_read_count
+			,b.comment_state
+			,board_order_no
+			,ta.save_file
+			,ta.file_path
+			,ta.represent_img
+		FROM
+			tb_board AS b
+		left join
+			tb_attach_board as a
+		on
+			b.board_idx = a.board_idx
+		left JOIN
+			tb_attach AS ta
+		on
+			ta.file_idx = a.file_idx	
+		WHERE
+			b.board_menu_code= 'notice_menu_code_003'
+		order by b.board_group_no DESC, b.board_order_no asc;			
+	</select>	
+
+	<select id="getQnaServiceList" resultMap="boardResultMap">
+		/* 문의사항(서비스 이용) 목록 조회 */
+		SELECT
+			b.board_menu_code
+			,b.board_idx
+			,b.board_secret
+			,b.m_id
+			,b.board_title
+			,(select
+				IF(a.file_idx is null, false, true)) AS board_add_file
+			,b.m_id AS memberId
+			,(SELECT 
+				IFNULL(b.update_time, b.regist_time)) AS regist_time
+			,b.board_read_count
+			,b.comment_state
+			,board_order_no
+			,ta.save_file
+			,ta.file_path
+			,ta.represent_img
+		FROM
+			tb_board AS b
+		left join
+			tb_attach_board as a
+		on
+			b.board_idx = a.board_idx
+		left JOIN
+			tb_attach AS ta
+		on
+			ta.file_idx = a.file_idx	
+		WHERE
+			b.board_menu_code= 'notice_menu_code_002'
+		order by b.board_group_no DESC, b.board_order_no asc;
+	</select>
+	
+	<select id="getNoticeListCount" resultType="int">
+		/* 공지사항 목록 총 row 수 */
+		SELECT
+			COUNT(b.board_idx)
+		FROM
+			tb_board AS b
+		WHERE 
+			b.board_menu_code = 'notice_menu_code_001';	
+	</select>
+	
+	<select id="getNoticeList" parameterType="map" resultMap="boardResultMap">
+	  	/* 공지사항 목록 조회 */
+		SELECT
+			b.board_menu_code
+			,b.board_idx
+			,b.board_secret
+			,b.m_id
+			,b.board_title
+			,(select
+				IF(a.file_idx is null, false, true)) AS board_add_file
+			,b.m_id AS memberId
+			,(SELECT 
+				IFNULL(b.update_time, b.regist_time)) AS regist_time
+			,b.board_read_count
+			,b.comment_state
+			,ta.save_file
+			,ta.file_path
+			,ta.represent_img
+		FROM
+			tb_board AS b
+		left join
+			tb_attach_board as a
+		on
+			b.board_idx = a.board_idx
+		left JOIN
+			tb_attach AS ta
+		on
+			ta.file_idx = a.file_idx	
+		WHERE
+			b.board_menu_code= 'notice_menu_code_001'
+		ORDER BY b.board_idx DESC
+		LIMIT #{startRow}, #{rowPerPage};
+	</select>
+
+
+</mapper>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.BillMapper">
+	<resultMap type="Bill" id="BillResultMap">
+		<id 	column="bill_code" 						property="billCode"/>
+		<result column="order_num_groupcode" 		property="orderNumGroupcode"/>
+		<result column="total_price" 				property="totalPrice"/>
+		<result column="user_code" 					property="userCode"/>
+		<result column="pay_use_point" 				property="payUsePoint"/>
+		<result column="pay_method" 				property="payMethod"/>
+		<result column="pay_method" 				property="payMethod"/>
+		<result column="pay_ok_date" 				property="payOkDate"/>
+		<result column="refund_code" 				property="refundCode"/>
+		<result column="after_use_point_pay" 		property="afterUsePointPay"/>
+		<result column="add_pay" 					property="addPay"/>
+		<result column="delivery_pay" 				property="deliveryPay"/>
+		<result column="total_pay_groupcode" 		property="totalPayGroupcode"/>
+	</resultMap>
+	
+	<select id="billPage" parameterType="map" resultType="map">
+		SELECT 
+			bill_code		AS billCode, 
+			m_id			AS memberId, 
+			goods_name		AS goodsName, 
+			total_price		AS totalPrice, 
+			laundry_name	AS laundryName,
+			skill_cate      AS skillCate, 
+			request			AS request, 
+			add_point		AS addPoint, 
+			refund			AS refund, 
+			regist_time		AS registTime		
+		FROM 
+			tb_bill2 AS b
+		WHERE
+			b.m_id = #{memberId}
+		AND 
+			b.refund = 'X'
+		ORDER BY b.regist_time DESC
+		LIMIT #{startRow}, #{rowPerPage}
+	</select>
+	
+	<select id="getBillCount2" parameterType="String" resultType="int">
+		/*예약 -> 결제 -> 결제건수 조회*/
+		SELECT
+			COUNT(bill_code)
+		FROM
+			tb_bill2 AS b
+		WHERE
+			b.m_id = #{memberId}
+		and
+			b.refund = 'X';
+	</select>
+
+	<insert id="addBill2" parameterType="Bill2">
+		/* 예약 -> 결제 -> 인서트작업 */
+		INSERT INTO tb_bill2
+			(
+			bill_code, 
+			m_id, 
+			goods_name, 
+			total_price, 
+			laundry_name, 
+			skill_cate, 
+			request,
+			refund, 
+			add_point,
+			regist_time
+			)
+		VALUES
+			(
+			(SELECT CONCAT('bill_code','_',MAX(CAST(substring(bill_code,11) AS DECIMAL)+1)) AS bill_code from tb_bill2 AS aaa), 
+			#{memberId}, 
+			#{goodsName},
+			#{totalPrice},
+			#{laundryName},
+			#{skillCate},
+			#{request},
+			'X', 
+			#{addPoint},
+			NOW()
+			)
+	
+	</insert>
+	
+ 	<insert id="addBill" parameterType="String">
+ 		INSERT INTO 
+			tb_bill
+			(
+			 bill_code, 
+			 order_num_groupcode, 
+			 total_price, 
+			 user_code, 
+			 pay_use_point, 
+			 pay_method, 
+			 pay_ok_date, 
+			 refund_code, 
+			 after_use_point_pay, 
+			 add_pay, 
+			 delivery_pay, 
+			 total_pay_groupcode
+			 )
+		VALUES 
+			(
+			(SELECT CONCAT('bill_code','_',MAX(CAST(substring(bill_code,11) AS DECIMAL)+1)) AS bill_code from tb_bill AS aaa),
+			(SELECT MAX(CONCAT(#{memberId},'_',#{laundryCode})) AS order_num_groupcode from tb_bill AS bbb),
+			 #{totalPrice},
+			 'user_code_001',
+			 0,
+			 '카드',
+			 NOW(),
+			 'X',
+			 #{totalPrice},
+			 0,
+			 2000,
+			 ''
+			)
+ 	</insert>
+ 	
+ 	
+ 	<select id="getBillList" resultMap="BillResultMap">
+ 		SELECT
+			bill_code, 
+			order_num_groupcode, 
+			total_price, 
+			user_code, 
+			pay_use_point, 
+			pay_method, 
+			pay_ok_date, 
+			refund_code, 
+			after_use_point_pay, 
+			add_pay, 
+			delivery_pay, 
+			total_pay_groupcode
+		FROM 
+			tb_bill
+ 	</select>
+ 	
+ 	<select id="getBillCount" parameterType="String" resultType="int">
+	 	SELECT
+			COUNT(bill_code)
+		FROM
+			tb_bill
+		WHERE
+			order_num_groupcode
+		LIKE 
+			CONCAT('%', #{memberId}, '%');
+ 	</select>
+ 
+ 	 	<select id="ilbanOrderList"  resultType="Map">
+	SELECT
+		o.order_code as orderCode ,
+		m.m_id as mId ,
+		m.m_name as mName ,
+		g.g_name as gName ,
+		g.g_price as gPrice ,
+		m.m_addr as mAddr 
+	FROM
+		tb_order AS o
+		INNER JOIN 
+		tb_user AS u
+		on
+		o.user_code = u.user_code
+		INNER join
+		tb_member AS m
+		on
+		m.m_id = u.m_id
+		INNER JOIN 
+		tb_ilban_g_price AS g
+		on
+		o.ilban_G_price_code = g.ilban_G_price_code;
+	</select>
+	
+	<select id="eachLaundryIncome" parameterType="map"
+		resultType="map">
+	/*세탁소별 매출액*/	
+	SELECT
+		l.laundry_name as laundryName,
+		m.m_name as memberName,
+		m.m_id as memberId,
+		b.total_price as totalPrice,
+		b.pay_ok_date as payOkDate	
+	FROM
+		tb_bill AS b
+		INNER JOIN
+		tb_laundry AS l
+		ON
+		b.order_num_groupcode like CONCAT('%','laundry_code_006')
+		INNER JOIN
+		tb_user AS u
+		on
+		b.user_code = u.user_code
+		INNER JOIN
+		tb_member AS m
+		ON
+		u.m_id = m.m_id
+		WHERE 
+		l.laundry_code = 'laundry_code_006'
+		LIMIT #{startRow}, #{rowPerPage};
+	</select>
+	
+	<select id="laundryIncomeLookUpCount" resultType="int">
+	/*세탁소별 페이징*/	
+		SELECT
+			count(b.total_price)
+			FROM
+			tb_bill AS b
+			where
+			b.order_num_groupcode like CONCAT('%','laundry_code_006')
+	</select>
+	  
+	
+	
+</mapper>

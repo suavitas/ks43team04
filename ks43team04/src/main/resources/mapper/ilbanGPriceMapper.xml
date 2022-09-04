@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.IlbanGPriceMapper">
+	
+	
+	
+   <select id="IlbanSkill" resultType="Map">
+	/* 일반세탁소별 세탁 가격 추가를 위해서 스킬카테 불러오기 */
+	SELECT 
+		ilban_skill_code as ilbanSkillCode, 
+		skill_cate as skillCate,
+		admin_level_code as adminLevelCode,
+		regist_time as registTime
+	FROM 
+		tb_ilban_skill;
+   </select>
+  
+  <insert id="addGoodsPrice" parameterType="String">
+ 		/* 일반세탁소별 세탁 가격 추가 */
+		INSERT INTO tb_ilban_g_price
+			(ilban_G_price_code, 
+			laundry_code, 
+			ilban_skill_code, 
+			g_name, 
+			g_price, 
+			regist_time , 
+			g_price_use_state)
+		VALUES 
+			(sf_new_g_price(),
+			 'laundry_code_006',
+			 #{ilbanSkillCode},
+			 #{gName},
+			 #{gPrice},
+			 NOW(),
+			 'use');			 
+ 	</insert>
+ 	
+ 	<update id="removeGoodsPrice" parameterType="Map">
+ 		UPDATE
+		tb_ilban_g_price
+		set
+		g_price_use_state = #{gPriceUseState}
+		WHERE
+		ilban_G_price_code = #{ilbanGPriceCode};
+   
+     </update>
+  
+  <update id="modifyGoodsPrice"  parameterType="IlbanGprice">
+		/* 세탁소별 세탁 가격 수정 */
+		UPDATE
+		tb_ilban_g_price
+		<trim prefix="SET" prefixOverrides=",">
+			<if test="ilbanGPriceCode != null and ilbanGPriceCode != ''">
+				ilban_G_price_code = #{ilbanGPriceCode}
+			</if>
+			<if test="laundryCode != null and laundryCode != ''">
+				,laundry_code = 'laundry_code_006'
+			</if>
+			<if test="ilbanSkillCode != null and ilbanSkillCode != ''">
+				,ilban_skill_code = #{ilbanSkillCode}
+			</if>
+			<if test="gName != null and gName != ''">
+				,g_name = #{gName}
+			</if>
+			<if test="gPrice != null and gPrice != ''">
+				,g_price = #{gPrice}
+			</if>
+			<if test="registTime != null and registTime != ''">
+				,regist_time = Now()
+			</if>
+			<if test="gPriceUseState != null and gPriceUseState != ''">
+				,g_price_use_state = #{gPriceUseState}
+			</if>
+		</trim>
+		WHERE
+		ilban_G_price_code = #{ilbanGPriceCode};
+   
+</update>
+
+<select id="eachGoodsPriceList" parameterType="map"
+		resultType="map">
+		/*일반세탁소 매장별 상품가격 리스트*/
+	SELECT
+			l.laundry_name as laundryName
+			,gp.ilban_G_price_code as ilbanGPriceCode
+			,gp.g_name as gName
+			,gp.g_price as gPrice
+			,s.skill_cate AS skillCate
+			,gp.g_price_use_state as gPriceUseState
+			,gp.ilban_skill_code as ilbanSkillCode
+			FROM
+			tb_laundry AS l
+			INNER join
+			tb_ilban_g_price AS gp
+			on
+			l.laundry_code= gp.laundry_code
+			INNER join
+			tb_ilban_skill AS s
+			ON
+			gp.ilban_skill_code=s.ilban_skill_code
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			l.laundry_code LIKE CONCAT('%laundry_code_006%')
+		</trim>
+		LIMIT #{startRow}, #{rowPerPage};
+	</select>
+
+
+	<select id="GoodsPriceLookUpCount" resultType="int">
+		/*세탁소 가격 페이징*/
+		SELECT
+		COUNT(G.ilban_G_price_code)
+		FROM
+		tb_ilban_g_price AS G
+		WHERE
+		G.laundry_code
+		LIKE
+		'%laundry_code_006%'
+	</select>
+  
+  
+	
+ 	
+	
+	
+</mapper>

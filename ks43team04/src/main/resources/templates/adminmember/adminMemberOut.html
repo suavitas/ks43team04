@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/adminDefault}">
+	
+	<th:block layout:fragment="customCss">
+		<!-- datepicker -->
+		<link th:href="@{/admin/build/css/datepicker.css}" rel="stylesheet">
+	</th:block>
+	
+	<th:block layout:fragment="customJsScript"></th:block>
+	<th:block layout:fragment="customJsScript2">
+		<script type="text/javascript">
+			//달력 오류 수정
+			var cdate = document.querySelectorAll('.cdate');
+			for(var i=0; i<cdate.length; i++){
+				cdate[i].addEventListener('click',function(){
+					var disn = document.querySelector('#ui-datepicker-div');
+					disn.style.display = 'none';
+				})
+			}
+			
+			<!-- 새로고침 후 탭 유지 -->
+		      $(document).ready(function() {
+		    	  console.log('location.hash 임',location.hash)
+		    	  
+		    	  var hiddenHash = $('#hiddenHash').val();
+		    	  console.log(hiddenHash);
+		    	  
+		    	 /*새로고침 후 URL에 저장된 hash로 탭 유지 */
+		          /* if (location.hash) {
+		              $("a[href='" + location.hash + "']").tab("show");
+		          } */
+	        	  if(hiddenHash!=''){
+	        		  $("a[href='" + hiddenHash + "']").tab("show");
+	        		  location.hash = hiddenHash;
+	        	  }
+		          
+		          /* URL hash 저장 */
+		          $(document.body).on("click", "a[data-toggle='tab']", function(event) {
+		              location.hash = this.getAttribute("href");
+		          });
+		      });
+		      
+		      /* $(window).on("popstate", function() {
+		          var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
+		          $("a[href='" + anchor + "']").tab("show");
+		      }); */
+		
+			//권한 조건 검색
+			$(function(){
+				//권한별 검색
+				$(document).on('click', '.checkLevel', function(){
+					
+					$('form').remove('#testForm');
+					
+					var checkMemberLevel = $(this).val();
+					
+					console.log(checkMemberLevel);
+					console.log(location.hash);
+					
+					var checkMemberForm = $('<form></form>');
+					
+					checkMemberForm.attr("id", "testForm");
+					checkMemberForm.attr("name", "checkMemberForm");
+					checkMemberForm.attr("method", "get");
+					checkMemberForm.attr("action", "/admin/searchLevelMemberOutList");
+					
+					checkMemberForm.append($('<input/>', {type: 'hidden', name: 'levelName', value: checkMemberLevel}));
+					checkMemberForm.append($('<input/>', {type: 'hidden', name: 'URLHash', value: location.hash}));
+					
+					checkMemberForm.appendTo('body');
+						
+					checkMemberForm.submit();
+						
+				});
+				
+				//기간(버튼)별 조건 검색
+				$(document).on('click', '.dateBtnGroup', function(){
+					$('form').remove('#testForm')
+					
+					var startDate = $('input[name="startDate"]').val();
+					var endDate = $('input[name="endDate"]').val();
+					
+					var dateBtnForm = $('<form></form>');
+					
+					dateBtnForm.attr("id", "testForm");
+					dateBtnForm.attr("name", "dateBtnForm");
+					dateBtnForm.attr("method", "get");
+					dateBtnForm.attr("action", "/admin/searchDateOutList");
+					
+					dateBtnForm.append($('<input/>', {type: 'hidden', name: 'startDate', value: startDate}));
+					dateBtnForm.append($('<input/>', {type: 'hidden', name: 'endDate', value: endDate}));
+					dateBtnForm.append($('<input/>', {type: 'hidden', name: 'URLHash', value: location.hash}));
+					
+					dateBtnForm.appendTo('body');
+					
+					dateBtnForm.submit();
+				});
+				
+				//달력 검색
+				$(document).on('change', '#startDate, #endDate', function(){
+					
+					$('form').remove('#testForm')
+					
+					
+					var startDate = $('input[name="startDate"]').val();
+					var endDate = $('input[name="endDate"]').val();
+					
+					var datepickerForm = $('<form></form>');
+					
+					datepickerForm.attr("id", "testForm");
+					datepickerForm.attr("name", "datepickerForm");
+					datepickerForm.attr("method", "get");
+					datepickerForm.attr("action", "/admin/searchDateOutList");
+					
+					datepickerForm.append($('<input/>', {type: 'hidden', name: 'startDate', value: startDate}));
+					datepickerForm.append($('<input/>', {type: 'hidden', name: 'endDate', value: endDate}));
+					datepickerForm.append($('<input/>', {type: 'hidden', name: 'URLHash', value: location.hash}));
+					
+					datepickerForm.appendTo('body');
+						
+					if(startDate != null && endDate != null && startDate != '' && endDate != ''){
+						
+						datepickerForm.submit();
+					}
+				});
+				
+				//검색바
+				$(document).ready(function () {
+				    $('.table').DataTable({
+				    	stateSave: true,
+				    	destroy : true,
+				    	ordering: false,
+				    	order: [ [ 1, "asc" ] ],
+				    	autowidth: false
+				
+				    });
+				});
+			});
+		      
+		</script>
+	</th:block>
+
+<style>
+	.column-title {
+		font-size: 8px;
+	}
+</style>
+	<!-- 사용자정의 contents -->
+	<th:block layout:fragment="customContents">
+   	<h4>탈퇴 회원 관리</h4>
+   	<input type="hidden" id="hiddenHash" th:value="${URLHash}">
+   	<div class="col-md-12 col-sm-12 mt-5">
+			<div class="x_panel">
+				<ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" id="home-tab" data-toggle="tab" href="#total" role="tab" aria-controls="home" aria-selected="true">탈퇴 회원 목록</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="profile-tab" data-toggle="tab" href="#wait" role="tab" aria-controls="profile" aria-selected="false">탈퇴 회원 대기</a>
+					</li>
+				</ul>
+				<div class="x_content">
+				  <div class="table-responsive" style="overflow: visible;">
+					<div class="mb-2" style="margin-top: 20px;">
+						<!-- START : 검색 바 -->
+							<div th:include="member/searchDate :: searchDateFragment"></div>
+						<!-- END : 검색 바 -->
+					</div>
+					<form id="reset_form">
+						<div class="mb-2">
+							<div class="checkbox">
+							<label>권한별 조회</label>
+									<label class="btn btn-default">
+										<input type="checkbox" class="checkLevel" id="option1" name="levelName" value="본사"> 본사
+									</label>						
+									<label class="btn btn-default">
+										<input type="checkbox" class="checkLevel" id="option2" name="levelName" value="관리자"> 관리자
+									</label>
+									<label class="btn btn-default">
+										<input type="checkbox" class="checkLevel" id="option3" name="levelName" value=""> 회원
+									</label>
+									<label class="btn btn-default">
+										<input type="checkbox" class="checkLevel" id="option4" name="levelName" value="일반세탁소점주"> 일반점주
+									</label>
+									<label class="btn btn-default">
+										<input type="checkbox" class="checkLevel" id="option5" name="levelName" value="무인세탁소점주"> 무인점주
+								</label>				
+							</div>					
+						</div>	
+					</form>			
+                                  
+					
+						<!-- 완료 -->
+						<div class="tab-content" id="myTabContent"  style="overflow:hidden;">
+						<div class="tab-pane fade active show" id="total" role="tabpanel" aria-labelledby="home-tab">
+						<table class="table table-striped jambo_table bulk_action" >					
+							<thead>
+								<tr class="headings" style="text-align: center;">
+									<th>
+										<input type="checkbox" id="check-all" class="flat">
+									</th>
+									<th class="column-title">탈퇴상태</th>
+									<th class="column-title">아이디</th>
+									<th class="column-title">탈퇴신청시각</th>
+									<th class="column-title">탈퇴승인시각</th>
+									<th class="column-title">탈퇴사유</th>
+									<th class="column-title">탈퇴복구</th>
+									<th class="bulk-actions" colspan="6">
+										<a class="antoo" style="color:#fff; font-weight:500;">전체 선택 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+									</th>
+								</tr>
+							</thead>
+							<tbody style="text-align: center;">
+								<tr th:if="${not #lists.isEmpty(adminMemberOut)}" th:each="l : ${adminMemberOut}" class="even pointer">
+									<td class="a-center">
+										<input type="checkbox" class="flat" name="table_records">
+									</td>
+									<td th:text="${l.memberOutOkayState}"></td>
+									<td th:text="${l.memberId}"></td>
+									<td th:text="${l.memberOutRequestTime}"></td>
+									<td th:text="${l.memberOutOkayTime}"></td>
+									<td th:text="${l.memberOutReason}"></td>
+									<td>
+										<div style="text-align: center;">							
+											<a th:href="@{/admin/adminReStore(memberId=${l.memberId})}"><button type="button" class="btn btn-warning btn-sm">복구</button></a>
+										</div>
+									</td>	
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					
+					<!-- 대기 -->
+					<div class="tab-pane fade" id="wait" role="tabpanel" aria-labelledby="profile-tab"  style="overflow:hidden;">
+						<table class="table table-striped jambo_table bulk_action"  style="width: 100%;">					
+							<thead>
+								<tr class="headings" style="text-align: center;">
+									<th>
+										<input type="checkbox" id="check-all" class="flat">
+									</th>
+									<th class="column-title">탈퇴상태</th>
+									<th class="column-title">아이디</th>
+									<th class="column-title">탈퇴신청시각</th>
+									<th class="column-title">탈퇴승인시각</th>
+									<th class="column-title">탈퇴사유</th>
+									<th class="column-title">대기사유</th>
+									<th class="column-title">사유작성</th>
+									<th class="column-title">탈퇴승인</th>
+									<th class="bulk-actions" colspan="8">
+										<a class="antoo" style="color:#fff; font-weight:500;">전체 선택 ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+									</th>
+								</tr>
+							</thead>
+							<tbody style="text-align: center;">
+								<tr th:if="${not #lists.isEmpty(getMemberNotOut)}" th:each="l, status : ${getMemberNotOut}" class="even pointer">
+									<td class="a-center">
+										<input type="checkbox" class="flat" name="table_records">
+									</td>
+									<td th:text="${l.memberOutOkayState}"></td>
+									<td th:text="${l.memberId}"></td>
+									<td th:text="${l.memberOutRequestTime}"></td>
+									<td th:text="${l.memberOutOkayTime}"></td>
+									<td th:text="${l.memberOutReason}"></td>
+									<td th:text="${l.memberNotOkayReason}"></td>
+									<td>
+									
+									<div style="text-align: center;">
+										<button type="button" class="btn btn-warning btn-sm Outbtn" data-toggle="modal" th:data-target="${'#myModal' + status.count}">사유작성</button>	
+									</div>
+									</td>
+									<td>
+										<div style="text-align: center;">
+											<a th:href="@{/admin/adminRemove(memberId=${l.memberId} , memberOutReason=${l.memberOutReason})}"><button type="button" class="btn btn-warning btn-sm">승인</button></a>
+										</div>
+										<!-- modal -->
+										<div class="modal fade" th:id="${'myModal' + status.count}" tabindex="-1" role="dialog" th:aria-labelledby="${'myModal' + status.count + 'Label'}">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+													<h4 class="modal-title"> 대기 사유작성</h4>	
+												</div>
+												<form th:action="@{/admin/memberOutWaitMemo}" method="post">
+													<div class="modal-body">
+														<textarea name="memberNotOkayReason" id="memberOutWaitMemo" placeholder="대기 사유를 작성해주세요." style="resize: none; width: 400px; height: 100px;" ></textarea>											
+														<div class="modal-footer">
+															<input type="hidden" name="memberId" th:value="${l.memberId}">
+															<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+															<input type="submit" class="btn btn-primary" th:value="저장하기">
+														</div>
+													</div>
+												</form>	
+											</div>
+										</div>
+									</div>	
+									<!-- modal -->
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+					<!-- <nav aria-label="Page navigation example">
+						<ul class="pagination justify-content-center">
+							<li class="page-item">
+								<a class="page-link" th:href="@{/admin/adminMemberOut}" tabindex="-1"> <
+								</a>
+							</li>
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item">
+								<a class="page-link" href="#">></a>
+							</li>
+						 </ul>
+					 </nav> -->
+				 </div>
+				</div>
+			</div>
+		  </div>
+	  </div>	
+</th:block>
+
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/userDefault}">
+
+			
+	<th:block layout:fragment="customJsScript">  
+		<script type="text/javascript">
+		<!-- 유효성검사(비밀번호확인) -->
+		function delCheck(){
+			 
+			var pwDelCheck = document.getElementById("pwDelCheck");
+			var pwDelCheck2 = document.getElementById("pwDelCheck2");
+			
+			if(pwDelCheck.value == ""){
+				alert("비밀번호를 입력하세요.")
+				pwDelCheck.focus();
+				return false;
+			}
+			else if(pwDelCheck.value !== pwDelCheck2.value){
+					alert("비밀번호를 확인하세요.")
+					pwDelCheck.focus();
+					return false;
+					
+				} return true;
+				 
+		}
+		
+		</script>
+	</th:block>	  
+	  
+	<!-- 사용자정의 contents -->
+	<th:block layout:fragment="customContents">
+
+ 	<!-- 삭제 Modal 시작 -->
+	<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">정말로 삭제하시겠습니까?</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+				</div>
+				<form class="noticeRemove" th:action="@{/user/board/qnaList}"  method="POST">
+					<div class="modal-body">
+		      	  
+				        	 <div style="text-align: center">
+								<h5>비밀번호 확인</h5>
+								<input type="password" id ="pwDelCheck" name="pwDelCheck" placeholder="비밀번호를 입력해주세요" required="required">
+								<input type="hidden" id ="pwDelCheck2" name="memberPw2" th:value="${member.memberPw}">
+							</div>
+		      			<input type="hidden" name="boardMenuCode" th:value="${board.boardMenuCode}">
+		      			<input type="hidden" name="boardIdx" th:value="${board.boardIdx}">
+		      		</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>									<!-- delCheck() -->
+							<a th:href="@{/user/board/qnaList}"><button type="submit" name="submit" value="submit" class="btn btn-primary" onclick="return delCheck()">삭제</button></a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- 삭제 Modal 끝 -->	 	
+	
+
+	<!-- 게시판 타이틀 -->
+	<div id="container">
+		<div id="top-loca">
+			<div class="boardPath">
+				<a th:href="@{/}">HOME</a>
+				 > 
+				<a th:href="@{/user/board/qnaList}">문의사항</a>
+			</div>	
+			<h2>문의사항</h2>			
+		</div>
+	</div>	
+		
+	<!-- 게시판 탭  -->			
+	<div class="list-group list-group-horizontal col-sm-6" style="margin:0 auto; text-align: center;">
+  		<a th:href="@{/user/board/noticeList}" class="list-group-item list-group-item-action">공지사항</a>
+		<a th:href="@{/user/board/eventList}" class="list-group-item list-group-item-action">이벤트</a>
+		<a th:href="@{/user/board/faqList}" class="list-group-item list-group-item-action">FAQ</a>
+		<a th:href="@{/user/board/qnaList}" data-cate="QnAList" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">문의사항</a>
+	</div>
+	
+	
+	<!--qna 상세 글 조회 테이블 -->
+	<div class="cart-section mt-150 mb-150" style="background-color: #f5f6fa; padding: 60px 0 100px; margin: 0; border-top: #e5e5e5 1px solid;">
+		<div class="container">
+			<div class="row" style="float: none; margin: 100 auto;">
+				<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
+
+					<!--상세 글 보기 -->
+					<div class="subject" style="border-bottom: 1px solid #d8d8d8">
+						<div class="row">
+							<th:block th:if="${board.commentState != null}">
+								<h3 style="padding: 11px 20px 12px 20px; margin: 0; font-size: 20px; font-weight: bold;" th:text="[+${board.commentState}+]"></h3>	
+							</th:block>
+							<th:block th:unless="${board.commentState != null}">
+								<h3 style="padding: 11px 20px 12px 20px; margin: 0; font-size: 20px; font-weight: bold;" th:text="[답변]"></h3>
+							</th:block>
+							<th:block th:if="${board.boardSecret=='Y'}">
+								<i class="bi bi-key-fill" style="padding-right: 10px; margin: 18px 10px 10px 10px;"></i>
+							</th:block>
+							<th:block th:unless="${board.boardSecret=='N'}">
+							</th:block>	
+								<h3 style="padding: 11px 0 12px 0; margin: 0; font-size: 20px; font-weight: bold;" th:text="${board.boardTitle}"></h3>	
+						</div>
+					</div>
+					<div class="info">
+						<div class="xright" style="text-align: right; padding: 10px 0 10px 0; font-size: 13px;">
+								<span class="addFile">
+				                       <th:block th:if="${not #lists.isEmpty(board.boardAttach)}" th:each="b : ${board.boardAttach}">
+					                      <a href="#"> 
+					                       <i class="bi bi-download" title="첨부파일"></i>
+				                        	    <th:block th:text="${b.saveFile}"></th:block>
+				                        	  </a>         
+						                    <span class="split">|</span>                 
+			                    </span> 
+				              	<th:block th:text="${board.memberId}"></th:block>	
+				                <span class="split">|</span> 									     
+				                <span class="han" th:text="${board.registTime}"></span> 
+				                <span class="split">|</span> 
+								<span class="han">조회</span> <span class="num" th:text="${board.boardReadCount}"></span> 
+				              
+						</div>
+					</div>
+					
+					<div id="nContent" class="content" style="padding-top: 40px;">
+	
+						<!-- 첨부파일 시작 -->
+						<th:block th:if="${not #lists.isEmpty(board.boardAttach)}" th:each="b : ${board.boardAttach}">									
+							<a class="pt" th:data-img="${b.saveFile}">
+								<img th:src="@{'/' + ${#strings.replace(b.filePath,'\','/')}}" alt="이미지를 불러올 수 없습니다." style="width: 700px; margin-bottom: 50px;">
+							</a>
+						</th:block>
+						<th:block th:unless="${not #lists.isEmpty(board.boardAttach)}">
+						</th:block>
+					<!-- 첨부파일 끝 -->
+			
+						<pre><p th:text="${board.boardContent}" style="font-size: 13px;"></p></pre>
+					</div>
+
+							
+					<!-- 목록버튼(qna 목록으로 돌아가기) -->
+					<div class="row">
+						<div class="btnArea col-lg-6 col-sm-12" style="padding-top: 0px; margin-top: 80px;">
+							
+							<span th:if="${sessionId == board.memberId && board.commentState == '답변대기'}">
+								<a th:href="@{/user/board/qnaModify(boardIdx=${board.boardIdx},boardMenuCode=${board.boardMenuCode},boardSecret=${board.boardSecret},memberId=${board.memberId},boardTitle=${board.boardTitle},boardContent=${board.boardContent})}" class="btn btn-warning btn-lg">수정</a>
+								<button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#staticBackdrop" style="margin-left: 10px;">삭제</button>
+							</span>
+							<th:block th:unless="${sessionId == board.memberId && board.commentState == '답변대기'}">
+							</th:block>
+						</div>
+						<div class="btnArea col-lg-6 col-sm-12" style="text-align:right; margin-top: 80px;">
+							<span>
+								<a href="javascript:history.back();" class="cart-btn btn-lg" >목록보기</a>
+							</span>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+</html>

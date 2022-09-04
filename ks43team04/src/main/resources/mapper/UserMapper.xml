@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.UserMapper">
+
+	<select id="getPaymentList" parameterType="map" resultType="map">
+		SELECT 
+			gp.g_name			AS goodsName 
+		   ,u.m_id				AS memberId
+		   ,gp.g_price			AS goodsPrice
+		   ,b.pay_ok_date		AS payOkDate
+		   ,gp.laundry_code		AS laundryCode
+		   ,l.laundry_name		AS laundryName
+		   ,b.pay_method		AS payMethod
+		FROM
+		   tb_user AS u
+		INNER join
+		   tb_order AS o
+		on
+		   u.user_code = o.user_code
+		INNER join
+		   tb_bill AS b
+		on
+		   o.user_code = b.user_code
+		INNER join
+		   tb_ilban_g_price AS gp
+		on
+		   gp.ilban_G_price_code = o.ilban_G_price_code
+		INNER JOIN
+		   tb_laundry AS l
+		on
+		   l.laundry_code = gp.laundry_code
+		where
+		   u.m_id = #{memberId}
+		LIMIT 
+			#{startRow}, #{rowPerPage};
+		
+	</select>
+	
+	<select id="LaundryUserList" parameterType="map" resultType="map">
+	SELECT
+		l.laundry_name as laundryName,
+		lu.m_name as UserName,
+		lu.m_id as UserId,
+		lu.m_adrr as UserAdrr 
+		
+	FROM
+		tb_laundry_user AS lu
+		INNER JOIN 
+		tb_laundry AS l
+		on
+		lu.laundry_code = l.laundry_code
+		where
+		lu.laundry_code ='laundry_code_006'
+		ORDER BY l.laundry_name;
+	</select>
+</mapper>

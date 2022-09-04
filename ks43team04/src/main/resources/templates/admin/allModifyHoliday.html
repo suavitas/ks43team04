@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/adminDefault}">
+	  
+	  
+	  
+	<!-- 사용자정의 contents -->
+	<th:block layout:fragment="customContents">
+	
+	<h4>2022년 전체  공휴일 </h4>
+	<form th:action="@{/admin/allModifyHoliday}" method="post">
+	<table class="table table-striped jambo_table bulk_action" style="width: 50%; margin: 0 auto; margin-top:80px; border-collapse: separate;">
+				<thead>
+					<tr class="headings">
+						<th class="column-title" colspan="2">수정할 공휴일 정보</th>
+						<input type="hidden" name="yearlyHolidayCode" th:value="${yearlyHolidayCode}">
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="even pointer">
+						<td>공휴일 날짜</td>
+						<td th:text="${yearlyHolidayDate}"></td>
+					</tr>
+					<tr class="even pointer">
+						<td>공휴일명</td>
+						<td th:text="${yearlyHolidayName}"></td>
+					</tr>
+					<tr class="even pointer">
+						<td>공휴일 사용여부</td>
+						<td>
+							O<input type="radio" name="holidayCodeUse" value="O" checked> 
+							X<input type="radio" name="holidayCodeUse" value="X"> 
+						</td>
+					</tr>
+					
+					<tr class="even pointer">
+						<td colspan="2">
+							<button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">수정하기</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+	</form>
+	
+	
+	
+	
+	</th:block>
+
+	</html>

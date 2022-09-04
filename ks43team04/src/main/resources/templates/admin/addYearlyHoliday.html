@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/adminDefault}">
+	  
+	  
+	<script type="text/javascript" th:src="@{/common/jquery-3.6.0.min.js}"></script>
+	<th:block layout:fragment="customJsScript">
+			<script type="text/javascript">
+				$(function() {
+					$('#submitButton').on('click', function() {
+			    		$input = $('input');
+
+			    		for(var i = 0; i < $input.length; i++) {
+				     		if($('input').eq(i).val() == null || $('input').eq(i).val() == '') {
+				     			
+				     			var alertStr = $('input').eq(i).parent().parent().find('.Holiday').html();
+				     			alert(alertStr + '을 입력해 주세요');
+				     			
+				     			return false;
+				     		} 
+			    		}
+			    		$('form').submit();
+			    	})
+				});
+	      	
+		</script>
+	</th:block>
+
+	<!-- 사용자정의 contents -->
+	<th:block layout:fragment="customContents">
+	
+		<h4>2022년 전체  공휴일</h4>
+		<form th:action="@{/admin/addYearlyHoliday}" method="post">
+			<table class="table table-striped jambo_table bulk_action" style="width: 50%; margin: 0 auto; margin-top:80px; border-collapse: separate;">
+				<thead>
+					<tr class="headings">
+						<th class="column-title" colspan="2">전체 공휴일 추가</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="even pointer">
+						<td class = "Holiday">공휴일 날짜</td>
+						<td>
+							<input type="date" name="yearlyHolidayDate"> 
+						</td>
+					</tr>
+					<tr class="even pointer">
+						<td class = "Holiday">공휴일명</td>
+						<td>
+							<input type="text" name="yearlyHolidayName" > 
+						</td>
+					</tr>
+					
+					
+					<tr class="even pointer">
+						<td colspan="2">
+							<button type="button" id="submitButton" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">추가하기</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+		
+	
+	</th:block>
+
+</html>

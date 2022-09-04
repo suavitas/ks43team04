@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/userDefault}">
+
+<th:block layout:fragment="customScript">
+	<script type="text/javascript" th:src="@{/user/assets/js/jquery-1.11.3.min.js}"></script>
+</th:block>	
+
+<th:block layout:fragment="customJsScript"> 
+	<script type="text/javascript">
+	
+	/*유효성검사 */
+	function validCheck(){
+		var boardMenuCode = document.getElementById("boardMenuCode");
+		var title = document.getElementById("title");
+		var content = document.getElementById("content");
+		
+		
+		if(boardMenuCode.value == ""){
+			alert("카테고리를 선택하세요.")
+			boardMenuCode.focus();
+			return false;
+		};
+		if(title.value == ""){
+			alert("제목을 입력하세요.")
+			title.focus();
+			return false;
+		};
+		if(content.value == ""){
+			alert("내용을 입력하세요.")
+			content.focus();
+			return false;
+		};				
+	}
+	
+	/*비밀글 여부*/
+	function clickSecret(){
+	if(document.getElementById("boardSecret").checked) {
+	    document.getElementById("boardSecret_hidden").disabled = true;
+		}
+	}
+	
+	/*첨부파일 필드추가*/
+	let fileIdx = 0; /*[- 파일 인덱스 처리용 전역 변수 -]*/
+	function addFile() {
+	
+		const fileDivs = $('div[data-name="fileDiv"]');
+		if (fileDivs.length > 3) {
+			alert('파일은 최대 네 개까지 업로드 할 수 있습니다.');
+			return false;
+		}
+	
+		fileIdx++;
+	
+		const fileHtml = `
+			<div data-name="fileDiv" class="form-group row filebox bs3-primary">
+				<label for="file_${fileIdx}" class="col-md-1 control-label"></label>
+				<div class="col-sm-10">
+					<input type="text" class="upload-name" value="파일 찾기" readonly />
+					<label for="file_${fileIdx}" class="control-label">찾아보기</label>
+					<input type="file" name="boardImgFile" id="file_${fileIdx}" class="upload-hidden" onchange="changeFilename(this)" />
+	
+					<button type="button" onclick="removeFile(this)" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+						<i class="fa fa-minus" aria-hidden="true"></i>
+					</button>
+				</div>
+			</div>
+		`;
+	
+		$('#btnDiv').before(fileHtml);
+	}
+	
+	
+	/*첨부파일 필드삭제*/
+	function removeFile(elem) {
+	
+		const prevTag = $(elem).prev().prop('tagName');
+		if (prevTag === 'BUTTON') {
+			const file = $(elem).prevAll('input[type="file"]');
+			const filename = $(elem).prevAll('input[type="text"]');
+			file.val('');
+			filename.val('파일 찾기');
+			return false;
+		}
+	
+		const target = $(elem).parents('div[data-name="fileDiv"]');
+		target.remove();
+	}
+		
+	/*첨부파일 첨부 시 파일 이름로 변경*/
+	function changeFilename(file) {
+	
+		file = $(file);
+		const filename = file[0].files[0].name;
+		const target = file.prevAll('input');
+		target.val(filename);
+	}
+
+</script>
+
+<style>
+
+	.filebox input[type="file"] {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		border: 0;
+	}
+	.filebox.bs3-primary .col-sm-10>label {
+		color: #fff;
+		background-color: #F28123;
+		border-color: #F28123;
+		margin-bottom: 0;
+	}
+	.filebox .col-sm-10>label {
+		display: inline-block;
+		padding: .5em .75em;
+		color: #999;
+		font-size: inherit;
+		font-weight: 600;
+		line-height: normal;
+		vertical-align: middle;
+		background-color: #fdfdfd;
+		cursor: pointer;
+		border: 1px solid #ebebeb;
+		border-bottom-color: #e2e2e2;
+		border-radius: .25em;
+	}
+	.filebox .upload-name {
+		display: inline-block;
+		width: 350px;
+		padding: .5em .75em;
+		margin-left: 25px;
+		/* label의 패딩값과 일치 */
+		font-size: inherit;
+		font-family: inherit;
+		line-height: normal;
+		vertical-align: middle;
+		background-color: #ffffff;
+		border: 1px solid #ddd;
+		border-bottom-color: #e2e2e2;
+		border-radius: .25em;
+		-webkit-appearance: none;
+		/* 네이티브 외형 감추기 */
+		-moz-appearance: none;
+		appearance: none;
+	}
+	.btn-write {
+		background-color: #f28213;
+		border-color: #f28213;
+		color: #fff;
+		font-weight: bold;
+	}
+	#btnDiv {
+		margin-left: 0; 
+		text-align: center; 
+		padding-top: 50px;
+	}
+	.col-md-9 {
+		max-width: 100%;
+	}
+
+</style>
+</th:block>		
+	  
+<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+	<!-- 게시판 타이틀 -->
+	<div id="container">
+		<div id="top-loca">
+			<div class="boardPath">
+				<a th:href="@{/}">HOME</a>
+				 >  
+				<a th:href="@{/user/board/qnaList}">문의사항</a>
+			</div>	
+			<h2>문의사항</h2>			
+		</div>
+	</div>	
+		
+	<!-- 게시판 탭  -->			
+	<div class="list-group list-group-horizontal col-sm-6" style="margin:0 auto; text-align: center;">
+  		<a th:href="@{/user/board/noticeList}" class="list-group-item list-group-item-action">공지사항</a>
+		<a th:href="@{/user/board/eventList}" class="list-group-item list-group-item-action">이벤트</a>
+		<a th:href="@{/user/board/faqList}" class="list-group-item list-group-item-action">FAQ</a>
+		<a th:href="@{/user/board/qnaList}" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">문의사항</a>
+	</div>
+	
+	
+	<!-- 문의사항 작성 테이블 -->
+	<div class="cart-section mt-150 mb-150" style="background-color: #f5f6fa; padding: 60px 0 100px; margin: 0; border-top: #e5e5e5 1px solid;">
+		<div class="container">
+			<div class="row" style="float: none; margin: 100 auto;">
+				<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
+
+				<!--작성 폼 -->
+				<div class="form-title">
+					<h2>문의사항 작성</h2>
+				</div>
+				 	<div id="form_status">
+						<div class="contact-form">
+							<form id="fruitkha-contact" th:action="@{/user/board/qnaWrite}" method="POST"  enctype="multipart/form-data" name="multipart" >
+								<table class="col-lg-8 col-lg-12">
+									<colgroup>
+										<col style="width:120px">
+										<col>
+										</colgroup>
+									<tbody style="background:none;">
+										<tr>
+											<th scope="row" class="table-head">작성자</th>
+											<td class="table-data">
+												<p>
+													<input type="text" name="memberId" id="name" th:value="${member.memberId}" style="padding: 5px 15px 5px 15px; margin-top: 10px; margin-bottom: 10px; width: 30%" readonly="readonly">
+												</p>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row" class="table-head table-row">문의유형</th>
+											<td class="table-data">
+											
+											<select name="boardMenuCode" id="boardMenuCode"  style="padding: 5px 15px 5px 5px;" required="required">
+												<option value="">카테고리 선택</option>
+												<option value="notice_menu_code_002">서비스 이용</option>
+												<option value="notice_menu_code_003">수거/배송</option>
+												<option value="notice_menu_code_004">결제/포인트</option>
+												<option value="notice_menu_code_005">서비스 불만족</option>
+											</select>
+											
+											<label style="padding-left: 10px; margin-left: 10px;">
+											  <input type="checkbox" name="boardSecret" value='Y' id="boardSecret" onclick="clickSecret()">  비밀글
+											  <input type="hidden" name="boardSecret" value='N' id="boardSecret_hidden">
+											</label>
+										
+										<tr>
+											<th scope="row" class="table-head">제목</th>
+											<td class="table-data">
+												<p>
+													<input type="text" placeholder="제목" name="boardTitle" id="title" required="required" style="padding: 5px 15px 5px 15px; margin-top: 10px; margin-bottom: 10px; width: 100%">
+												</p>
+											</td>
+										</tr>
+										
+										<tr>
+											<th scope="row" class="table-head">문의내용</th>
+											<td class="table-data">
+												<p><textarea name="boardContent" id="content" cols="30" rows="10"  required="required" placeholder="내용" style="margin-bottom: 10px;"></textarea></p>
+											</td>
+										</tr>
+																	
+									</tbody>	
+								</table>
+						
+						
+								<!-- 첨부파일 -->	
+								<div data-name="fileDiv" class="form-group row filebox bs3-primary">
+									<label for="file_0" class="col-md-1 control-label"><strong>파일첨부</strong></label>
+										<div class="col-sm-10">
+											<input type="text" class="upload-name" value="파일 찾기" readonly />
+												<label for="file_0" class="control-label">찾아보기</label>
+													<input type="file" name="boardImgFile" id="file_0" class="upload-hidden" onchange="changeFilename(this)" />		
+														<button type="button" onclick="addFile()" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+															<i class="fa fa-plus" aria-hidden="true"></i>
+														</button>
+														<button type="button" onclick="removeFile(this)" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+															<i class="fa fa-minus" aria-hidden="true"></i>
+														</button>
+										</div>
+								</div>
+					
+						
+								<div id="btnDiv" class="form-group">
+									<div class="col-md-9 col-sm-9">
+										<a th:href="@{/user/board/qnaList}"><button type="button" class="btn btn-secondary btn-lg">취소</button></a>
+											<a th:href="@{/user/board/qnaList}"><button type="submit" class="btn btn-write btn-lg" value="Submit" style=" margin: 50px;" onclick="return validCheck()">등록</button></a>
+											</div>
+											</div>
+										</form>
+									</div>
+								</div>
+				
+						</div>
+				
+					</div>
+					
+		</div>
+		
+	</div>
+		
+</th:block>
+</html>

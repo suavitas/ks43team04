@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/userDefault}">
+
+
+<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+<style>
+.complete-area table tr td:last-child{
+	width: 400px;
+}
+.complete-area table tr td:first-child{
+	width: 150px;
+}
+.complete-area table{
+	margin: 0 auto;
+}
+.lastBtn{
+	border: 0; 
+	border-radius: 10px; 
+	margin: 20px 0; 
+	padding: 0; 
+	width: 150px; 
+	height: 40px; 
+	font-size: 16px;
+	background-color :#F28123;
+	color: #fff;
+}
+.lastBtn:hover{
+	color: #fff;
+	background-color:#f29f23;
+}
+
+</style>
+	<form id="payForm" name="payForm" method="post" th:action="@{/user/myPagePayment2}">
+		<div class="complete-area" style="width: 100%; padding: 100px 200px 200px 200px; text-align: left;">
+
+
+
+
+	<h2 style="margin: 0 auto; padding-bottom:100px; text-align: center;">주문이 완료되었습니다.</h2>
+		<button type="submit" class="lastBtn" style="float: left; margin-left: 35%">결제내역 보기</button>
+		<button type="button" class="lastBtn" th:onclick="|location.href='@{/}'|" style="float: right; margin-right: 35%">메인으로</button>
+		</div>
+
+
+	</form>
+	
+	
+	
+</th:block>
+
+
+
+</html>

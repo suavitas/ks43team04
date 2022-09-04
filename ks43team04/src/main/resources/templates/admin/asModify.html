@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/adminDefault}">
+	  
+	<th:block layout:fragment="customScript">
+		<script type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+	</th:block>	
+		
+	<th:block layout:fragment="customJsScript"> 
+		<script type="text/javascript">
+		
+		/*유효성검사 */
+		function validCheck(){
+			var title = document.getElementById("title");
+			var content = document.getElementById("content");
+			if(title.value == ""){
+				alert("제목을 입력하세요.")
+				title.focus();
+				return false;
+			};
+			if(content.value == ""){
+				alert("내용을 입력하세요.")
+				content.focus();
+				return false;
+			};				
+		}
+		
+		/*첨부파일 필드추가*/
+		let fileIdx = 0; /*[- 파일 인덱스 처리용 전역 변수 -]*/
+		function addFile() {
+		
+			const fileDivs = $('div[data-name="fileDiv"]');
+			if (fileDivs.length > 3) {
+				alert('파일은 최대 네 개까지 업로드 할 수 있습니다.');
+				return false;
+			}
+		
+			fileIdx++;
+		
+			const fileHtml = `
+				<div data-name="fileDiv" class="form-group row filebox bs3-primary">
+					<label for="file_${fileIdx}" class="col-md-1 control-label"></label>
+					<div class="col-sm-10">
+						<input type="text" class="upload-name" value="파일 찾기" readonly />
+						<label for="file_${fileIdx}" class="control-label">찾아보기</label>
+						<input type="file" name="boardImgFile" id="file_${fileIdx}" class="upload-hidden" onchange="changeFilename(this)" />
+		
+						<button type="button" onclick="removeFile(this)" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+							<i class="fa fa-minus" aria-hidden="true"></i>
+						</button>
+					</div>
+				</div>
+			`;
+		
+			$('#btnDiv').before(fileHtml);
+		}
+		
+		
+		/*첨부파일 필드삭제*/
+		function removeFile(elem) {
+		
+			const prevTag = $(elem).prev().prop('tagName');
+			if (prevTag === 'BUTTON') {
+				const file = $(elem).prevAll('input[type="file"]');
+				const filename = $(elem).prevAll('input[type="text"]');
+				file.val('');
+				filename.val('파일 찾기');
+				return false;
+			}
+		
+			const target = $(elem).parents('div[data-name="fileDiv"]');
+			target.remove();
+		}
+ 		
+		/*첨부파일 첨부 시 파일 이름로 변경*/
+		function changeFilename(file) {
+		
+			file = $(file);
+			const filename = file[0].files[0].name;
+			const target = file.prevAll('input');
+			target.val(filename);
+		}
+	
+	</script>
+
+	<style>	
+		.filebox input[type="file"] {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			margin: -1px;
+			overflow: hidden;
+			clip: rect(0, 0, 0, 0);
+			border: 0;
+		}
+		.filebox.bs3-primary .col-sm-10>label {
+			color: #fff;
+			background-color: #337ab7;
+			border-color: #2e6da4;
+		}
+		.filebox .col-sm-10>label {
+			display: inline-block;
+			padding: .5em .75em;
+			color: #999;
+			font-size: inherit;
+			font-weight: 600;
+			line-height: normal;
+			vertical-align: middle;
+			background-color: #fdfdfd;
+			cursor: pointer;
+			border: 1px solid #ebebeb;
+			border-bottom-color: #e2e2e2;
+			border-radius: .25em;
+		}
+		.filebox .upload-name {
+			display: inline-block;
+			width: 350px;
+			padding: .5em .75em;
+			/* label의 패딩값과 일치 */
+			font-size: inherit;
+			font-family: inherit;
+			line-height: normal;
+			vertical-align: middle;
+			background-color: #f5f5f5;
+			border: 1px solid #ebebeb;
+			border-bottom-color: #e2e2e2;
+			border-radius: .25em;
+			-webkit-appearance: none;
+			/* 네이티브 외형 감추기 */
+			-moz-appearance: none;
+			appearance: none;
+		}	
+	</style>
+</th:block>	  		  	
+
+	  
+	  
+	<!-- 사용자정의 contents -->
+	<th:block layout:fragment="customContents">
+	
+ 		<!-- 탭 이름 -->
+		<h4><strong>고장 신고</strong></h4>
+			<!-- 본문 --> 	
+ 			<div class="admin-board-list" style="margin-top: 50px;">
+ 				<div class="x_panel">
+	 				<!-- 게시판 타이틀 -->
+	 				<h4 style="margin: 20px;">고장 신고 수정하기</h4>
+			 			<div class="x_title">
+			 				<!-- 고장 신고 수정 폼 시작 -->	
+							<div class="x_content" style="margin-top: 80px;">	
+	 							<form class="form-horizontal form-label-left" th:action="@{/admin/asModify}" method="POST" enctype="multipart/form-data" name="multipart" style="width: 80%; margin: 20px auto;">
+									<div class="form-group row">
+										<label class="control-label col-md-1 col-sm-1">세탁소명</label>
+											<div class="col-md-4 col-sm-4"  th:each="l : ${getMemberLaundryList}">
+												<input type="text" class="form-control" readonly="readonly" name="laundryCode" th:value="${l.laundryName}" id="code">
+											</div>
+									</div>									
+									<div class="form-group row">
+										<label class="control-label col-md-1 col-sm-1">작성자</label>
+											<div class="col-md-4 col-sm-4">
+												<input type="text" class="form-control" id="memberId" readonly="readonly"  th:value="${memberId}">
+											</div>
+											<div class="checkbox">
+												<label class="smsCheck" style="margin: 10px 0 10px 20px;">
+													<div class="icheckbox_flat-green checked" style="position: relative;">
+														<input type="checkbox" class="flat" checked="checked" style="position: absolute; opacity: 0;">
+															<ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+													</div> 
+													<span style="margin-left: 10px;">SMS 알림 수신 동의</span>
+												</label>
+											</div>
+									</div>									
+									<div class="form-group row">
+										<label class="control-label col-md-1 col-sm-1">제목</label>
+											<div class="col-md-9 col-sm-9">
+												<input type="text" class="form-control" name="asTitle" id="title" th:value="${asTitle}">
+											</div>
+									</div>									
+									<div class="form-group row">
+										<label class="control-label col-md-1 col-sm-1">내용</label>
+											<div class="col-md-9 col-sm-9">
+												<p><textarea class="form-control" name="asContent" id="content" th:text="${asContent}" placeholder="내용" style="resize: none; height: 350px;" required="required"></textarea></p>
+											</div>
+									</div>
+									
+									<!-- 첨부파일 -->	
+									<div data-name="fileDiv" class="form-group row filebox bs3-primary">
+										<label for="file_0" class="col-md-1 control-label">파일첨부</label>
+											<div class="col-sm-10">
+												<input type="text" class="upload-name" value="파일 찾기" readonly />
+													<label for="file_0" class="control-label">찾아보기</label>
+														<input type="file" name="boardImgFile" id="file_0" class="upload-hidden" onchange="changeFilename(this)" />		
+															<button type="button" onclick="addFile()" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+																<i class="fa fa-plus" aria-hidden="true"></i>
+															</button>
+															<button type="button" onclick="removeFile(this)" class="btn btn-bordered btn-xs visible-xs-inline visible-sm-inline visible-md-inline visible-lg-inline">
+																<i class="fa fa-minus" aria-hidden="true"></i>
+															</button>																		
+											</div>
+									</div>				
+																<input type="hidden" name = "asCode" th:value="${asCode}">
+																<input type="hidden" name = "asState" th:value="${asState}">
+																<input type="hidden" name = "updateTime" th:value="${updateTime}">
+									
+									<!-- 버튼 -->
+									<div id="btnDiv" class="form-group">										
+										<div class="col-md-9 col-sm-9 offset-md-3" style="margin-left: 0; text-align: center; padding-top: 50px;">
+											<a th:href="@{/admin/asListById}"><button type="button" class="btn btn-secondary" style="margin-right: 30px;">취소</button></a>
+											<button type="submit"  value="Submit" class="btn btn-warning" style="margin-left: 30px;" onclick="return validCheck()">수정</button>
+										</div>
+									</div>
+								</form>
+							</div>
+							<!-- 고장 신고 수정 폼 끝 -->	
+						</div>
+					</div>
+				</div>
+						
+	</th:block>
+
+</html>

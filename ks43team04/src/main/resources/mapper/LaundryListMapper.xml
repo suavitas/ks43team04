@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.LaundryListMapper">
+
+   <resultMap type="LaundryList"                   id="LaundryListResultMap">
+      <id column="laundry_code"                  property="laundryCode"/>
+      <result column="m_id"                      property="memberId"/>
+      <result column="level_code"                property="levelCode"/>
+      <result column="laundry_name"                property="laundryName"/>
+      <result column="laundry_state"                property="laundryState"/>
+      <result column="laundry_post_num"             property="laundryPostNum"/>
+      <result column="laundry_addr"                property="laundryAddr"/>
+      <result column="laundry_detail_addr"          property="laundryDetailAddr"/>
+      <result column="laundry_tel"                property="laundryTel"/>
+      <result column="laundry_license_img"          property="laundryLicenseImg"/>
+      <result column="laundry_img"                property="laundryImg"/>
+      <result column="skill_licence"                property="skillLicence"/>
+      <result column="business_number"             property="businessNumber"/>
+      <result column="admin_level_code"             property="adminLevelCode"/>
+      <result column="regist_time"               property="registTime"/>
+      <collection property="ilbanGpriceList"             ofType="IlbanGprice"> 
+         <id    column="ilban_G_price_code"             property="ilbanGoodsPriceCode"/>
+         <result column="laundry_code"             property="laundryCode"/>
+         <result column="ilban_skill_code"       property="ilbanSkillCode"/>
+         <result column="g_name"       property="goodsName"/>
+         <result column="g_price"          property="goodsPrice"/>
+         <result column="regist_time"          property="registTime"/>
+         <result column="g_price_use_state"          property="goodsPriceUseState"/>
+      </collection>
+      <collection property="billList"             ofType="MonthBill"> 
+         <id    column="bill_code"             property="billCode"/>
+         <result column="order_num_groupcode"             property="orderNumGroupcode"/>
+         <result column="total_price"       property="totalPrice"/>
+         <result column="user_code"       property="userCode"/>
+         <result column="pay_use_point"          property="payUsePoint"/>
+         <result column="pay_method"          property="payMethod"/>
+         <result column="pay_ok_date"          property="payOkDate"/>
+         <result column="refund_code"          property="refundCode"/>
+         <result column="after_use_point_pay"          property="afterUsePointPay"/>
+         <result column="add_pay"          property="addPay"/>
+         <result column="delivery_pay"          property="deliveryPay"/>
+         <result column="total_pay_groupcode"          property="totalPayGroupcode"/>
+      </collection>
+      <collection property="orderList"             ofType="Order"> 
+         <id    column="order_code"             property="orderCode"/>
+         <result column="ilban_G_price_code"             property="ilbanGPriceCode"/>
+         <result column="user_code"       property="userCode"/>
+         <result column="order_num_groupcode"       property="orderNumGroupCode"/>
+      </collection>
+   </resultMap>
+   
+	  <select id="getSearchList" fetchSize="10" parameterType="map" resultType="map">
+				/*시설검색*/
+				SELECT
+					f.facility_cd 			AS facilityCd
+					,f.main_ctg_cd 			AS mainCtgCd
+					,fu.facility_use_nm 	AS facilityUseNm
+					,a.area_nm 				AS areaNm
+					,ac.city_nm				AS cityNm
+					,act.town_nm 			AS townNm
+					,f.user_id 				AS userId
+					,f.facility_nm 			AS facilityNm
+	 				,f.facility_address 	AS facilityAddr
+					,f.facility_detail_addr AS facilityDetailAddr
+					,f.facility_tell 		AS facilityTell
+					,f.business_number		AS businessNum
+					,f.facility_reg_date 	AS facilityRegDate
+				FROM
+					LaundryList AS l
+					
+				<trim prefix="WHERE" prefixOverrides="AND |OR ">
+					<if test="searchValue != null and searchValue != ''">
+						${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
+					</if>
+				</trim>
+	 </select>
+   
+   <select id="laundryList" resultType="Map">
+	SELECT
+		result.laundry_name,
+		SUM(result.g_price) as income
+	FROM
+		(
+     SELECT
+      l.laundry_name
+      ,gp.g_name
+      ,gp.g_price
+      ,b.total_price
+      ,b.pay_ok_date
+      FROM 
+         tb_laundry AS l
+         INNER join
+         tb_ilban_g_price AS gp
+         on
+         l.laundry_code = gp.laundry_code
+         CROSS join
+         tb_month_bill AS b
+         on
+         l.laundry_code = gp.laundry_code
+ 			WHERE
+					pay_ok_date BETWEEN '2021-01-01' AND '2021-01-31'
+			)as result
+			GROUP BY result.laundry_name;
+   </select>
+   
+   <select id="Month3laundryList" resultType="Map">
+	SELECT
+		result.laundry_name,
+		SUM(result.g_price) as income
+	FROM
+		(
+     SELECT
+      l.laundry_name
+      ,gp.g_name
+      ,gp.g_price
+      ,b.total_price
+      ,b.pay_ok_date
+      FROM 
+         tb_laundry AS l
+         INNER join
+         tb_ilban_g_price AS gp
+         on
+         l.laundry_code = gp.laundry_code
+         CROSS join
+         tb_month_bill AS b
+         on
+         l.laundry_code = gp.laundry_code
+ 			WHERE
+					l.laundry_name like CONCAT('%','크','%') and
+					pay_ok_date BETWEEN '2021-01-01' AND '2021-04-31'
+			)as result
+			GROUP BY result.laundry_name;
+   </select>
+   
+
+   
+     <select id="Month6laundryList" resultType="Map">
+	SELECT
+		result.laundry_name,
+		SUM(result.g_price) as income
+	FROM
+		(
+     SELECT
+      l.laundry_name
+      ,gp.g_name
+      ,gp.g_price
+      ,b.total_price
+      ,b.pay_ok_date
+      FROM 
+         tb_laundry AS l
+         INNER join
+         tb_ilban_g_price AS gp
+         on
+         l.laundry_code = gp.laundry_code
+         CROSS join
+         tb_month_bill AS b
+         on
+         l.laundry_code = gp.laundry_code
+ 			WHERE
+					l.laundry_name like CONCAT('%','크','%') and
+					pay_ok_date BETWEEN '2021-01-01' AND '2021-07-31'
+			)as result
+			GROUP BY result.laundry_name;
+   </select>
+   
+        <select id="yearlaundryList" resultType="Map">
+	SELECT
+		result.laundry_name,
+		SUM(result.g_price) as income
+	FROM
+		(
+     SELECT
+      l.laundry_name
+      ,gp.g_name
+      ,gp.g_price
+      ,b.total_price
+      ,b.pay_ok_date
+      FROM 
+         tb_laundry AS l
+         INNER join
+         tb_ilban_g_price AS gp
+         on
+         l.laundry_code = gp.laundry_code
+         CROSS join
+         tb_month_bill AS b
+         on
+         l.laundry_code = gp.laundry_code
+ 			WHERE
+					l.laundry_name like CONCAT('%','크','%') and
+					pay_ok_date BETWEEN '2021-01-01' AND '2022-01-31'
+			)as result
+			GROUP BY result.laundry_name;
+   </select>
+   
+   <select id="addlaundryName" resultMap="LaundryListResultMap">
+	   SELECT 
+		laundry_name
+		,laundry_code
+		FROM
+		tb_laundry;
+	</select>
+   
+   
+   
+   
+</mapper>

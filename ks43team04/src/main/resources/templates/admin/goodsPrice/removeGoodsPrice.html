@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/adminDefault}">
+
+<th:block layout:fragment="customCss">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+</th:block>
+
+<th:block layout:fragment="customJsScript">
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+	<script>
+		$(function(){
+			$(document).on('click', '.removeGoodsPriceBtn', function() {
+				$.ajax({
+        		    url: "/admin/goodsPrice/removeGoodsPrice",
+        		    type: "post",
+        		    dataType: "text",
+        		    data: $('#removeGoodsPriceForm').serialize(),
+        		    success: function(data){
+        		    	swal(
+        		    	        '사용유무 변경',
+        		    	        '<b style="color:red;"><strong>상태 변경</strong></b>이 완료 되었습니다!',
+        		    	        'success'
+        		    	      ).then((result) => {
+        				          if (result.value) {
+        				              window.location = data;
+        				          }
+        		    	      });
+        		    	
+        		    },
+        		    error: function (request, status, error){        
+
+        		    }
+				
+		    	});
+			});
+		});
+	</script>
+</th:block>
+
+<th:block layout:fragment="customContents">
+	<form th:action="@{/admin/goodsPrice/removeGoodsPrice}" method="post" 
+			id="removeGoodsPriceForm" style="text-align: center;">
+		<table class="table table-striped jambo_table bulk_action"
+			style="width: 50%; margin: 0 auto; margin-top: 80px; border-collapse: separate;">
+			<thead>
+				<tr class="headings">
+					<th class="column-title" colspan="2">가격 정보</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="even pointer">
+					<td>스킬 명</td>
+					<td><input th:text="${skillCate}" name="skillCate"
+						th:value="${skillCate}" hidden="true"></td>
+				</tr>
+				<tr class="even pointer">
+					<td>제품 명</td>
+					<td><input th:text="${gName}" name="gName" th:value="${gName}"
+						hidden="true"></td>
+				</tr>
+				<tr class="even pointer">
+					<td>제품 가격</td>
+					<td><input th:text="${gPrice}" name="gPrice"
+						th:value="${gPrice}" hidden="true"></td>
+
+				</tr>
+				<tr class="even pointer">
+					<td colspan="2">
+						<button type="button" class="btn btn-danger btn-sm removeGoodsPriceBtn"
+							data-toggle="modal" data-target="#deleteModal">가격 사용유무 변경</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<input type="hidden" name="ilbanGPriceCode"	th:value="${ilbanGPriceCode}"> 
+		<input type="hidden" name="gPriceUseState" th:value="${gPriceUseState}">
+	</form>
+
+</th:block>
+</html>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.DeliveryMapper">
+
+	<resultMap type="Delivery" id="deliveryResultMap">
+		<id column="delivery_code" property="deliveryCode" />
+		<result column="laundry_code" property="laundryCode" />
+		<result column="request_code" property="requestCode" />
+		<result column="delivery_addr" property="deliveryAddr" />
+		<result column="user_code" property="userCode" />
+		<result column="bill_code" property="billCode" />
+		<result column="delivery_plan_date" property="deliveryPlanDate" />
+		<result column="delivery_finish_time"
+			property="deliveryFinishTime" />
+		<result column="contract_rider_code"
+			property="contractRiderCode" />
+		<collection property="user" ofType="User">
+			<id column="user_code" property="userCode" />
+			<result column="m_id" property="mId" />
+			<result column="user_level_change_code"
+				property="userLevelChangeCode" />
+			<result column="point_update" property="pointUpdate" />
+			<result column="admin_level_code" property="adminLevelCode" />
+		</collection>
+		<collection property="memberList" ofType="Member">
+			<id column="m_id" property="memberId" />
+			<result column="level_code" property="levelCode" />
+			<result column="m_pw" property="memberPw" />
+			<result column="m_pw_QnA_code" property="memberPwQnACode" />
+			<result column="m_name" property="memberName" />
+			<result column="m_birth" property="memberBirth" />
+			<result column="m_addr" property="memberAddr" />
+			<result column="m_phone" property="memberPhone" />
+			<result column="m_gender" property="memberGender" />
+			<result column="m_out_code" property="memberOutCode" />
+			<result column="m_email" property="memberEmail" />
+			<result column="m_reg_date" property="memberRegDate" />
+			<result column="admin_level_code" property="adminLevelCode" />
+			<result column="regist_time" property="registTime" />
+		</collection>
+		<collection property="laundryList" ofType="LaundryList">
+			<id column="laundry_code" property="laundryCode" />
+			<result column="m_id" property="memberId" />
+			<result column="level_code" property="levelCode" />
+			<result column="laundry_name" property="laundryName" />
+			<result column="laundry_state" property="laundryState" />
+			<result column="laundry_post_num" property="laundryPostNum" />
+			<result column="laundry_addr" property="laundryAddr" />
+			<result column="laundry_detail_addr"
+				property="laundryDetailAddr" />
+			<result column="laundry_tel" property="laundryTel" />
+			<result column="laundry_license_img"
+				property="laundryLicenseImg" />
+			<result column="laundry_img" property="laundryImg" />
+			<result column="skill_licence" property="skillLicence" />
+			<result column="business_number" property="businessNumber" />
+			<result column="admin_level_code" property="adminLevelCode" />
+			<result column="regist_time" property="registTime" />
+		</collection>
+			<collection property="requestList" 							ofType="Request">
+			<id column="request_code"									property="requestCode"/>
+			<result column="request_cate" 								property="requestCate"/>
+		</collection>
+		<collection property="contractRiderList" 						ofType="ContractRider">
+			<id column="head_contract_rider_code"						property="headContractRiderCode"/>
+			<result column="head_contract_admin" 						property="headContractAdmin"/>
+			<result column="head_rider_conpany_name" 					property="headRiderConpanyName"/>
+			<result column="head_rider_phone" 							property="headRiderPhone"/>
+			<result column="head_rider_area" 							property="headRiderArea"/>
+			<result column="head_rider_contract_date" 					property="headRiderContractDate"/>
+		</collection>
+		<collection property="bill"					ofType="Bill">
+		<id 	column="bill_code" 					property="billCode"/>
+		<result column="order_num_groupcode" 		property="orderNumGroupcode"/>
+		<result column="total_price" 				property="totalPrice"/>
+		<result column="user_code" 					property="userCode"/>
+		<result column="pay_use_point" 				property="payUsePoint"/>
+		<result column="pay_method" 				property="payMethod"/>
+		<result column="pay_ok_date" 				property="payOkDate"/>
+		<result column="refund_code" 				property="refundCode"/>
+		<result column="after_use_point_pay" 		property="afterUsePointPay"/>
+		<result column="add_pay" 					property="addPay"/>
+		<result column="delivery_pay" 				property="deliveryPay"/>
+		<result column="total_pay_groupcode" 		property="totalPayGroupcode"/>
+		</collection>
+		
+	</resultMap>
+
+	<select id="deliveryListByStore" resultMap="deliveryResultMap">
+		SELECT
+			d.delivery_code
+			,d.delivery_addr
+			,d.delivery_plan_date
+			,d.delivery_finish_time
+			,l.laundry_name
+			,r.request_cate
+			,m.m_name
+			,b.bill_code
+			,c.head_rider_conpany_name
+		FROM
+			tb_delivery AS d
+		INNER JOIN
+			tb_laundry AS l
+			on
+			l.laundry_code = d.laundry_code	
+		INNER JOIN
+			tb_request AS r
+			on
+			r.request_code = d.request_code
+		INNER JOIN
+			tb_user AS u
+			on
+			u.user_code = d.user_code
+		INNER JOIN
+			tb_member AS m
+			on
+			u.m_id = m.m_id	
+		INNER JOIN
+			tb_bill AS b
+			on
+			b.bill_code = d.bill_code	
+		INNER JOIN
+			tb_contract_rider AS c
+			on
+			c.head_contract_rider_code = d.contract_rider_code
+		WHERE
+			l.laundry_code IN
+			  <foreach item="laundryCode" index="index" collection="laundryCodeList"
+			      open="(" separator="," close=")">
+			        #{laundryCode}
+			  </foreach>	
+	
+	</select>
+
+
+
+	<select id="getDeliveryList" resultMap="deliveryResultMap">
+		SELECT
+			l.laundry_name
+			,m.m_name
+			,d.delivery_plan_date
+			,d.delivery_finish_time
+		FROM
+			tb_delivery AS d
+		INNER JOIN
+			tb_user AS u
+			on
+			u.user_code = d.user_code
+		INNER JOIN
+			tb_member AS m
+			on
+			u.m_id = m.m_id
+		INNER JOIN
+			tb_laundry AS l
+			ON
+			d.laundry_code =l.laundry_code
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="searchValue != null and searchValue != ''">
+				m.m_id = #{sessionId};
+			</if>
+		</trim>		
+	</select>
+
+
+</mapper>

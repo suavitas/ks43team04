@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/userDefault}">
+	  
+	  
+<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+   <div id="container">
+      <div id="top-loca">
+         <div class="boardPath">
+            <a th:href="@{/}">HOME</a>           
+            <h2 style="font-family: 'ONE-Mobile-Regular'">[[${sessionName}]]</h2><span>님의 마이페이지</span>
+         </div>   
+      </div>
+   </div>   
+	<!-- 게시판 탭  -->         
+	<div class="list-group list-group-horizontal col-sm-12" style="margin:0 auto; text-align: center;padding-right: 0px;">
+		<a th:href="@{/user/myPage}" class="list-group-item list-group-item-action">회원정보</a>
+		<a  th:href="@{/user/myPageReservationStatus}" class="list-group-item list-group-item-action">예약 현황</a>
+		<a th:href="@{/user/myPageDelivery}" class="list-group-item list-group-item-action">수거배송 조회</a>
+		<a th:href="@{/user/myPagePayment}" class="list-group-item list-group-item-action active" style="background-color: #F28123; border-color: #F28123;" aria-current="true">결제 내역</a>
+		<a th:href="@{/user/myPageRefund}" class="list-group-item list-group-item-action">환불 내역</a>
+		<a th:href="@{/user/myPagePoint}" class="list-group-item list-group-item-action">포인트 조회</a>
+		<a th:href="@{/user/myPageWrite}" class="list-group-item list-group-item-action">문의 내역</a>
+	</div>
+	<!-- 본문내용 -->
+	<div class="cart-section mt-150 mb-150" style="background-color: #f5f6fa; padding: 60px 0 100px; margin: 0; border-top: #e5e5e5 1px solid;">
+		<div class="container">
+			<div class="row" style="float: none; margin: 100 auto;">
+				<div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">			
+					<!-- 결제내역 조회 -->
+					<div class="cart-table-wrap">
+						<div class="point-summary" style="border: 1px solid #dadddf; padding: 30px 0 30px;">
+							<ul class="point-zone" style=" display: table; width: 100%; table-layout: fixed; list-style: none; padding-left: 0px; margin-bottom: 0px;">
+								<li class="level-area" style="display: table-cell; text-align: center; vertical-align: middle;">
+									<div class="level-type">
+										<div class="level-area-title">
+											<a th:href="@{/user/myPage}">
+												<strong>[[${sessionName}]]</strong>
+											</a>
+											님의 결제내역
+										</div>
+									</div>
+								</li>
+								<li class="point-total" style="display: table-cell; text-align: center; border-left: 1px solid #d9dadd; width: 650px;">
+									<div class="point-content" style="display: inline-block; position: relative; margin: 0 auto;">
+										<div class="point-area-title">
+											<span>결제 건수</span>
+										</div>
+										<div class="point-amount row">
+											<i class="bi bi-cart-plus" style="font-size: 30px;"></i>
+											<div style="padding-left: 20px; padding-right: 20px; font-size: 30px;">
+												<th:block>
+													<span th:text="${rowCount}+' 건'">count</span>
+												</th:block>
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="point-list">
+						<div class="point-ask-period" style="position: relative; border: 1px solid #d9dadd; margin: -1px 0 46px; padding: 18px 27px;">
+							<table style="border-collapse: separate; text-indent: initial; border-spacing: 2px; margin: auto;">
+								<tbody style="display: table-row-group; vertical-align: middle; border-color: inherit; background-color: transparent;">
+									<tr style="table-row; vertical-align: inherit; border-color: inherit;">
+										<td>
+											<div style="margin: 0 10px;">
+												<input type="date">
+												<span>~</span>
+												<input type="date">
+												<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" id="dropdownBtn" style="background-color: #F28123; border-color: #F28123; margin-left: 10px;padding-top: 3px;padding-bottom: 3px;margin-bottom: 2px; ">
+													전체상태
+												</button>
+												<div class="dropdown-menu">
+													<a class="dropdown-item" href="#">결제</a>
+													<a class="dropdown-item" href="#">환불</a>
+												</div>
+											</div>
+											<td class="search-click-btn"><a href="#" style="display: inline-block; width: 70px; height: 32px; margin-left:50px; middle;background-color: #F28123; border-color: #F28123; color: #fff; border-radius: 5px; text-align: center;"><span style="vertical-align: middle;">조회하기</span></a></td>
+									</tr>	
+								</tbody>
+							</table>	
+						</div>							
+					</div>
+					<!-- 내용 시작-->
+					<th:block th:if="${not #lists.isEmpty(billPage)}" th:each="l , status : ${billPage}">
+						<div class="cart-table-wrap">
+							<div class="point-summary" style="border: 1px solid #dadddf; padding: 30px 0 30px;">
+								<ul class="point-zone" style=" display: table; width: 100%; table-layout: fixed; list-style: none; padding-left: 0px; margin-bottom: 0px;">
+									<li class="level-area" style="display: table-cell; text-align: center; vertical-align: middle;">
+										<div class="level-type">
+											<div class="level-area-title">
+												<span style="display: block; font-size: 50px;">
+													<strong><i class="bi bi-cart-check"></i></strong>
+												</span>
+												<span th:text="${l.get('registTime')}"></span>
+											</div>
+										</div>
+									</li>
+									<li class="point-total" style="display: table-cell; text-align: center; border-left: 1px solid #d9dadd; width: 650px;">
+										<div class="point-content" style="display: inline-block; position: relative; margin: 0 auto;">
+											<div class="point-area-title">
+												<span th:text="${l.get('laundryName')}"></span>
+											</div>
+											<div class="point-amount">
+												<div>
+												<span>세탁물 : </span>
+												<strong th:text="${l.get('goodsName')}"></strong>
+												</div>
+												<div>
+												<span>세탁기능 : </span>
+												<strong th:text="${l.get('skillCate')}"></strong>
+												</div>
+												<div style="padding-left: 20px; padding-right: 20px; font-size: 30px;">
+													<span th:text="${#numbers.arrayFormatInteger(l.get('totalPrice'),3,'COMMA') + '원'}"></span>
+												</div>
+												<div>
+												<span>카드 결제완료</span>
+												</div>
+												<div>
+													<span th:text="${#numbers.arrayFormatInteger(l.get('addPoint'),3,'COMMA') + '포인트 적립'}"></span>
+												</div>
+												<!-- 모달창 시작 -->
+												<div>
+													<button type="button" class="btn btn-info btn-xs" data-toggle="modal" th:data-target="${'#myModal' + status.count}">요청사항</button>
+												</div>
+												<!-- Modal -->
+												<div class="modal fade" th:id="${'myModal' + status.count}" tabindex="-1" role="dialog" th:aria-labelledby="${'myModal' + status.count + 'Label'}">
+												  <div class="modal-dialog">
+												    <!-- Modal content-->
+												    <div class="modal-content">
+												      <div class="modal-header">
+												        <button type="button" class="close" data-dismiss="modal">&times;</button>
+												        <h4 class="modal-title">요청사항</h4>
+												      </div>
+												      <div class="modal-body">
+												        <p th:text="${l.request}"></p>
+												      </div>
+												      <div class="modal-footer">
+												        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+												      </div>
+												    </div>
+												  </div>
+												</div>
+												<!-- 모달창 끝 -->
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</th:block>
+					<!-- 내용 끝 -->
+					<th:block th:unless="${not #lists.isEmpty(billPage)}">
+						<div class="cart-table-wrap">
+							<div class="point-summary" style="border: 1px solid #dadddf; padding: 30px 0 30px;">
+								<ul class="point-zone" style=" display: table; width: 100%; table-layout: fixed; list-style: none; padding-left: 0px; margin-bottom: 0px;">
+									<li class="level-area" style="display: table-cell; text-align: center; vertical-align: middle;">
+										<div class="level-type">
+											<div class="level-area-title">
+												<span style="display: block; font-size: 50px;">
+													<strong><i class="bi bi-cart-x"></i></strong>
+												</span>
+												<span></span>
+											</div>
+										</div>
+									</li>
+									<li class="point-total" style="display: table-cell; text-align: center; border-left: 1px solid #d9dadd; width: 650px;">
+										<div class="point-content" style="display: inline-block; position: relative; margin: 0 auto;">
+											<div class="point-area-title">
+												<span>결제 내역이 더이상 존재하지 않습니다.</span>
+											</div>
+											<div class="point-amount">
+												<div>
+												<span>문제가 있으신 경우</span>
+												<br/>
+												<strong>아래 번호로 문의 부탁드립니다.</strong>
+												</div>
+												<div style="padding-left: 20px; padding-right: 20px; font-size: 30px;">
+													<span>063-717-1008</span>
+												</div>
+												<div>
+												<span>감사합니다.</span>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</th:block>			
+				</div>
+			</div>
+		</div>
+		<!-- 페이징처리 시작 -->
+		<th:block>
+			<div class="row" style="margin-bottom: 100px;">
+				<div class="col-lg-12 text-center">
+					<div class="pagination-wrap">
+						<ul>
+							<li><a th:href="@{/user/myPagePayment2}">처음</a><li>
+							<li><a th:if="${currentPage > 1}" th:href="@{/user/myPagePayment2(currentPage=${currentPage -1})}">이전</a></li>
+							<th:block th:each="num : ${#numbers.sequence(startPageNum, endPageNum)}">
+								<li><label th:if="${currentPage eq num}" th:text="${(num < 5)? '0'+ num: num}"></label></li>
+								<li><a th:unless="${currentPage eq num}" th:href="@{/user/myPagePayment2(currentPage=${num})}" th:text="${(num < 5)? '0'+ num: num}"></a></li>
+							</th:block>
+							<li><a th:if="${currentPage < lastPage}" th:href="@{/user/myPagePayment2(currentPage=${currentPage +1})}">다음</a></li>
+							<li><a th:href="@{/user/myPagePayment2(currentPage=${lastPage})}">마지막</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</th:block>
+		<!-- 페이징처리 끝 -->
+	</div>
+</th:block>
+
+
+
+</html>

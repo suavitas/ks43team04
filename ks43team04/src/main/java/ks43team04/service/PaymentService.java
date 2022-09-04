@@ -1,0 +1,31 @@
+package ks43team04.service;
+
+
+import org.springframework.stereotype.Service;
+
+import ks43team04.dto.JJname;
+import ks43team04.dto.MemberLevel;
+import ks43team04.dto.PayMember;
+import ks43team04.mapper.PaymentMapper;
+
+@Service
+public class PaymentService {
+	private final PaymentMapper paymentMapper;
+
+	public PaymentService(PaymentMapper paymentMapper) {
+		this.paymentMapper = paymentMapper;
+	}
+
+	// 회원 상세정보 조회
+	public PayMember getPayMInfo(String memberId) {
+		return paymentMapper.getPayMInfo(memberId);
+	}
+
+	public MemberLevel getMemberLevel(String levelCode) {
+		return paymentMapper.getMemberLevel(levelCode);
+	}
+	
+	public JJname getJJname(String laundryName) {
+		return paymentMapper.getJJname(laundryName);
+	}
+}

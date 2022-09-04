@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	  
+<head th:replace="user/fragment/head :: head"></head>
+
+
+
+        
+
+         <!-- top navigation -->
+         <div th:replace="user/fragment/header :: header"></div>
+         <!-- /top navigation -->
+         
+         
+  <!-- featured section -->
+	<div class="checkout-section mt-150 mb-150" role="main">
+	          <th:block layout:fragment="customContents">
+	          
+            </th:block>
+	</div>
+	<!-- end featured section -->
+         
+         
+         <!-- footer content -->
+         <footer th:replace="user/fragment/footer :: footer"></footer>
+           <!-- /footer content -->
+  
+
+
+
+  	<!-- jquery -->
+	<script th:src="@{/user/assets/js/jquery-1.11.3.min.js}"></script>
+	<!-- popper -->
+	<script th:src="@{/user/assets/js/popper.js}"></script>
+	<!-- bootstrap -->
+	<script th:src="@{/user/assets/bootstrap/js/bootstrap.min.js}"></script>
+	<!-- count down -->
+	<script th:src="@{/user/assets/js/jquery.countdown.js}"></script>
+	<!-- isotope -->
+	<script th:src="@{/user/assets/js/jquery.isotope-3.0.6.min.js}"></script>
+	<!-- waypoints -->
+	<script th:src="@{/user/assets/js/waypoints.js}"></script>
+	<!-- owl carousel -->
+	<script th:src="@{/user/assets/js/owl.carousel.min.js}"></script>
+	<!-- magnific popup -->
+	<script th:src="@{/user/assets/js/jquery.magnific-popup.min.js}"></script>
+	<!-- mean menu -->
+	<script th:src="@{/user/assets/js/jquery.meanmenu.min.js}"></script>
+	<!-- sticker js -->
+	<script th:src="@{/user/assets/js/sticker.js}"></script>
+	<!-- main js -->
+	<script th:src="@{/user/assets/js/main.js}"></script>
+	<!-- datatable -->
+	<script th:src="@{/common/jquery.dataTables.min.js}"></script>
+	
+	
+	
+	<!-- 사용자정의 자바스크립트 플러그인  -->
+	<th:block layout:fragment="customJsPlugin"></th:block>
+	<!-- 스크립트 -->
+	<th:block layout:fragment="customJsScript"></th:block>
+	<th:block layout:fragment="customJsScript2"></th:block>
+
+
+	</body>
+</html>
+					

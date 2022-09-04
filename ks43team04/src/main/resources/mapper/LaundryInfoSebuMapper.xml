@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.LaundryInfoSebuMapper">
+
+   
+   <resultMap type="laundryInfoSebu"               		id="LaundryInfoResultMap">
+      <id column="laundry_code"                   		property="laundryCode"/>
+      <result column="m_id"                       		property="memberId"/>
+      <result column="level_code"                 		property="levelCode"/>
+      <result column="laundry_name"               		property="laundryName"/>
+      <result column="laundry_state"              		property="laundryState"/>
+      <result column="laundry_post_num"           		property="laundryPostNum"/>
+      <result column="laundry_addr"               		property="laundryAddr"/>
+      <result column="laundry_detail_addr"        		property="laundryDetailAddr"/>
+      <result column="laundry_tel"                		property="laundryTel"/>
+      <result column="laundry_license_img"       		property="laundryLicenseImg"/>
+      <result column="laundry_img"               		property="laundryImg"/>
+      <result column="skill_licence"              		property="skillLicence"/>
+      <result column="business_number"            		property="businessNumber"/>
+      <result column="admin_level_code"           		property="adminLevelCode"/>
+      
+      <collection property="reviewList"            		ofType="Review"> 
+      	 <id     column="review_code"            		property="reviewCode"/>
+         <result column="laundry_code"        		    property="laundryCode"/>
+         <result column="m_id"       					property="memberId"/>
+         <result column="review_content"       			property="reviewContent"/>
+         <result column="counting_star"       			property="countingStar"/>
+         <result column="regist_time"       			property="registTime"/>
+      </collection>
+      
+      <collection property="ilbanGpriceList"            ofType="IlbanGprice"> 
+         <id     column="ilban_G_price_code"            property="ilbanGoodsPriceCode"/>
+         <result column="laundry_code"        		    property="laundryCode"/>
+         <result column="ilban_skill_code"       		property="ilbanSkillCode"/>
+         <result column="g_name"       					property="goodsName"/>
+         <result column="g_price"          				property="goodsPrice"/>
+         <result column="regist_time"          			property="registTime"/>
+         <result column="g_price_use_state"          	property="goodsPriceUseState"/>
+      </collection>
+      
+      <collection property="memberList" 				ofType="Member">
+		<id		column="m_id" 							property="memberId"/>
+		<result column="level_code" 					property="levelCode"/>
+		<result column="m_pw" 							property="memberPw"/>
+		<result column="m_pw_QnA_code" 					property="memberPwQnACode"/>
+		<result column="m_name" 						property="memberName"/>
+		<result column="m_birth" 						property="memberBirth"/>
+		<result column="m_post_num" 					property="memberPostNum"/>
+		<result column="m_addr" 						property="memberAddr"/>
+		<result column="m_detail_addr" 					property="memberDetailAddr"/>
+		<result column="m_phone" 						property="memberPhone"/>
+		<result column="m_gender" 						property="memberGender"/>
+		<result column="m_out_code" 					property="memberOutCode"/>
+		<result column="m_email" 						property="memberEmail"/>
+		<result column="m_reg_date" 					property="memberRegDate"/>
+		<result column="admin_level_code" 				property="adminLevelCode"/>
+		<result column="regist_time" 					property="registTime"/>
+      </collection>
+      
+   </resultMap>
+   
+   <select id="laundryInfoSebu" parameterType="String" resultMap="LaundryInfoResultMap">
+      SELECT 
+           laundry_name
+         , laundry_state
+         , laundry_addr
+         , laundry_tel
+         , level_code
+      FROM 
+         tb_laundry
+   </select>
+   <select id="getLaundryInfoSebu"  parameterType="HashMap" resultMap="LaundryInfoResultMap">
+    /* 써치키 써치밸류로 세탁소명 비교해서 세탁소 정보 가져오기 */
+	SELECT 
+		 l.laundry_code
+		,l.m_id
+		,l.level_code
+		,l.laundry_name
+		,l.laundry_state
+		,l.laundry_post_num
+		,l.laundry_addr
+		,l.laundry_detail_addr
+		,l.laundry_tel
+		,l.laundry_license_img
+		,l.laundry_img
+		,l.skill_licence
+		,l.business_number
+		,l.admin_level_code
+		,l.regist_time	
+		,g.ilban_G_price_code
+		,g.ilban_skill_code
+		,g.g_name
+		,g.g_price
+		,g.g_price_use_state
+	FROM 
+		tb_laundry AS l
+		inner join
+		tb_ilban_g_price AS g		
+		on
+		g.g_price_use_state = 'use'
+		and
+		l.laundry_code = g.laundry_code
+	where
+		${searchKey}=#{searchValue};
+     
+	   
+	   	  
+   </select>
+   
+   <select id="dateCheck"  parameterType="String" resultType="HolidayList">
+	   SELECT 
+			h.laundry_code 			AS laundryCode
+			,h.yearly_holiday_date  AS yearlyHolidayDate
+			,h.yearly_holiday_name	AS yearlyHolidayName
+		FROM 
+			tb_holiday AS h
+		WHERE
+			h.laundry_code = #{laundryCode}
+		and
+			h.yearly_holiday_date = #{yeyakDate};
+			
+	</select>
+   
+   
+</mapper>

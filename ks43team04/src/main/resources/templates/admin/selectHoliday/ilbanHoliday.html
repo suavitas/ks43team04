@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/adminDefault}">
+	  
+<th:block layout:fragment="customCss">
+	<style>
+        table {
+            clear: both;            
+        }
+        th {
+            height: 30px;
+            width: 50px;
+            background-color: #F7F7F7;
+            text-align: center;
+            
+        }
+        td {
+            text-align: center;
+            height: 120px;
+            width: 140px;
+            background-color: #F7F7F7; 
+            border: 1px solid #bcbcbc;
+        }
+        input {
+            height: 30px;
+            width: 50px;
+            border: none;
+            background-color: #F7F7F7;
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+        .year_mon{
+            font-size: 25px;
+            text-align: center;
+        }
+        .colToday{
+            background-color: #d3d3d3;
+        }
+        .holiday {
+        	background-color: red;
+        }
+		h4 {
+			 margin-bottom: 30px;
+		}
+		#sidebar-right {
+        width: 300px;
+        padding: 5px;
+        margin-bottom: 5px;
+        float: left;
+        border-left: 1px solid #bcbcbc;     
+        margin-top: 30px;   
+      }			
+    </style>
+</th:block>	  
+	  
+	<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">		
+	<th:block class="fc-form">
+		<body>		
+		<div class="col-lg-9 mb-5 mb-lg-0">		
+			<div class="blog_left_sidebar">
+			<h4>2022년 세탁소 휴일 지정</h4>										
+				<table id="calendar">
+			    <thead>
+			        <tr>
+			            <th><input name="preMon" type="button" value="<"></th>
+			            <th colspan="5" class="year_mon"></th>
+			            <th><input name="nextMon" type="button" value=">"></th>
+			        </tr>
+			        <tr>
+			            <th>일</th>
+			            <th>월</th>
+			            <th>화</th>
+			            <th>수</th>
+			            <th>목</th>
+			            <th>금</th>
+			            <th>토</th>
+			        </tr>			        
+			    </thead>
+			    <tbody>			    	
+			    </tbody>
+			</table>								
+			</div>
+		</div>
+		<div id="sidebar-right">
+       		<div>정기 휴일과 일반 휴일 지정<br>
+        		정기 휴일<br>
+        		대체 휴일<br>
+        		개인사정<br>
+        		휴가<br>        	
+        	</div>        	
+      	</div>			
+	</body>		
+	</th:block>  
+	
+	<script th:src="@{/common/jquery.min.js}"></script>	
+	<script th:src="@{/admin/calendar/moment.min.js}"></script>    	
+	<script th:src="@{/admin/calendar/customJs.js}"></script>    	
+</th:block>
+
+
+</th:block>
+</html>

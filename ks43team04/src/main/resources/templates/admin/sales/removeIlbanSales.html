@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/adminDefault}">
+	  
+	<!-- 사용자정의 contents -->
+	<th:block layout:fragment="customContents">
+		<form id="removeForm" th:action="@{/admin/removeIlbanSales}" method="post" style="text-align: center;">
+			<table class="table table-striped jambo_table bulk_action" style="width: 50%; margin: 0 auto; margin-top:80px; border-collapse: separate;">
+				<thead>
+					<tr class="headings">
+						<th class="column-title" colspan="2">영수증 정보</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="even pointer">
+						<td>영수증 코드</td>
+						<td><input type="text" name="billCode" th:value="${billCode}" readonly="readonly"></td>
+					</tr>
+					<tr class="even pointer">
+						<td>가격</td>
+						<td th:text="${totalPrice}"></td>
+					</tr>
+					<tr class="even pointer">
+						<td>사용한 포인트</td>
+						<td th:text="${payUsePoint}"></td>
+					</tr>
+					<tr class="even pointer">
+						<td>결제 방법</td>
+						<td th:text="${payMethod}"></td>
+					</tr>
+					<tr class="even pointer">
+						<td>결제 승인 날짜</td>
+						<td th:text="${payOkDate}"></td>
+					</tr>
+					<tr class="even pointer">
+						<td>환불 여부</td>
+						<td th:text="${refundCode}"></td>
+					</tr>
+					<tr class="even pointer">
+						<td>포인트 사용후 실 결제금액</td>
+						<td th:text="${afterUsePointPay}"></td>
+					</tr>
+					<tr class="even pointer">
+						<td>추가금</td>
+						<td th:text="${addPay}"></td>
+					</tr>
+					<tr class="even pointer">
+						<td>배달료</td>
+						<td th:text="${deliveryPay}"></td>
+					</tr> 
+					<tr class="even pointer">
+						<td colspan="2">
+							<button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">영수증 정보 삭제</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</th:block>
+
+</html>

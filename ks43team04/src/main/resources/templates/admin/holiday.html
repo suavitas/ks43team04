@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/adminDefault}">
+	  
+	  
+	  
+	<!-- 사용자정의 contents -->
+	<th:block layout:fragment="customContents">
+	
+	<h4>2022년 전체  공휴일</h4>
+	<a th:href=@{/admin/addYearlyHoliday}><button type="button" class="btn btn-primary" style="float: right;">공휴일 추가</button></a>
+		
+	<table id= "holidayList" class="table table-striped jambo_table bulk_action" style="width: 100%; text-align: center;">
+		<thead>
+			<tr>
+				<th>공휴일 코드 </th>
+				<th>공휴일 날짜</th>				
+				<th>공휴일명</th>
+				<th>공휴일 사용여부</th>	
+				<th>수정</th>					
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:if="${not #lists.isEmpty(YearlyHolidayList)}" th:each="l : ${YearlyHolidayList}">
+				<td th:text="${l.yearlyHolidayCode}"></td>
+				<td th:text="${l.yearlyHolidayDate}"></td>
+				<td th:text="${l.yearlyHolidayName}"></td>
+				<td th:text="${l.holidayCodeUse}"></td>
+				<td>			 
+					<a th:href="@{/admin/allModifyHoliday(yearlyHolidayDate=${l.yearlyHolidayDate},yearlyHolidayName=${l.yearlyHolidayName},holidayCodeUse=${l.holidayCodeUse},yearlyHolidayCode=${l.yearlyHolidayCode})}">
+					<button	type="button" class="btn btn-success btn-sm">수정</button> </a>
+				</td>
+								
+			</tr>			
+		</tbody>
+	</table>
+	
+	
+	
+	
+	</th:block>
+
+	</html>

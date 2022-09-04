@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ks43team04.mapper.HolidayMapper">
+
+	<resultMap type="HolidayList" 					id="HolidayListResultMap">
+		<id column="laundry_code"					property="holidayCode"/>
+		<result column="m_id" 						property="laundryCode"/>
+		<result column="level_code" 				property="yearlyHolidayDate"/>
+		<result column="laundry_name" 				property="yearlyHolidayName"/>
+		<result column="laundry_state" 				property="holidayCodeUse"/>
+	</resultMap>
+	
+			
+	<resultMap type="YearlyHoliday" 				id="holidayResultMap">
+		<id column="yearly_holiday_code" 			property="yearlyHolidayCode"/>
+		<result column="yearly_holiday_date" 		property="yearlyHolidayDate"/>
+		<result column="yearly_holiday_name"		property="yearlyHolidayName"/>
+		<result column="holiday_code_use" 			property="holidayCodeUse"/>
+		<result column="admin_level_code" 			property="adminLevelCode"/>
+		<result column="regist_time" 				property="registTime"/>
+	</resultMap>
+	
+	
+		<update id="allModifyHolyday" parameterType="String">
+		/* 전체 공휴일 수정*/
+			UPDATE tb_yearly_holiday
+			SET
+				holiday_code_use= #{holidayCodeUse},
+				regist_time=NOW()
+			WHERE yearly_holiday_code= #{yearlyHolidayCode}		
+		</update>
+	
+	
+	<insert id="addYearlyHoliday" parameterType="YearlyHoliday">
+	INSERT INTO tb_yearly_holiday
+			(yearly_holiday_code 
+			,yearly_holiday_date 
+			,yearly_holiday_name 
+			,holiday_code_use
+			,admin_level_code
+			,regist_time)
+		
+		VALUES(
+			(SELECT CONCAT('yearly_holiday_code','_',max(CAST(substring(yearly_holiday_code,21)+1 AS DECIMAL))) AS yearly_holiday_code FROM tb_yearly_holiday AS aa)
+			,#{yearlyHolidayDate}
+			,#{yearlyHolidayName}
+			,'O'
+			,'admin_level_code_002' 
+			,NOW());
+	</insert>
+	
+	
+	
+		<update id="modifyHoliday"  parameterType="HolidayList">
+		/* 세탁소별 휴일 수정 */
+		UPDATE
+		tb_holiday
+		<trim prefix="SET" prefixOverrides=",">
+			<if test="holidayCode != null and holidayCode != ''">
+				holiday_code = #{holidayCode}
+			</if>
+			<if test="laundryCode != null and laundryCode != ''">
+				,laundry_code = #{laundryCode}
+			</if>
+			<if test="yearlyHolidayDate != null and yearlyHolidayDate != ''">
+				,yearly_holiday_date = #{yearlyHolidayDate}
+			</if>
+			<if test="yearlyHolidayName != null and yearlyHolidayName != ''">
+				,yearly_holiday_name = #{yearlyHolidayName}
+			</if>
+			<if test="holidayCodeUse != null and holidayCodeUse != ''">
+				,holiday_code_use = #{holidayCodeUse}
+			</if>
+		</trim>
+		WHERE
+		holiday_code = #{holidayCode};
+
+
+	</update>
+	
+	<insert id="addHoliday" parameterType="String">
+ 		/* 세탁소별 휴일 추가 */
+ 		INSERT INTO tb_holiday
+			(holiday_code 
+			,laundry_code
+			,yearly_holiday_date 
+			,yearly_holiday_name 
+			,holiday_code_use)
+		
+		VALUES(
+			(SELECT MAX(holiday_code)+1 FROM tb_holiday AS L)
+			,#{laundryCode}
+			,#{yearlyHolidayDate}
+			,#{yearlyHolidayName}
+			,'O');
+ 	</insert>
+ 	
+ 	<delete id="removeHoliday" parameterType="String">
+ 		DELETE 
+        FROM 
+        	tb_holiday
+        WHERE
+       		holiday_code = #{holidayCode}; 
+     </delete>
+	
+	
+	
+	<select id="holidayList" parameterType="String" resultMap="HolidayListResultMap">
+		SELECT 
+			holiday_code, 
+			laundry_code, 
+			yearly_holiday_date,
+			yearly_holiday_name,
+			holiday_code_use
+		FROM 
+			tb_holiday		
+	</select>
+		
+	<select id="yearlyHolidayList" resultMap="holidayResultMap">
+		SELECT
+			h.yearly_holiday_code 
+			,h.yearly_holiday_date
+			,h.yearly_holiday_name 
+			,h.holiday_code_use
+		FROM
+			tb_yearly_holiday AS h
+		where
+			h.holiday_code_use = 'O';
+	</select>
+	<select id="yearlyHolidayListByDate" parameterType="Map" resultMap="holidayResultMap">
+		SELECT
+			h.yearly_holiday_code 
+			,h.yearly_holiday_date
+			,h.yearly_holiday_name 
+			,h.holiday_code_use
+		FROM
+			tb_yearly_holiday AS h
+		where
+			h.holiday_code_use = 'O'
+			and
+			h.yearly_holiday_date between #{startDate} and #{endDate}
+	</select>
+	
+	<select id="LaundryHolidayLookUpCount" resultType="int">
+		/*세탁소별 휴일 튜플수 페이징*/
+		SELECT
+				COUNT(h.holiday_code)
+				FROM
+				tb_holiday AS h
+
+	</select>
+		<select id="eachLaundryHoliday" parameterType="map" resultType="map">
+		/*세탁소별 휴일 검색*/
+		SELECT
+		tl.laundry_name as laundryName,
+		tl.laundry_code as laundryCode,
+		th.yearly_holiday_date as yearlyHolidayDate,
+		th.yearly_holiday_name as yearlyHolidayName,
+		th.holiday_code_use as holidayCodeUse,
+		th.holiday_code as holidayCode
+		FROM
+		tb_holiday AS th
+		INNER JOIN
+		tb_laundry AS tl
+		ON
+		th.laundry_code = tl.laundry_code
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="searchValue != null and searchValue != ''">
+				${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
+			</if>
+		</trim>
+		LIMIT #{startRow}, #{rowPerPage};
+	</select>
+	
+	
+</mapper>

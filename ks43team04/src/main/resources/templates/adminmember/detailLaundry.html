@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="~{layouts/adminDefault}">     
+
+<!-- 사용자 정의 JsScript 파일-->
+<th:block layout:fragment="customJsScript">
+   <!-- 주소검색 API -->
+   <script th:src="@{//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js}"></script>
+</th:block>
+
+<th:block layout:fragment="customScript">
+      <script type="text/javascript">
+         // 카카오 우편번호 API 
+         function searchAddForm() {
+              new daum.Postcode({
+                  oncomplete: function(data) {
+                     
+                     var addr = '';
+                     var extraAddr = ''; // 참고항목 변수
+
+                      //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                      if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                          addr = data.roadAddress;
+                      } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                          addr = data.jibunAddress;
+                      }
+                      
+                      document.getElementById('memberPostNum').value = data.zonecode;
+                      document.getElementById('memberAddr').value = addr;
+                      // 커서를 상세주소 필드로 이동한다.
+                      document.getElementById('memberDetailAddr').focus();
+                      
+                  }
+              }).open();
+          }
+      </script>
+      
+</th:block>
+
+<th:block layout:fragment="customJsScript2">
+	
+      <script>
+	   	var levelName = document.querySelector('#levelName');
+	   	var levelCode = document.querySelector('#levelCode').value;
+	   	
+	   	var level = '';
+	   	
+	   	if(levelCode == 'level_code_02'){
+	   		level = '무인세탁소'
+	   	}else if(levelCode == 'level_code_03'){
+	   		level = '일반세탁소'
+	   	
+	   	}
+	   	
+	   	levelName.value = level; 
+   </script>
+</th:block>
+<style>
+     min-height: 100vh;
+
+    .input-form {
+      max-width: 800px;
+
+      margin-top: 100px;
+      margin-bottom: 100px;
+      padding: 32px;
+
+      background: #fff;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+    }
+</style>
+</th:block>
+
+<!-- 사용자정의 contents -->
+<th:block layout:fragment="customContents">
+<!-- 게시판 타이틀 -->
+   	<h4>세탁소 업체 상세정보 조회</h4>
+   	<div class="col-md-12 col-sm-12 mt-5">
+			<div class="x_panel">
+			<h2>상세정보</h2>
+			<div class="x_title">
+			</div>     
+		   
+			      <div class="container">
+			         <div class="row" style="float: none; margin: 100 auto;">
+			            <div class="col-lg-8 col-lg-12" style="float: none; margin:0 auto;">
+			
+				        <div class="container"  style="margin-top: 20px; margin-bottom: 100px;">
+				          <div class="input-form-backgroud row">
+				            <div class="input-form col-md-12 mx-auto">
+				                  <div id="cid_1" class="form-input-wide" data-layout="full">
+				                    <div data-component="separator" style="border-top:1px solid rgb(0,0,0); clear:both;"></div>
+				             	  </div>
+			             	
+			              <form th:action="@{/admin/detailLaundry}" method="post" class="validation-form" novalidate>
+				              <table class="table table-bordered">
+								<thead>
+									<tr>
+										<th scope="col" style="width: 10%;">#</th>
+										<th scope="col">업체 관리</th>
+									</tr>
+								</thead>
+								<tbody>
+								<tr>
+								<th scope="row">업체 사진</th>
+								<td>
+									<div class="form-group row">
+										<div class="col-md-3 col-sm-3">
+										</div>
+										<div class="col-md-6 col-sm-6" >
+											<img />
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">업체 정보</th>
+								<td>
+									<div class="form-group row">
+										<div class="col-md-2 col-sm-2">
+											<label class="control-label" for="laundryCode">업체관리코드</label>
+										</div>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="text" class="form-control readonlyInput" name="laundryCode" th:value="${laundry.laundryCode}" readonly="readonly"/>
+										</div>
+									</div>
+									<div class="form-group row">
+											<div class="col-md-2 col-sm-2">
+												<label class="control-label" for="levelCode">회원권한코드</label>
+											</div>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="text" class="form-control readonlyInput" id="levelCode"  name="levelCode" th:value="${laundry.levelCode}" readonly="readonly"/>
+											</div>
+										</div>
+									<div class="form-group row">
+											<div class="col-md-2 col-sm-2">
+												<label class="control-label" for="memberId">업체분류</label>
+											</div>
+											<div class="col-md-6 col-sm-6 ">
+												<input type="text" id="levelName" class="form-control readonlyInput" name="levelName" readonly="readonly"/>
+											</div>
+										</div> 
+									<div class="form-group row">
+										<div class="col-md-2 col-sm-2">
+											<label class="control-label" for="memberId">가입아이디</label>
+										</div>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="text" class="form-control" name="memberId" th:value="${laundry.memberId}" disabled="disabled"/>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-md-2 col-sm-2">
+											<label class="control-label" for="sellerStoreName">업체명</label>
+										</div>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="text" class="form-control" name="laundryName" th:value="${laundry.laundryName}" readonly="readonly"/>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-md-2 col-sm-2">
+											<label class="control-label" for="sellerStoreAddr">업체 주소</label>
+										</div>
+										<div class="col-md-4 col-sm-4">
+												<input type="text" class="form-control" name="laundryPostNumber" id="laundryPostNum" th:value="${laundry.laundryPostNumber}" readonly="readonly"/>
+											</div>
+											<div class="col-md-3 col-sm-3">
+												<button type="button" class="btn btn-info" id="laundryPostNum" onclick="searchPostNum()">우편번호찾기</button>
+											</div>
+										</div>
+									<div class="form-group row">
+										<div class="col-md-6 offset-md-2">
+											<input type="text" class="form-control" id="laundryAddr" name="laundryAddr"  th:value="${laundry.laundryAddr}" readonly="readonly"/>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-md-6 offset-md-2">
+											<input type="text" class="form-control" name="laundryDetailAddr" id="laundryDetailAddr" th:value="${laundry.laundryDetailAddr}" readonly="readonly"/>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-md-2 col-sm-2">
+											<label class="control-label" for="laundryTel">업체 대표번호</label>
+										</div>
+										<div class="col-md-6 col-sm-6">
+											<input type="text" class="form-control" name="laundryTel" th:value="${laundry.laundryTel}" readonly="readonly"/>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-md-2 col-sm-2">
+											<label class="control-label" for="laundryState">영업상태</label>
+										</div>
+										<div class="col-md-6 col-sm-6">
+											<input type="text" class="form-control" name="laundryState" th:value="${laundry.laundryState}" readonly="readonly"/>
+										</div>
+									</div> 
+									<th:block  th:if="${laundry.levelCode == 'level_code_03'}">
+										<div class="form-group row">
+											<div class="col-md-2 col-sm-2">
+												<label class="control-label" for="skillLicence">자격증 유무</label>
+											</div>
+											<div class="col-md-6 col-sm-6">
+												<input type="text" class="form-control" name="skillLicence" th:value="${laundry.skillLicence}" readonly="readonly"/>
+											</div>
+										</div>
+									</th:block>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">업체 등록 정보</th>	
+								<td>
+									<div class="form-group row">
+										<div class="col-md-2 col-sm-2">
+											<label class="control-label" for="businessNumber">사업자등록번호</label>
+										</div>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="text" class="form-control" name="businessNumber" th:value="${laundry.businessNumber}" readonly="readonly"/>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-md-2 col-sm-2">
+											<label class="control-label" for="registTime">업체 등록날짜</label>
+										</div>
+										<div class="col-md-6 col-sm-6 ">
+											<input type="text" class="form-control" name="registTime" th:value="${laundry.registTime}" disabled="disabled"/>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+							</table>
+							<div class="ln_solid"></div>
+								<div class="form-group">
+									<div class="col-md-8 col-sm-8  offset-md-4">
+										<a th:href="@{/admin/laundryList}"><button type="button" class="btn btn-secondary" id="cancelButton">취소</button></a>
+										<a th:href="@{/admin/modifyLaundry(laundryCode=${laundry.laundryCode})}"><button type="button" class="btn btn-success">수정</button></a>	
+										<button type="submit" class="btn btn-primary">저장</button>
+									</div>
+								</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>				
+</div>						
+</th:block>
+</html>
+
+  
